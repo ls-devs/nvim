@@ -40,7 +40,7 @@ dashboard.section.header.val = {
 dashboard.section.buttons.val = {
 	dashboard.button(
 		"f",
-		"  Find file",
+		"→  Find file",
 		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>"
 	),
 	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
