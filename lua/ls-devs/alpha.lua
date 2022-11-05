@@ -1,5 +1,5 @@
 local alpha = safe_require("alpha")
-
+local quotes = require("ls-devs.quotes")
 if not alpha then
 	return
 end
@@ -48,10 +48,11 @@ dashboard.section.buttons.val = {
 	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
 	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
 	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+	dashboard.button("", ""),
 }
 
 local function footer()
-	return "“Should've named my kids tech debt, they're never going away.” – Trash"
+	return " “" .. quotes.content .. "” - " .. quotes.author
 end
 
 dashboard.section.footer.val = footer()
