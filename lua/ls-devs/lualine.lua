@@ -124,7 +124,6 @@ ins_left({
 	end,
 	padding = { right = 1 },
 })
-
 ins_left({
 	-- filesize component
 	"filesize",
@@ -140,7 +139,6 @@ ins_left({
 ins_left({ "location" })
 
 ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
-
 ins_left({
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
@@ -151,7 +149,15 @@ ins_left({
 		color_info = { fg = colors.cyan },
 	},
 })
-
+ins_left({
+	function()
+		return os.date("%H:%M:%S", os.time())
+	end,
+	color = {
+		fg = colors.blue,
+		gui = "bold",
+	},
+})
 -- Insert mid section. You can make any number of sections in neovim :)
 -- for lualine it's any number greater then 2
 ins_left({
@@ -159,7 +165,6 @@ ins_left({
 		return "%="
 	end,
 })
-
 ins_left({
 	-- Lsp server name .
 	function()
