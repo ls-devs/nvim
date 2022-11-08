@@ -36,6 +36,9 @@ m.setup({
 		"cssmodules_ls",
 		"volar",
 		"angularls",
+		"dockerls",
+		"emmet_ls",
+		"yamlls",
 	},
 })
 
