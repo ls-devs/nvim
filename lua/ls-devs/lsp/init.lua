@@ -80,3 +80,24 @@ m.setup_handlers({
 		})
 	end,
 })
+
+require("lspconfig").pyright.setup({
+	on_attach = require("ls-devs.lsp.on_attach").on_attach,
+	capabilities = capabilities,
+	cmd = { "pyright-langserver", "--stdio" },
+	filetypes = { "python" },
+	--root_dir = function(startpath)
+	--       return M.search_ancestors(startpath, matcher)
+	--  end,
+	settings = {
+		python = {
+			pythonPath = "/usr/bin/python3",
+			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "workspace",
+				useLibraryCodeForTypes = true,
+			},
+		},
+	},
+	single_file_support = true,
+})
