@@ -28,9 +28,6 @@ m.setup({
 		"tailwindcss",
 		"html",
 		"cssls",
-		"astro",
-		"yamlls",
-		"taplo",
 		"marksman",
 		"dockerls",
 		"cssmodules_ls",
@@ -40,6 +37,7 @@ m.setup({
 		"emmet_ls",
 		"yamlls",
 		"sqlls",
+		"pyright",
 	},
 })
 
