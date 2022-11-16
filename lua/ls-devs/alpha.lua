@@ -1,5 +1,4 @@
 local alpha = safe_require("alpha")
-local quotes = require("ls-devs.quotes")
 if not alpha then
 	return
 end
@@ -9,33 +8,6 @@ local dashboard = safe_require("alpha.themes.dashboard")
 if not dashboard then
 	return
 end
-
-dashboard.section.header.val = {
-	[[                        .^!777777~      ]],
-	[[                 .^!77~^:......~Y~      ]],
-	[[              :!?7^..           .5!     ]],
-	[[           :7?!:.                .P^    ]],
-	[[         ~J!.                     :G    ]],
-	[[       ^Y!.                        J?   ]],
-	[[      ?Y.                          .G.  ]],
-	[[     JJ                             ?Y  ]],
-	[[    ?Y                              JG  ]],
-	[[   .G.                              Y!  ]],
-	[[   J?                              .G   ]],
-	[[   G^                            ::.P^  ]],
-	[[   G:                            ^^ ^P  ]],
-	[[   P^                                ?J ]],
-	[[   Y!                                :G ]],
-	[[   !Y  ..                          .. P^]],
-	[[   .G. .^                        .7J: P~]],
-	[[    Y7                        .~?J~  ?Y ]],
-	[[    .G.                   .^!??~.  ^Y7  ]],
-	[[     ?J              .:^!7?!:.  :!?!.   ]],
-	[[      P~       .^!777?7~:.  .^7?!.      ]],
-	[[      .P~ .^~!7?!:...  .:~77!^.         ]],
-	[[        ?JJ!^::..:^~!777~.              ]],
-	[[         .~77777!~^:.                   ]],
-}
 
 dashboard.section.buttons.val = {
 	dashboard.button(
@@ -50,12 +22,6 @@ dashboard.section.buttons.val = {
 	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 	dashboard.button("", ""),
 }
-
-local function footer()
-	return " “" .. quotes.content .. "” - " .. quotes.author
-end
-
-dashboard.section.footer.val = footer()
 
 dashboard.section.footer.opts.hl = "Type"
 dashboard.section.header.opts.hl = "Include"

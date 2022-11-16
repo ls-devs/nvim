@@ -89,7 +89,12 @@ return packer.startup(function(use)
 
 	-- Utils
 	use("lewis6991/impatient.nvim")
-	use("goolord/alpha-nvim")
+	use({
+		"goolord/alpha-nvim",
+		config = function()
+			require("alpha").setup(require("alpha.themes.dashboard").config)
+		end,
+	})
 	use("phaazon/hop.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("ethanholz/nvim-lastplace")
