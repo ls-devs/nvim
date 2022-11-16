@@ -39,6 +39,7 @@ m.setup({
 		"dockerls",
 		"emmet_ls",
 		"yamlls",
+		"sqlls",
 	},
 })
 
@@ -80,10 +81,54 @@ m.setup_handlers({
 		})
 	end,
 })
+require("lspconfig").yamlls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").dockerls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").sqlls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").html.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").cssls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").prismals.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").tailwindcss.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").eslint.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").emmet_ls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").cssmodules_ls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+require("lspconfig").volar.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
 
 require("lspconfig").pyright.setup({
-	on_attach = require("ls-devs.lsp.on_attach").on_attach,
-	capabilities = capabilities,
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	settings = {
