@@ -86,13 +86,11 @@ require("lspconfig").pyright.setup({
 	capabilities = capabilities,
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
-	--root_dir = function(startpath)
-	--       return M.search_ancestors(startpath, matcher)
-	--  end,
 	settings = {
 		python = {
-			pythonPath = "/usr/bin/python3",
 			analysis = {
+				extraPath = { "." },
+				autoImportCompletions = true,
 				autoSearchPaths = true,
 				diagnosticMode = "workspace",
 				useLibraryCodeForTypes = true,
