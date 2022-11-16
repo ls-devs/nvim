@@ -9,6 +9,7 @@ local M = {}
 M.on_attach = function(client, bufnr)
 	lsp_signature.on_attach({
 		floating_window = false,
+		hint_prefix = "🐭 ",
 	}, bufnr)
 
 	if client.name == "tsserver" then
