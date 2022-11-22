@@ -6,7 +6,7 @@ require("ls-devs.colorscheme")
 require("ls-devs.treesitter")
 require("ls-devs.which-key")
 require("ls-devs.nvim-tree")
-require("ls-devs.bufferline")
+--[[ require("ls-devs.bufferline") ]]
 require("ls-devs.lualine")
 require("ls-devs.telescope")
 require("ls-devs.cmp")

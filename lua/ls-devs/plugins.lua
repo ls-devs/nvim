@@ -47,7 +47,7 @@ return packer.startup(function(use)
 	use("kyazdani42/nvim-tree.lua")
 
 	-- Buffer and status lines
-	use({ "akinsho/bufferline.nvim", tag = "v2.*" })
+	--[[ use({ "akinsho/bufferline.nvim", tag = "v2.*" }) ]]
 	use("nvim-lualine/lualine.nvim")
 
 	-- Treesitter
