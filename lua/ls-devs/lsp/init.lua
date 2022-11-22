@@ -79,6 +79,11 @@ m.setup_handlers({
 		})
 	end,
 })
+require("lspconfig").vuels.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+})
+
 require("lspconfig").yamlls.setup({
 	on_attach = opts.on_attach,
 	capabilities = opts.capabilities,
