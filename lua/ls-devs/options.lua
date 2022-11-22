@@ -17,7 +17,6 @@ local options = {
 	mouse = "a",
 	pumheight = 10,
 	showmode = true,
-	--[[ showtabline = 2, ]]
 	smartcase = true,
 	smartindent = true,
 	splitbelow = true,
@@ -37,7 +36,7 @@ local options = {
 	signcolumn = "yes",
 	wrap = false,
 	scrolloff = 8,
-	sidescrolloff = 8,
+	sidescrolloff = 12,
 	foldmethod = "expr",
 	foldexpr = "nvim_treesitter#foldexpr()",
 }
