@@ -38,6 +38,7 @@ m.setup({
 		"yamlls",
 		"sqlls",
 		"pyright",
+		"clangd",
 	},
 })
 
