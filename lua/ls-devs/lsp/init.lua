@@ -32,7 +32,6 @@ m.setup({
 		"dockerls",
 		"cssmodules_ls",
 		"volar",
-		"angularls",
 		"dockerls",
 		"emmet_ls",
 		"yamlls",
@@ -79,10 +78,6 @@ m.setup_handlers({
 			server = opts,
 		})
 	end,
-})
-require("lspconfig").vuels.setup({
-	on_attach = opts.on_attach,
-	capabilities = opts.capabilities,
 })
 
 require("lspconfig").yamlls.setup({
