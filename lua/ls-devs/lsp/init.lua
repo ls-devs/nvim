@@ -3,6 +3,7 @@ local mason = safe_require("mason")
 if not mason then
 	return
 end
+require("lspconfig.ui.windows").default_options.border = "rounded"
 
 mason.setup()
 

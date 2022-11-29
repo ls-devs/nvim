@@ -1,5 +1,3 @@
-require("lspconfig.ui.windows").default_options.border = "rounded"
-
 local signs = {
 	{ name = "DiagnosticSignError", text = "" },
 	{ name = "DiagnosticSignWarn", text = "" },
