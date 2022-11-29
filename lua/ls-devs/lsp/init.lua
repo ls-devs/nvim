@@ -5,7 +5,16 @@ if not mason then
 end
 require("lspconfig.ui.windows").default_options.border = "rounded"
 
-mason.setup()
+mason.setup({
+	ui = {
+		border = "rounded",
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
+})
 
 local m = safe_require("mason-lspconfig")
 
@@ -40,6 +49,7 @@ m.setup({
 		"pyright",
 		"clangd",
 	},
+
 })
 
 require("ls-devs.lsp.config")
