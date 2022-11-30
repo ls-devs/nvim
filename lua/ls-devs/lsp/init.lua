@@ -48,8 +48,8 @@ m.setup({
 		"sqlls",
 		"pyright",
 		"clangd",
+		"intelephense",
 	},
-
 })
 
 require("ls-devs.lsp.config")
@@ -94,6 +94,38 @@ m.setup_handlers({
 require("lspconfig").yamlls.setup({
 	on_attach = opts.on_attach,
 	capabilities = opts.capabilities,
+})
+require("lspconfig").intelephense.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+  settings = {
+        intelephense = {
+            stubs = { 
+                "bcmath",
+                "bz2",
+                "mysql",
+                "psql",
+                "calendar",
+                "Core",
+                "curl",
+                "zip",
+                "zlib",
+                "wordpress",
+                "woocommerce",
+                "acf-pro",
+                "wordpress-globals",
+                "wp-cli",
+                "genesis",
+                "polylang"
+            },
+            environment = {
+              includePaths = '/Users/laurent/.composer/vendor/php-stubs/' -- this line forces the composer path for the stubs in case inteliphense don't find it...
+            },
+            files = {
+                maxSize = 5000000;
+            };
+        };
+    }
 })
 require("lspconfig").dockerls.setup({
 	on_attach = opts.on_attach,
