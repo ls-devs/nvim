@@ -1,4 +1,4 @@
-local lspconfig_util = safe_require("lspconfig.util")
+local lspconfig_util = require("lspconfig.util")
 
 if not lspconfig_util then
 	return

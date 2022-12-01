@@ -1,4 +1,4 @@
-local lsp_signature = safe_require("lsp_signature")
+local lsp_signature = require("lsp_signature")
 
 if not lsp_signature then
 	return

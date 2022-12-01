@@ -1,4 +1,4 @@
-local mason = safe_require("mason")
+local mason = require("mason")
 
 if not mason then
 	return
@@ -16,13 +16,13 @@ mason.setup({
 	},
 })
 
-local m = safe_require("mason-lspconfig")
+local m = require("mason-lspconfig")
 
 if not m then
 	return
 end
 
-local lspconfig = safe_require("lspconfig")
+local lspconfig = require("lspconfig")
 
 if not lspconfig then
 	return
@@ -54,7 +54,7 @@ m.setup({
 
 require("ls-devs.lsp.config")
 
-local cmp_nvim_lsp = safe_require("cmp_nvim_lsp")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 if not cmp_nvim_lsp then
 	return
@@ -68,7 +68,7 @@ local opts = {
 	on_attach = require("ls-devs.lsp.on_attach").on_attach,
 }
 
-local typescript = safe_require("typescript")
+local typescript = require("typescript")
 
 if not typescript then
 	return

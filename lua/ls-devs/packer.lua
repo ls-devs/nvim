@@ -77,47 +77,22 @@ return packer.startup(function(use)
 	use("JoosepAlviste/nvim-ts-context-commentstring")
 
 	-- Git
-	use({
-		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
-	})
+	use("lewis6991/gitsigns.nvim")
 	use("sindrets/diffview.nvim")
 	use("tpope/vim-fugitive")
 
 	-- Utils
 	use("lewis6991/impatient.nvim")
-	use({
-		"goolord/alpha-nvim",
-		config = function()
-			require("alpha").setup(require("alpha.themes.dashboard").config)
-		end,
-	})
+	use("goolord/alpha-nvim")
 	use("phaazon/hop.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("ethanholz/nvim-lastplace")
 	use("abecodes/tabout.nvim")
-	use({
-		"max397574/better-escape.nvim",
-		config = function()
-			require("better_escape").setup()
-		end,
-	})
-	use({
-		"kylechui/nvim-surround",
-		config = function()
-			require("nvim-surround").setup()
-		end,
-	})
+	use("max397574/better-escape.nvim")
+	use("kylechui/nvim-surround")
 	use("ellisonleao/glow.nvim")
 	use("famiu/bufdelete.nvim")
-	use({
-		"sitiom/nvim-numbertoggle",
-		config = function()
-			require("numbertoggle").setup()
-		end,
-	})
+	use("sitiom/nvim-numbertoggle")
 	use("Pocco81/true-zen.nvim")
 	use("aserowy/tmux.nvim")
 	use("rcarriga/nvim-notify")
@@ -135,45 +110,7 @@ return packer.startup(function(use)
 	use("ray-x/lsp_signature.nvim")
 	use("stevearc/dressing.nvim")
 	use("akinsho/toggleterm.nvim")
-	use({
-		"Pocco81/auto-save.nvim",
-		config = function()
-			require("auto-save").setup({
-				-- your config goes here
-				-- or just leave it empty :)
-				enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-				execution_message = {
-					message = function() -- message to print on save
-						return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-					end,
-					dim = 0.18, -- dim the color of `message`
-					cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
-				},
-				trigger_events = { "InsertLeave" }, -- vim events that trigger auto-save. See :h events
-				-- function that determines whether to save the current buffer or not
-				-- return true: if buffer is ok to be saved
-				-- return false: if it's not ok to be saved
-				condition = function(buf)
-					local fn = vim.fn
-					local utils = require("auto-save.utils.data")
-
-					if fn.getbufvar(buf, "&modifiable") == 1 and utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-						return true -- met condition(s), can save
-					end
-					return false -- can't save
-				end,
-				write_all_buffers = false, -- write all buffers when the current one meets `condition`
-				debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
-				callbacks = { -- functions to be executed at different intervals
-					enabling = nil, -- ran when enabling auto-save
-					disabling = nil, -- ran when disabling auto-save
-					before_asserting_save = nil, -- ran before checking `condition`
-					before_saving = nil, -- ran before doing the actual save
-					after_saving = nil, -- ran after doing the actual save
-				},
-			})
-		end,
-	})
+	use("Pocco81/auto-save.nvim")
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
