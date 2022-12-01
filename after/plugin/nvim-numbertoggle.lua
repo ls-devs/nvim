@@ -1,0 +1,2 @@
+			require("numbertoggle").setup()
+
