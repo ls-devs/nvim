@@ -37,8 +37,6 @@ local options = {
 	wrap = false,
 	scrolloff = 8,
 	sidescrolloff = 12,
-	foldmethod = "expr",
-	foldexpr = "nvim_treesitter#foldexpr()",
 }
 
 for k, v in pairs(options) do
