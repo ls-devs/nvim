@@ -15,6 +15,9 @@ mason_null_ls.setup({
 	ensure_installed = {
 		"stylua",
 		"prettier",
+    "rustfmt",
+    "black",
+    "prismaFmt"
 	},
 })
 
@@ -25,7 +28,8 @@ null_ls.setup({
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.prismaFmt,
 		null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.rustfmt,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then

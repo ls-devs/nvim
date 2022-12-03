@@ -48,6 +48,7 @@ m.setup({
 		"sqlls",
 		"pyright",
 		"clangd",
+    "rust_analyzer",
 		"intelephense",
 	},
 })
@@ -171,18 +172,29 @@ require("lspconfig").volar.setup({
 require("lspconfig").pyright.setup({
 	on_attach = opts.on_attach,
 	capabilities = opts.capabilities,
-	cmd = { "pyright-langserver", "--stdio" },
-	filetypes = { "python" },
+})
+require("lspconfig").rust_analyzer.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
 	settings = {
-		python = {
-			analysis = {
-				extraPath = { ".", "./*" },
-				autoImportCompletions = true,
-				autoSearchPaths = true,
-				diagnosticMode = "workspace",
-				useLibraryCodeForTypes = true,
+		["rust-analyzer"] = {
+			checkOnSave = {
+				command = "clippy",
+			},
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true,
 			},
 		},
 	},
-	single_file_support = true,
 })

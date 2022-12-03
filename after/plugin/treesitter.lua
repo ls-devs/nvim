@@ -28,6 +28,7 @@ treesitter.setup({
 		"graphql",
 		"yaml",
 		"toml",
+    "rust",
 	},
 	highlight = {
 		enable = true,
