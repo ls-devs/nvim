@@ -46,4 +46,6 @@ keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)
 
 -- Rest-nvim
-keymap("n", "<leader>rh", "<Plug>RestNvim", { silent = true })
+keymap("n", "<leader>rh", "<Plug>RestNvim", opts)
+keymap("n", "<leader>rl", "<Plug>RestNvimLast", opts)
+keymap("n", "<leader>rp", "<Plug>RestNvimPreview", opts)
