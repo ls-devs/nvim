@@ -1,2 +1,2 @@
-			require("better_escape").setup()
+require("better_escape").setup()
 
