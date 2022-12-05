@@ -48,7 +48,7 @@ m.setup({
 		"sqlls",
 		"pyright",
 		"clangd",
-    "rust_analyzer",
+		"rust_analyzer",
 		"intelephense",
 	},
 })
@@ -120,7 +120,7 @@ require("lspconfig").intelephense.setup({
 				"polylang",
 			},
 			environment = {
-				includePaths = "/Users/laurent/.composer/vendor/php-stubs/", -- this line forces the composer path for the stubs in case inteliphense don't find it...
+				includePaths = "/home/laurent/.config/composer/vendor/php-stubs/", -- this line forces the composer path for the stubs in case inteliphense don't find it...
 			},
 			files = {
 				maxSize = 5000000,
