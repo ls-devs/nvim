@@ -17,11 +17,11 @@ end
 
 -- Autocommand that reloads neovim whenever you save the packer.lua file
 vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost packer.lua source <afile> | PackerSync
-  augroup end
-]])
+ augroup packer_user_config
+ autocmd!
+ autocmd BufWritePost packer.lua source <afile> | PackerSync
+ augroup end
+ ]])
 
 local packer = require("packer")
 
@@ -35,32 +35,71 @@ packer.init({
 })
 
 return packer.startup(function(use)
-	-- Essentials
+	-- Package manager
 	use("wbthomason/packer.nvim")
-	use("nvim-lua/plenary.nvim")
 
 	-- Colorschemes
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- File explorer
-	use("kyazdani42/nvim-web-devicons")
-	use("kyazdani42/nvim-tree.lua")
+	use({ "kyazdani42/nvim-tree.lua", requires = { { "kyazdani42/nvim-web-devicons" } }, tag = "nightly" })
 
 	-- Buffer and status lines
-	use("nvim-lualine/lualine.nvim")
+	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
 	-- Treesitter
-	use("nvim-treesitter/nvim-treesitter")
-	use("windwp/nvim-ts-autotag")
-	use("nvim-treesitter/nvim-treesitter-textobjects")
-	use("p00f/nvim-ts-rainbow")
-
-	use("folke/which-key.nvim")
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		requires = {
+			{ "windwp/nvim-ts-autotag" },
+			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+			{ "p00f/nvim-ts-rainbow" },
+			{ "folke/which-key.nvim" },
+		},
+		run = ":TSUpdate",
+	})
 
 	-- Telescope
-	use("nvim-telescope/telescope.nvim")
+	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+	--
+	-- UI
+	use("stevearc/dressing.nvim")
 
-	-- CMP
+	--Formatter
+	use("jayp0521/mason-null-ls.nvim")
+	use("jose-elias-alvarez/null-ls.nvim")
+
+	-- Easy jump
+	use({ "phaazon/hop.nvim", branch = "v2" })
+
+	-- Auto-save
+	use("Pocco81/auto-save.nvim")
+
+	-- Http client
+	use({ "rest-nvim/rest.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+
+	-- Terminal toggle
+	use({ "akinsho/toggleterm.nvim", tag = "*" })
+	--
+	-- Auto close pairs
+	use("windwp/nvim-autopairs")
+
+	-- Surround
+	use("kylechui/nvim-surround")
+
+	-- Comments
+	use("numToStr/Comment.nvim")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
+
+	-- Rust tools
+	use({ "simrat39/rust-tools.nvim", requires = { { "nvim-lua/plenary.nvim" }, { "mfussenegger/nvim-dap" } } })
+
+	-- Git
+	use("lewis6991/gitsigns.nvim")
+	use("sindrets/diffview.nvim")
+	use("tpope/vim-fugitive")
+
+	-- Completion
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
@@ -69,33 +108,7 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-nvim-lsp")
 	use("L3MON4D3/LuaSnip")
 	use("rafamadriz/friendly-snippets")
-	use("windwp/nvim-autopairs")
 	use("onsails/lspkind.nvim")
-
-	-- Comments
-	use("numToStr/Comment.nvim")
-	use("JoosepAlviste/nvim-ts-context-commentstring")
-
-	-- Git
-	use("lewis6991/gitsigns.nvim")
-	use("sindrets/diffview.nvim")
-	use("tpope/vim-fugitive")
-
-	-- Utils
-	use("lewis6991/impatient.nvim")
-	use("goolord/alpha-nvim")
-	use("phaazon/hop.nvim")
-	use("lukas-reineke/indent-blankline.nvim")
-	use("ethanholz/nvim-lastplace")
-	use("abecodes/tabout.nvim")
-	use("max397574/better-escape.nvim")
-	use("kylechui/nvim-surround")
-	use("ellisonleao/glow.nvim")
-	use("famiu/bufdelete.nvim")
-	use("sitiom/nvim-numbertoggle")
-	use("aserowy/tmux.nvim")
-	use("rcarriga/nvim-notify")
-	use("petertriho/nvim-scrollbar")
 
 	-- LSP
 	use("williamboman/mason.nvim")
@@ -103,18 +116,23 @@ return packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use("b0o/schemastore.nvim")
 	use("jose-elias-alvarez/typescript.nvim")
-	use("jayp0521/mason-null-ls.nvim")
 	use("WhoIsSethDaniel/mason-tool-installer.nvim")
-	use("jose-elias-alvarez/null-ls.nvim")
 	use("ray-x/lsp_signature.nvim")
-	use("stevearc/dressing.nvim")
-	use("akinsho/toggleterm.nvim")
 
-	-- Auto-save
-	use("Pocco81/auto-save.nvim")
+	-- Utils
+	use("lewis6991/impatient.nvim")
+	use("goolord/alpha-nvim")
+	use("lukas-reineke/indent-blankline.nvim")
+	use("ethanholz/nvim-lastplace")
+	use("abecodes/tabout.nvim")
+	use("max397574/better-escape.nvim")
+	use("ellisonleao/glow.nvim")
+	use("famiu/bufdelete.nvim")
+	use("sitiom/nvim-numbertoggle")
+	use("aserowy/tmux.nvim")
+	use("rcarriga/nvim-notify")
+	use("petertriho/nvim-scrollbar")
 
-	-- Http client
-	use("rest-nvim/rest.nvim")
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
