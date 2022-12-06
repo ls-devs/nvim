@@ -18,9 +18,9 @@ M.on_attach = function(client, bufnr)
 	if client.name == "sumneko_lua" then
 		client.server_capabilities.document_formatting = false
 	end
-	if client.name == "rust_analyser" then
-		client.server_capabilities.document_formatting = false
-	end
+	--[[ if client.name == "rust_analyser" then ]]
+	--[[ 	client.server_capabilities.document_formatting = false ]]
+	--[[ end ]]
 	if client.name == "pyright" then
 		client.server_capabilities.document_formatting = false
 	end
