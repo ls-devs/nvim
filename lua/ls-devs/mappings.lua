@@ -49,3 +49,10 @@ keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)
 keymap("n", "<leader>rh", "<Plug>RestNvim", opts)
 keymap("n", "<leader>rl", "<Plug>RestNvimLast", opts)
 keymap("n", "<leader>rp", "<Plug>RestNvimPreview", opts)
+
+-- DAP
+keymap("n", "<leader>uo", "<cmd>lua require('dapui').toggle()<CR>", opts)
+keymap("n", "<leader>uc", "<cmd>lua require('dapui').close()<CR>", opts)
+keymap("n", "<leader>un", ":DapContinue<CR>", opts)
+keymap("n", "<leader>ut", ":DapTerminate<CR>", opts)
+keymap("n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)

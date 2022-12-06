@@ -13,7 +13,6 @@ end
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup({
-
 	open_on_setup = true,
 	open_on_setup_file = false,
 	hijack_netrw = true,
@@ -35,6 +34,7 @@ nvim_tree.setup({
 		"dashboard",
 		"alpha",
 	},
+
 	filters = {
 		custom = { ".git" },
 		exclude = { ".gitignore" },

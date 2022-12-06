@@ -91,12 +91,17 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
 
-	-- Rust tools
+	-- Debugger
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+
+	-- Rust tools
 	use({
 		"simrat39/rust-tools.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+
+	-- Python
+	use({ "mfussenegger/nvim-dap-python" })
 
 	-- Git
 	use("lewis6991/gitsigns.nvim")
