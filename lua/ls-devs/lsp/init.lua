@@ -48,7 +48,7 @@ m.setup({
 		"sqlls",
 		"pyright",
 		"clangd",
-		"rust_analyzer",
+		--[[ "rust_analyzer", ]]
 		"intelephense",
 	},
 })
@@ -173,28 +173,28 @@ require("lspconfig").pyright.setup({
 	on_attach = opts.on_attach,
 	capabilities = opts.capabilities,
 })
-require("lspconfig").rust_analyzer.setup({
-	on_attach = opts.on_attach,
-	capabilities = opts.capabilities,
-	settings = {
-		["rust-analyzer"] = {
-			checkOnSave = {
-				command = "clippy",
-			},
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
-			},
-			cargo = {
-				buildScripts = {
-					enable = true,
-				},
-			},
-			procMacro = {
-				enable = true,
-			},
-		},
-	},
-})
+--[[ require("lspconfig").rust_analyzer.setup({ ]]
+--[[ 	on_attach = opts.on_attach, ]]
+--[[ 	capabilities = opts.capabilities, ]]
+--[[ 	settings = { ]]
+--[[ 		["rust-analyzer"] = { ]]
+--[[ 			checkOnSave = { ]]
+--[[ 				command = "clippy", ]]
+--[[ 			}, ]]
+--[[ 			imports = { ]]
+--[[ 				granularity = { ]]
+--[[ 					group = "module", ]]
+--[[ 				}, ]]
+--[[ 				prefix = "self", ]]
+--[[ 			}, ]]
+--[[ 			cargo = { ]]
+--[[ 				buildScripts = { ]]
+--[[ 					enable = true, ]]
+--[[ 				}, ]]
+--[[ 			}, ]]
+--[[ 			procMacro = { ]]
+--[[ 				enable = true, ]]
+--[[ 			}, ]]
+--[[ 		}, ]]
+--[[ 	}, ]]
+--[[ }) ]]
