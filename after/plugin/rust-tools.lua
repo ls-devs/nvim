@@ -2,15 +2,12 @@ local extension_path = vim.env.HOME .. "/.vscode-insiders/extensions/vadimcn.vsc
 local codelldb_path = extension_path .. "adapter/codelldb"
 local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 local rt = require("rust-tools")
-local executors = require("rust-tools.executors")
 rt.setup({
 	tools = {
-		executor = executors.toggleterm,
 		runnables = {
 			use_telescope = true,
 		},
-		autosethints = true,
-		inlay_hints = { show_parameter_hints = true },
+		inlay_hints = { auto = true, show_parameter_hints = true },
 		hover_actions = { auto_focus = true },
 	},
 	dap = {
@@ -20,7 +17,6 @@ rt.setup({
 	server = {
 
 		on_attach = function(_, bufnr)
-			--[[ vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc") ]]
 			vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
 			vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
 			local opts = { noremap = true, silent = true }
@@ -35,6 +31,11 @@ rt.setup({
 			keymap(bufnr, "n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 			keymap(bufnr, "n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 			keymap(bufnr, "n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+			keymap(bufnr, "n", "<leader>uo", "<cmd>lua require('dapui').toggle()<CR>", opts)
+			keymap(bufnr, "n", "<leader>uc", "<cmd>lua require('dapui').close()<CR>", opts)
+			keymap(bufnr, "n", "<leader>un", ":DapContinue<CR>", opts)
+			keymap(bufnr, "n", "<leader>ut", ":DapTerminate<CR>", opts)
+			keymap(bufnr, "n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
 		end,
 		settings = {
 

@@ -135,7 +135,6 @@ return packer.startup(function(use)
 	use("sitiom/nvim-numbertoggle")
 	use("aserowy/tmux.nvim")
 	use("rcarriga/nvim-notify")
-	use("petertriho/nvim-scrollbar")
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
