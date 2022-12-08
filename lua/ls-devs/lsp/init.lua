@@ -48,7 +48,7 @@ m.setup({
 		"sqlls",
 		"pyright",
 		"clangd",
-		--[[ "rust_analyzer", ]]
+		"rust_analyzer",
 		"intelephense",
 	},
 })
