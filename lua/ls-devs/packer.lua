@@ -93,6 +93,7 @@ return packer.startup(function(use)
 
 	-- Debugger
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use("theHamsta/nvim-dap-virtual-text")
 
 	-- Rust tools
 	use({
@@ -127,6 +128,7 @@ return packer.startup(function(use)
 	use("jose-elias-alvarez/typescript.nvim")
 	use("WhoIsSethDaniel/mason-tool-installer.nvim")
 	use("ray-x/lsp_signature.nvim")
+	use("lvimuser/lsp-inlayhints.nvim")
 
 	-- Utils
 	use("lewis6991/impatient.nvim")
@@ -140,6 +142,8 @@ return packer.startup(function(use)
 	use("sitiom/nvim-numbertoggle")
 	use("aserowy/tmux.nvim")
 	use("rcarriga/nvim-notify")
+
+	-- Screenshot
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

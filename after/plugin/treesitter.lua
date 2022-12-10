@@ -30,6 +30,7 @@ treesitter.setup({
 		"toml",
 		"rust",
 		"http",
+		"cpp",
 	},
 	highlight = {
 		enable = true,
