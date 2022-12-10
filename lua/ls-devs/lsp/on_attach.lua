@@ -7,6 +7,7 @@ end
 local M = {}
 
 M.on_attach = function(client, bufnr)
+	require("lsp-inlayhints").on_attach(client, bufnr)
 	lsp_signature.on_attach({
 		floating_window = false,
 		hint_prefix = "🐭 ",
@@ -16,12 +17,6 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.document_formatting = false
 	end
 	if client.name == "sumneko_lua" then
-		client.server_capabilities.document_formatting = false
-	end
-	--[[ if client.name == "rust_analyser" then ]]
-	--[[ 	client.server_capabilities.document_formatting = false ]]
-	--[[ end ]]
-	if client.name == "pyright" then
 		client.server_capabilities.document_formatting = false
 	end
 
@@ -44,4 +39,3 @@ M.on_attach = function(client, bufnr)
 end
 
 return M
-
