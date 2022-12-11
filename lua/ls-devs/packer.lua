@@ -38,6 +38,12 @@ return packer.startup(function(use)
 	-- Package manager
 	use("wbthomason/packer.nvim")
 
+	-- Lsp & Dap manager
+	use("williamboman/mason.nvim")
+	use({ "jayp0521/mason-nvim-dap.nvim" })
+	use("williamboman/mason-lspconfig.nvim")
+	use("WhoIsSethDaniel/mason-tool-installer.nvim")
+
 	-- Colorschemes
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
@@ -101,6 +107,9 @@ return packer.startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
+	-- Clang extensions
+	use("p00f/clangd_extensions.nvim")
+
 	-- Python
 	use({ "mfussenegger/nvim-dap-python" })
 
@@ -121,12 +130,9 @@ return packer.startup(function(use)
 	use("onsails/lspkind.nvim")
 
 	-- LSP
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
 	use("neovim/nvim-lspconfig")
 	use("b0o/schemastore.nvim")
 	use("jose-elias-alvarez/typescript.nvim")
-	use("WhoIsSethDaniel/mason-tool-installer.nvim")
 	use("ray-x/lsp_signature.nvim")
 	use("lvimuser/lsp-inlayhints.nvim")
 
@@ -144,6 +150,7 @@ return packer.startup(function(use)
 	use("rcarriga/nvim-notify")
 
 	-- Screenshot
+	use({ "krivahtoo/silicon.nvim", run = "./install.sh" })
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
