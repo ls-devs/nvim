@@ -24,13 +24,19 @@ mason_null_ls.setup({
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({
+	border = "rounded",
 	sources = {
+		--[[ null_ls.builtins.diagnostics.eslint_d, ]]
+		null_ls.builtins.diagnostics.pylint,
+		null_ls.builtins.diagnostics.cpplint,
+		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.prismaFmt,
-		null_ls.builtins.formatting.prettier,
+		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.rustfmt,
 		null_ls.builtins.formatting.clang_format,
+		null_ls.builtins.formatting.cmake_format,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
