@@ -14,7 +14,8 @@ mason_null_ls.setup({
 	automatic_installation = false,
 	ensure_installed = {
 		"stylua",
-		"prettier",
+		"eslint_d",
+		"prettierd",
 		"rustfmt",
 		"black",
 		"prismaFmt",
@@ -26,8 +27,8 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	border = "rounded",
 	sources = {
-		--[[ null_ls.builtins.diagnostics.eslint_d, ]]
 		null_ls.builtins.diagnostics.pylint,
+		null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.diagnostics.cpplint,
 		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.stylua,
