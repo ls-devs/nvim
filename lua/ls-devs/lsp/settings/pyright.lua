@@ -1,10 +1,16 @@
 return {
 	settings = {
-		pyright = {
+		python = {
+			analysis = {
+				useLibraryCodeForTypes = true,
+				diagnosticMode = "workspace",
+				autoSearchPaths = true,
 				inlayHints = {
-					functionReturnTypes = true,
 					variableTypes = true,
+					functionReturnTypes = true,
+				},
 			},
+			single_file_support = true,
 		},
 	},
 }
