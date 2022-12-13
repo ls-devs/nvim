@@ -110,9 +110,6 @@ return packer.startup(function(use)
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
 
-	-- Python
-	use({ "mfussenegger/nvim-dap-python" })
-
 	-- Git
 	use("lewis6991/gitsigns.nvim")
 	use("sindrets/diffview.nvim")
