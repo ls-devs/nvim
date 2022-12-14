@@ -33,7 +33,6 @@ m.setup({
 		"sumneko_lua",
 		"jsonls",
 		"tsserver",
-		"eslint",
 		"prismals",
 		"tailwindcss",
 		"html",
@@ -85,4 +84,9 @@ m.setup_handlers({
 
 		lspconfig[server_name].setup(opts)
 	end,
+	--[[ ["tsserver"] = function() ]]
+	--[[ 	typescript.setup({ ]]
+	--[[ 		server = opts, ]]
+	--[[ 	}) ]]
+	--[[ end, ]]
 })
