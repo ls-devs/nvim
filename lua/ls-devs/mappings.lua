@@ -44,7 +44,7 @@ keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)
-keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
+keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
 
 -- Rest-nvim
 keymap("n", "<leader>rh", "<Plug>RestNvim", opts)

@@ -13,10 +13,7 @@ M.on_attach = function(client, bufnr)
 		hint_prefix = "🐭 ",
 	}, bufnr)
 
-	if client.name == "tsserver" then
-		client.server_capabilities.document_formatting = false
-	end
-	if client.name == "sumneko_lua" then
+	if client.name == "sumneko_lua" or "tsserver" or "pyright" or "volar" or "rust-analyser" then
 		client.server_capabilities.document_formatting = false
 	end
 
@@ -32,7 +29,6 @@ M.on_attach = function(client, bufnr)
 	keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 	keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	keymap(bufnr, "n", "gf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 	keymap(bufnr, "n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	keymap(bufnr, "n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	keymap(bufnr, "n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
