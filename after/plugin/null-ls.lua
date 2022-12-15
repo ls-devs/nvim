@@ -23,6 +23,8 @@ mason_null_ls.setup({
 	},
 })
 
+--luacheck: ignore augroup
+---@diagnostic disable-next-line: unused-local
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({

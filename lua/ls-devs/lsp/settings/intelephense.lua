@@ -20,7 +20,7 @@ return {
 				"polylang",
 			},
 			environment = {
-				includePaths = "/home/laurent/.config/composer/vendor/php-stubs/", -- this line forces the composer path for the stubs in case inteliphense don't find it...
+				includePaths = "/home/laurent/.config/composer/vendor/php-stubs/",
 			},
 			files = {
 				maxSize = 5000000,

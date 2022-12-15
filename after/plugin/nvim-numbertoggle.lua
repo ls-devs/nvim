@@ -1,2 +1,1 @@
-			require("numbertoggle").setup()
-
+require("numbertoggle").setup()
