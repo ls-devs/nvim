@@ -19,6 +19,7 @@ mason_null_ls.setup({
 		"rustfmt",
 		"black",
 		"prismaFmt",
+		"luacheck",
 	},
 })
 
@@ -27,16 +28,24 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	border = "rounded",
 	sources = {
+		-- PYTHON
 		null_ls.builtins.diagnostics.pylint,
-		null_ls.builtins.diagnostics.eslint_d,
-		null_ls.builtins.diagnostics.cpplint,
-		null_ls.builtins.diagnostics.cmake_lint,
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.prismaFmt,
-		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.black,
+		-- JS / TS
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.formatting.prettierd,
+		-- LUA
+		null_ls.builtins.diagnostics.luacheck,
+		null_ls.builtins.formatting.stylua,
+		-- PRISMA
+		null_ls.builtins.formatting.prismaFmt,
+		-- RUST
 		null_ls.builtins.formatting.rustfmt,
+		-- CPP
+		null_ls.builtins.diagnostics.cpplint,
 		null_ls.builtins.formatting.clang_format,
+		-- CMAKE
+		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.cmake_format,
 	},
 	--[[ on_attach = function(client, bufnr) ]]
