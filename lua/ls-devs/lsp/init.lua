@@ -84,9 +84,8 @@ m.setup_handlers({
 
 		lspconfig[server_name].setup(opts)
 	end,
-	--[[ ["tsserver"] = function() ]]
-	--[[ 	typescript.setup({ ]]
-	--[[ 		server = opts, ]]
-	--[[ 	}) ]]
-	--[[ end, ]]
 })
+
+-- Autocmd for stopping eslint_d & prettier_d when leaving nvim
+vim.cmd("autocmd BufWinLeave * silent! !eslint_d stop")
+vim.cmd("autocmd BufWinLeave * silent! !prettierd stop")
