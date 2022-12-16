@@ -1,6 +1,6 @@
 require("clangd_extensions").setup({
 	server = {
-		cmd = { "clangd-15" },
+		cmd = { "clangd" },
 		on_attach = function(_, bufnr)
 			local opts = { noremap = true, silent = true }
 

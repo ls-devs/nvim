@@ -44,28 +44,14 @@ null_ls.setup({
 		-- RUST
 		null_ls.builtins.formatting.rustfmt,
 		-- CPP
-		null_ls.builtins.diagnostics.cpplint,
+		null_ls.builtins.diagnostics.cpplint.with({
+			filter = function(diagnostic)
+				return not diagnostic.message:match("No copyright")
+			end,
+		}),
 		null_ls.builtins.formatting.clang_format,
 		-- CMAKE
 		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.cmake_format,
 	},
-	--[[ on_attach = function(client, bufnr) ]]
-	--[[ 	if client.supports_method("textDocument/formatting") then ]]
-	--[[ 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr }) ]]
-	--[[ 		vim.api.nvim_create_autocmd("InsertLeave", { ]]
-	--[[ 			group = augroup, ]]
-	--[[ 			buffer = bufnr, ]]
-	--[[ 			callback = function() ]]
-	--[[ 				vim.lsp.buf.format({ ]]
-	--[[ 					bufnr = bufnr, ]]
-	--[[ 					timeout_ms = 2200, ]]
-	--[[ 					filter = function() ]]
-	--[[ 						return client.name == "null-ls" ]]
-	--[[ 					end, ]]
-	--[[ 				}) ]]
-	--[[ 			end, ]]
-	--[[ 		}) ]]
-	--[[ 	end ]]
-	--[[ end, ]]
 })
