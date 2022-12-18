@@ -16,6 +16,11 @@ nvim_tree.setup({
 	open_on_setup = true,
 	open_on_setup_file = false,
 	hijack_netrw = true,
+	actions = {
+		open_file = {
+			quit_on_open = true,
+		},
+	},
 	view = {
 		adaptive_size = true,
 		side = "right",

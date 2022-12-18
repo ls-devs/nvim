@@ -20,7 +20,7 @@ return {
 				"polylang",
 			},
 			environment = {
-				includePaths = "/home/laurent/.config/composer/vendor/php-stubs/",
+				includePaths = vim.env.HOME .. "/.config/composer/vendor/php-stubs/",
 			},
 			files = {
 				maxSize = 5000000,
