@@ -68,6 +68,7 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+	use({ "nvim-telescope/telescope-media-files.nvim", requires = { { "nvim-lua/popup.nvim" } } })
 
 	-- UI
 	use("stevearc/dressing.nvim")
@@ -152,7 +153,7 @@ return packer.startup(function(use)
 	use("chrisbra/Colorizer")
 
 	-- Screenshot
-	use({ "krivahtoo/silicon.nvim", run = "./install.sh" })
+	use({ "krivahtoo/silicon.nvim", run = "./install.sh build" })
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
