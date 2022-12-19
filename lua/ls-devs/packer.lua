@@ -39,13 +39,13 @@ return packer.startup(function(use)
 	-- Package manager
 	use("wbthomason/packer.nvim")
 
-	-- Lsp & Dap manager
+	-- Lsp & Dap Managers
 	use("williamboman/mason.nvim")
 	use({ "jayp0521/mason-nvim-dap.nvim" })
 	use("williamboman/mason-lspconfig.nvim")
 	use("WhoIsSethDaniel/mason-tool-installer.nvim")
 
-	-- Colorschemes
+	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- File explorer
@@ -68,7 +68,7 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
-	--
+
 	-- UI
 	use("stevearc/dressing.nvim")
 
@@ -87,7 +87,7 @@ return packer.startup(function(use)
 
 	-- Terminal toggle
 	use({ "akinsho/toggleterm.nvim", tag = "*" })
-	--
+
 	-- Auto close pairs
 	use("windwp/nvim-autopairs")
 
@@ -109,7 +109,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	use("luk400/vim-jukit")
+	--[[ use("luk400/vim-jukit") ]]
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
@@ -138,17 +138,18 @@ return packer.startup(function(use)
 	use("lvimuser/lsp-inlayhints.nvim")
 
 	-- Utils
-	use("lewis6991/impatient.nvim")
 	use("goolord/alpha-nvim")
+	use("lewis6991/impatient.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
-	use("ethanholz/nvim-lastplace")
 	use("abecodes/tabout.nvim")
 	use("max397574/better-escape.nvim")
 	use("ellisonleao/glow.nvim")
-	use("famiu/bufdelete.nvim")
 	use("sitiom/nvim-numbertoggle")
 	use("aserowy/tmux.nvim")
 	use("rcarriga/nvim-notify")
+	use("ethanholz/nvim-lastplace")
+	use("dstein64/vim-startuptime")
+	use("chrisbra/Colorizer")
 
 	-- Screenshot
 	use({ "krivahtoo/silicon.nvim", run = "./install.sh" })
