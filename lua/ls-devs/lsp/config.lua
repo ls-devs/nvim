@@ -31,7 +31,7 @@ vim.diagnostic.config(config)
 vim.lsp.handlers["textDocument/hover"] = function(_, result)
 	vim.lsp.with(vim.lsp.handlers.hover, {
 		border = "rounded",
-	})
+})
 	if not (result and result.contents) then
 		--vim.notify('No information available')
 		return
