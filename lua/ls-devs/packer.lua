@@ -80,7 +80,13 @@ return packer.startup(function(use)
 	--Formatter
 	use("jayp0521/mason-null-ls.nvim")
 	use("jose-elias-alvarez/null-ls.nvim")
-
+	use({
+		"ThePrimeagen/refactoring.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	})
 	-- Easy jump
 	use({ "phaazon/hop.nvim", branch = "v2" })
 
