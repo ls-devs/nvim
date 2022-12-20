@@ -13,7 +13,21 @@ M.on_attach = function(client, bufnr)
 		hint_prefix = "🐭 ",
 	}, bufnr)
 
-	if client.name == "sumneko_lua" or "tsserver" or "pyright" or "volar" or "rust-analyser" then
+	if
+		client.name == "sumneko_lua"
+		or "tsserver"
+		or "pyright"
+		or "volar"
+		or "rust-analyser"
+		or "jsonls"
+		or "intelephense"
+		or "marksman"
+		or "yamlls"
+		or "clangd"
+		or "cmake"
+		or "dockerls"
+		or "prismals"
+	then
 		client.server_capabilities.document_formatting = false
 	end
 

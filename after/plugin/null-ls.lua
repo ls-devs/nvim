@@ -11,15 +11,29 @@ if not null_ls then
 end
 
 mason_null_ls.setup({
-	automatic_installation = false,
+	automatic_installation = true,
 	ensure_installed = {
+		"black",
+		"pylint",
 		"stylua",
+		"luacheck",
 		"eslint_d",
 		"prettierd",
 		"rustfmt",
-		"black",
 		"prismaFmt",
-		"luacheck",
+		"cpplint",
+		"cmakelang",
+		"clang-format",
+		"markdownlint",
+		"yamllint",
+		"yamlfmt",
+		"jsonlint",
+		"jq",
+		"phpcs",
+		"php-cs-fixer",
+		"proselint",
+		"refactoring",
+    "hadolint",
 	},
 })
 
@@ -31,13 +45,18 @@ null_ls.setup({
 	border = "rounded",
 	sources = {
 		-- PYTHON
+		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.diagnostics.pylint,
 		null_ls.builtins.formatting.black,
 		-- JS / TS
+		null_ls.builtins.code_actions.eslint_d,
 		null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.code_actions.eslint_d,
 		null_ls.builtins.formatting.prettierd,
+		-- JSON
+		null_ls.builtins.diagnostics.jsonlint,
+		null_ls.builtins.formatting.jq,
 		-- LUA
+		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.diagnostics.luacheck,
 		null_ls.builtins.formatting.stylua,
 		-- PRISMA
@@ -45,14 +64,22 @@ null_ls.setup({
 		-- RUST
 		null_ls.builtins.formatting.rustfmt,
 		-- CPP
-		null_ls.builtins.diagnostics.cpplint.with({
-			filter = function(diagnostic)
-				return not diagnostic.message:match("No copyright")
-			end,
-		}),
+		null_ls.builtins.diagnostics.cpplint,
 		null_ls.builtins.formatting.clang_format,
 		-- CMAKE
 		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.cmake_format,
+		-- MARKDOWN
+		null_ls.builtins.code_actions.proselint,
+		null_ls.builtins.diagnostics.markdownlint,
+		null_ls.builtins.formatting.markdownlint,
+		-- YAML
+		null_ls.builtins.diagnostics.yamllint,
+		null_ls.builtins.formatting.yamlfmt,
+		-- PHP
+		null_ls.builtins.diagnostics.phpcs,
+		null_ls.builtins.formatting.phpcsfixer,
+		-- DOCKER
+		null_ls.builtins.diagnostics.hadolint,
 	},
 })
