@@ -33,7 +33,7 @@ mason_null_ls.setup({
 		"php-cs-fixer",
 		"proselint",
 		"refactoring",
-    "hadolint",
+		"hadolint",
 	},
 })
 
@@ -45,7 +45,9 @@ null_ls.setup({
 	border = "rounded",
 	sources = {
 		-- PYTHON
-		null_ls.builtins.code_actions.refactoring,
+		null_ls.builtins.code_actions.refactoring.with({
+			filetypes = { "python" },
+		}),
 		null_ls.builtins.diagnostics.pylint,
 		null_ls.builtins.formatting.black,
 		-- JS / TS
@@ -56,7 +58,9 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.jsonlint,
 		null_ls.builtins.formatting.jq,
 		-- LUA
-		null_ls.builtins.code_actions.refactoring,
+		null_ls.builtins.code_actions.refactoring.with({
+			filetypes = { "lua" },
+		}),
 		null_ls.builtins.diagnostics.luacheck,
 		null_ls.builtins.formatting.stylua,
 		-- PRISMA
