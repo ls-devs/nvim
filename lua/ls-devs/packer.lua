@@ -70,7 +70,7 @@ return packer.startup(function(use)
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 	use({
 		"HendrikPetertje/telescope-media-files.nvim",
-		branh = "fix-replace-ueber-with-viu",
+		branch = "fix-replace-ueber-with-viu",
 		requires = { { "nvim-lua/popup.nvim" } },
 	})
 

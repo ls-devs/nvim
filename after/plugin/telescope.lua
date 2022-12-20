@@ -8,10 +8,6 @@ end
 if not actions then
 	return
 end
-local function is_git_repo()
-	local is_repo = vim.fn.system("git rev-parse --is-inside-work-tree")
-	return vim.v.shell_error == 0
-end
 
 telescope.setup({
 	defaults = {
@@ -50,13 +46,5 @@ telescope.setup({
 	},
 })
 telescope.load_extension("media_files")
-
-vim.keymap.set("n", "<leader>,", function()
-	if is_git_repo() then
-		builtin.git_files()
-	else
-		builtin.find_files()
-	end
-end, {})
 
 vim.keymap.set("n", "<leader>mf", telescope.extensions.media_files.media_files, {})
