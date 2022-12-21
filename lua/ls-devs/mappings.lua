@@ -60,5 +60,32 @@ keymap("n", "<leader>ut", ":DapTerminate<CR>", opts)
 keymap("n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
 
 -- JUKIT
+-- Splits
 keymap("n", "<leader>jo", "<cmd>call jukit#splits#output()<cr>", opts)
-vim.g.jukit_mappings = 0;
+keymap("n", "<leader>jh", "<cmd>call jukit#splits#history()<cr>", opts)
+keymap("n", "<leader>joh", "<cmd>call jukit#splits#output_and_history()<cr>", opts)
+keymap("n", "<leader>joc", "<cmd>call jukit#close_output_split<cr>", opts)
+keymap("n", "<leader>jhc", "<cmd>call jukit#splits#close_history()<cr>", opts)
+keymap("n", "<leader>jcoh", "<cmd>call jukit#splits#close_output_and_history(1)<cr>", opts)
+-- Cells
+keymap("n", "<leader>jcc", "<cmd>call jukit#cells#create_below(0)<cr>", opts)
+keymap("n", "<leader>jcC", "<cmd>call jukit#cells#create_above(0)<cr>", opts)
+keymap("n", "<leader>jct", "<cmd>call jukit#cells#create_below(1)<cr>", opts)
+keymap("n", "<leader>jcT", "<cmd>call jukit#cells#create_above(1)<cr>", opts)
+keymap("n", "<leader>jcd", "<cmd>call jukit#cells#delete()<cr>", opts)
+keymap("n", "<leader>jcm", "<cmd>call jukit#cells#merge_below()<cr>", opts)
+keymap("n", "<leader>jcM", "<cmd>call jukit#cells#merge_above()<cr>", opts)
+keymap("n", "<leader>jck", "<cmd>call jukit#cells#move_up()<cr>", opts)
+keymap("n", "<leader>jcj", "<cmd>call jukit#cells#move_down()<cr>", opts)
+keymap("n", "<leader>JJ", "<cmd>call jukit#cells#jump_to_next_cell()<cr>", opts)
+keymap("n", "<leader>KK", "<cmd>call jukit#cells#jump_to_previous_cell()<cr>", opts)
+keymap("n", "<leader>jdo", "<cmd>call jukit#cells#delete_outputs(0)<cr>", opts)
+keymap("n", "<leader>jda", "<cmd>call jukit#cells#delete_outputs(1)<cr>", opts)
+-- Send
+keymap("n", "<leader>jss", "<cmd>call jukit#send#section(1)<cr>", opts)
+keymap("n", "<leader>jsl", "<cmd>call jukit#send#line()<cr>", opts)
+keymap("v", "<leader>jss", "<cmd>call jukit#send#selection()<cr>", opts)
+keymap("n", "<leader>jsu", "<cmd>call jukit#send#until_current_section()<cr>", opts)
+keymap("n", "<leader>jsa", "<cmd>call jukit#send#all()<cr>", opts)
+-- Convert
+keymap("n", "<leader>jcv", "<cmd>call jukit#convert#notebook_convert('jupyter-notebook')<cr>", opts)
