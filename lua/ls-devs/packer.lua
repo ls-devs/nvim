@@ -120,7 +120,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	--[[ use("luk400/vim-jukit") ]]
+	use("luk400/vim-jukit")
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")

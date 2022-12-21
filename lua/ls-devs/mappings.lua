@@ -58,3 +58,7 @@ keymap("n", "<leader>uc", "<cmd>lua require('dapui').close()<CR>", opts)
 keymap("n", "<leader>un", ":DapContinue<CR>", opts)
 keymap("n", "<leader>ut", ":DapTerminate<CR>", opts)
 keymap("n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
+
+-- JUKIT
+keymap("n", "<leader>jo", "<cmd>call jukit#splits#output()<cr>", opts)
+vim.g.jukit_mappings = 0;
