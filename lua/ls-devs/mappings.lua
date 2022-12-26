@@ -92,3 +92,9 @@ keymap("n", "<leader>jcv", "<cmd>call jukit#convert#notebook_convert('jupyter-no
 
 -- Allway yank to systemclipboard
 keymap("v", "y", ":!xclip -f -sel clip<CR>", opts)
+
+-- Navigating
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-u>", "<C-u>zz", opts)
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)

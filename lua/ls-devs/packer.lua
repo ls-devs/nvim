@@ -54,8 +54,8 @@ return packer.startup(function(use)
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
-  -- Navigation (tmux)
-  use("christoomey/vim-tmux-navigator")
+	-- Navigation (tmux)
+	use("christoomey/vim-tmux-navigator")
 
 	-- Treesitter
 	use({
