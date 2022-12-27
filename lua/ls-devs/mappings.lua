@@ -89,7 +89,9 @@ keymap("n", "<leader>jsa", "<cmd>call jukit#send#all()<CR>", opts)
 -- Convert
 keymap("n", "<leader>jcv", "<cmd>call jukit#convert#notebook_convert('jupyter-notebook')<CR>", opts)
 
-
+-- Yank
+-- Keep yank in buffer
+keymap("v", "<leader>p", "\"_dP", opts)
 -- Allway yank to systemclipboard
 keymap("v", "y", ":!xclip -f -sel clip<CR>", opts)
 
