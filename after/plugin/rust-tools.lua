@@ -7,7 +7,7 @@ rt.setup({
 		runnables = {
 			use_telescope = true,
 		},
-		inlay_hints = { auto = true, show_parameter_hints = true },
+		inlay_hints = { auto = true, show_parameter_hints = true, locationLinks = false },
 		hover_actions = { auto_focus = true },
 	},
 	dap = {
@@ -40,6 +40,7 @@ rt.setup({
 		settings = {
 
 			["rust-analyzer"] = {
+				inlayHints = { auto = true, show_parameter_hints = true, locationLinks = false },
 				lens = {
 					enable = true,
 				},
