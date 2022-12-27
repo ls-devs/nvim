@@ -90,7 +90,7 @@ local mappings = {
 		["v"] = { "<cmd>HopVertical<cr>", "Vertical" },
 		["w"] = { "<cmd>HopWord<cr>", "Word" },
 	},
-	["p"] = {
+	["P"] = {
 		name = "Packer",
 		["s"] = { "<cmd>PackerSync<CR>", "Sync" },
 		["i"] = { "<cmd>PackerInstall<CR>", "Install" },
