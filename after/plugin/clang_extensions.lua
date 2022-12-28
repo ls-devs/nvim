@@ -1,4 +1,8 @@
-require("clangd_extensions").setup({
+local clgd_ext = require("clangd_extensions")
+if not clgd_ext then
+	return
+end
+clgd_ext.setup({
 	server = {
 		cmd = { "clangd" },
 		on_attach = function(_, bufnr)
