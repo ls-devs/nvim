@@ -25,6 +25,7 @@ local options = {
 	termguicolors = true,
 	undofile = true,
 	updatetime = 300,
+  timeoutlen = 500,
 	writebackup = false,
 	expandtab = true,
 	shiftwidth = 2,

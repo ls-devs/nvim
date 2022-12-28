@@ -54,9 +54,6 @@ return packer.startup(function(use)
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
-	-- Navigation (tmux)
-	use("christoomey/vim-tmux-navigator")
-
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -64,7 +61,6 @@ return packer.startup(function(use)
 			{ "windwp/nvim-ts-autotag" },
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 			{ "p00f/nvim-ts-rainbow" },
-			{ "folke/which-key.nvim" },
 		},
 		run = ":TSUpdate",
 	})
@@ -89,6 +85,7 @@ return packer.startup(function(use)
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
+		ft = { "lua", "python " },
 	})
 	-- Easy jump
 	use({ "phaazon/hop.nvim", branch = "v2" })
@@ -123,7 +120,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	use("luk400/vim-jukit")
+	use({ "luk400/vim-jukit", ft = { "python" } })
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
@@ -146,7 +143,7 @@ return packer.startup(function(use)
 
 	-- LSP
 	use("neovim/nvim-lspconfig")
-	use("b0o/schemastore.nvim")
+	use({ "b0o/schemastore.nvim", ft = { "json" } })
 	use("jose-elias-alvarez/typescript.nvim")
 	use("ray-x/lsp_signature.nvim")
 	use("lvimuser/lsp-inlayhints.nvim")
@@ -157,9 +154,8 @@ return packer.startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("abecodes/tabout.nvim")
 	use("max397574/better-escape.nvim")
-	use("ellisonleao/glow.nvim")
+	use({ "ellisonleao/glow.nvim", ft = { "md" } })
 	use("sitiom/nvim-numbertoggle")
-	use("aserowy/tmux.nvim")
 	use("rcarriga/nvim-notify")
 	use("ethanholz/nvim-lastplace")
 	use("dstein64/vim-startuptime")
