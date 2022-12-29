@@ -43,7 +43,6 @@ return packer.startup(function(use)
 	use("williamboman/mason.nvim")
 	use({ "jayp0521/mason-nvim-dap.nvim" })
 	use("williamboman/mason-lspconfig.nvim")
-	use("WhoIsSethDaniel/mason-tool-installer.nvim")
 
 	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
@@ -67,6 +66,7 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
+  -- Telescope show medias
 	use({
 		"HendrikPetertje/telescope-media-files.nvim",
 		branch = "fix-replace-ueber-with-viu",

@@ -17,8 +17,6 @@ keymap("n", "<leader>k", "<C-w>k", opts)
 keymap("n", "<leader>l", "<C-w>l", opts)
 
 -- Navigate buffers
-keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
-keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
@@ -58,7 +56,7 @@ keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
+keymap("n", "<leader>ft", "<cmd>Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 

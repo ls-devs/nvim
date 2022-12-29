@@ -47,7 +47,7 @@ m.setup({
 		"rust_analyzer",
 		"pyright",
 		"clangd",
-    "cmake",
+		"cmake",
 		"sumneko_lua",
 	},
 })
@@ -83,6 +83,9 @@ m.setup_handlers({
 		end
 
 		lspconfig[server_name].setup(opts)
+			typescript.setup({
+				server = opts,
+			})
 	end,
 })
 
