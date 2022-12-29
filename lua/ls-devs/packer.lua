@@ -39,6 +39,9 @@ return packer.startup(function(use)
 	-- Package manager
 	use("wbthomason/packer.nvim")
 
+	-- Performance
+	use("lewis6991/impatient.nvim")
+
 	-- Lsp & Dap Managers
 	use("williamboman/mason.nvim")
 	use({ "jayp0521/mason-nvim-dap.nvim" })
@@ -66,7 +69,7 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
-  -- Telescope show medias
+	-- Telescope show medias
 	use({
 		"HendrikPetertje/telescope-media-files.nvim",
 		branch = "fix-replace-ueber-with-viu",
@@ -150,7 +153,6 @@ return packer.startup(function(use)
 
 	-- Utils
 	use("goolord/alpha-nvim")
-	use("lewis6991/impatient.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("abecodes/tabout.nvim")
 	use("max397574/better-escape.nvim")
