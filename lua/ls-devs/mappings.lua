@@ -62,6 +62,7 @@ keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 
 -- File explorer
 keymap("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts)
+keymap("n", "<leader>²", "<cmd>NvimTreeFocus<CR>", opts)
 keymap("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>", opts)
 keymap("n", "<leader>tc", "<cmd>NvimTreeClose<CR>", opts)
 keymap("n", "<leader>to", "<cmd>NvimTreeCollapse<CR>", opts)
@@ -86,10 +87,10 @@ keymap("n", "<leader>hv", "<cmd>HopVertical<cr>", opts)
 keymap("n", "<leader>hw", "<cmd>HopWord<cr>", opts)
 
 -- Packer
-keymap("n", "<leader>PS", "<cmd>PackerSync<CR>", opts)
-keymap("n", "<leader>PI", "<cmd>PackerInstall<CR>", opts)
-keymap("n", "<leader>PU", "<cmd>PackerUpdate<CR>", opts)
-keymap("n", "<leader>PC", "<cmd>PackerCompile<CR>", opts)
+keymap("n", "<leader>pS", "<cmd>PackerSync<CR>", opts)
+keymap("n", "<leader>pI", "<cmd>PackerInstall<CR>", opts)
+keymap("n", "<leader>pU", "<cmd>PackerUpdate<CR>", opts)
+keymap("n", "<leader>pC", "<cmd>PackerCompile<CR>", opts)
 
 -- Typescript
 keymap("n", "<leader>ta", "<cmd>TypescriptAddMissingImports<CR>", opts)
