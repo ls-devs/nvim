@@ -69,12 +69,6 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
-	-- Telescope show medias
-	use({
-		"HendrikPetertje/telescope-media-files.nvim",
-		branch = "fix-replace-ueber-with-viu",
-		requires = { { "nvim-lua/popup.nvim" } },
-	})
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 	-- UI
