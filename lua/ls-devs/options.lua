@@ -2,7 +2,7 @@ vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set guicursor=i:blinkon1]])
 
-vim.opt.shortmess:append("c")
+--[[ vim.opt.shortmess:append("c") ]]
 
 local options = {
 	backup = false,
@@ -25,7 +25,6 @@ local options = {
 	termguicolors = true,
 	undofile = true,
 	updatetime = 300,
-  timeoutlen = 500,
 	writebackup = false,
 	expandtab = true,
 	shiftwidth = 2,

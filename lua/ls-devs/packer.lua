@@ -75,6 +75,7 @@ return packer.startup(function(use)
 		branch = "fix-replace-ueber-with-viu",
 		requires = { { "nvim-lua/popup.nvim" } },
 	})
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 	-- UI
 	use("stevearc/dressing.nvim")
@@ -123,7 +124,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	use({ "luk400/vim-jukit", ft = { "python" } })
+	use({ "luk400/vim-jukit", ft = { "python", "ipynb" } })
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
@@ -140,8 +141,8 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-cmdline")
 	use("saadparwaiz1/cmp_luasnip")
 	use("hrsh7th/cmp-nvim-lsp")
-	use("L3MON4D3/LuaSnip")
 	use("rafamadriz/friendly-snippets")
+	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
 	use("onsails/lspkind.nvim")
 
 	-- LSP
@@ -152,7 +153,6 @@ return packer.startup(function(use)
 	use("lvimuser/lsp-inlayhints.nvim")
 
 	-- Utils
-	use("goolord/alpha-nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("abecodes/tabout.nvim")
 	use("max397574/better-escape.nvim")
