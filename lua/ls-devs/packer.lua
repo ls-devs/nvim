@@ -56,6 +56,17 @@ return packer.startup(function(use)
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
+	use({
+		"utilyre/barbecue.nvim",
+		branch = "dev", -- omit this if you only want stable updates
+		requires = {
+			"neovim/nvim-lspconfig",
+			"smiteshp/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		after = { "catppuccin", "nvim-web-devicons" }, -- keep this if you're using NvChad
+	})
+
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",

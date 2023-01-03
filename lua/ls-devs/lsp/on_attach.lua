@@ -31,6 +31,9 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.document_formatting = false
 	end
 
+	if client.server_capabilities["documentSymbolProvider"] then
+		require("nvim-navic").attach(client, bufnr)
+	end
 	local opts = { noremap = true, silent = true }
 	local keymap = vim.api.nvim_buf_set_keymap
 
