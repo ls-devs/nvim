@@ -1,17 +1,7 @@
-local lsp_signature = require("lsp_signature")
-
-if not lsp_signature then
-	return
-end
-
 local M = {}
 
 M.on_attach = function(client, bufnr)
 	require("lsp-inlayhints").on_attach(client, bufnr)
-	lsp_signature.on_attach({
-		floating_window = false,
-		hint_prefix = "🐭 ",
-	}, bufnr)
 
 	if
 		client.name == "sumneko_lua"
