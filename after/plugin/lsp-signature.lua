@@ -1,8 +1,8 @@
 local cfg = {
-	debug = false, -- set to true to enable debug logging
+	debug = true, -- set to true to enable debug logging
 	log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log", -- log dir when debug is on
 	-- default is  ~/.cache/nvim/lsp_signature.log
-	verbose = false, -- show debug line number
+	verbose = true, -- show debug line number
 
 	bind = true, -- This is mandatory, otherwise border config won't get registered.
 	-- If you want to hook lspsaga or other signature handler, pls set to false
@@ -25,7 +25,7 @@ local cfg = {
 	floating_window_off_y = 0, -- adjust float windows y position. e.g -2 move window up 2 lines; 2 move down 2 lines
 	-- can be either number or function, see examples
 
-	close_timeout = 3000, -- close floating window after ms when laster parameter is entered
+	close_timeout = 1500, -- close floating window after ms when laster parameter is entered
 	fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
 	hint_enable = true, -- virtual hint enable
 	hint_prefix = "🐭 ", -- Panda for parameter, NOTE: for the terminal not support emoji, might crash
@@ -48,7 +48,7 @@ local cfg = {
 	toggle_key = nil, -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
 
 	select_signature_key = nil, -- cycle to next signature, e.g. '<M-n>' function overloading
-	move_cursor_key = "<C-k>", -- imap, use nvim_set_current_win to move cursor between current win and floating
+	move_cursor_key = nil, -- imap, use nvim_set_current_win to move cursor between current win and floating
 }
 
 -- recommended:
