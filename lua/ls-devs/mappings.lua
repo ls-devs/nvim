@@ -51,9 +51,6 @@ keymap("v", "y", ":!xclip -f -sel clip<CR>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Formatting
-keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope live_grep<CR>", opts)

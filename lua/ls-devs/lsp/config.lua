@@ -4,6 +4,7 @@ local signs = {
 	{ name = "DiagnosticSignHint", text = "" },
 	{ name = "DiagnosticSignInfo", text = "" },
 }
+
 for _, sign in ipairs(signs) do
 	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 end
@@ -17,7 +18,7 @@ local config = {
 	underline = true,
 	severity_sort = true,
 	float = {
-		focusable = false,
+		focusable = true,
 		style = "minmal",
 		border = "rounded",
 		source = "always",
@@ -31,7 +32,8 @@ vim.diagnostic.config(config)
 vim.lsp.handlers["textDocument/hover"] = function(_, result)
 	vim.lsp.with(vim.lsp.handlers.hover, {
 		border = "rounded",
-})
+    focusable = true,
+	})
 	if not (result and result.contents) then
 		--vim.notify('No information available')
 		return
@@ -44,8 +46,10 @@ vim.lsp.handlers["textDocument/hover"] = function(_, result)
 	end
 	return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", {
 		border = "rounded",
+    focusable = true,
 	})
 end
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 	border = "rounded",
+	focusable = true,
 })
