@@ -62,7 +62,7 @@ return packer.startup(function(use)
 		requires = {
 			"neovim/nvim-lspconfig",
 			"smiteshp/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
+			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
 		after = { "catppuccin", "nvim-web-devicons" }, -- keep this if you're using NvChad
 	})
@@ -129,7 +129,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	use({ "luk400/vim-jukit", ft = { "python", "ipynb" } })
+	use({ "luk400/vim-jukit"})
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
@@ -151,6 +151,9 @@ return packer.startup(function(use)
 	use("onsails/lspkind.nvim")
 
 	-- LSP
+	use({
+		"ray-x/lsp_signature.nvim",
+	})
 	use("neovim/nvim-lspconfig")
 	use({ "b0o/schemastore.nvim", ft = { "json" } })
 	use("jose-elias-alvarez/typescript.nvim")
