@@ -154,7 +154,6 @@ return packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use({ "b0o/schemastore.nvim", ft = { "json" } })
 	use("jose-elias-alvarez/typescript.nvim")
-	use("ray-x/lsp_signature.nvim")
 	use("lvimuser/lsp-inlayhints.nvim")
 
 	-- Utils
