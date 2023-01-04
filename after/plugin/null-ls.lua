@@ -14,7 +14,6 @@ mason_null_ls.setup({
 	automatic_installation = true,
 	ensure_installed = {
 		"black",
-		"pylint",
 		"stylua",
 		"luacheck",
 		"eslint_d",
@@ -48,7 +47,6 @@ null_ls.setup({
 		null_ls.builtins.code_actions.refactoring.with({
 			filetypes = { "python" },
 		}),
-		null_ls.builtins.diagnostics.pylint,
 		null_ls.builtins.formatting.black,
 		-- JS / TS
 		null_ls.builtins.code_actions.eslint_d,
