@@ -1,10 +1,7 @@
 require("barbecue").setup({
-	show_navic = false,
-  custom_section = function()
-    return vim.bo.filetype
-  end,
-  show_modified = true,
   theme = "catppuccin",
+	show_navic = false,
+  show_modified = true,
 	create_autocmd = false, -- prevent barbecue from updating itself automatically
 	attach_navic = false,
 })

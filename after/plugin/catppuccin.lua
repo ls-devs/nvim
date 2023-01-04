@@ -30,6 +30,9 @@ require("catppuccin").setup({
 	},
 	integrations = {
 		treesitter = true,
+    barbecue = {
+    dim_dirname = true,
+  },
 		native_lsp = {
 			enabled = true,
 			virtual_text = {
