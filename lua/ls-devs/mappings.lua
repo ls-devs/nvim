@@ -120,8 +120,8 @@ keymap("n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
 
 -- JUKIT
 -- Splits
-keymap("n", "<leader>jo", "<cmd>call jukit#splits#output()<CR>", opts)
-keymap("n", "<leader>jh", "<cmd>call jukit#splits#history()<CR>", opts)
+keymap("n", "<leader>jjo", "<cmd>call jukit#splits#output()<CR>", opts)
+keymap("n", "<leader>jjh", "<cmd>call jukit#splits#history()<CR>", opts)
 keymap("n", "<leader>joh", "<cmd>call jukit#splits#output_and_history()<CR>", opts)
 keymap("n", "<leader>jco", "<cmd>call jukit#splits#close_output_split()<CR>", opts)
 keymap("n", "<leader>jch", "<cmd>call jukit#splits#close_history()<CR>", opts)
