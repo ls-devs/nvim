@@ -1,35 +1,42 @@
-local cmp = require("cmp")
+require("mason.settings").set({
+	ui = {
+		border = "rounded",
+	},
+})
 
-if not cmp then
-	return
-end
+require("lspconfig.ui.windows").default_options.border = "rounded"
+
+local lsp = require("lsp-zero")
 
 local luasnip = require("luasnip")
 
-if not luasnip then
-	return
-end
-
 local lspkind = require("lspkind")
-
-if not lspkind then
-	return
-end
 
 local luasnip_vscode_loader = require("luasnip/loaders/from_vscode")
 
-if not luasnip_vscode_loader then
-	return
-end
+local cmp = require("cmp")
+
+lsp.preset("recommended")
 
 luasnip_vscode_loader.lazy_load()
+
+cmp.setup({
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+})
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
 	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
-cmp.setup({
+lsp.setup_nvim_cmp({
+	preselect = require("cmp").PreselectMode.None,
+	completion = {
+		completeopt = "menu,menuone,noinsert,noselect",
+	},
 	sorting = {
 		comparators = {
 			cmp.config.compare.offset,
@@ -104,24 +111,22 @@ cmp.setup({
 			end,
 		}),
 	},
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
-	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
-	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
 		ghost_text = false,
 		native_menu = false,
 	},
+})
+
+cmp.setup.filetype("gitcommit", {
+	sources = cmp.config.sources({
+		{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+	}, {
+		{ name = "buffer" },
+	}),
 })
 
 cmp.setup.cmdline("/", {
@@ -131,7 +136,6 @@ cmp.setup.cmdline("/", {
 	},
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
@@ -140,3 +144,54 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
+
+local signs = {
+	{ name = "DiagnosticSignError", text = "" },
+	{ name = "DiagnosticSignWarn", text = "" },
+	{ name = "DiagnosticSignHint", text = "" },
+	{ name = "DiagnosticSignInfo", text = "" },
+}
+
+vim.diagnostic.config({
+	virtual_text = false,
+	signs = {
+		active = signs,
+	},
+	update_in_insert = false,
+	underline = true,
+	severity_sort = true,
+	float = {
+		focusable = true,
+		style = "minmal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+})
+
+lsp.preset("recommended")
+
+lsp.on_attach(function(client, bufnr)
+	require("lsp-inlayhints").on_attach(client, bufnr)
+end)
+
+local get_servers = require("mason-lspconfig").get_installed_servers
+
+for _, server in pairs(get_servers()) do
+	local config_exists, config = pcall(require, "ls-devs.lsp.settings." .. server)
+
+	if config_exists then
+		lsp.configure(server, config)
+	end
+end
+
+lsp.nvim_workspace()
+
+lsp.skip_server_setup({ "rust_analyzer" })
+
+lsp.setup()
+
+local rust_lsp = lsp.build_options("rust_analyzer", {})
+
+require("rust-tools").setup({ server = rust_lsp })
