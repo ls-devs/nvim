@@ -56,9 +56,12 @@ return packer.startup(function(use)
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
+	-- Fidget
+	use("j-hui/fidget.nvim")
+
 	use({
 		"utilyre/barbecue.nvim",
-		branch = "dev", -- omit this if you only want stable updates
+		branch = "dev", -- omit this if you only want stable updates ]]
 		requires = {
 			"neovim/nvim-lspconfig",
 			"smiteshp/nvim-navic",
@@ -96,11 +99,9 @@ return packer.startup(function(use)
 		},
 		ft = { "lua", "python " },
 	})
+
 	-- Easy jump
 	use({ "phaazon/hop.nvim", branch = "v2" })
-
-	-- Auto-save
-	use("Pocco81/auto-save.nvim")
 
 	-- Http client
 	use({ "rest-nvim/rest.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
@@ -129,7 +130,7 @@ return packer.startup(function(use)
 	})
 
 	-- Python
-	use({ "luk400/vim-jukit"})
+	use({ "luk400/vim-jukit" })
 
 	-- Clang extensions
 	use("p00f/clangd_extensions.nvim")
@@ -146,6 +147,7 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-cmdline")
 	use("saadparwaiz1/cmp_luasnip")
 	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-nvim-lua")
 	use("rafamadriz/friendly-snippets")
 	use({ "L3MON4D3/LuaSnip", tag = "v1.*" })
 	use("onsails/lspkind.nvim")
