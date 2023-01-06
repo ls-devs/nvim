@@ -2,7 +2,6 @@ vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set guicursor=i:blinkon1]])
 
---[[ vim.opt.shortmess:append("c") ]]
 
 local options = {
 	backup = false,

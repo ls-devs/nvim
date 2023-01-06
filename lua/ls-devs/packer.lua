@@ -63,7 +63,7 @@ return packer.startup(function(use)
 			{ "onsails/lspkind.nvim" },
 
 			-- Snippets
-			{ "L3MON4D3/LuaSnip", tag="v1.*" },
+			{ "L3MON4D3/LuaSnip", tag = "v1.*" },
 			-- Snippet Collection (Optional)
 			{ "rafamadriz/friendly-snippets" },
 		},
@@ -73,8 +73,15 @@ return packer.startup(function(use)
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- File explorer
-	use({ "kyazdani42/nvim-tree.lua", requires = { { "kyazdani42/nvim-web-devicons" } }, tag = "nightly" })
-
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		},
+	})
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
@@ -140,7 +147,6 @@ return packer.startup(function(use)
 	-- Comments
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
-
 
 	-- Debugger
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
