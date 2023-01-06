@@ -63,7 +63,7 @@ return packer.startup(function(use)
 			{ "onsails/lspkind.nvim" },
 
 			-- Snippets
-			{ "L3MON4D3/LuaSnip" },
+			{ "L3MON4D3/LuaSnip", tag="v1.*" },
 			-- Snippet Collection (Optional)
 			{ "rafamadriz/friendly-snippets" },
 		},
