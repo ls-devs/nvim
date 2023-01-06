@@ -174,13 +174,28 @@ lsp.preset("recommended")
 
 lsp.on_attach(function(client, bufnr)
 	require("lsp-inlayhints").on_attach(client, bufnr)
+	if client.name == "tsserver" then
+		require("typescript").setup({
+			server = {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			},
+		})
+		local opts = { noremap = true, silent = true }
+		local keymap = vim.api.nvim_set_keymap
+
+		-- Typescript
+		keymap("n", "<leader>ta", "<cmd>TypescriptAddMissingImports<CR>", opts)
+		keymap("n", "<leader>to", "<cmd>TypescriptOrganizeImports<CR>", opts)
+		keymap("n", "<leader>tu", "<cmd>TypescriptRemoveUnused<CR>", opts)
+		keymap("n", "<leader>tf", "<cmd>TypescriptFixAll<CR>", opts)
+		keymap("n", "<leader>tg", "<cmd>TypescriptGoToSourceDefinition<CR>", opts)
+		keymap("n", "<leader>tr", "<cmd>TypescriptRenameFile<CR>", opts)
+	end
 end)
 
 local get_servers = require("mason-lspconfig").get_installed_servers
-
 for _, server in pairs(get_servers()) do
 	local config_exists, config = pcall(require, "ls-devs.lsp.settings." .. server)
-
 	if config_exists then
 		lsp.configure(server, config)
 	end
