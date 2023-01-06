@@ -82,8 +82,6 @@ return packer.startup(function(use)
 			"MunifTanjim/nui.nvim",
 		},
 	})
-	--[[ use({ "kyazdani42/nvim-tree.lua", requires = { { "kyazdani42/nvim-web-devicons" } }, tag = "nightly" }) ]]
-
 	-- Buffer and status lines
 	use({ "nvim-lualine/lualine.nvim", requires = { { "nvim-tree/nvim-web-devicons" } } })
 
