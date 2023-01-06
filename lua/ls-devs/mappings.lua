@@ -87,8 +87,8 @@ keymap("n", "<leader>gb", "<cmd>Git<CR>", opts)
 keymap("n", "<leader>gr", "<cmd>Gread<CR>", opts)
 
 -- Diff view
-keymap("n", "<leader>do", "<cmd>DiffviewOpen<CR>", opts)
-keymap("n", "<leader>dc", "<cmd>DiffviewClose<CR>", opts)
+keymap("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", opts)
+keymap("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", opts)
 
 -- Hop
 keymap("n", "<leader>hh", "<cmd>HopChar2<cr>", opts)
@@ -103,14 +103,6 @@ keymap("n", "<leader>pS", "<cmd>PackerSync<CR>", opts)
 keymap("n", "<leader>pI", "<cmd>PackerInstall<CR>", opts)
 keymap("n", "<leader>pU", "<cmd>PackerUpdate<CR>", opts)
 keymap("n", "<leader>pC", "<cmd>PackerCompile<CR>", opts)
-
--- Typescript
-keymap("n", "<leader>ta", "<cmd>TypescriptAddMissingImports<CR>", opts)
-keymap("n", "<leader>to", "<cmd>TypescriptOrganizeImports<CR>", opts)
-keymap("n", "<leader>tu", "<cmd>TypescriptRemoveUnused<CR>", opts)
-keymap("n", "<leader>tf", "<cmd>TypescriptFixAll<CR>", opts)
-keymap("n", "<leader>tg", "<cmd>TypescriptGoToSourceDefinition<CR>", opts)
-keymap("n", "<leader>tr", "<cmd>TypescriptRenameFile<CR>", opts)
 
 -- Terminal
 keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)

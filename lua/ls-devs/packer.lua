@@ -68,7 +68,7 @@ return packer.startup(function(use)
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
-  --
+	--
 	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
@@ -141,6 +141,7 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
 
+
 	-- Debugger
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	use("theHamsta/nvim-dap-virtual-text")
@@ -163,9 +164,7 @@ return packer.startup(function(use)
 	use("tpope/vim-fugitive")
 
 	-- LSP
-	use({
-		"ray-x/lsp_signature.nvim",
-	})
+	use({ "ray-x/lsp_signature.nvim" })
 	use({ "b0o/schemastore.nvim", ft = { "json" } })
 	use("jose-elias-alvarez/typescript.nvim")
 	use("lvimuser/lsp-inlayhints.nvim")
