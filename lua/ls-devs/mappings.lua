@@ -58,11 +58,9 @@ keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 
 -- File explorer
-keymap("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts)
-keymap("n", "<leader>²", "<cmd>NvimTreeFocus<CR>", opts)
-keymap("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>", opts)
-keymap("n", "<leader>tc", "<cmd>NvimTreeClose<CR>", opts)
-keymap("n", "<leader>to", "<cmd>NvimTreeCollapse<CR>", opts)
+keymap("n", "<leader>e", "<cmd>NeoTreeFloatToggle<CR>", opts)
+keymap("n", "<leader>to", "<cmd>NeoTreeShow<CR>", opts)
+keymap("n", "<leader>tc", "<cmd>NeoTreeClose<CR>", opts)
 
 -- LSP
 keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
