@@ -80,6 +80,7 @@ return packer.startup(function(use)
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
+      "s1n7ax/nvim-window-picker",
 		},
 	})
 	-- Buffer and status lines
