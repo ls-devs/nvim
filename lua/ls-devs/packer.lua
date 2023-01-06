@@ -80,7 +80,7 @@ return packer.startup(function(use)
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
-      "s1n7ax/nvim-window-picker",
+			"s1n7ax/nvim-window-picker",
 		},
 	})
 	-- Buffer and status lines
@@ -179,8 +179,7 @@ return packer.startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("abecodes/tabout.nvim")
 	use("max397574/better-escape.nvim")
-	use({ "ellisonleao/glow.nvim", ft = { "markdown" } })
-	use("sitiom/nvim-numbertoggle")
+	use({ "ellisonleao/glow.nvim" })
 	use("rcarriga/nvim-notify")
 	use("ethanholz/nvim-lastplace")
 	use("dstein64/vim-startuptime")
