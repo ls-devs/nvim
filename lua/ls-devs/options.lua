@@ -2,20 +2,42 @@ vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set guicursor=i:blinkon1]])
 
-vim.opt.number = true
-vim.opt.relativenumber = true
 
-vim.opt.smartindent = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+local options = {
+	backup = false,
+	clipboard = "unnamedplus",
+	cmdheight = 1,
+	laststatus = 3,
+	completeopt = { "menu", "menuone", "noselect" },
+	conceallevel = 0,
+	fileencoding = "utf-8",
+	hlsearch = true,
+	ignorecase = true,
+	mouse = "a",
+	pumheight = 10,
+	showmode = true,
+	smartcase = true,
+	smartindent = true,
+	splitbelow = true,
+	splitright = true,
+	swapfile = false,
+	termguicolors = true,
+	undofile = true,
+	updatetime = 300,
+	writebackup = false,
+	expandtab = true,
+	shiftwidth = 2,
+	tabstop = 2,
+	cursorline = true,
+	number = true,
+	relativenumber = true,
+	numberwidth = 4,
+	signcolumn = "yes",
+	wrap = false,
+	scrolloff = 8,
+	sidescrolloff = 12,
+}
 
-vim.opt.scrolloff = 8
-vim.opt.wrap = false
-
-vim.opt.hlsearch = false
-vim.opt.ignorecase = true
-
-vim.opt.swapfile = false
-
-vim.g.mapleader = " "
+for k, v in pairs(options) do
+	vim.opt[k] = v
+end
