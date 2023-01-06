@@ -180,10 +180,10 @@ lsp.on_attach(function(client, bufnr)
 				capabilities = require("cmp_nvim_lsp").default_capabilities(),
 			},
 		})
+
+		-- Mappings Typescript
 		local opts = { noremap = true, silent = true }
 		local keymap = vim.api.nvim_set_keymap
-
-		-- Typescript
 		keymap("n", "<leader>ta", "<cmd>TypescriptAddMissingImports<CR>", opts)
 		keymap("n", "<leader>to", "<cmd>TypescriptOrganizeImports<CR>", opts)
 		keymap("n", "<leader>tu", "<cmd>TypescriptRemoveUnused<CR>", opts)
