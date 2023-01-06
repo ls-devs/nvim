@@ -20,9 +20,7 @@ mason_null_ls.setup({
 		"prettierd",
 		"rustfmt",
 		"prismaFmt",
-		"cpplint",
 		"cmakelang",
-		"clang-format",
 		"markdownlint",
 		"yamllint",
 		"yamlfmt",
@@ -65,9 +63,6 @@ null_ls.setup({
 		null_ls.builtins.formatting.prismaFmt,
 		-- RUST
 		null_ls.builtins.formatting.rustfmt,
-		-- CPP
-		null_ls.builtins.diagnostics.cpplint,
-		null_ls.builtins.formatting.clang_format,
 		-- CMAKE
 		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.formatting.cmake_format,

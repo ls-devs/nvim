@@ -2,7 +2,6 @@ local dap = require("dap")
 
 require("mason-nvim-dap").setup({
 	ensure_installed = {
-		"cpptools",
 		"debugpy",
 		"codelldb",
 		"node-debug2-adapter",
