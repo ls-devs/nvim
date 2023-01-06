@@ -173,7 +173,6 @@ return packer.startup(function(use)
 	-- LSP
 	use({ "ray-x/lsp_signature.nvim" })
 	use({ "b0o/schemastore.nvim", ft = { "json" } })
-	use("jose-elias-alvarez/typescript.nvim")
 	use("lvimuser/lsp-inlayhints.nvim")
 
 	-- Utils
