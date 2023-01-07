@@ -96,11 +96,12 @@ keymap("n", "<leader>hl", "<cmd>HopLineStart<cr>", opts)
 keymap("n", "<leader>hv", "<cmd>HopVertical<cr>", opts)
 keymap("n", "<leader>hw", "<cmd>HopWord<cr>", opts)
 
--- Packer
-keymap("n", "<leader>pS", "<cmd>PackerSync<CR>", opts)
-keymap("n", "<leader>pI", "<cmd>PackerInstall<CR>", opts)
-keymap("n", "<leader>pU", "<cmd>PackerUpdate<CR>", opts)
-keymap("n", "<leader>pC", "<cmd>PackerCompile<CR>", opts)
+-- Lazy
+keymap("n", "<leader>l", "<cmd>Lazy<CR>", opts)
+keymap("n", "<leader>lS", "<cmd>Lazy sync<CR>", opts)
+keymap("n", "<leader>lI", "<cmd>Lazy install<CR>", opts)
+keymap("n", "<leader>lU", "<cmd>Lazy update<CR>", opts)
+keymap("n", "<leader>lC", "<cmd>Lazy build<CR>", opts)
 
 -- Terminal
 keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)
