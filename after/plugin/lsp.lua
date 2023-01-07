@@ -18,6 +18,28 @@ local cmp = require("cmp")
 
 lsp.preset("recommended")
 
+lsp.ensure_installed({
+	"html",
+	"cssls",
+	"cssmodules_ls",
+	"emmet_ls",
+	"tsserver",
+	"volar",
+	"tailwindcss",
+	"prismals",
+	"jsonls",
+	"intelephense",
+	"sqlls",
+	"yamlls",
+	"dockerls",
+	"marksman",
+	"rust_analyzer",
+	"pyright",
+	"clangd",
+	"cmake",
+	"sumneko_lua",
+})
+
 luasnip_vscode_loader.lazy_load()
 
 cmp.setup({
