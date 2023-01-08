@@ -130,7 +130,7 @@ require("lazy").setup({
 	-- Rust tools
 	{
 		"simrat39/rust-tools.nvim",
-		ft = "rust",
+		ft = { "rust" },
 		dependencies = { { "nvim-lua/plenary.nvim" } },
 	},
 	-- Python

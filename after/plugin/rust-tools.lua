@@ -41,16 +41,13 @@ rt.setup({
 			keymap(bufnr, "n", "<leader>ut", ":DapTerminate<CR>", opts)
 			keymap(bufnr, "n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
 		end,
-		settings = {
-
-			["rust-analyzer"] = {
-				inlayHints = { auto = true, show_parameter_hints = true, locationLinks = false },
-				lens = {
-					enable = true,
-				},
-				checkonsave = {
-					command = "clippy",
-				},
+		["rust-analyzer"] = {
+			inlayHints = { auto = true, show_parameter_hints = true, locationLinks = false },
+			lens = {
+				enable = true,
+			},
+			checkonsave = {
+				command = "clippy",
 			},
 		},
 	},
