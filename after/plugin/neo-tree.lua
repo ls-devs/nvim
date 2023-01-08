@@ -24,6 +24,7 @@ neo_tree.setup({
 			never_show = {
 				".git",
 				".DS_Store",
+				"lazy-lock.json",
 			},
 		},
 		hijack_netrw_behavior = "open_current",
