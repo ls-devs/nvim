@@ -211,9 +211,6 @@ lsp.skip_server_setup({ "rust_analyzer" })
 
 lsp.setup()
 
--- Initialize rust_analyzer with rust-tools
-local rust_lsp = lsp.build_options("rust_analyzer", {})
-require("rust-tools").setup({ server = rust_lsp })
 -- Autocmd for stopping eslint_d & prettier_d when leaving nvim
 vim.cmd("autocmd ExitPre *.jsx,*.tsx,*.vue,*.js,*.ts silent! !eslint_d stop")
 vim.cmd("autocmd ExitPre *.jsx,*.tsx,*.vue,*.js,*.ts silent! !prettierd stop")

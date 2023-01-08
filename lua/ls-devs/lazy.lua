@@ -131,6 +131,8 @@ require("lazy").setup({
 	{
 		"simrat39/rust-tools.nvim",
 		ft = { "rust" },
+		config = require("ls-devs.lazyconf.rust-tools"),
+
 		dependencies = { { "nvim-lua/plenary.nvim" } },
 	},
 	-- Python
@@ -149,7 +151,11 @@ require("lazy").setup({
 	{ "lukas-reineke/indent-blankline.nvim" },
 	{ "abecodes/tabout.nvim" },
 	{ "max397574/better-escape.nvim" },
-	{ "ellisonleao/glow.nvim", ft = "markdown" },
+	{
+		"ellisonleao/glow.nvim",
+		ft = "markdown",
+		config = require("ls-devs.lazyconf.glow"),
+	},
 	{ "rcarriga/nvim-notify" },
 	{ "ethanholz/nvim-lastplace" },
 	{ "dstein64/vim-startuptime" },
