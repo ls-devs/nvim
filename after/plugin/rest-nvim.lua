@@ -1,4 +1,8 @@
-require("rest-nvim").setup({
+local rv = require("rest-nvim")
+if not rv then
+	return
+end
+rv.setup({
 	-- Open request results in a horizontal split
 	result_split_horizontal = false,
 	-- Keep the http file buffer above|left when split horizontal|vertical
