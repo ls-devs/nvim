@@ -63,11 +63,9 @@ keymap("n", "<leader>fH", "<cmd>Telescope highlights<cr>", opts)
 keymap("n", "<leader>fB", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 keymap("n", "<leader>fC", "<cmd>Telescope command_history<cr>", opts)
 keymap("n", "<leader>fM", "<cmd>Telescope marks<cr>", opts)
-
--- File explorer
-keymap("n", "<leader>e", "<cmd>NeoTreeFloatToggle<CR>", opts)
-keymap("n", "<leader>to", "<cmd>NeoTreeShow<CR>", opts)
-keymap("n", "<leader>tc", "<cmd>NeoTreeClose<CR>", opts)
+keymap("n", "<leader>gs", "<cmd>lua require('telescope.builtin').git_status()<CR>", opts)
+keymap("n", "<leader>gc", "<cmd>lua require('telescope.builtin').git_commits()<CR>", opts)
+keymap("n", "<leader>gb", "<cmd>lua require('telescope.builtin').git_branches()<CR>", opts)
 
 -- LSP
 keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -76,7 +74,7 @@ keymap("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
@@ -84,52 +82,12 @@ keymap("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
--- Git
-keymap("n", "<leader>gs", "<cmd>lua require('telescope.builtin').git_status()<CR>", opts)
-keymap("n", "<leader>gc", "<cmd>lua require('telescope.builtin').git_commits()<CR>", opts)
-keymap("n", "<leader>gb", "<cmd>lua require('telescope.builtin').git_branches()<CR>", opts)
-keymap("n", "<leader>gb", "<cmd>Git<CR>", opts)
-keymap("n", "<leader>gr", "<cmd>Gread<CR>", opts)
-
--- Diff view
-keymap("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", opts)
-keymap("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", opts)
-
--- Hop
-keymap("n", "<leader>hh", "<cmd>HopChar2<cr>", opts)
-keymap("n", "<leader>hf", "<cmd>HopChar1<cr>", opts)
-keymap("n", "<leader>hp", "<cmd>HopPattern<cr>", opts)
-keymap("n", "<leader>hl", "<cmd>HopLineStart<cr>", opts)
-keymap("n", "<leader>hv", "<cmd>HopVertical<cr>", opts)
-keymap("n", "<leader>hw", "<cmd>HopWord<cr>", opts)
-
 -- Lazy
 keymap("n", "<leader>l", "<cmd>Lazy<CR>", opts)
 keymap("n", "<leader>lS", "<cmd>Lazy sync<CR>", opts)
 keymap("n", "<leader>lI", "<cmd>Lazy install<CR>", opts)
 keymap("n", "<leader>lU", "<cmd>Lazy update<CR>", opts)
 keymap("n", "<leader>lC", "<cmd>Lazy build<CR>", opts)
-
--- Terminal
-keymap("n", "<C-y>", ":ToggleTerm<CR>", opts)
-
--- Markdown
-keymap("n", "<leader>md", "<cmd>Glow<CR>", opts)
-
--- No Highlight
-keymap("n", "<leader>nh", "<cmd>nohl<CR>", opts)
-
--- Rest-nvim
-keymap("n", "<leader>rh", "<Plug>RestNvim", opts)
-keymap("n", "<leader>rl", "<Plug>RestNvimLast", opts)
-keymap("n", "<leader>rp", "<Plug>RestNvimPreview", opts)
-
--- DAP
-keymap("n", "<leader>uo", "<cmd>lua require('dapui').toggle()<CR>", opts)
-keymap("n", "<leader>uc", "<cmd>lua require('dapui').close()<CR>", opts)
-keymap("n", "<leader>un", ":DapContinue<CR>", opts)
-keymap("n", "<leader>ut", ":DapTerminate<CR>", opts)
-keymap("n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
 
 -- JUKIT
 -- Splits
