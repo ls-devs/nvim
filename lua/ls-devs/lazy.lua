@@ -135,7 +135,7 @@ require("lazy").setup({
   {
     "jayp0521/mason-null-ls.nvim",
     cmd = "Mason",
-    config = require("ls-devs.lazy.mason-null-ls"),
+    config = require("ls-devs.lazy.mason-null-ls").config,
   },
   {
     "ThePrimeagen/refactoring.nvim",
