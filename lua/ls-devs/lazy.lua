@@ -94,7 +94,7 @@ require("lazy").setup({
   {
     "utilyre/barbecue.nvim",
     branch = "dev", -- omit this if you only want stable updates ]]
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = require("ls-devs.lazy.barbecue"),
     dependencies = {
       "neovim/nvim-lspconfig",
@@ -176,6 +176,7 @@ require("lazy").setup({
   {
     "kylechui/nvim-surround",
     config = require("ls-devs.lazy.nvim-surround").config,
+    event = "BufReadPost",
   },
   -- Comments
   {
@@ -276,7 +277,11 @@ require("lazy").setup({
     config = require("ls-devs.lazy.notify").config,
     event = "VeryLazy",
   },
-  { "ethanholz/nvim-lastplace" },
+  {
+    "ethanholz/nvim-lastplace",
+    config = require("ls-devs.lazy.lastplace").config,
+    event = "BufReadPost",
+  },
   {
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
