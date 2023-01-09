@@ -36,10 +36,4 @@ M.config = function()
   })
 end
 
-M.keys = {
-  { "<leader>e", "<cmd>NeoTreeFloatToggle<CR>", desc = "NeoTreeFloatToggle" },
-  { "<leader>to", "<cmd>NeoTreeShow<CR>", desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>NeoTreeClose<CR>", desc = "NeoTreeClose" },
-}
-
 return M
