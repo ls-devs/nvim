@@ -48,6 +48,11 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+-- File explorer
+keymap("n", "<leader>e", "<cmd>NeoTreeFloatToggle<CR>", opts)
+keymap("n", "<leader>to", "<cmd>NeoTreeShow<CR>", opts)
+keymap("n", "<leader>tc", "<cmd>NeoTreeClose<CR>", opts)
+
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope live_grep<CR>", opts)
