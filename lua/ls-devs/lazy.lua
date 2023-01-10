@@ -20,7 +20,21 @@ require("lazy").setup({
     dependencies = {
       -- LSP Support
       { "neovim/nvim-lspconfig", event = "BufReadPre" },
-      { "williamboman/mason.nvim" },
+      {
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+        config = require("ls-devs.lazy.mason").config,
+        dependencies = {
+          {
+            "jayp0521/mason-null-ls.nvim",
+            config = require("ls-devs.lazy.mason-null-ls").config,
+          },
+          {
+            "jayp0521/mason-nvim-dap.nvim",
+            config = require("ls-devs.lazy.mason-nvim-dap").config,
+          },
+        },
+      },
       { "williamboman/mason-lspconfig.nvim" },
       -- Snippets
       {
@@ -108,6 +122,18 @@ require("lazy").setup({
     config = require("ls-devs.lazy.alpha").config,
     event = "VimEnter",
   },
+  {
+    "echasnovski/mini.surround",
+    config = require("ls-devs.lazy.surround").config,
+    event = "VimEnter",
+  },
+
+  {
+    "echasnovski/mini.surround",
+    config = require("ls-devs.lazy.alpha").config,
+    event = "VimEnter",
+  },
+
   -- Trouble
   {
     "folke/trouble.nvim",
@@ -153,11 +179,6 @@ require("lazy").setup({
     event = "BufReadPre",
   },
   {
-    "jayp0521/mason-null-ls.nvim",
-    cmd = "Mason",
-    config = require("ls-devs.lazy.mason-null-ls").config,
-  },
-  {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
       { "nvim-lua/plenary.nvim" },
@@ -166,6 +187,11 @@ require("lazy").setup({
     ft = { "lua", "python " },
   },
   -- Easy jump
+  {
+    "ggandor/leap.nvim",
+    config = require("ls-devs.lazy.leap").config,
+    event = "BufReadPost",
+  },
   {
     "phaazon/hop.nvim",
     branch = "v2",
@@ -194,10 +220,16 @@ require("lazy").setup({
   },
   -- Surround
   {
-    "kylechui/nvim-surround",
-    config = require("ls-devs.lazy.nvim-surround").config,
-    event = "BufReadPost",
+    "echasnovski/mini.surround",
+    keys = { "gz" },
+    config = require("ls-devs.lazy.surround").config,
   },
+  -- Buffer Remove
+  {
+    "echasnovski/mini.bufremove",
+    keys = require("ls-devs.lazy.bufremove").keys,
+  },
+
   -- Comments
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
@@ -208,13 +240,12 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.lazy.comment").config,
   },
-  -- Debugger
+  -- Indent Scope
   {
-    "jayp0521/mason-nvim-dap.nvim",
-    cmd = "Mason",
-    config = require("ls-devs.lazy.mason-nvim-dap"),
+    "echasnovski/mini.indentscope",
+    config = require("ls-devs.lazy.indentscope").config,
+    event = "BufReadPre",
   },
-
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {

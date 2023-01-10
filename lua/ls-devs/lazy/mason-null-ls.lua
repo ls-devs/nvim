@@ -1,12 +1,7 @@
 local M = {}
 
 M.config = function()
-  return function()
     local mason_null_ls = require("mason-null-ls")
-    if not mason_null_ls then
-      return
-    end
-
     mason_null_ls.setup({
       automatic_installation = true,
       ensure_installed = {
@@ -30,7 +25,6 @@ M.config = function()
         "hadolint",
       },
     })
-  end
 end
 
 return M

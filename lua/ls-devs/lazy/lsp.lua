@@ -1,12 +1,6 @@
 local M = {}
 
 M.config = function()
-  require("mason.settings").set({
-    ui = {
-      border = "rounded",
-    },
-  })
-
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
   local cmp = require("cmp")
