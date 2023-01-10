@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = function()
-  require("nvim-surround").setup()
+  require("leap").add_default_mappings()
 end
 
 return M

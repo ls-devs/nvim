@@ -24,6 +24,7 @@ M.config = function()
     dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
     dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("l", "鈴" .. " Lazy", ":Lazy<CR>"),
+    dashboard.button("m", "憐" .. " Mason", ":Mason<CR>"),
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
   for _, button in ipairs(dashboard.section.buttons.val) do
@@ -37,7 +38,6 @@ M.config = function()
 
   vim.b.miniindentscope_disable = true
 
-  -- close Lazy and re-open when the dashboard is ready
   if vim.o.filetype == "lazy" then
     vim.cmd.close()
     vim.api.nvim_create_autocmd("User", {
