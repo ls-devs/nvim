@@ -102,6 +102,12 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons", -- optional dependency
     },
   },
+  -- Splash screen
+  {
+    "goolord/alpha-nvim",
+    config = require("ls-devs.lazy.alpha").config,
+    event = "VimEnter",
+  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
