@@ -123,7 +123,7 @@ require("lazy").setup({
     event = "VimEnter",
   },
   {
-    --Surround
+    -- Surround
     "echasnovski/mini.surround",
     config = require("ls-devs.lazy.surround").config,
     event = "VimEnter",
