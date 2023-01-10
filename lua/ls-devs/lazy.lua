@@ -108,6 +108,20 @@ require("lazy").setup({
     config = require("ls-devs.lazy.alpha").config,
     event = "VimEnter",
   },
+  -- Trouble
+  {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    cmd = "Trouble",
+    config = require("ls-devs.lazy.trouble").config,
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "BufReadPost",
+    config = require("ls-devs.lazy.todo-comments").config,
+  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
