@@ -62,7 +62,7 @@ require("lazy").setup({
   -- File explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    cmd = "Neotree",
+    cmd = { "Neotree", "NeoTreeFloatToggle" },
     keys = require("ls-devs.lazy.neo-tree").keys,
     config = require("ls-devs.lazy.neo-tree").config,
     branch = "v2.x",
