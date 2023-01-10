@@ -1,44 +1,14 @@
 local M = {}
 
 M.config = function()
-  local comment = require("Comment")
-  local comment_utils = require("Comment.utils")
-  local commentstring_utils = require("ts_context_commentstring.utils")
-  local commentstring_internal = require("ts_context_commentstring.internal")
-
-  if not comment then
-    return
-  end
-
-  if not comment_utils then
-    return
-  end
-
-  if not commentstring_utils then
-    return
-  end
-
-  if not commentstring_internal then
-    return
-  end
+  local comment = require("mini.comment")
 
   comment.setup({
-    pre_hook = function(ctx)
-      local U = comment_utils
-
-      local location = nil
-      if ctx.ctype == U.ctype.block then
-        location = commentstring_utils.get_cursor_location()
-      elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-        location = commentstring_utils.get_visual_start_location()
-      end
-
-      return commentstring_internal.calculate_commentstring({
-        key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-        location = location,
-      })
-    end,
+    hooks = {
+      pre = function()
+        require("ts_context_commentstring.internal").update_commentstring({})
+      end,
+    },
   })
 end
-
 return M

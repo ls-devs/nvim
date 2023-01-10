@@ -200,13 +200,13 @@ require("lazy").setup({
   },
   -- Comments
   {
-    "numToStr/Comment.nvim",
-    config = require("ls-devs.lazy.comment").config,
+    "JoosepAlviste/nvim-ts-context-commentstring",
     event = "BufReadPost",
   },
   {
-    "JoosepAlviste/nvim-ts-context-commentstring",
+    "echasnovski/mini.comment",
     event = "BufReadPost",
+    config = require("ls-devs.lazy.comment").config,
   },
   -- Debugger
   {
