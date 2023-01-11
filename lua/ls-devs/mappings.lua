@@ -94,6 +94,13 @@ keymap("n", "<leader>lI", "<cmd>Lazy install<CR>", opts)
 keymap("n", "<leader>lU", "<cmd>Lazy update<CR>", opts)
 keymap("n", "<leader>lC", "<cmd>Lazy build<CR>", opts)
 
+-- Trouble
+keymap("n", "<leader>v", "<cmd>Trouble<CR>", opts)
+
+-- Todo
+keymap("n", "<leader>T", "<cmd>TodoTrouble<CR>", opts)
+keymap("n", "<leader>tt", "<cmd>TodoTelescope<CR>", opts)
+
 -- JUKIT
 -- Splits
 keymap("n", "<leader>jjo", "<cmd>call jukit#splits#output()<CR>", opts)
