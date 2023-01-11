@@ -6,12 +6,11 @@ M.config = function()
 
   mason_nvim_dap.setup({
     ensure_installed = {
-      "debugpy",
+      "python",
+      "node2",
+      "php",
       "codelldb",
-      "node-debug2-adapter",
-      "php-debug-adapter",
-      "go-debug-adapter",
-      "js-debug-adapter",
+      "js",
     },
     automatic_setup = true,
     automatic_installation = true,

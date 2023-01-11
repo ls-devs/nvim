@@ -1,6 +1,7 @@
 local M = {}
 
 M.config = function()
+  vim.api.nvim_exec([[autocmd FileType alpha set laststatus=0]], false)
   local dashboard = require("alpha.themes.dashboard")
   local version = vim.version()
   local lazy = require("lazy")
