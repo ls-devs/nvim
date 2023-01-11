@@ -224,7 +224,6 @@ require("lazy").setup({
     "echasnovski/mini.bufremove",
     keys = require("ls-devs.lazy.bufremove").keys,
   },
-
   -- Comments
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
@@ -252,6 +251,19 @@ require("lazy").setup({
     },
     keys = require("ls-devs.lazy.dapui"),
     config = require("ls-devs.lazy.dapui").config,
+  },
+  -- Tmux navigation
+  {
+    "aserowy/tmux.nvim",
+    cond = function()
+      if vim.fn.exists("$TMUX") == 0 then
+        return false
+      else
+        return true
+      end
+    end,
+    config = require("ls-devs.lazy.tmux").config,
+    event = "VeryLazy",
   },
   -- Rust tools
   {
