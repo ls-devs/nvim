@@ -4,6 +4,7 @@ vim.cmd([[set guicursor=i:blinkon1]])
 
 local options = {
   backup = false,
+  showtabline = 0,
   clipboard = "unnamedplus",
   cmdheight = 1,
   laststatus = 3,
