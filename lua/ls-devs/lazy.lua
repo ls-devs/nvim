@@ -132,7 +132,7 @@ require("lazy").setup({
   -- Trouble
   {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Trouble",
     config = require("ls-devs.lazy.trouble").config,
   },
