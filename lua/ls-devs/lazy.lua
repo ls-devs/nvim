@@ -16,7 +16,7 @@ require("lazy").setup({
   {
     "VonHeikemen/lsp-zero.nvim",
     config = require("ls-devs.lazy.lsp").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
     dependencies = {
       -- LSP Support
       { "neovim/nvim-lspconfig", event = "BufReadPre" },
@@ -101,14 +101,14 @@ require("lazy").setup({
   -- Fidget
   {
     "j-hui/fidget.nvim",
-    event = "BufReadPost",
+    event = "BufReadPre",
     config = require("ls-devs.lazy.fidget").config,
   },
   -- Barbecue
   {
     "utilyre/barbecue.nvim",
     branch = "dev", -- omit this if you only want stable updates ]]
-    event = "BufReadPost",
+    event = "BufReadPre",
     config = require("ls-devs.lazy.barbecue"),
     dependencies = {
       "neovim/nvim-lspconfig",
@@ -140,7 +140,7 @@ require("lazy").setup({
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "BufReadPost",
+    event = "BufReadPre",
     config = require("ls-devs.lazy.todo-comments").config,
   },
   -- Treesitter
@@ -152,7 +152,7 @@ require("lazy").setup({
     },
     config = require("ls-devs.lazy.treesitter").config,
     build = ":TSUpdate",
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   -- Telescope
   {
@@ -185,7 +185,7 @@ require("lazy").setup({
   {
     "ggandor/leap.nvim",
     config = require("ls-devs.lazy.leap").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "phaazon/hop.nvim",
@@ -211,7 +211,7 @@ require("lazy").setup({
   {
     "windwp/nvim-autopairs",
     config = require("ls-devs.lazy.autopairs").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   -- Surround
   {
@@ -228,11 +228,11 @@ require("lazy").setup({
   -- Comments
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "echasnovski/mini.comment",
-    event = "BufReadPost",
+    event = "BufReadPre",
     config = require("ls-devs.lazy.comment").config,
   },
   -- Indent Scope
@@ -285,7 +285,7 @@ require("lazy").setup({
   {
     "ray-x/lsp_signature.nvim",
     config = require("ls-devs.lazy.lsp-signature").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "b0o/schemastore.nvim",
@@ -294,7 +294,7 @@ require("lazy").setup({
   {
     "lvimuser/lsp-inlayhints.nvim",
     config = require("ls-devs.lazy.lsp-inlayhints").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   -- Utils
   {
@@ -305,12 +305,12 @@ require("lazy").setup({
   {
     "abecodes/tabout.nvim",
     config = require("ls-devs.lazy.tabout").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "max397574/better-escape.nvim",
     config = require("ls-devs.lazy.better_escape").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "ellisonleao/glow.nvim",
@@ -326,7 +326,7 @@ require("lazy").setup({
   {
     "ethanholz/nvim-lastplace",
     config = require("ls-devs.lazy.lastplace").config,
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
   {
     "dstein64/vim-startuptime",
