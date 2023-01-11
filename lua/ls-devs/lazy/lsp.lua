@@ -45,7 +45,7 @@ M.config = function()
   end
 
   lsp.setup_nvim_cmp({
-    preselect = require("cmp").PreselectMode.None,
+    preselect = cmp.PreselectMode.None,
     completion = {
       completeopt = "menu,menuone,noinsert,noselect",
     },

@@ -3,6 +3,7 @@ local M = {}
 M.config = function()
   local dashboard = require("alpha.themes.dashboard")
   local version = vim.version()
+  local lazy = require("lazy")
 
   local logo = [[
 
@@ -43,7 +44,7 @@ M.config = function()
     vim.api.nvim_create_autocmd("User", {
       pattern = "AlphaReady",
       callback = function()
-        require("lazy").show()
+        lazy.show()
       end,
     })
   end
@@ -53,7 +54,7 @@ M.config = function()
   vim.api.nvim_create_autocmd("User", {
     pattern = "LazyVimStarted",
     callback = function()
-      local stats = require("lazy").stats()
+      local stats = lazy.stats()
       local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
       dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
       pcall(vim.cmd.AlphaRedraw)
