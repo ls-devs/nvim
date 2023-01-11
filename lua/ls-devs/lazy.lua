@@ -53,7 +53,7 @@ require("lazy").setup({
   {
     "hrsh7th/nvim-cmp",
     config = require("ls-devs.lazy.cmp").config,
-    event = { "InsertEnter", "BufReadPost", "CmdlineEnter" },
+    event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
