@@ -26,16 +26,22 @@ require("lazy").setup({
         config = require("ls-devs.lazy.mason").config,
         dependencies = {
           {
-            "jayp0521/mason-null-ls.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            config = require("ls-devs.lazy.mason-lspconfig").config,
+          },
+          {
+            "jay-babu/mason-null-ls.nvim",
             config = require("ls-devs.lazy.mason-null-ls").config,
           },
           {
-            "jayp0521/mason-nvim-dap.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
             config = require("ls-devs.lazy.mason-nvim-dap").config,
+            dependencies = {
+              { "mfussenegger/nvim-dap" },
+            },
           },
         },
       },
-      { "williamboman/mason-lspconfig.nvim" },
       -- Snippets
       {
         "L3MON4D3/LuaSnip",
@@ -243,7 +249,7 @@ require("lazy").setup({
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-      "mfussenegger/nvim-dap",
+      { "mfussenegger/nvim-dap" },
       {
         "theHamsta/nvim-dap-virtual-text",
         config = require("ls-devs.lazy.nvim-dap-virtual-text").config,

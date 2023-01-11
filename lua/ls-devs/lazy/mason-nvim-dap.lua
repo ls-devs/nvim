@@ -14,6 +14,7 @@ M.config = function()
       "js-debug-adapter",
     },
     automatic_setup = true,
+    automatic_installation = true,
   })
 
   mason_nvim_dap.setup_handlers({
