@@ -129,7 +129,7 @@ M.config = function()
     },
   })
 
-  lsp.preset("recommended")
+  lsp.preset("lsp-compe")
 
   lsp.on_attach(function(client, bufnr)
     require("lsp-inlayhints").on_attach(client, bufnr)
