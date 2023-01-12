@@ -14,4 +14,8 @@ M.config = function()
   })
 end
 
+M.keys = {
+  { "gz", mode = { "n", "v" } },
+}
+
 return M

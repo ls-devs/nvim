@@ -233,7 +233,7 @@ require("lazy").setup({
   -- Surround
   {
     "echasnovski/mini.surround",
-    keys = { "gz" },
+    keys = require("ls-devs.plugins.surround").keys,
     config = require("ls-devs.plugins.surround").config,
   },
 
