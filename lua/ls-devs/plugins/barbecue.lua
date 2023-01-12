@@ -1,9 +1,8 @@
 return function()
   require("barbecue").setup({
     theme = "catppuccin",
-    show_navic = false,
     show_modified = true,
-    create_autocmd = false, -- prevent barbecue from updating itself automatically
+    create_autocmd = false,
     attach_navic = false,
   })
 
