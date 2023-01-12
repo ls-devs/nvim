@@ -2,11 +2,8 @@ local M = {}
 
 M.config = function()
   local cmp = require("cmp")
-
   local luasnip = require("luasnip")
-
   local lspkind = require("lspkind")
-
   local luasnip_vscode_loader = require("luasnip/loaders/from_vscode")
 
   luasnip_vscode_loader.lazy_load()
@@ -77,8 +74,10 @@ M.config = function()
     formatting = {
       fields = { "kind", "abbr", "menu" },
       format = lspkind.cmp_format({
-        mode = "symbol", -- show only symbol annotations
+        mode = "symbol",
         maxwidth = 50,
+        ellipsis_char = "...",
+
         before = function(entry, vim_item)
           vim_item.menu = ({
             nvim_lsp = "[LSP]",
@@ -112,7 +111,7 @@ M.config = function()
 
   cmp.setup.filetype("gitcommit", {
     sources = cmp.config.sources({
-      { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+      { name = "cmp_git" },
     }, {
       { name = "buffer" },
     }),
@@ -125,7 +124,6 @@ M.config = function()
     },
   })
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
