@@ -12,6 +12,11 @@ M.config = function()
   })
 end
 
-M.keys = { "gc" }
+M.keys = {
+  {
+    "gc",
+    mode = { "n", "v" },
+  },
+}
 
 return M
