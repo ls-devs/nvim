@@ -16,8 +16,8 @@ require("lazy").setup({
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
-    config = require("ls-devs.plugins.lsp").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.lsp").config,
     dependencies = {
       -- LSP Support
       { "neovim/nvim-lspconfig", event = "BufReadPre" },
@@ -60,8 +60,8 @@ require("lazy").setup({
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
-    config = require("ls-devs.plugins.cmp").config,
     event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
+    config = require("ls-devs.plugins.cmp").config,
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
@@ -78,7 +78,7 @@ require("lazy").setup({
     "catppuccin/nvim",
     lazy = false,
     priority = 1000,
-    name = "catpuccin",
+    name = "catppuccin",
     config = require("ls-devs.plugins.catppuccin").config,
   },
 
@@ -103,9 +103,9 @@ require("lazy").setup({
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { { "nvim-tree/nvim-web-devicons" } },
-    config = require("ls-devs.plugins.lualine").config,
     event = "VeryLazy",
+    config = require("ls-devs.plugins.lualine").config,
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
 
   -- Fidget
@@ -131,37 +131,37 @@ require("lazy").setup({
   -- Splash screen
   {
     "goolord/alpha-nvim",
-    config = require("ls-devs.plugins.alpha").config,
     event = "VimEnter",
+    config = require("ls-devs.plugins.alpha").config,
   },
 
   -- Trouble
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Trouble",
     config = require("ls-devs.plugins.trouble").config,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
   -- Todos
   {
     "folke/todo-comments.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = "BufReadPre",
     config = require("ls-devs.plugins.todo-comments").config,
+    dependencies = "nvim-lua/plenary.nvim",
   },
 
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    event = "BufReadPre",
+    config = require("ls-devs.plugins.treesitter").config,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "p00f/nvim-ts-rainbow" },
     },
-    config = require("ls-devs.plugins.treesitter").config,
     build = ":TSUpdate",
-    event = "BufReadPre",
   },
 
   -- Telescope
@@ -169,65 +169,71 @@ require("lazy").setup({
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     config = require("ls-devs.plugins.telescope"),
-    dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+      },
+    },
   },
 
   -- UI
   {
     "stevearc/dressing.nvim",
-    config = require("ls-devs.plugins.dressing").config,
     event = "VeryLazy",
+    config = require("ls-devs.plugins.dressing").config,
   },
 
   -- Formatter
   {
     "jose-elias-alvarez/null-ls.nvim",
-    config = require("ls-devs.plugins.null-ls").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.null-ls").config,
   },
   {
     "ThePrimeagen/refactoring.nvim",
+    ft = { "lua", "python " },
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
     },
-    ft = { "lua", "python " },
   },
 
   -- Easy jump
   {
     "ggandor/leap.nvim",
-    config = require("ls-devs.plugins.leap").config,
     keys = require("ls-devs.plugins.leap").keys,
+    config = require("ls-devs.plugins.leap").config,
   },
   {
     "phaazon/hop.nvim",
     branch = "v2",
-    keys = require("ls-devs.plugins.hop").keys,
     config = require("ls-devs.plugins.hop").config,
+    keys = require("ls-devs.plugins.hop").keys,
   },
 
   -- Http client
   {
     "rest-nvim/rest.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
     keys = require("ls-devs.plugins.rest-nvim").keys,
     config = require("ls-devs.plugins.rest-nvim").config,
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 
   -- Terminal toggle
   {
     "akinsho/toggleterm.nvim",
-    version = "*",
     keys = require("ls-devs.plugins.toggleterm").keys,
     config = require("ls-devs.plugins.toggleterm").config,
+    version = "*",
   },
 
   -- Auto close pairs
   {
     "windwp/nvim-autopairs",
-    config = require("ls-devs.plugins.autopairs").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.autopairs").config,
   },
 
   -- Surround
@@ -246,24 +252,26 @@ require("lazy").setup({
   -- Comments
   {
     "echasnovski/mini.comment",
+    keys = require("ls-devs.plugins.comment").keys,
+    config = require("ls-devs.plugins.comment").config,
     dependencies = {
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
         event = "BufReadPre",
       },
     },
-    config = require("ls-devs.plugins.comment").config,
-    keys = require("ls-devs.plugins.comment").keys,
   },
 
   -- Indent Scope
   {
     "echasnovski/mini.indentscope",
-    config = require("ls-devs.plugins.indentscope").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.indentscope").config,
   },
   {
     "rcarriga/nvim-dap-ui",
+    keys = require("ls-devs.plugins.dapui"),
+    config = require("ls-devs.plugins.dapui").config,
     dependencies = {
       { "mfussenegger/nvim-dap" },
       {
@@ -271,8 +279,6 @@ require("lazy").setup({
         config = require("ls-devs.plugins.nvim-dap-virtual-text").config,
       },
     },
-    keys = require("ls-devs.plugins.dapui"),
-    config = require("ls-devs.plugins.dapui").config,
   },
 
   -- Tmux navigation
@@ -285,8 +291,8 @@ require("lazy").setup({
         return true
       end
     end,
-    config = require("ls-devs.plugins.tmux").config,
     event = "VeryLazy",
+    config = require("ls-devs.plugins.tmux").config,
   },
 
   -- Rust tools
@@ -323,8 +329,8 @@ require("lazy").setup({
   -- Signature
   {
     "ray-x/lsp_signature.nvim",
-    config = require("ls-devs.plugins.lsp-signature").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.lsp-signature").config,
   },
   {
     "b0o/schemastore.nvim",
@@ -332,25 +338,25 @@ require("lazy").setup({
   },
   {
     "lvimuser/lsp-inlayhints.nvim",
-    config = require("ls-devs.plugins.lsp-inlayhints").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.lsp-inlayhints").config,
   },
 
   -- Utils
   {
     "lukas-reineke/indent-blankline.nvim",
-    config = require("ls-devs.plugins.indent_blankline").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.indent_blankline").config,
   },
   {
     "abecodes/tabout.nvim",
-    config = require("ls-devs.plugins.tabout").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.tabout").config,
   },
   {
     "max397574/better-escape.nvim",
-    config = require("ls-devs.plugins.better_escape").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.better_escape").config,
   },
   {
     "ellisonleao/glow.nvim",
@@ -360,13 +366,13 @@ require("lazy").setup({
   },
   {
     "rcarriga/nvim-notify",
-    config = require("ls-devs.plugins.notify").config,
     event = "VeryLazy",
+    config = require("ls-devs.plugins.notify").config,
   },
   {
     "ethanholz/nvim-lastplace",
-    config = require("ls-devs.plugins.lastplace").config,
     event = "BufReadPre",
+    config = require("ls-devs.plugins.lastplace").config,
   },
   {
     "dstein64/vim-startuptime",
