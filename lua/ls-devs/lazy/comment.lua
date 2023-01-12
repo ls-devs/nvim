@@ -11,4 +11,7 @@ M.config = function()
     },
   })
 end
+
+M.keys = { "gc" }
+
 return M
