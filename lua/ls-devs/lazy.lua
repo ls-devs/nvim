@@ -332,10 +332,14 @@ require("lazy").setup({
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-signature").config,
   },
+
+  -- Json schemas
   {
     "b0o/schemastore.nvim",
     ft = { "json" },
   },
+
+  -- Inlay hints
   {
     "lvimuser/lsp-inlayhints.nvim",
     event = "BufReadPre",
@@ -363,11 +367,6 @@ require("lazy").setup({
     ft = "markdown",
     keys = require("ls-devs.plugins.glow").keys,
     config = require("ls-devs.plugins.glow").config,
-  },
-  {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    config = require("ls-devs.plugins.notify").config,
   },
   {
     "ethanholz/nvim-lastplace",
