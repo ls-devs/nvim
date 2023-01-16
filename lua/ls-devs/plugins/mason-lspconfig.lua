@@ -22,6 +22,7 @@ M.config = function()
       "clangd",
       "cmake",
       "sumneko_lua",
+      "hls",
     },
     automatic_installation = true,
   })
