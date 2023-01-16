@@ -47,6 +47,8 @@ M.config = function()
       null_ls.builtins.formatting.phpcsfixer,
       -- DOCKER
       null_ls.builtins.diagnostics.hadolint,
+      -- Haskell
+      null_ls.builtins.formatting.fourmolu,
     },
   })
 end
