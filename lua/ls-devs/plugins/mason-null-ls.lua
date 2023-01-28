@@ -11,6 +11,7 @@ M.config = function()
       "eslint_d",
       "prettierd",
       "rustfmt",
+      "shellharden",
       "prismaFmt",
       "cmakelang",
       "markdownlint",
