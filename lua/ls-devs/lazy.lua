@@ -118,7 +118,7 @@ require("lazy").setup({
   -- Winbar
   {
     "utilyre/barbecue.nvim",
-    version= "*", -- omit this if you only want stable updates ]]
+    version = "*", -- omit this if you only want stable updates ]]
     event = "BufReadPre",
     config = require("ls-devs.plugins.barbecue"),
     dependencies = {
@@ -270,7 +270,7 @@ require("lazy").setup({
   },
   {
     "rcarriga/nvim-dap-ui",
-    keys = require("ls-devs.plugins.dapui"),
+    keys = require("ls-devs.plugins.dapui").keys,
     config = require("ls-devs.plugins.dapui").config,
     dependencies = {
       { "mfussenegger/nvim-dap" },
