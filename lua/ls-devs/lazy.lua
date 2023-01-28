@@ -118,7 +118,7 @@ require("lazy").setup({
   -- Winbar
   {
     "utilyre/barbecue.nvim",
-    branch = "dev", -- omit this if you only want stable updates ]]
+    version= "*", -- omit this if you only want stable updates ]]
     event = "BufReadPre",
     config = require("ls-devs.plugins.barbecue"),
     dependencies = {

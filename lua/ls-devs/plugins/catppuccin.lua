@@ -17,6 +17,10 @@ M.config = function()
       shade = "dark",
       percentage = 0.15,
     },
+    transparent_background = true,
+    show_end_of_buffer = true, -- show the '~' characters after the end of buffers
+    term_colors = true,
+    compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
     styles = {
       comments = { "italic" },
       properties = { "italic" },
@@ -33,9 +37,6 @@ M.config = function()
     },
     integrations = {
       treesitter = true,
-      barbecue = {
-        dim_dirname = true,
-      },
       native_lsp = {
         enabled = true,
         virtual_text = {
@@ -51,42 +52,46 @@ M.config = function()
           information = { "underline" },
         },
       },
-      lsp_trouble = true,
-      lsp_saga = true,
+      aerial = false,
+      barbar = false,
+      beacon = false,
+      cmp = true,
+      coc_nvim = false,
+      dap = { enabled = true, enable_ui = true },
+      dashboard = false,
+      fern = false,
+      fidget = true,
       gitgutter = false,
       gitsigns = true,
-      telescope = true,
-      nvimtree = true,
-      which_key = true,
-      indent_blankline = { enabled = true, colored_indent_levels = false },
-      dashboard = true,
-      neogit = false,
-      vim_sneak = false,
-      fern = false,
-      barbar = false,
-      markdown = true,
-      lightspeed = false,
-      ts_rainbow = true,
-      mason = true,
-      neotest = false,
-      noice = false,
+      harpoon = false,
       hop = true,
       illuminate = true,
-      cmp = true,
-      dap = { enabled = true, enable_ui = true },
-      notify = true,
-      symbols_outline = false,
-      coc_nvim = false,
+      indent_blankline = { enabled = true, colored_indent_levels = false },
       leap = false,
-      neotree = { enabled = false, show_root = true, transparent_panel = false },
-      telekasten = false,
+      lightspeed = false,
+      lsp_saga = true,
+      lsp_trouble = true,
+      markdown = true,
+      mason = true,
       mini = false,
-      aerial = false,
-      vimwiki = true,
-      beacon = false,
       navic = { enabled = false },
+      neogit = false,
+      neotest = false,
+      neotree = { enabled = false, show_root = true, transparent_panel = false },
+      noice = false,
+      notify = true,
+      nvimtree = true,
       overseer = false,
-      fidget = true,
+      pounce = false,
+      semantic_tokens = false,
+      symbols_outline = false,
+      telekasten = false,
+      telescope = true,
+      treesitter_context = false,
+      ts_rainbow = true,
+      vim_sneak = false,
+      vimwiki = false,
+      which_key = true,
     },
     color_overrides = {
       mocha = {
@@ -120,12 +125,24 @@ M.config = function()
       },
     },
     highlight_overrides = {
+      all = function(cp)
+        return {
+          -- For lspsaga.nvim
+          SagaBeacon = { bg = cp.surface0 },
+        }
+      end,
       mocha = function(cp)
         return {
           -- For base configs.
+          NormalFloat = { fg = cp.text, bg = false and cp.none or cp.base },
           CursorLineNr = { fg = cp.green },
           Search = { bg = cp.surface1, fg = cp.pink, style = { "bold" } },
           IncSearch = { bg = cp.pink, fg = cp.surface1 },
+          Keyword = { fg = cp.pink },
+          Type = { fg = cp.blue },
+          Typedef = { fg = cp.yellow },
+          StorageClass = { fg = cp.red, style = { "italic" } },
+          LspInlayHint = { bg = cp.none, fg = "#CCD0DA"},
 
           -- For native lsp configs.
           DiagnosticVirtualTextError = { bg = cp.none },
@@ -140,15 +157,18 @@ M.config = function()
           LspDiagnosticsUnderlineHint = { sp = cp.rosewater },
 
           -- For fidget.
-          FidgetTask = { bg = cp.none, fg = cp.surface2 },
+          FidgetTask = { bg = cp.none, fg = cp.peach },
           FidgetTitle = { fg = cp.blue, style = { "bold" } },
+
+          -- For trouble.nvim
+          TroubleNormal = { bg = cp.base },
 
           -- For treesitter.
           ["@field"] = { fg = cp.rosewater },
           ["@property"] = { fg = cp.yellow },
 
           ["@include"] = { fg = cp.teal },
-          ["@operator"] = { fg = cp.sky },
+          -- ["@operator"] = { fg = cp.sky },
           ["@keyword.operator"] = { fg = cp.sky },
           ["@punctuation.special"] = { fg = cp.maroon },
 
@@ -165,13 +185,14 @@ M.config = function()
           ["@constant.builtin"] = { fg = cp.lavender },
           -- ["@function.builtin"] = { fg = cp.peach, style = { "italic" } },
           -- ["@type.builtin"] = { fg = cp.yellow, style = { "italic" } },
+          ["@type.qualifier"] = { link = "@keyword" },
           ["@variable.builtin"] = { fg = cp.red, style = { "italic" } },
 
           -- ["@function"] = { fg = cp.blue },
           ["@function.macro"] = { fg = cp.red, style = {} },
           ["@parameter"] = { fg = cp.rosewater },
+          ["@keyword"] = { fg = cp.red, style = { "italic" } },
           ["@keyword.function"] = { fg = cp.maroon },
-          ["@keyword"] = { fg = cp.red },
           ["@keyword.return"] = { fg = cp.pink, style = {} },
 
           -- ["@text.note"] = { fg = cp.base, bg = cp.blue },
@@ -180,14 +201,14 @@ M.config = function()
           -- ["@constant.macro"] = { fg = cp.mauve },
 
           -- ["@label"] = { fg = cp.blue },
-          ["@method"] = { style = { "italic" } },
+          ["@method"] = { fg = cp.blue, style = { "italic" } },
           ["@namespace"] = { fg = cp.rosewater, style = {} },
 
           ["@punctuation.delimiter"] = { fg = cp.teal },
           ["@punctuation.bracket"] = { fg = cp.overlay2 },
           -- ["@string"] = { fg = cp.green },
           -- ["@string.regex"] = { fg = cp.peach },
-          -- ["@type"] = { fg = cp.yellow },
+          ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text },
           ["@tag.attribute"] = { fg = cp.mauve, style = { "italic" } },
           ["@tag"] = { fg = cp.peach },
@@ -224,7 +245,10 @@ M.config = function()
           ["@type.css"] = { fg = cp.lavender },
           ["@property.css"] = { fg = cp.yellow, style = { "italic" } },
 
+          ["@type.builtin.c"] = { fg = cp.yellow, style = {} },
+
           ["@property.cpp"] = { fg = cp.text },
+          ["@type.builtin.cpp"] = { fg = cp.yellow, style = {} },
 
           -- ["@symbol"] = { fg = cp.flamingo },
         }
