@@ -142,7 +142,8 @@ M.config = function()
           Type = { fg = cp.blue },
           Typedef = { fg = cp.yellow },
           StorageClass = { fg = cp.red, style = { "italic" } },
-          LspInlayHint = { bg = cp.none, fg = "#CCD0DA"},
+          LspInlayHint = { bg = cp.none, fg = "#CCD0DA" },
+          ColorColumn = { bg = cp.none },
 
           -- For native lsp configs.
           DiagnosticVirtualTextError = { bg = cp.none },
