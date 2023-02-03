@@ -130,7 +130,7 @@ M.config = function()
           -- For base configs.
           NormalFloat = { fg = cp.text, bg = true and cp.none or cp.base },
           CursorLineNr = { fg = cp.green },
-          Search = { bg = cp.surface1, fg = cp.pink, style = { "bold" } },
+          Search = { bg = cp.surface0, fg = cp.pink, style = { "bold" } },
           IncSearch = { bg = cp.pink, fg = cp.surface1 },
           Keyword = { fg = cp.pink },
           Type = { fg = cp.blue },
@@ -182,6 +182,7 @@ M.config = function()
 
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
+          ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
         }
       end,
     },
