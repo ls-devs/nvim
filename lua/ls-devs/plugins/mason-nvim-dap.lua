@@ -10,6 +10,7 @@ M.config = function()
       "node2",
       "php",
       "codelldb",
+      "cppdbg",
       "js",
     },
     automatic_setup = true,
