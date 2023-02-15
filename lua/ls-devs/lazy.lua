@@ -303,6 +303,13 @@ require("lazy").setup({
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
 
+  -- Clang tools
+  {
+    "p00f/clangd_extensions.nvim",
+    ft = { "c", "cpp" },
+    config = require("ls-devs.plugins.clang-tools"),
+  },
+
   -- Python
   {
     "luk400/vim-jukit",
@@ -392,7 +399,6 @@ require("lazy").setup({
 }, {
   lazy = true,
   version = "*",
-
   ui = {
     border = "rounded",
   },
