@@ -318,6 +318,11 @@ require("lazy").setup({
 
   -- Git
   {
+    "kdheepak/lazygit.nvim",
+    cmd = "LazyGit",
+    keys = require("ls-devs.plugins.lazygit").keys,
+  },
+  {
     "lewis6991/gitsigns.nvim",
     cmd = "Gitsigns",
     config = require("ls-devs.plugins.gitsigns").config,
