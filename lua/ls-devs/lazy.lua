@@ -181,6 +181,7 @@ require("lazy").setup({
   -- UI
   {
     "folke/noice.nvim",
+    event = "VeryLazy",
     config = require("ls-devs.plugins.noice").config,
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -188,7 +189,11 @@ require("lazy").setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      { "rcarriga/nvim-notify", config = require("ls-devs.plugins.notify").config },
+      {
+        "rcarriga/nvim-notify",
+        event = "VeryLazy",
+        config = require("ls-devs.plugins.notify").config,
+      },
     },
   },
   {
