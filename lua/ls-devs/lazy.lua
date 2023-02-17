@@ -180,6 +180,18 @@ require("lazy").setup({
 
   -- UI
   {
+    "folke/noice.nvim",
+    config = require("ls-devs.plugins.noice").config,
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      { "rcarriga/nvim-notify", config = require("ls-devs.plugins.notify").config },
+    },
+  },
+  {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
@@ -201,16 +213,20 @@ require("lazy").setup({
   },
 
   -- Easy jump
+  -- {
+  --   "ggandor/flit.nvim",
+  --   keys = require("ls-devs.plugins.flit").keys,
+  --   config = require("ls-devs.plugins.flit").config,
+  --   dependencies = {
+  --     "ggandor/leap.nvim",
+  --     keys = require("ls-devs.plugins.leap").keys,
+  --     config = require("ls-devs.plugins.leap").config,
+  --   },
+  -- },
   {
     "ggandor/leap.nvim",
     keys = require("ls-devs.plugins.leap").keys,
     config = require("ls-devs.plugins.leap").config,
-  },
-  {
-    "phaazon/hop.nvim",
-    branch = "v2",
-    config = require("ls-devs.plugins.hop").config,
-    keys = require("ls-devs.plugins.hop").keys,
   },
 
   -- Http client
