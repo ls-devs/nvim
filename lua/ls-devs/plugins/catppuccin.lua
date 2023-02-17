@@ -21,6 +21,10 @@ M.config = function()
     show_end_of_buffer = true, -- show the '~' characters after the end of buffers
     term_colors = true,
     compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
     styles = {
       comments = { "bold" },
       properties = { "italic" },
@@ -129,7 +133,8 @@ M.config = function()
         return {
           -- For base configs.
           NormalFloat = { fg = cp.text, bg = true and cp.none or cp.base },
-          CursorLineNr = { fg = cp.green },
+          CursorLineNr = { fg = cp.pink },
+          LineNr = { fg = cp.lavender },
           Search = { bg = cp.surface0, fg = cp.pink, style = { "bold" } },
           IncSearch = { bg = cp.pink, fg = cp.surface1 },
           Keyword = { fg = cp.pink },
@@ -138,48 +143,37 @@ M.config = function()
           StorageClass = { fg = cp.red, style = { "italic" } },
           LspInlayHint = { bg = cp.none, fg = cp.overlay1 },
           ColorColumn = { bg = cp.none },
-
+          Visual = { bg = cp.surface2, style = { "bold" } },
           -- For native lsp configs.
           DiagnosticVirtualTextError = { bg = cp.none },
           DiagnosticVirtualTextWarn = { bg = cp.none },
           DiagnosticVirtualTextInfo = { bg = cp.none },
           DiagnosticVirtualTextHint = { fg = cp.rosewater, bg = cp.none },
-
           DiagnosticHint = { fg = cp.rosewater },
           LspDiagnosticsDefaultHint = { fg = cp.rosewater },
           LspDiagnosticsHint = { fg = cp.rosewater },
           LspDiagnosticsVirtualTextHint = { fg = cp.rosewater },
           LspDiagnosticsUnderlineHint = { sp = cp.rosewater },
-
           -- For fidget.
           FidgetTask = { bg = cp.none, fg = cp.surface2 },
           FidgetTitle = { fg = cp.blue, style = { "bold" } },
-
           -- For trouble.nvim
           TroubleNormal = { bg = cp.base },
-
           -- Mason
           MasonHeader = { fg = cp.base, bg = cp.peach },
           MasonHeaderSecondary = { fg = cp.base, bg = cp.pink },
-
           MasonHighlight = { fg = cp.pink },
           MasonHighlightBlock = { bg = cp.pink, fg = cp.base },
           MasonHighlightBlockBold = { bg = cp.pink, fg = cp.base, bold = true },
-
           MasonHighlightSecondary = { fg = cp.red },
           MasonHighlightBlockSecondary = { bg = cp.red, fg = cp.base },
           MasonHighlightBlockBoldSecondary = { bg = cp.red, fg = cp.base, bold = true },
-
           MasonLink = { fg = cp.rosewater },
-
           MasonMuted = { fg = cp.overlay1 },
           MasonMutedBlock = { bg = cp.surface0, fg = cp.overlay1 },
           MasonMutedBlockBold = { bg = cp.surface0, fg = cp.overlay1, bold = true },
-
           MasonError = { fg = cp.red },
-
           MasonHeading = { bold = true },
-
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
           ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
