@@ -174,6 +174,12 @@ M.config = function()
           MasonMutedBlockBold = { bg = cp.surface0, fg = cp.overlay1, bold = true },
           MasonError = { fg = cp.red },
           MasonHeading = { bold = true },
+          -- Lazy
+          LazyButtonActive = { bold = true, bg = cp.peach, fg = cp.base },
+          LazyButton = { fg = cp.text, bold = true },
+          LazyH1 = { bold = true, bg = cp.peach, fg = cp.base },
+          LazyH2 = { bold = true, fg = cp.text },
+          -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
           ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
