@@ -175,10 +175,12 @@ M.config = function()
           MasonError = { fg = cp.red },
           MasonHeading = { bold = true },
           -- Lazy
-          LazyButtonActive = { bold = true, bg = cp.peach, fg = cp.base },
+          LazyButtonActive = { bold = true, fg = cp.base, bg = cp.pink },
           LazyButton = { fg = cp.text, bold = true },
-          LazyH1 = { bold = true, bg = cp.peach, fg = cp.base },
-          LazyH2 = { bold = true, fg = cp.text },
+          LazyH1 = { bold = true, fg = cp.base, bg = cp.peach },
+          LazyH2 = { fg = cp.text, bold = true },
+          LazySpecial = { fg = cp.base, bold = true },
+          LazyReasonEvent = { fg = cp.pink, bold = true },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
