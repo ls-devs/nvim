@@ -6,7 +6,7 @@ local options = {
   backup = false,
   showtabline = 0,
   clipboard = "unnamedplus",
-  cmdheight = 1,
+  cmdheight = 0,
   laststatus = 3,
   completeopt = { "menu", "menuone", "noselect" },
   conceallevel = 0,
@@ -41,4 +41,3 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
