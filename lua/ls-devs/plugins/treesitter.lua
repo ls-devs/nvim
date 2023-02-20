@@ -34,6 +34,9 @@ M.config = function()
       "rust",
       "http",
       "cpp",
+      "markdown_inline",
+      "regex",
+      "bash",
     },
     highlight = {
       enable = true,
