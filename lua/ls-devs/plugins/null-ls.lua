@@ -1,5 +1,8 @@
 local M = {}
 
+-- Increase formatting timeout
+vim.lsp.buf.format({ timeout_ms = 5000 })
+
 M.config = function()
   local null_ls = require("null-ls")
 
