@@ -17,7 +17,7 @@ require("lazy").setup({
   {
     "VonHeikemen/lsp-zero.nvim",
     event = "BufReadPre",
-    config = require("ls-devs.plugins.lsp").config,
+    config = require("ls-devs.plugins.lsp-zero").config,
     dependencies = {
       -- LSP Support
       { "neovim/nvim-lspconfig", event = "BufReadPre" },
