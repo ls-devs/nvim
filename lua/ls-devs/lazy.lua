@@ -21,28 +21,6 @@ require("lazy").setup({
     dependencies = {
       -- LSP Support
       { "neovim/nvim-lspconfig", event = "BufReadPre" },
-      {
-        "williamboman/mason.nvim",
-        cmd = "Mason",
-        config = require("ls-devs.plugins.mason").config,
-        dependencies = {
-          {
-            "williamboman/mason-lspconfig.nvim",
-            config = require("ls-devs.plugins.mason-lspconfig").config,
-          },
-          {
-            "jay-babu/mason-null-ls.nvim",
-            config = require("ls-devs.plugins.mason-null-ls").config,
-          },
-          {
-            "jay-babu/mason-nvim-dap.nvim",
-            config = require("ls-devs.plugins.mason-nvim-dap").config,
-            dependencies = {
-              { "mfussenegger/nvim-dap" },
-            },
-          },
-        },
-      },
       -- Snippets
       {
         "L3MON4D3/LuaSnip",
@@ -53,6 +31,27 @@ require("lazy").setup({
       {
         "rafamadriz/friendly-snippets",
         event = "InsertEnter",
+      },
+    },
+  },
+
+  -- Mason & Managers
+  {
+    cmd = "Mason",
+    "williamboman/mason-lspconfig.nvim",
+    config = require("ls-devs.plugins.mason-lspconfig").config,
+    dependencies = {
+      {
+        "williamboman/mason.nvim",
+        config = require("ls-devs.plugins.mason").config,
+      },
+      {
+        "jay-babu/mason-null-ls.nvim",
+        config = require("ls-devs.plugins.mason-null-ls").config,
+      },
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        config = require("ls-devs.plugins.mason-nvim-dap").config,
       },
     },
   },
