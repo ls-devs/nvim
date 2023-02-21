@@ -42,16 +42,16 @@ require("lazy").setup({
     config = require("ls-devs.plugins.mason-lspconfig").config,
     dependencies = {
       {
-        "williamboman/mason.nvim",
-        config = require("ls-devs.plugins.mason").config,
-      },
-      {
         "jay-babu/mason-null-ls.nvim",
         config = require("ls-devs.plugins.mason-null-ls").config,
       },
       {
         "jay-babu/mason-nvim-dap.nvim",
         config = require("ls-devs.plugins.mason-nvim-dap").config,
+      },
+      {
+        "williamboman/mason.nvim",
+        config = require("ls-devs.plugins.mason").config,
       },
     },
   },
