@@ -183,6 +183,9 @@ M.config = function()
           LazyProgressTodo = { fg = cp.base, bg = cp.base, bold = true },
           LazyProgressDone = { fg = cp.pink, bg = cp.base, bold = true },
           LazyReasonEvent = { fg = cp.peach, bold = true },
+          -- Leap
+          LeapLabelPrimary = { bg = cp.yellow, fg = cp.base, bold = true, nocombine = true },
+          LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, bold = true, nocombine = true },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
