@@ -12,6 +12,7 @@ M.config = function()
       "codelldb",
       "cppdbg",
       "js",
+      "chrome",
     },
     automatic_setup = true,
     automatic_installation = true,

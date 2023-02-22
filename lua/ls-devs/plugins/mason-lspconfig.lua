@@ -26,6 +26,12 @@ M.config = function()
       "lua_ls",
       "hls",
       "clangd",
+      "bashls",
+      "vimls",
+      "graphql",
+      "wgsl_analyzer",
+      "grammarly",
+      "svelte",
     },
     automatic_installation = true,
   })
