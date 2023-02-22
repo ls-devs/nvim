@@ -68,7 +68,9 @@ M.config = function()
       -- GIT
       null_ls.builtins.diagnostics.commitlint,
       -- ZSH
-      null_ls.builtins.formatting.beautysh,
+      null_ls.builtins.formatting.beautysh.with({
+        filetypes = { "zsh" },
+      }),
     },
   })
 end
