@@ -28,6 +28,10 @@ M.config = function()
       "fourmolu",
       "clang-format",
       "cpplint",
+      "bash-debug-adapter",
+      "pylint",
+      "commitlint",
+      "beautysh",
     },
   })
 end

@@ -14,6 +14,7 @@ M.config = function()
       null_ls.builtins.code_actions.refactoring.with({
         filetypes = { "python" },
       }),
+      null_ls.builtins.diagnostics.pylint,
       null_ls.builtins.formatting.black,
       -- JS / TS
       null_ls.builtins.code_actions.eslint_d,
@@ -64,6 +65,10 @@ M.config = function()
       null_ls.builtins.formatting.clang_format.with({
         filetypes = { "c", "cpp" },
       }),
+      -- GIT
+      null_ls.builtins.diagnostics.commitlint,
+      -- ZSH
+      null_ls.builtins.formatting.beautysh,
     },
   })
 end
