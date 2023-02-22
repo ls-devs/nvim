@@ -217,20 +217,13 @@ require("lazy").setup({
   },
 
   -- Easy jump
-  -- {
-  --   "ggandor/flit.nvim",
-  --   keys = require("ls-devs.plugins.flit").keys,
-  --   config = require("ls-devs.plugins.flit").config,
-  --   dependencies = {
-  --     "ggandor/leap.nvim",
-  --     keys = require("ls-devs.plugins.leap").keys,
-  --     config = require("ls-devs.plugins.leap").config,
-  --   },
-  -- },
   {
-    "ggandor/leap.nvim",
-    keys = require("ls-devs.plugins.leap").keys,
-    config = require("ls-devs.plugins.leap").config,
+    "ggandor/flit.nvim",
+    keys = require("ls-devs.plugins.flit").keys,
+    config = require("ls-devs.plugins.flit").config,
+    dependencies = {
+      "ggandor/leap.nvim",
+    },
   },
 
   -- Http client
