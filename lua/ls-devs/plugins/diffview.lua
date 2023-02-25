@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = function()
-  require("diffiview").setup()
+  require("diffview").setup()
 end
 
 M.keys = {
