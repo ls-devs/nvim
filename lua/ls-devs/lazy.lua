@@ -5,7 +5,7 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
@@ -85,7 +85,7 @@ require("lazy").setup({
     branch = "v2.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
       {
         "s1n7ax/nvim-window-picker",
@@ -109,13 +109,13 @@ require("lazy").setup({
   -- Winbar
   {
     "utilyre/barbecue.nvim",
-    version = "*", -- omit this if you only want stable updates ]]
+    version = "*",
     event = "BufReadPre",
     config = require("ls-devs.plugins.barbecue"),
     dependencies = {
       "neovim/nvim-lspconfig",
       "smiteshp/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
+      "nvim-tree/nvim-web-devicons",
     },
   },
   -- Splash screen
@@ -169,14 +169,10 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.noice").config,
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       { "MunifTanjim/nui.nvim", event = "VeryLazy" },
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
       {
         "rcarriga/nvim-notify",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         config = require("ls-devs.plugins.notify").config,
       },
     },
@@ -392,18 +388,16 @@ require("lazy").setup({
     wrap = false,
   },
   change_detection = {
-    -- automatically check for config file changes and reload the ui
     enabled = true,
-    notify = true, -- get a notification when changes are found
+    notify = true,
   },
   performance = {
     cache = {
       enabled = true,
     },
-    reset_packpath = true, -- reset the package path to improve startup time
+    reset_packpath = true,
   },
   install = {
-    -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "catppuccin" },
   },
   checker = { enabled = true },
