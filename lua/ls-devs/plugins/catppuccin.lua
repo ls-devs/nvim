@@ -190,6 +190,7 @@ M.config = function()
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
           ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
+          ["@comment"] = { fg = cp.overlay1, bold = true },
         }
       end,
     },
