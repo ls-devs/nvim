@@ -375,7 +375,7 @@ require("lazy").setup({
     "krivahtoo/silicon.nvim",
     cmd = "Silicon",
     config = require("ls-devs.plugins.silicon"),
-    build = "./install.sh ",
+    build = "./install.sh build",
   },
 }, {
   defaults = {
