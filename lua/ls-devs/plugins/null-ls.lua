@@ -61,9 +61,11 @@ M.config = function()
       -- CPP
       null_ls.builtins.diagnostics.cpplint.with({
         filetypes = { "c", "cpp" },
+        extra_args = { "--filter=", "-legal/copyright" },
       }),
       null_ls.builtins.formatting.clang_format.with({
         filetypes = { "c", "cpp" },
+        extra_args = { "-style=", "file" },
       }),
       -- GIT
       null_ls.builtins.diagnostics.commitlint,
