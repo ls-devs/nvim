@@ -375,7 +375,7 @@ require("lazy").setup({
     "krivahtoo/silicon.nvim",
     cmd = "Silicon",
     config = require("ls-devs.plugins.silicon"),
-    build = "./install.sh build",
+    build = "./install.sh ",
   },
 }, {
   defaults = {
@@ -398,7 +398,11 @@ require("lazy").setup({
     reset_packpath = true,
   },
   install = {
+    missing = true,
     colorscheme = { "catppuccin" },
   },
-  checker = { enabled = true },
+  checker = {
+    enabled = true,
+    notify = true,
+  },
 })
