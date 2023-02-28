@@ -7,20 +7,18 @@ M.config = function()
     return
   end
 
-  -- Color table for highlights
-  -- stylua: ignore
   local colors = {
-    bg       = '#101019',
-    fg       = '#cdd6f4',
-    yellow   = '#f9e2af',
-    cyan     = '#89dceb',
-    darkblue = '#45475a',
-    green    = '#a6e3a1',
-    orange   = '#fab387',
-    violet   = '#cba6f7',
-    magenta  = '#f5c2e7',
-    blue     = '#89b4fa',
-    red      = '#f38ba8',
+    bg = "#101019",
+    fg = "#cdd6f4",
+    yellow = "#f9e2af",
+    cyan = "#89dceb",
+    darkblue = "#45475a",
+    green = "#a6e3a1",
+    orange = "#fab387",
+    violet = "#cba6f7",
+    magenta = "#f5c2e7",
+    blue = "#89b4fa",
+    red = "#f38ba8",
   }
 
   local conditions = {
@@ -44,26 +42,20 @@ M.config = function()
       component_separators = "",
       section_separators = "",
       theme = {
-        -- We are going to use lualine_c an lualine_x as left and
-        -- right section. Both are highlighted by c theme .  So we
-        -- are just setting default looks o statusline
         normal = { c = { fg = colors.fg, bg = nil } },
         inactive = { c = { fg = colors.fg, bg = colors.bg } },
       },
       disabled_filetypes = { "NvimTree", "alpha" },
     },
     sections = {
-      -- these are to remove the defaults
       lualine_a = {},
       lualine_b = {},
       lualine_y = {},
       lualine_z = {},
-      -- These will be filled later
       lualine_c = {},
       lualine_x = {},
     },
     inactive_sections = {
-      -- these are to remove the defaults
       lualine_a = {},
       lualine_b = {},
       lualine_y = {},
@@ -73,31 +65,19 @@ M.config = function()
     },
   }
 
-  -- Inserts a component in lualine_c at left section
   local function ins_left(component)
     table.insert(config.sections.lualine_c, component)
   end
 
-  -- Inserts a component in lualine_x ot right section
   local function ins_right(component)
     table.insert(config.sections.lualine_x, component)
   end
 
-  -- ins_left({
-  --   function()
-  --     return "▊"
-  --   end,
-  --   color = { fg = colors.blue }, -- Sets highlighting of component
-  --   padding = { left = 0, right = 1 }, -- We don't need space before this
-  -- })
-
   ins_left({
-    -- mode component
     function()
       return ""
     end,
     color = function()
-      -- auto change color according to neovims mode
       local mode_color = {
         n = colors.red,
         i = colors.green,
@@ -125,7 +105,6 @@ M.config = function()
     padding = { right = 1 },
   })
   ins_left({
-    -- filesize component
     "filesize",
     cond = conditions.buffer_not_empty,
   })
@@ -164,11 +143,8 @@ M.config = function()
     end,
     cond = require("lazy.status").has_updates,
     color = { fg = colors.orange },
-    -- padding = { left = 1 },
   })
 
-  -- Insert mid section. You can make any number of sections in neovim :)
-  -- for lualine it's any number greater then 2
   ins_left({
     function()
       return "%="
@@ -195,10 +171,9 @@ M.config = function()
     color = { fg = "#ffffff", gui = "bold" },
   })
 
-  -- Add components to right sections
   ins_right({
-    "o:encoding", -- option component same as &encoding in viml
-    fmt = string.upper, -- I'm not sure why it's upper case either ;)
+    "o:encoding",
+    fmt = string.upper,
     cond = conditions.hide_in_width,
     color = { fg = colors.green, gui = "bold" },
   })
@@ -206,7 +181,7 @@ M.config = function()
   ins_right({
     "fileformat",
     fmt = string.upper,
-    icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+    icons_enabled = false,
     color = { fg = colors.green, gui = "bold" },
   })
 
@@ -218,7 +193,6 @@ M.config = function()
 
   ins_right({
     "diff",
-    -- Is it me or the symbol for modified us really weird
     symbols = { added = " ", modified = " ", removed = "✖ " },
     diff_color = {
       added = { fg = colors.green },
@@ -228,7 +202,6 @@ M.config = function()
     cond = conditions.hide_in_width,
   })
 
-  -- Now don't forget to initialize lualine
   lualine.setup(config)
 end
 
