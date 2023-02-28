@@ -158,6 +158,15 @@ M.config = function()
       gui = "bold",
     },
   })
+  ins_left({
+    function()
+      return require("lazy.status").updates()
+    end,
+    cond = require("lazy.status").has_updates,
+    color = { fg = colors.orange },
+    -- padding = { left = 1 },
+  })
+
   -- Insert mid section. You can make any number of sections in neovim :)
   -- for lualine it's any number greater then 2
   ins_left({
@@ -218,14 +227,6 @@ M.config = function()
     },
     cond = conditions.hide_in_width,
   })
-
-  -- ins_right({
-  --   function()
-  --     return "▊"
-  --   end,
-  --   color = { fg = colors.blue },
-  --   padding = { left = 1 },
-  -- })
 
   -- Now don't forget to initialize lualine
   lualine.setup(config)
