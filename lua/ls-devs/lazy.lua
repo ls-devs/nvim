@@ -172,7 +172,7 @@ require("lazy").setup({
       { "MunifTanjim/nui.nvim", event = "VeryLazy" },
       {
         "rcarriga/nvim-notify",
-        -- event = "VeryLazy",
+        event = "VeryLazy",
         config = require("ls-devs.plugins.notify").config,
       },
     },
