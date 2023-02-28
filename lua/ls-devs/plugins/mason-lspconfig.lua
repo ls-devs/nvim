@@ -32,6 +32,7 @@ M.config = function()
       "wgsl_analyzer",
       "grammarly",
       "svelte",
+      "taplo",
     },
     automatic_installation = true,
   })
