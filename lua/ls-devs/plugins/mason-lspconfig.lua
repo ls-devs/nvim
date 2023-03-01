@@ -33,6 +33,7 @@ M.config = function()
       "grammarly",
       "svelte",
       "taplo",
+      "vls",
     },
     automatic_installation = true,
   })

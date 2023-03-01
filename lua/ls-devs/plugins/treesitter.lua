@@ -51,6 +51,7 @@ M.config = function()
       "gomod",
       "haskell",
       "graphql",
+      "v",
     },
     sync_install = true,
     auto_install = true,
