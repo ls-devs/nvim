@@ -15,6 +15,7 @@ require("lazy").setup({
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x",
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-zero").config,
     dependencies = {
