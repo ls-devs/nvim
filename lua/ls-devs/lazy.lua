@@ -336,6 +336,14 @@ require("lazy").setup({
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-inlayhints").config,
   },
+
+  -- Live Server
+  {
+    "barrett-ruth/live-server.nvim",
+    build = "pnpm i -g live-server",
+    keys = require("ls-devs.plugins.live-server").keys,
+    config = require("ls-devs.plugins.live-server").config,
+  },
   -- Utils
   {
     "lukas-reineke/indent-blankline.nvim",
