@@ -15,7 +15,6 @@ return function()
       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
-
       on_attach = function(_, bufnr)
         vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
         vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
@@ -37,13 +36,16 @@ return function()
         keymap(bufnr, "n", "<leader>ut", ":DapTerminate<CR>", opts)
         keymap(bufnr, "n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
       end,
-      ["rust-analyzer"] = {
+          ["rust-analyzer"] = {
         inlayHints = { auto = true, show_parameter_hints = true, locationLinks = false },
         lens = {
           enable = true,
         },
         checkonsave = {
           command = "clippy",
+        },
+        procMacros = {
+          enabled = true,
         },
       },
     },
