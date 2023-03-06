@@ -89,10 +89,10 @@ keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
 -- Lazy
 keymap("n", "<leader>l", "<cmd>Lazy<CR>", opts)
-keymap("n", "<leader>lS", "<cmd>Lazy sync<CR>", opts)
-keymap("n", "<leader>lI", "<cmd>Lazy install<CR>", opts)
-keymap("n", "<leader>lU", "<cmd>Lazy update<CR>", opts)
-keymap("n", "<leader>lC", "<cmd>Lazy build<CR>", opts)
+keymap("n", "<leader>ls", "<cmd>Lazy sync<CR>", opts)
+keymap("n", "<leader>li", "<cmd>Lazy install<CR>", opts)
+keymap("n", "<leader>lu", "<cmd>Lazy update<CR>", opts)
+keymap("n", "<leader>lc", "<cmd>Lazy build<CR>", opts)
 
 -- Trouble
 keymap("n", "<leader>v", "<cmd>Trouble<CR>", opts)
