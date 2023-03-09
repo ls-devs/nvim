@@ -31,7 +31,7 @@ M.config = function()
       numbers = {},
       types = { "italic" },
       strings = {},
-      variables = {},
+      variables = { "bold" },
     },
     integrations = {
       treesitter = true,

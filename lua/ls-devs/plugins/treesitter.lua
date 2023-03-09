@@ -61,7 +61,7 @@ M.config = function()
     },
     rainbow = {
       enable = true,
-      extended_mode = false,
+      extended_mode = true,
     },
     autotag = {
       enable = true,
