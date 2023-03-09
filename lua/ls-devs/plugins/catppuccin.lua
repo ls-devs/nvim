@@ -1,12 +1,6 @@
 local M = {}
 
 M.config = function()
-  local catppuccin = require("catppuccin")
-
-  if not catppuccin then
-    return
-  end
-
   require("catppuccin").setup({
     flavour = "mocha", -- Can be one of: latte, frappe, macchiato, mocha
     -- background = { light = "latte", dark = "mocha" },
@@ -71,27 +65,27 @@ M.config = function()
       hop = true,
       illuminate = true,
       indent_blankline = { enabled = true, colored_indent_levels = false },
-      leap = false,
+      leap = true,
       lightspeed = false,
       lsp_saga = true,
       lsp_trouble = true,
       markdown = true,
       mason = true,
-      mini = false,
+      mini = true,
       navic = { enabled = false },
       neogit = false,
       neotest = false,
-      neotree = { enabled = false, show_root = true, transparent_panel = false },
-      noice = false,
+      neotree = { enabled = true, show_root = true, transparent_panel = true },
+      noice = true,
       notify = true,
       nvimtree = true,
       overseer = false,
       pounce = false,
-      semantic_tokens = false,
-      symbols_outline = false,
+      semantic_tokens = true,
+      symbols_outline = true,
       telekasten = false,
       telescope = true,
-      treesitter_context = false,
+      treesitter_context = true,
       ts_rainbow = true,
       vim_sneak = false,
       vimwiki = false,
@@ -187,15 +181,15 @@ M.config = function()
           LeapLabelPrimary = { bg = cp.yellow, fg = cp.base, bold = true, nocombine = true },
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, bold = true, nocombine = true },
           -- Keywords
-          ["@type"] = { fg = cp.yellow },
-          ["@variable"] = { fg = cp.text, style = { "bold" } },
-          ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
-          ["@comment"] = { fg = cp.overlay1, bold = true },
+              ["@type"] = { fg = cp.yellow },
+              ["@variable"] = { fg = cp.text, style = { "bold" } },
+              ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
+              ["@comment"] = { fg = cp.overlay2, bold = true },
         }
       end,
     },
   })
-  vim.cmd.colorscheme("catppuccin")
+  vim.cmd([[colorscheme catppuccin]])
 end
 
 return M

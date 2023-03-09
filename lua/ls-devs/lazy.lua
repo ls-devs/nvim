@@ -12,6 +12,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- Colorscheme
+  {
+    "catppuccin/nvim",
+    lazy = false,
+    priority = 1000,
+    name = "catppuccin",
+    config = require("ls-devs.plugins.catppuccin").config,
+  },
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
@@ -68,14 +76,6 @@ require("lazy").setup({
       { "hrsh7th/cmp-nvim-lua" },
       { "onsails/lspkind.nvim" },
     },
-  },
-  -- Colorscheme
-  {
-    "catppuccin/nvim",
-    lazy = false,
-    priority = 1000,
-    name = "catppuccin",
-    config = require("ls-devs.plugins.catppuccin").config,
   },
   -- File explorer
   {
