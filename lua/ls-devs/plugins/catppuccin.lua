@@ -178,13 +178,14 @@ M.config = function()
           LazyProgressDone = { fg = cp.pink, bg = cp.base, bold = true },
           LazyReasonEvent = { fg = cp.peach, bold = true },
           -- Leap
-          LeapLabelPrimary = { bg = cp.yellow, fg = cp.base, bold = true, nocombine = true },
-          LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, bold = true, nocombine = true },
+          LeapBackdrop = { fg = cp.none },
+          LeapLabelPrimary = { bg = cp.green, fg = cp.base, style = { "bold" and "underline" } },
+          LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
           -- Keywords
-              ["@type"] = { fg = cp.yellow },
-              ["@variable"] = { fg = cp.text, style = { "bold" } },
-              ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
-              ["@comment"] = { fg = cp.overlay2, bold = true },
+          ["@type"] = { fg = cp.yellow },
+          ["@variable"] = { fg = cp.text, style = { "bold" } },
+          ["@keyword.return"] = { fg = cp.mauve, style = { "bold" } },
+          ["@comment"] = { fg = cp.overlay2, bold = true },
         }
       end,
     },
