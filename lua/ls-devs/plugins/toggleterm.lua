@@ -2,10 +2,6 @@ local M = {}
 M.config = function()
   local toggleterm = require("toggleterm")
 
-  if not toggleterm then
-    return
-  end
-
   toggleterm.setup({
     size = 9,
     open_mapping = [[<c-\>]],
@@ -43,7 +39,7 @@ M.config = function()
 end
 
 M.keys = {
-  { "<C-y>", ":ToggleTerm<CR>", desc = "ToggleTerm" }
+  { "<C-y>", ":ToggleTerm<CR>", desc = "ToggleTerm" },
 }
 
 return M

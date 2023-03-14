@@ -15,6 +15,7 @@ return function()
       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
+      standalone = false,
       on_attach = function(_, bufnr)
         vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
         vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
@@ -23,6 +24,7 @@ return function()
         keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
         keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
         keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+        keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
         keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
         keymap(bufnr, "n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
         keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
@@ -36,17 +38,17 @@ return function()
         keymap(bufnr, "n", "<leader>ut", ":DapTerminate<CR>", opts)
         keymap(bufnr, "n", "<leader>bb", ":DapToggleBreakpoint<CR>", opts)
       end,
-          ["rust-analyzer"] = {
-        inlayHints = { auto = true, show_parameter_hints = true, locationLinks = false },
+      ["rust-analyzer"] = {
+        inlayHints = { auto = true, show_parameter_hints = true },
         lens = {
           enable = true,
         },
         checkonsave = {
           command = "clippy",
         },
-        procMacros = {
-          enabled = true,
-        },
+        -- procMacros = {
+        --   enabled = true,
+        -- },
       },
     },
   })

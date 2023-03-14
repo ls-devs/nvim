@@ -3,10 +3,6 @@ local M = {}
 M.config = function()
   local lualine = require("lualine")
 
-  if not lualine then
-    return
-  end
-
   local colors = {
     bg = "#101019",
     fg = "#cdd6f4",
