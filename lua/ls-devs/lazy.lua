@@ -125,21 +125,6 @@ require("lazy").setup({
     event = "VimEnter",
     config = require("ls-devs.plugins.alpha").config,
   },
-  -- Trouble
-  {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    config = require("ls-devs.plugins.trouble").config,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
-  -- Todos
-  {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.todo-comments").config,
-    dependencies = "nvim-lua/plenary.nvim",
-  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -162,7 +147,23 @@ require("lazy").setup({
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
+      "nvim-telescope/telescope-media-files.nvim",
     },
+  },
+  -- Trouble
+  {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    config = require("ls-devs.plugins.trouble").config,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  -- Todos
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "BufReadPre",
+    config = require("ls-devs.plugins.todo-comments").config,
+    dependencies = "nvim-lua/plenary.nvim",
   },
   -- UI
   {
@@ -203,7 +204,15 @@ require("lazy").setup({
     keys = require("ls-devs.plugins.flit").keys,
     config = require("ls-devs.plugins.flit").config,
     dependencies = {
-      "ggandor/leap.nvim",
+      {
+        "ggandor/leap.nvim",
+        config = require("ls-devs.plugins.leap").config,
+        keys = require("ls-devs.plugins.leap").keys,
+      },
+      {
+        "ggandor/leap-spooky.nvim",
+        config = require("ls-devs.plugins.leap-spooky").config,
+      },
     },
   },
   -- Http client
