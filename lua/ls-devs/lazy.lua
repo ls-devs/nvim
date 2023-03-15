@@ -36,11 +36,6 @@ require("lazy").setup({
         version = "v1.*",
         event = "InsertEnter",
       },
-      {
-        "jose-elias-alvarez/typescript.nvim",
-        ft = { "ts", "tsx", "jsx", "js" },
-        config = require("ls-devs.plugins.typescript").config,
-      },
     },
   },
   -- Autocompletion
@@ -345,6 +340,13 @@ require("lazy").setup({
     "b0o/schemastore.nvim",
     ft = { "json" },
   },
+  -- Typescript
+  {
+    "jose-elias-alvarez/typescript.nvim",
+    ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
+    config = require("ls-devs.plugins.typescript").config,
+  },
+
   -- Inlay hints
   {
     "lvimuser/lsp-inlayhints.nvim",
