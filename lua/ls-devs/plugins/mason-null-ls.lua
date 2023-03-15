@@ -10,7 +10,7 @@ M.config = function()
       "xmlformatter",
       "luacheck",
       "eslint_d",
-      "prettierd",
+      "prettier_d_slim",
       "rustfmt",
       "shellharden",
       "prismaFmt",
