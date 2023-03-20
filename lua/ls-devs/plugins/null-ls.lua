@@ -60,7 +60,9 @@ M.config = function()
       null_ls.builtins.diagnostics.yamllint,
       null_ls.builtins.formatting.yamlfmt,
       -- PHP
-      null_ls.builtins.diagnostics.phpcs,
+      null_ls.builtins.diagnostics.phpcs.with({
+        extra_args = { "--standard=ruleset.xml" },
+      }),
       null_ls.builtins.formatting.phpcsfixer,
       -- DOCKER
       null_ls.builtins.diagnostics.hadolint,
