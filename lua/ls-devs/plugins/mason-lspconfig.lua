@@ -30,7 +30,6 @@ M.config = function()
       "vimls",
       "graphql",
       "wgsl_analyzer",
-      "grammarly",
       "svelte",
       "taplo",
       "vls",
