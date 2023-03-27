@@ -64,6 +64,8 @@ M.config = function()
         extra_args = { "--standard=ruleset.xml" },
       }),
       null_ls.builtins.formatting.phpcsfixer,
+      -- SQL
+      null_ls.builtins.formatting.sql_formatter,
       -- DOCKER
       null_ls.builtins.diagnostics.hadolint,
       -- Haskell

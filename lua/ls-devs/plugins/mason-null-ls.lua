@@ -32,6 +32,7 @@ M.config = function()
       "pylint",
       "commitlint",
       "beautysh",
+      "sql_formatter",
     },
   })
 end
