@@ -4,8 +4,8 @@ M.config = function()
     border = "rounded", -- floating window border config
     width = 115,
     height = 115,
-    height_ratio = 0.9,
-    width_ration = 0.9,
+    height_ratio = 1,
+    width_ration = 1,
   })
 end
 
