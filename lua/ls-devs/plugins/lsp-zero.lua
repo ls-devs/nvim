@@ -38,9 +38,9 @@ M.config = function()
 
   local get_servers = require("mason-lspconfig").get_installed_servers
   for _, server in pairs(get_servers()) do
-    local config_exists, config = pcall(require, "ls-devs.lsp.settings." .. server)
-    if config_exists then
-      lsp.configure(server, config)
+    local has_config, config = pcall(require, "ls-devs.lsp.settings." .. server)
+    if has_config then
+      require("lspconfig")[server].setup(config)
     end
   end
 
