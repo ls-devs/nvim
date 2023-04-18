@@ -403,6 +403,12 @@ require("lazy").setup({
     config = require("ls-devs.plugins.silicon"),
     build = "./install.sh build",
   },
+  {
+    "timtro/glslView-nvim",
+    ft = "glsl",
+    config = require("ls-devs.plugins.glslViewer").config,
+    keys = require("ls-devs.plugins.glslViewer").keys,
+  },
 }, {
   defaults = {
     lazy = true,
