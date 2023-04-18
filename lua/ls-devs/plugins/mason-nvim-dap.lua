@@ -25,12 +25,6 @@ M.config = function()
     automatic_setup = true,
     automatic_installation = true,
   })
-
-  mason_nvim_dap.setup_handlers({
-    function(source_name)
-      require("mason-nvim-dap.automatic_setup")(source_name)
-    end,
-  })
 end
 
 return M

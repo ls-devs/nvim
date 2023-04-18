@@ -10,7 +10,6 @@ return function()
     },
     server = {
       capabilities = { offsetEncoding = "utf-8" },
-
       on_attach = function(_, bufnr)
         local opts = { noremap = true, silent = true }
         local keymap = vim.api.nvim_buf_set_keymap
@@ -94,7 +93,6 @@ return function()
           statement = "",
           ["template argument"] = "",
         },
-
         kind_icons = {
           Compound = "",
           Recovery = "",

@@ -24,6 +24,8 @@ M.config = function()
   })
 
   lsp.skip_server_setup({ "rust_analyzer" })
+  lsp.skip_server_setup({ "clangd" })
+  lsp.skip_server_setup({ "tsserver" })
 
   lsp.on_attach(function(client, bufnr)
     require("lsp-inlayhints").on_attach(client, bufnr)
@@ -35,6 +37,8 @@ M.config = function()
       end
     end
   end)
+
+  require("lspconfig").glslls.setup(require("ls-devs.lsp.settings.glslls"))
 
   local get_servers = require("mason-lspconfig").get_installed_servers
   for _, server in pairs(get_servers()) do
@@ -48,9 +52,26 @@ M.config = function()
 
   lsp.setup()
 
+  vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
+    config = config or {}
+    config.focus_id = ctx.method
+    if not (result and result.contents) then
+      return
+    end
+    config.border = "rounded"
+    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+    if vim.tbl_isempty(markdown_lines) then
+      return
+    end
+    return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
+  end
+
   -- Autocmd for stopping eslint_d & prettier_d_slim when leaving nvim
   vim.cmd("autocmd VimLeave *.jsx,*.tsx,*.vue,*.js,*.ts silent !eslint_d stop")
   vim.cmd("autocmd VimLeave *.jsx,*.tsx,*.vue,*.js,*.ts silent !prettier_d_slim stop")
+
+  vim.cmd("autocmd BufNewFile,BufRead *.vert,*.frag silent set filetype=glsl")
 end
 
 return M
