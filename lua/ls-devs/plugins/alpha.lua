@@ -20,13 +20,13 @@ M.config = function()
 
   dashboard.section.header.val = vim.split(logo, "\n")
   dashboard.section.buttons.val = {
-    dashboard.button("e", "פּ " .. " NeoTree", "<cmd>NeoTreeFloatToggle<CR>"),
+    dashboard.button("e", "󰙅 " .. " NeoTree", "<cmd>NeoTreeFloatToggle<CR>"),
     dashboard.button("f", " " .. " Find file", "<cmd>Telescope find_files <CR>"),
     dashboard.button("t", " " .. " Find text", "<cmd>Telescope live_grep <CR>"),
     dashboard.button("r", " " .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
     dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-    dashboard.button("l", "鈴" .. " Lazy", "<cmd>Lazy<CR>"),
-    dashboard.button("m", "憐" .. " Mason", "<cmd>Mason<CR>"),
+    dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
+    dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
     dashboard.button("q", " " .. " Quit", ":qa<CR>"),
   }
   for _, button in ipairs(dashboard.section.buttons.val) do
