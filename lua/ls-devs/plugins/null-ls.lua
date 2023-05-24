@@ -19,7 +19,9 @@ M.config = function()
       -- JS / TS
       null_ls.builtins.code_actions.eslint_d,
       null_ls.builtins.diagnostics.eslint_d,
-      null_ls.builtins.formatting.prettier_d_slim,
+      null_ls.builtins.formatting.prettier_d_slim.with({
+        root_dir = require("null-ls.utils").root_pattern("."),
+      }),
       -- JSON
       null_ls.builtins.diagnostics.jsonlint,
       null_ls.builtins.formatting.jq,
