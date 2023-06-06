@@ -32,7 +32,9 @@ M.config = function()
       null_ls.builtins.diagnostics.luacheck,
       null_ls.builtins.formatting.stylua,
       -- PRISMA
-      null_ls.builtins.formatting.prismaFmt,
+      null_ls.builtins.formatting.prismaFmt.with({
+        command = "prismaFmt",
+      }),
       -- RUST
       null_ls.builtins.formatting.rustfmt.with({
         extra_args = function(params)

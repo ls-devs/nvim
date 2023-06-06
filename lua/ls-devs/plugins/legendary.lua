@@ -40,11 +40,6 @@ M.config = function()
         description = "Navigate Window Right",
         opts = opts,
       },
-      -- { "<leader>h", "<C-w>h",                  opts = opts },
-      -- { "<leader>j", "<C-w>j",                  opts = opts },
-      -- { "<leader>k", "<C-w>k",                  opts = opts },
-      -- { "<leader>l", "<C-w>l",                  opts = opts },
-
       -- Navigate buffers
       {
         "<C-d>",
@@ -58,30 +53,28 @@ M.config = function()
         description = "Navigate Up & Center",
         opts = opts,
       },
-      -- { "n",         "nzzzv",                   opts = opts },
-      -- { "N",         "Nzzzv",                   opts = opts },
 
       -- Resize
       {
-        "<M-j>",
+        "<A-h>",
         ":resize -2<CR>",
         description = "Resize H-",
         opts = opts,
       },
       {
-        "<M-k>",
+        "<A-l>",
         ":resize +2<CR>",
         description = "Resize  H+",
         opts = opts,
       },
       {
-        "<M-l>",
+        "<A-j>",
         ":vertical resize -2<CR>",
         description = "Resize V-",
         opts = opts,
       },
       {
-        "<M-h>",
+        "<A-k>",
         ":vertical resize +2<CR>",
         description = "Resize V+",
         opts = opts,
@@ -111,15 +104,13 @@ M.config = function()
 
       -- Stay in indent mode
       {
-        "v",
         "<",
-        "<gv",
+        { v = "<gv" },
         opts = opts,
       },
       {
-        "v",
         ">",
-        ">gv",
+        { v = ">gv" },
         opts = opts,
       },
 
@@ -633,18 +624,7 @@ M.config = function()
     extensions = {
       -- load keymaps and commands from nvim-tree.lua
       nvim_tree = true,
-      -- load commands from smart-splits.nvim
-      -- and create keymaps, see :h legendary-extensions-smart-splits.nvim
-      smart_splits = {
-        directions = { "h", "j", "k", "l" },
-        mods = {
-          move = "<C>",
-          resize = "<M>",
-        },
-      },
-      -- load commands from op.nvim
       op_nvim = true,
-      -- load keymaps from diffview.nvim
       diffview = true,
     },
     sort = {
