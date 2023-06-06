@@ -187,7 +187,7 @@ require("lazy").setup({
   },
   {
     "levouh/tint.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.tint").config,
   },
 
@@ -260,7 +260,7 @@ require("lazy").setup({
   -- Animate
   {
     "echasnovski/mini.animate",
-    event = "VeryLazy",
+    event = "BufReadPost",
     version = false,
     config = require("ls-devs.plugins.animate").config,
   },

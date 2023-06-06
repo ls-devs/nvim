@@ -183,7 +183,7 @@ M.config = function()
           LeapLabelPrimary = { bg = cp.green, fg = cp.base, style = { "bold" and "underline" } },
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
           -- IndentScope
-          MiniIndentscopeSymbol = { fg = cp.peach },
+          MiniIndentscopeSymbol = { fg = cp.flamingo },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
