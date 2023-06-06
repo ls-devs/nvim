@@ -22,13 +22,6 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
--- Buffers
-keymap("n", "<leader>bl", "<cmd>BufferLineCloseRight<CR>", opts)
-keymap("n", "<leader>bh", "<cmd>BufferLineCloseLeft<CR>", opts)
-keymap("n", "<leader>bd", "<cmd>lua require('bufdelete').bufdelete(0, true)<CR>", opts)
-keymap("n", "<leader>bm", "<cmd>BufferLineCloseRight<CR><cmd>BufferLineCloseLeft<CR>", opts)
-keymap("n", "<leader>x", "<cmd>bd<CR>", opts)
-
 -- Resize
 keymap("n", "<M-j>", ":resize -2<CR>", opts)
 keymap("n", "<M-k>", ":resize +2<CR>", opts)

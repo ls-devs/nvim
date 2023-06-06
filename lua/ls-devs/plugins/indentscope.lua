@@ -2,7 +2,7 @@ local M = {}
 
 M.config = function()
   require("mini.indentscope").setup({
-    symbol = "│",
+    symbol = "|",
     options = { try_as_border = true },
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
