@@ -68,7 +68,7 @@ M.config = function()
       indent_blankline = { enabled = true, colored_indent_levels = false },
       leap = true,
       lightspeed = false,
-      lsp_saga = true,
+      lsp_saga = false,
       lsp_trouble = true,
       markdown = true,
       mason = true,
@@ -184,6 +184,7 @@ M.config = function()
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
           -- IndentScope
           MiniIndentscopeSymbol = { fg = cp.flamingo },
+
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
