@@ -13,7 +13,7 @@ M.config = function()
       color_mode = true,
     },
     hover = {
-      open_browser = "!brave"
+      open_browser = "!brave",
     },
     rename = {
       quit = "<ESC>",

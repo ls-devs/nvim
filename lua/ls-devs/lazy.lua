@@ -93,6 +93,13 @@ require("lazy").setup({
       },
     },
   },
+  -- Mapping
+  {
+    "mrjones2014/legendary.nvim",
+    event = "VeryLazy",
+    config = require("ls-devs.plugins.legendary").config,
+    dependencies = { "kkharji/sqlite.lua" },
+  },
   -- File explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
