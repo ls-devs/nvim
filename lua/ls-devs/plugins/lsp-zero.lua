@@ -29,12 +29,9 @@ M.config = function()
 
   lsp.on_attach(function(client, bufnr)
     require("lsp-inlayhints").on_attach(client, bufnr)
-    if client.server_capabilities["documentSymbolProvider"] then
-      require("nvim-navic").attach(client, bufnr)
-      if client.name == "volar" or client.name == "tsserver" then
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentFormattingRangeProvider = false
-      end
+    if client.name == "volar" or client.name == "tsserver" then
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentFormattingRangeProvider = false
     end
   end)
 

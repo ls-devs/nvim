@@ -29,7 +29,22 @@ require("lazy").setup({
     priority = 900,
     dependencies = {
       -- LSP Support
-      { "neovim/nvim-lspconfig", event = "BufReadPre" },
+      {
+        "neovim/nvim-lspconfig",
+        event = "BufReadPre",
+        dependencies = {
+          -- LSP Enhancement
+          {
+            "glepnir/lspsaga.nvim",
+            event = "LspAttach",
+            config = require("ls-devs.plugins.lsp_saga").config,
+            dependencies = {
+              { "nvim-tree/nvim-web-devicons" },
+              { "nvim-treesitter/nvim-treesitter" },
+            },
+          },
+        },
+      },
       -- Snippets
       {
         "L3MON4D3/LuaSnip",
@@ -107,18 +122,6 @@ require("lazy").setup({
     "j-hui/fidget.nvim",
     event = "BufReadPre",
     config = require("ls-devs.plugins.fidget").config,
-  },
-  -- Winbar
-  {
-    "utilyre/barbecue.nvim",
-    version = "*",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.barbecue"),
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "smiteshp/nvim-navic",
-      "nvim-tree/nvim-web-devicons",
-    },
   },
   -- Splash screen
   {
@@ -255,14 +258,6 @@ require("lazy").setup({
     version = false,
     keys = require("ls-devs.plugins.bufremove").keys,
     config = require("ls-devs.plugins.bufremove").config,
-  },
-
-  -- Animate
-  {
-    "echasnovski/mini.animate",
-    event = "BufReadPost",
-    version = false,
-    config = require("ls-devs.plugins.animate").config,
   },
 
   -- Comments
