@@ -182,6 +182,8 @@ M.config = function()
           LeapBackdrop = { fg = cp.none },
           LeapLabelPrimary = { bg = cp.green, fg = cp.base, style = { "bold" and "underline" } },
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
+          -- IndentScope
+          MiniIndentscopeSymbol = { fg = cp.peach },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },

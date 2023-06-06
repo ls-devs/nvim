@@ -185,6 +185,12 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
   },
+  {
+    "levouh/tint.nvim",
+    event = "VeryLazy",
+    config = require("ls-devs.plugins.tint").config,
+  },
+
   -- Formatter
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -239,17 +245,30 @@ require("lazy").setup({
   -- Surround
   {
     "echasnovski/mini.surround",
+    version = false,
     keys = require("ls-devs.plugins.surround").keys,
     config = require("ls-devs.plugins.surround").config,
   },
   -- Buffer Remove
   {
     "echasnovski/mini.bufremove",
+    version = false,
     keys = require("ls-devs.plugins.bufremove").keys,
+    config = require("ls-devs.plugins.bufremove").config,
   },
+
+  -- Animate
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    version = false,
+    config = require("ls-devs.plugins.animate").config,
+  },
+
   -- Comments
   {
     "echasnovski/mini.comment",
+    version = false,
     keys = require("ls-devs.plugins.comment").keys,
     config = require("ls-devs.plugins.comment").config,
     dependencies = {
@@ -262,6 +281,7 @@ require("lazy").setup({
   -- Indent Scope
   {
     "echasnovski/mini.indentscope",
+    version = false,
     event = "BufReadPre",
     config = require("ls-devs.plugins.indentscope").config,
   },

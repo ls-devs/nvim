@@ -1,5 +1,9 @@
 local M = {}
 
+M.config = function()
+  require("mini.bufremove").setup()
+end
+
 M.keys = {
 
   {
