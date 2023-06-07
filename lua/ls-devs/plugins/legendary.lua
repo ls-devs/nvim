@@ -2,19 +2,20 @@ local M = {}
 
 M.config = function()
   local opts = { noremap = true, silent = true }
+  local keymap = vim.api.nvim_set_keymap
+
+  -- Leader key
+  keymap("", "<Space>", "<Nop>", opts)
   vim.g.mapleader = " "
   vim.g.maplocalleader = " "
 
   require("legendary").setup({
     keymaps = {
-      { "<leader>LL", "<cmd>Legendary<CR>",          description = "Legendary", opts = opts },
-      -- Leader key
-      {
-        "<Space>",
-        "<Nop>",
-        description = "Leader Key",
-        opts = opts,
-      },
+      { "<leader>LL", "<cmd>Legendary<CR>",           description = "Legendary",           opts = opts },
+      { "<leader>LK", "<cmd>Legendary keymaps<CR>",   description = "Legendary keymaps",   opts = opts },
+      { "<leader>LC", "<cmd>Legendary commands<CR>",  description = "Legendary commands",  opts = opts },
+      { "<leader>LA", "<cmd>Legendary autocmds<CR>",  description = "Legendary autocmds",  opts = opts },
+      { "<leader>LF", "<cmd>Legendary functions<CR>", description = "Legendary functions", opts = opts },
       -- Window navigation
       {
         "<C-h>",
@@ -99,8 +100,8 @@ M.config = function()
         description = "Paste Text",
         opts = opts,
       },
-      { "J",          { x = ":move '>+1<CR>gv-gv" }, opts = opts },
-      { "K",          { x = ":move '<-2<CR>gv-gv" }, opts = opts },
+      { "J", { x = ":move '>+1<CR>gv-gv" }, opts = opts },
+      { "K", { x = ":move '<-2<CR>gv-gv" }, opts = opts },
 
       -- Stay in indent mode
       {
@@ -627,25 +628,54 @@ M.config = function()
       op_nvim = true,
       diffview = true,
     },
+    autocmds = {
+      {
+        "VimLeave",
+        ":silent !eslint_d stop",
+        description = "Stop eslint_d",
+        opts = {
+          pattern = { "*.jsx", "*.tsx", "*.vue", "*.js", "*.ts" },
+        },
+      },
+      {
+        "VimLeave",
+        ":silent !prettier_d_slim stop",
+        description = "Stop prettier_d_slim",
+        opts = {
+          pattern = {
+            "*.jsx",
+            "*.tsx",
+            "*.vue",
+            "*.js",
+            "*.ts",
+            "*.css",
+            "*.scss",
+            "*.less",
+            "*.html",
+            "*.json",
+            "*.jsonc",
+            "*.yaml",
+            "*.md",
+            "*.mdx",
+            "*.graphql",
+          },
+        },
+      },
+      {
+        { "BufNewFile", "BufRead" },
+        ":silent set filetype=glsl",
+        description = "Set filetype to glsl",
+        opts = {
+          pattern = { "*.vert", "*.frag" },
+        },
+      },
+    },
     sort = {
-      -- sort most recently used item to the top
       most_recent_first = true,
-      -- sort user-defined items before built-in items
       user_items_first = true,
-      -- sort the specified item type before other item types,
-      -- value must be one of: 'keymap', 'command', 'autocmd', 'group', nil
       item_type_bias = nil,
-      -- settings for frecency sorting.
-      -- https://en.wikipedia.org/wiki/Frecency
-      -- Set `frecency = false` to disable.
-      -- this feature requires sqlite.lua (https://github.com/kkharji/sqlite.lua)
-      -- and will be automatically disabled if sqlite is not available.
-      -- NOTE: THIS TAKES PRECEDENCE OVER OTHER SORT OPTIONS!
       frecency = {
-        -- the directory to store the database in
         db_root = string.format("%s/legendary/", vim.fn.stdpath("data")),
-        -- the maximum number of timestamps for a single item
-        -- to store in the database
         max_timestamps = 10,
       },
     },
