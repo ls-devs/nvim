@@ -63,12 +63,6 @@ M.config = function()
     end
     return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
   end
-
-  -- Autocmd for stopping eslint_d & prettier_d_slim when leaving nvim
-  vim.cmd("autocmd VimLeave *.jsx,*.tsx,*.vue,*.js,*.ts silent !eslint_d stop")
-  vim.cmd("autocmd VimLeave *.jsx,*.tsx,*.vue,*.js,*.ts silent !prettier_d_slim stop")
-
-  vim.cmd("autocmd BufNewFile,BufRead *.vert,*.frag silent set filetype=glsl")
 end
 
 return M
