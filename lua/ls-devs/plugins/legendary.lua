@@ -295,7 +295,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "gt",
+        "pt",
         "<cmd>Lspsaga peek_type_definition<CR>",
         description = "LSPSaga Peek Type Definition",
         opts = opts,
