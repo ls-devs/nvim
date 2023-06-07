@@ -15,6 +15,13 @@ M.config = function()
     handlers = {
       handle = false,
     },
+    excluded_filetypes = {
+      "prompt",
+      "TelescopePrompt",
+      "noice",
+      "neo-tree",
+      "neo-tree-popup",
+    },
   })
 end
 
