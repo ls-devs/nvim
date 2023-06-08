@@ -203,6 +203,13 @@ M.config = function()
         opts = opts,
       },
       {
+        "<leader>tz",
+        "<cmd>Telescope aerial<CR>",
+        description = "Telescope aerial",
+        opts = opts,
+      },
+
+      {
         "<leader>fB",
         "<cmd>Telescope current_buffer_fuzzy_find<CR>",
         description = "Telescope Current Buffer Fuzzy Find",
@@ -391,6 +398,10 @@ M.config = function()
         opts = opts,
       },
 
+      -- Aerial
+      { "<leader>at", "<cmd>AerialToggle<CR>", description = "Aerial Toggle", opts = opts },
+      { "<leader>an", "<cmd>AerialNext<CR>",   description = "Aerial Next",   opts = opts },
+      { "<leader>ap", "<cmd>AerialPrev<CR>",   description = "Aerial Prev",   opts = opts },
       -- Lazy
       {
         "<leader>l",

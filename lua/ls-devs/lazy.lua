@@ -330,6 +330,16 @@ require("lazy").setup({
     "luk400/vim-jukit",
     ft = { "python", "ipynb" },
   },
+  -- Aerial
+  {
+    "stevearc/aerial.nvim",
+    cmd = "AerialToggle",
+    config = require("ls-devs.plugins.aerial").config,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
   -- Git
   {
     "kdheepak/lazygit.nvim",
