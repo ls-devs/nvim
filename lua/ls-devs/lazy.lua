@@ -195,6 +195,12 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
   },
+  -- Transparency
+  {
+    "xiyaowong/transparent.nvim",
+    lazy = false,
+    config = require("ls-devs.plugins.transparent").config,
+  },
   {
     "levouh/tint.nvim",
     event = "BufReadPost",
