@@ -200,7 +200,6 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.tint").config,
   },
-
   -- Formatter
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -319,6 +318,22 @@ require("lazy").setup({
     config = require("ls-devs.plugins.rust-tools"),
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
+  -- Overseer
+  {
+    "stevearc/overseer.nvim",
+    cmd = {
+      "OverseerRun",
+      "OverseerToggle",
+    },
+    config = require("ls-devs.plugins.overseer").config,
+  },
+  -- Crates.io
+  {
+    "saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = require("ls-devs.plugins.crates").config,
+  },
   -- Clang tools
   {
     "p00f/clangd_extensions.nvim",
@@ -329,6 +344,28 @@ require("lazy").setup({
   {
     "luk400/vim-jukit",
     ft = { "python", "ipynb" },
+  },
+  -- NeoAI
+  {
+    "Bryley/neoai.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = {
+      "NeoAI",
+      "NeoAIOpen",
+      "NeoAIClose",
+      "NeoAIToggle",
+      "NeoAIContext",
+      "NeoAIContextOpen",
+      "NeoAIContextClose",
+      "NeoAIInject",
+      "NeoAIInjectCode",
+      "NeoAIInjectContext",
+      "NeoAIInjectContextCode",
+    },
+    keys = require("ls-devs.plugins.neoai").keys,
+    config = require("ls-devs.plugins.neoai").config,
   },
   -- Aerial
   {
