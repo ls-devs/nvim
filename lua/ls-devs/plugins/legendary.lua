@@ -252,6 +252,20 @@ M.config = function()
         opts = opts,
       },
 
+      -- Overseer
+      {
+        "<leader>or",
+        "<cmd>OverseerRun<CR>",
+        description = "Overseer Run",
+        opts = opts,
+      },
+      {
+        "<leader>ot",
+        "<cmd>OverseerToggle<CR>",
+        description = "Overseer Toggle",
+        opts = opts,
+      },
+
       -- LSP & LSP Saga
       {
         "<C-s>",
