@@ -2,6 +2,10 @@ local M = {}
 
 M.config = function()
   require("lspsaga").setup({
+    lightbulb = {
+      enable = false,
+      enable_in_insert = false,
+    },
     symbol_in_winbar = {
       enable = true,
       separator = "  ",
