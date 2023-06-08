@@ -31,7 +31,18 @@ return function()
         previewer = false,
       },
     },
+    extensions = {
+      aerial = {
+        -- Display symbols as <root>.<parent>.<symbol>
+        show_nesting = {
+          ["_"] = false, -- This key will be the default
+          json = true, -- You can set the option for specific filetypes
+          yaml = true,
+        },
+      },
+    },
   })
   telescope.load_extension("fzf")
   telescope.load_extension("media_files")
+  telescope.load_extension("aerial")
 end
