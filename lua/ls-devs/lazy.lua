@@ -136,20 +136,6 @@ require("lazy").setup({
     event = "VimEnter",
     config = require("ls-devs.plugins.alpha").config,
   },
-  -- Scrollbar
-  {
-    "petertriho/nvim-scrollbar",
-    event = "VeryLazy",
-    config = require("ls-devs.plugins.scrollbar").config,
-    dependencies = {
-      { "kevinhwang91/nvim-hlslens", config = require("ls-devs.plugins.scrollbar").hlslens },
-      {
-        "lewis6991/gitsigns.nvim",
-        cmd = "Gitsigns",
-        config = require("ls-devs.plugins.scrollbar").gitsigns,
-      },
-    },
-  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -349,6 +335,11 @@ require("lazy").setup({
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
     keys = require("ls-devs.plugins.lazygit").keys,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.gitsigns").config,
   },
   {
     "sindrets/diffview.nvim",
