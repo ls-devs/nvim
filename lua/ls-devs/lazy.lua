@@ -93,6 +93,11 @@ require("lazy").setup({
       },
     },
   },
+  -- Yuck
+  {
+    "elkowar/yuck.vim",
+    ft = "yuck",
+  },
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
@@ -127,6 +132,7 @@ require("lazy").setup({
   -- Fidget
   {
     "j-hui/fidget.nvim",
+    branch = "legacy",
     event = "BufReadPre",
     config = require("ls-devs.plugins.fidget").config,
   },
