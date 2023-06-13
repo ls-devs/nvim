@@ -212,6 +212,16 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.tint").config,
   },
+  -- Windows
+  {
+    "anuvyklack/windows.nvim",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.windows").config,
+    dependencies = {
+      { "anuvyklack/middleclass" },
+      { "anuvyklack/animation.nvim" },
+    },
+  },
   -- Formatter
   {
     "jose-elias-alvarez/null-ls.nvim",
