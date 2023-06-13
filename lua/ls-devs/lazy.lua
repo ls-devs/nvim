@@ -439,7 +439,7 @@ require("lazy").setup({
   {
     "barrett-ruth/live-server.nvim",
     build = "pnpm i -g live-server",
-    keys = require("ls-devs.plugins.live-server").keys,
+    cmd = "LiveServerStart",
     config = require("ls-devs.plugins.live-server").config,
   },
   -- Utils
