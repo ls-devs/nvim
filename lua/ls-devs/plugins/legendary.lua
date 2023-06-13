@@ -266,6 +266,10 @@ M.config = function()
         opts = opts,
       },
 
+      -- Live Server
+      { "<leader>ss", "<cmd>LiveServerStart<CR>", description = "Start Live Server", opts = opts },
+      { "<leader>sk", "<cmd>LiveServerStop<CR>",  description = "Stop Live Server",  opts = opts },
+
       -- LSP & LSP Saga
       {
         "<C-s>",
