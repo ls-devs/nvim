@@ -127,14 +127,14 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.lualine").config,
-    dependencies = { { "nvim-tree/nvim-web-devicons" } },
-  },
-  -- Fidget
-  {
-    "j-hui/fidget.nvim",
-    branch = "legacy",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.fidget").config,
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+      {
+        "linrongbin16/lsp-progress.nvim",
+        event = "VeryLazy",
+        config = require("ls-devs.plugins.lsp-progress").config,
+      },
+    },
   },
   -- Splash screen
   {
