@@ -270,7 +270,7 @@ require("lazy").setup({
   -- Auto close pairs
   {
     "windwp/nvim-autopairs",
-    event = "BufReadPre",
+    event = "InsertEnter",
     config = require("ls-devs.plugins.autopairs").config,
   },
   -- Surround
@@ -305,7 +305,7 @@ require("lazy").setup({
   {
     "echasnovski/mini.indentscope",
     version = false,
-    event = "BufReadPre",
+    event = "BufEnter",
     config = require("ls-devs.plugins.indentscope").config,
   },
   {
