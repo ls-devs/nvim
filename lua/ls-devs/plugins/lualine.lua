@@ -150,12 +150,11 @@ M.config = function()
     function()
       return require("lsp-progress").progress({
         max_size = 40,
-        -- client_format = function(client_name, spinner, series_messages)
-        --   return #series_messages > 0
-        --       and client_name ~= "null-ls"
-        --       and ("[" .. client_name .. "] " .. spinner .. " " .. table.concat(series_messages, ", "))
-        --       or nil
-        -- end,
+        client_format = function(client_name, spinner, series_messages)
+          return #series_messages > 0
+              and ("[" .. client_name .. "] " .. spinner .. " " .. table.concat(series_messages, ", "))
+              or nil
+        end,
         format = function(messages)
           return #messages > 0 and table.concat(messages, " ") or ""
         end,
