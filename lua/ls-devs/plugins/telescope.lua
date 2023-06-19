@@ -24,11 +24,11 @@ return function()
     pickers = {
       find_files = {
         theme = "dropdown",
-        previewer = false,
+        previewer = true,
       },
       buffers = {
         theme = "dropdown",
-        previewer = false,
+        previewer = true,
       },
     },
     extensions = {
