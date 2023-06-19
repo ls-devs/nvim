@@ -212,16 +212,6 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.tint").config,
   },
-  -- Windows
-  {
-    "anuvyklack/windows.nvim",
-    event = "BufReadPost",
-    config = require("ls-devs.plugins.windows").config,
-    dependencies = {
-      { "anuvyklack/middleclass" },
-      { "anuvyklack/animation.nvim" },
-    },
-  },
   -- Formatter
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -259,13 +249,6 @@ require("lazy").setup({
     keys = require("ls-devs.plugins.rest-nvim").keys,
     config = require("ls-devs.plugins.rest-nvim").config,
     dependencies = { "nvim-lua/plenary.nvim" },
-  },
-  -- Terminal toggle
-  {
-    "akinsho/toggleterm.nvim",
-    keys = require("ls-devs.plugins.toggleterm").keys,
-    config = require("ls-devs.plugins.toggleterm").config,
-    version = "*",
   },
   -- Auto close pairs
   {
