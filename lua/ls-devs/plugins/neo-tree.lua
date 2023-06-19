@@ -31,6 +31,56 @@ M.config = function()
     popup_border_style = "rounded",
     enable_git_status = true,
     enable_diagnostics = true,
+    default_component_configs = {
+      container = {
+        enable_character_fade = true,
+      },
+      indent = {
+        indent_size = 2,
+        padding = 1, -- extra padding on left hand side
+        -- indent guides
+        with_markers = true,
+        indent_marker = "│",
+        last_indent_marker = "└",
+        highlight = "NeoTreeIndentMarker",
+        -- expander config, needed for nesting files
+        with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+        expander_collapsed = "",
+        expander_expanded = "",
+        expander_highlight = "NeoTreeExpander",
+      },
+      icon = {
+        folder_closed = "",
+        folder_open = "",
+        folder_empty = "",
+        default = "*",
+        highlight = "NeoTreeFileIcon",
+      },
+      modified = {
+        symbol = "[+]",
+        highlight = "NeoTreeModified",
+      },
+      name = {
+        trailing_slash = false,
+        use_git_status_colors = true,
+        highlight = "NeoTreeFileName",
+      },
+      git_status = {
+        symbols = {
+          -- Change type
+          added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted = "✖", -- this can only be used in the git_status source
+          renamed = "", -- this can only be used in the git_status source
+          -- Status type
+          untracked = "",
+          ignored = "",
+          unstaged = "",
+          staged = "",
+          conflict = "",
+        },
+      },
+    },
     window = {
       position = "right",
       mappings = {
@@ -118,9 +168,9 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>e", "<cmd>NeoTreeFloatToggle<CR>", desc = "NeoTreeFloatToggle" },
-  { "<leader>to", "<cmd>NeoTreeShow<CR>", desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>NeoTreeClose<CR>", desc = "NeoTreeClose" },
+  { "<leader>e",  "<cmd>NeoTreeFloatToggle<CR>", desc = "NeoTreeFloatToggle" },
+  { "<leader>to", "<cmd>NeoTreeShow<CR>",        desc = "NeoTreeShow" },
+  { "<leader>tc", "<cmd>NeoTreeClose<CR>",       desc = "NeoTreeClose" },
 }
 
 return M
