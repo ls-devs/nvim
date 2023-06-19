@@ -698,6 +698,14 @@ M.config = function()
           pattern = { "*.vert", "*.frag" },
         },
       },
+      {
+        { "User LspProgressStatusUpdated" },
+        'lua require("lualine").refresh()',
+        description = "Refresh Lualine",
+        opts = {
+          -- group = "lualine_augroup",
+        },
+      },
     },
     sort = {
       most_recent_first = true,
