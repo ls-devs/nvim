@@ -24,6 +24,7 @@ M.config = function()
   })
 
   lsp.skip_server_setup({ "rust_analyzer" })
+  lsp.skip_server_setup({ "hls" })
   lsp.skip_server_setup({ "clangd" })
   lsp.skip_server_setup({ "tsserver" })
 

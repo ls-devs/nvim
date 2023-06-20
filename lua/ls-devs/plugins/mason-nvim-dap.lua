@@ -21,6 +21,7 @@ M.config = function()
       "codelldb",
       "js",
       "chrome",
+      "haskell",
     },
     automatic_setup = true,
     automatic_installation = true,

@@ -251,7 +251,47 @@ M.config = function()
         description = "Telescope Git Branches",
         opts = opts,
       },
-
+      -- Urlview
+      {
+        "<leader>ul",
+        "<cmd>UrlView lazy<CR>",
+        description = "UrlView Lazy",
+        opts = opts,
+      },
+      {
+        "<leader>ub",
+        "<cmd>UrlView buffer<CR>",
+        description = "UrlView Buffer",
+        opts = opts,
+      },
+      {
+        "<leader>uf",
+        "<cmd>UrlView file<CR>",
+        description = "UrlView File",
+        opts = opts,
+      },
+      -- Ufo
+      {
+        "zR",
+        function()
+          require("ufo").openAllFolds()
+        end,
+      },
+      {
+        "zM",
+        function()
+          require("ufo").closeAllFolds()
+        end,
+      },
+      {
+        "<leader>P",
+        function()
+          local winid = require("ufo").peekFoldedLinesUnderCursor()
+          if not winid then
+            vim.lsp.buf.hover()
+          end
+        end,
+      },
       -- Overseer
       {
         "<leader>or",

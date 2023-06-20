@@ -38,8 +38,11 @@ local options = {
   sidescrolloff = 12,
   foldlevel = 99,
   foldlevelstart = 99,
-  foldmethod = "expr",
-  foldexpr = "nvim_treesitter#foldexpr()",
+  foldmethod = "manual",
+  -- foldexpr = "nvim_treesitter#foldexpr()",
+  foldcolumn = "1",
+  foldenable = true,
+  fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 }
 
 for k, v in pairs(options) do

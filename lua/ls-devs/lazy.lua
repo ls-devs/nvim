@@ -164,9 +164,16 @@ require("lazy").setup({
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
-      "nvim-telescope/telescope-media-files.nvim",
+      { "nvim-telescope/telescope-media-files.nvim" },
     },
   },
+  -- UrlView
+  {
+    "axieax/urlview.nvim",
+    cmd = "UrlView",
+    config = require("ls-devs.plugins.urlview").config,
+  },
+
   -- Trouble
   {
     "folke/trouble.nvim",
@@ -200,12 +207,6 @@ require("lazy").setup({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
-  },
-  -- Transparency
-  {
-    "xiyaowong/transparent.nvim",
-    lazy = false,
-    config = require("ls-devs.plugins.transparent").config,
   },
   {
     "levouh/tint.nvim",
@@ -323,6 +324,17 @@ require("lazy").setup({
     config = require("ls-devs.plugins.rust-tools"),
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
+  -- Haskell Tools
+  {
+    "mrcjkb/haskell-tools.nvim",
+    ft = { "haskell" },
+    config = require("ls-devs.plugins.haskell_tools").config,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    version = "1.x.x",              -- recommended
+  },
   -- Overseer
   {
     "stevearc/overseer.nvim",
@@ -408,6 +420,31 @@ require("lazy").setup({
     "ray-x/lsp_signature.nvim",
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-signature").config,
+  },
+  -- Ufo
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      { "kevinhwang91/promise-async" },
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require("statuscol.builtin")
+          require("statuscol").setup({
+            -- foldfunc = "builtin",
+            -- setopt = true,
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
+              { text = { "%s" },                  click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          })
+        end,
+      },
+    },
+    event = "BufRead",
+    config = require("ls-devs.plugins.ufo").config,
   },
   -- Json schemas
   {

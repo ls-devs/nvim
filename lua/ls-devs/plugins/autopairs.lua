@@ -10,7 +10,7 @@ M.config = function()
       javascript = { "string", "template_string" },
       java = false,
     },
-    disable_filetype = { "TelescopePrompt", "spectre_panel" },
+    disable_filetype = { "TelescopePrompt", "spectre_panel", "guihua", "guihua_rust", "clap_input" },
     fast_wrap = {
       map = "<M-e>",
       chars = { "{", "[", "(", '"', "'" },
@@ -29,6 +29,10 @@ M.config = function()
   local cmp = require("cmp")
 
   cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+
+  if vim.o.ft == "clap_input" and vim.o.ft == "guihua" and vim.o.ft == "guihua_rust" then
+    cmp.setup.buffer({ completion = { enable = false } })
+  end
 end
 
 return M

@@ -127,8 +127,10 @@ M.config = function()
       mocha = function(cp)
         return {
           -- For base configs.
+          Normal = { bg = cp.none },
+          CursorLine = { bg = cp.none },
           NormalFloat = { fg = cp.text, bg = true and cp.none or cp.base },
-          CursorLineNr = { fg = cp.pink },
+          CursorLineNr = { fg = cp.pink, bg = cp.none },
           LineNr = { fg = cp.lavender },
           Search = { bg = cp.surface0, fg = cp.pink, style = { "bold" } },
           IncSearch = { bg = cp.pink, fg = cp.surface1 },
@@ -184,6 +186,14 @@ M.config = function()
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
           -- IndentScope
           MiniIndentscopeSymbol = { fg = cp.flamingo },
+          -- UFO
+          UfoPreviewSbar = { fg = cp.red, bg = cp.blue },
+          -- Keywords
+          UfoPreviewThumb = { fg = cp.red, bg = cp.blue },
+          UfoPreviewWinBar = { fg = cp.red, bg = cp.blue },
+          UfoPreviewCursorLine = { fg = cp.red, bg = cp.blue },
+          UfoFoldedEllipsis = { fg = cp.mauve, bg = cp.blue, style = { "bold" } },
+          UfoCursorFoldedLine = { bg = cp.mantle },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
