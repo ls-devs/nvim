@@ -285,6 +285,13 @@ require("lazy").setup({
       },
     },
   },
+  -- CursorWord
+  {
+    "echasnovski/mini.cursorword",
+    version = false,
+    event = "BufRead",
+    config = require("ls-devs.plugins.cursorword").config,
+  },
   -- Indent Scope
   {
     "echasnovski/mini.indentscope",
@@ -445,6 +452,12 @@ require("lazy").setup({
     },
     event = "BufRead",
     config = require("ls-devs.plugins.ufo").config,
+  },
+  -- Presence
+  {
+    "andweeb/presence.nvim",
+    lazy = false,
+    config = require("ls-devs.plugins.presence").config,
   },
   -- Json schemas
   {
