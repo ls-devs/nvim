@@ -1,9 +1,8 @@
 local M = {}
-local builtin = require("statuscol.builtin")
 
 M.config = function()
   require("statuscol").setup({
-
+  builtin = require("statuscol.builtin"),
     -- foldfunc = "builtin",
     -- setopt = true,
     relculright = true,
