@@ -16,31 +16,6 @@ M.config = function()
       { "<leader>LC", "<cmd>Legendary commands<CR>",  description = "Legendary commands",  opts = opts },
       { "<leader>LA", "<cmd>Legendary autocmds<CR>",  description = "Legendary autocmds",  opts = opts },
       { "<leader>LF", "<cmd>Legendary functions<CR>", description = "Legendary functions", opts = opts },
-      -- Window navigation
-      {
-        "<C-h>",
-        "<C-w>h",
-        description = "Navigate Window Left",
-        opts = opts,
-      },
-      {
-        "<C-j>",
-        "<C-w>j",
-        description = "Navigate Window Down",
-        opts = opts,
-      },
-      {
-        "<C-k>",
-        "<C-w>k",
-        description = "Navigate Window Up",
-        opts = opts,
-      },
-      {
-        "<C-l>",
-        "<C-w>l",
-        description = "Navigate Window Right",
-        opts = opts,
-      },
       -- Navigate buffers
       {
         "<C-d>",
@@ -56,41 +31,16 @@ M.config = function()
       },
 
       -- Resize
-      {
-        "<A-h>",
-        ":resize -2<CR>",
-        description = "Resize H-",
-        opts = opts,
-      },
-      {
-        "<A-l>",
-        ":resize +2<CR>",
-        description = "Resize  H+",
-        opts = opts,
-      },
-      {
-        "<A-j>",
-        ":vertical resize -2<CR>",
-        description = "Resize V-",
-        opts = opts,
-      },
-      {
-        "<A-k>",
-        ":vertical resize +2<CR>",
-        description = "Resize V+",
-        opts = opts,
-      },
-
       -- Move text up and down
       {
         "<A-j>",
-        { v = ":m .+1<CR>==", x = ":move '>+1<CR>gv-gv" },
+        { v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
         description = "Move Text Down",
         opts = opts,
       },
       {
         "<A-k>",
-        { v = ":m .-2<CR>==", x = ":move '<-2<CR>gv-gv" },
+        { v = "<cmd>m .-2<CR>==", x = "<cmd>move '<-2<CR>gv-gv" },
         description = "Move Text Up",
         opts = opts,
       },
@@ -114,7 +64,19 @@ M.config = function()
         { v = ">gv" },
         opts = opts,
       },
-
+      -- Copilot
+      {
+        "<leader>cp",
+        "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>",
+        description = "Toggle Copilot",
+        opts = opts,
+      },
+      {
+        "<leader>ph",
+        "<cmd>lua print('Hello')<CR>",
+        description = "Print Hello",
+        opts = opts,
+      },
       -- File explorer
       {
         "<leader>e",
@@ -284,7 +246,7 @@ M.config = function()
         end,
       },
       {
-        "<leader>P",
+        "<leader>p",
         function()
           local winid = require("ufo").peekFoldedLinesUnderCursor()
           if not winid then
@@ -695,6 +657,17 @@ M.config = function()
       -- load keymaps and commands from nvim-tree.lua
       nvim_tree = true,
       op_nvim = true,
+      smart_splits = {
+        directions = { "h", "j", "k", "l" },
+        mods = {
+          -- for moving cursor between windows
+          move = "<C>",
+          -- for resizing windows
+          resize = "<M>",
+          -- for swapping window buffers
+          swap = false, -- false disables creating a binding
+        },
+      },
       diffview = true,
     },
     autocmds = {

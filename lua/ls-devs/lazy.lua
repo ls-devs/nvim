@@ -93,6 +93,13 @@ require("lazy").setup({
       },
     },
   },
+  -- Copilot
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = require("ls-devs.plugins.copilot").config,
+  },
   -- Yuck
   {
     "elkowar/yuck.vim",
@@ -103,7 +110,15 @@ require("lazy").setup({
     "mrjones2014/legendary.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.legendary").config,
-    dependencies = { "kkharji/sqlite.lua" },
+    dependencies = {
+      "kkharji/sqlite.lua",
+      -- Smart Splits
+      {
+        "mrjones2014/smart-splits.nvim",
+        build = "./kitty/install-kittens.bash",
+        config = require("ls-devs.plugins.smart_splits").config,
+      },
+    },
   },
   -- File explorer
   {
@@ -150,6 +165,10 @@ require("lazy").setup({
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "p00f/nvim-ts-rainbow" },
+      {
+        "haringsrob/nvim_context_vt",
+        config = require("ls-devs.plugins.nvim_context_vt").config,
+      },
     },
     build = ":TSUpdate",
   },
@@ -284,13 +303,6 @@ require("lazy").setup({
         event = "BufReadPre",
       },
     },
-  },
-  -- CursorWord
-  {
-    "echasnovski/mini.cursorword",
-    version = false,
-    event = "BufRead",
-    config = require("ls-devs.plugins.cursorword").config,
   },
   -- Indent Scope
   {
