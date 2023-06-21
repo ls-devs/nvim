@@ -152,7 +152,6 @@ M.config = function()
           LspDiagnosticsVirtualTextHint = { fg = cp.rosewater },
           LspDiagnosticsUnderlineHint = { sp = cp.rosewater },
           -- For fidget.
-          FidgetTask = { bg = cp.none, fg = cp.surface2 },
           FidgetTitle = { fg = cp.blue, style = { "bold" } },
           -- For trouble.nvim
           TroubleNormal = { bg = cp.base },
@@ -190,7 +189,8 @@ M.config = function()
           UfoPreviewSbar = { fg = cp.red, bg = cp.blue },
           -- Keywords
           UfoFoldedEllipsis = { fg = cp.mauve, bg = cp.blue, style = { "bold" } },
-          CustomContextVt = { fg = cp.overlay2 },
+          CustomContextVt = { fg = cp.overlay2, style = { "bold" and "italic" } },
+          FidgetTask = { fg = cp.text, style = { "bold" } },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
