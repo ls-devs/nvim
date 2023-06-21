@@ -144,11 +144,6 @@ require("lazy").setup({
     config = require("ls-devs.plugins.lualine").config,
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },
-      {
-        "linrongbin16/lsp-progress.nvim",
-        event = "VeryLazy",
-        config = require("ls-devs.plugins.lsp-progress").config,
-      },
     },
   },
   -- Splash screen
@@ -165,10 +160,6 @@ require("lazy").setup({
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "p00f/nvim-ts-rainbow" },
-      {
-        "haringsrob/nvim_context_vt",
-        config = require("ls-devs.plugins.nvim_context_vt").config,
-      },
     },
     build = ":TSUpdate",
   },
@@ -191,6 +182,13 @@ require("lazy").setup({
     "axieax/urlview.nvim",
     cmd = "UrlView",
     config = require("ls-devs.plugins.urlview").config,
+  },
+  -- Fidget
+  {
+    "j-hui/fidget.nvim",
+    branch = "legacy",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.fidget").config,
   },
 
   -- Trouble
@@ -226,11 +224,6 @@ require("lazy").setup({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
-  },
-  {
-    "levouh/tint.nvim",
-    event = "BufReadPost",
-    config = require("ls-devs.plugins.tint").config,
   },
   -- Formatter
   {
@@ -447,19 +440,7 @@ require("lazy").setup({
       { "kevinhwang91/promise-async" },
       {
         "luukvbaal/statuscol.nvim",
-        config = function()
-          local builtin = require("statuscol.builtin")
-          require("statuscol").setup({
-            -- foldfunc = "builtin",
-            -- setopt = true,
-            relculright = true,
-            segments = {
-              { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
-              { text = { "%s" },                  click = "v:lua.ScSa" },
-              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-            },
-          })
-        end,
+        config = require("ls-devs.plugins.statuscol").config,
       },
     },
     event = "BufRead",

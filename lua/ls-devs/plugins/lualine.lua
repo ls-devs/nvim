@@ -146,22 +146,6 @@ M.config = function()
       return "%="
     end,
   })
-  ins_left({
-    function()
-      return require("lsp-progress").progress({
-        max_size = 40,
-        client_format = function(client_name, spinner, series_messages)
-          return #series_messages > 0
-              and ("[" .. client_name .. "] " .. spinner .. " " .. table.concat(series_messages, ", "))
-              or nil
-        end,
-        format = function(messages)
-          return #messages > 0 and table.concat(messages, " ") or ""
-        end,
-      })
-    end,
-    color = { fg = "#ffffff", gui = "bold" },
-  })
   ins_right({
     -- Lsp server name .
     function()
@@ -179,7 +163,7 @@ M.config = function()
       end
       return msg
     end,
-    icon = " LSP:",
+    icon = " LSP :",
     color = { fg = "#ffffff", gui = "bold" },
   })
 

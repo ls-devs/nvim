@@ -28,17 +28,21 @@ M.config = function()
     },
     ui = {
       -- This option only works in Neovim 0.9
-      -- title = true,
+      title = true,
       -- Border type can be single, double, rounded, solid, shadow.
       border = "rounded",
-      -- winblend = 0,
-      -- expand = "",
-      -- collapse = "",
-      -- code_action = "",
-      -- incoming = " ",
-      -- outgoing = " ",
-      -- hover = " ",
-      -- kind = {},
+      winblend = 0,
+      expand = "",
+      collapse = "",
+      code_action = "💡",
+      incoming = " ",
+      outgoing = " ",
+      hover = " ",
+      kind = {},
+    },
+    beacon = {
+      enable = true,
+      frequency = 7,
     },
   })
 end
