@@ -189,11 +189,8 @@ M.config = function()
           -- UFO
           UfoPreviewSbar = { fg = cp.red, bg = cp.blue },
           -- Keywords
-          UfoPreviewThumb = { fg = cp.red, bg = cp.blue },
-          UfoPreviewWinBar = { fg = cp.red, bg = cp.blue },
-          UfoPreviewCursorLine = { fg = cp.red, bg = cp.blue },
           UfoFoldedEllipsis = { fg = cp.mauve, bg = cp.blue, style = { "bold" } },
-          UfoCursorFoldedLine = { bg = cp.mantle },
+          CustomContextVt = { fg = cp.overlay2 },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
