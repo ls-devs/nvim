@@ -29,7 +29,6 @@ M.config = function()
         description = "Navigate Up & Center",
         opts = opts,
       },
-
       -- Resize
       -- Move text up and down
       {
