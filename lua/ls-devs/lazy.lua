@@ -43,6 +43,13 @@ require("lazy").setup({
               { "nvim-treesitter/nvim-treesitter" },
             },
           },
+          -- Rust tools
+          {
+            "simrat39/rust-tools.nvim",
+            ft = { "rust" },
+            config = require("ls-devs.plugins.rust-tools").config,
+            dependencies = { { "nvim-lua/plenary.nvim" } },
+          },
         },
       },
       -- Snippets
@@ -108,7 +115,8 @@ require("lazy").setup({
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
-    event = "VeryLazy",
+    priority = 1000,
+    lazy = false,
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
       "kkharji/sqlite.lua",
@@ -328,13 +336,6 @@ require("lazy").setup({
     end,
     event = "VeryLazy",
     config = require("ls-devs.plugins.tmux").config,
-  },
-  -- Rust tools
-  {
-    "simrat39/rust-tools.nvim",
-    ft = { "rust" },
-    config = require("ls-devs.plugins.rust-tools"),
-    dependencies = { { "nvim-lua/plenary.nvim" } },
   },
   -- Haskell Tools
   {
