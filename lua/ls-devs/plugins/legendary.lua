@@ -382,7 +382,11 @@ M.config = function()
       },
       {
         "K",
-        "<cmd>Lspsaga hover_doc<CR>",
+        function()
+          if vim.bo.filetype ~= "rust" then
+            return "<cmd>Lspsaga hover_doc<CR>"
+          end
+        end,
         description = "LSPSaga Hover Doc",
         opts = opts,
       },

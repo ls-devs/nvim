@@ -1,11 +1,12 @@
-return function()
-  local rt = require("rust-tools")
+local M = {}
+M.config = function()
   local mason_registry = require("mason-registry")
   local codelldb = mason_registry.get_package("codelldb")
   local extension_path = codelldb:get_install_path() .. "/extension/"
   local codelldb_path = extension_path .. "adapter/codelldb"
   local liblldb_path = vim.fn.has("mac") == 1 and extension_path .. "lldb/lib/liblldb.dylib"
       or extension_path .. "lldb/lib/liblldb.so"
+  local rt = require("rust-tools")
   rt.setup({
     tools = {
       runnables = {
@@ -18,8 +19,9 @@ return function()
       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
-      standalone = false,
+      standalone = true,
       on_attach = function(_, bufnr)
+        vim.cmd("unmap K")
         vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
         vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
         local opts = { noremap = true, silent = true }
@@ -56,3 +58,5 @@ return function()
     },
   })
 end
+
+return M
