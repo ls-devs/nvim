@@ -34,6 +34,9 @@ M.config = function()
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentFormattingRangeProvider = false
     end
+    -- if client.name == "clangd" then
+    --   client.server_capabilities.semanticTokensProvider = false
+    -- end
   end)
 
   require("lspconfig").glslls.setup(require("ls-devs.lsp.settings.glslls"))
@@ -50,20 +53,20 @@ M.config = function()
 
   lsp.setup()
 
-  vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
-    config = config or {}
-    config.focus_id = ctx.method
-    if not (result and result.contents) then
-      return
-    end
-    config.border = "rounded"
-    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-    if vim.tbl_isempty(markdown_lines) then
-      return
-    end
-    return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
-  end
+  -- vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
+  --   config = config or {}
+  --   config.focus_id = ctx.method
+  --   if not (result and result.contents) then
+  --     return
+  --   end
+  --   config.border = "rounded"
+  --   local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+  --   markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+  --   if vim.tbl_isempty(markdown_lines) then
+  --     return
+  --   end
+  --   return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
+  -- end
 end
 
 return M
