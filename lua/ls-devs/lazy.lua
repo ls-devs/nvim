@@ -173,6 +173,7 @@ require("lazy").setup({
     config = require("ls-devs.plugins.treesitter").config,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
+      { "tree-sitter/tree-sitter-cpp" },
       { "p00f/nvim-ts-rainbow" },
     },
     build = ":TSUpdate",
