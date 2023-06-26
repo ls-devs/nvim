@@ -70,11 +70,11 @@ M.config = function()
         description = "Toggle Copilot",
         opts = opts,
       },
+      -- Glow
       {
-        "<leader>ph",
-        "<cmd>lua print('Hello')<CR>",
-        description = "Print Hello",
-        opts = opts,
+        "<leader>md",
+        "<cmd>Glow<CR>",
+        description = "Glow"
       },
       -- File explorer
       {
