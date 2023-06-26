@@ -50,6 +50,12 @@ require("lazy").setup({
             config = require("ls-devs.plugins.rust-tools").config,
             dependencies = { { "nvim-lua/plenary.nvim" } },
           },
+          -- Clang tools
+          {
+            "p00f/clangd_extensions.nvim",
+            ft = { "c", "cpp" },
+            config = require("ls-devs.plugins.clang-tools").config,
+          },
         },
       },
       -- Snippets
@@ -363,12 +369,6 @@ require("lazy").setup({
     event = { "BufRead Cargo.toml" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = require("ls-devs.plugins.crates").config,
-  },
-  -- Clang tools
-  {
-    "p00f/clangd_extensions.nvim",
-    ft = { "c", "cpp" },
-    config = require("ls-devs.plugins.clang-tools"),
   },
   -- Python
   {
