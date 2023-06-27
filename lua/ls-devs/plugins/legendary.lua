@@ -10,6 +10,7 @@ M.config = function()
   vim.g.maplocalleader = " "
 
   require("legendary").setup({
+    lazy_nvim = { auto_register = true },
     keymaps = {
       { "<leader>LL", "<cmd>Legendary<CR>",           description = "Legendary",           opts = opts },
       { "<leader>LK", "<cmd>Legendary keymaps<CR>",   description = "Legendary keymaps",   opts = opts },
@@ -291,15 +292,15 @@ M.config = function()
         "<leader>ca",
         {
           n = function()
-            if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return require("lspsaga.codeaction"):code_action()
-            end
+            -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+            return require("lspsaga.codeaction"):code_action()
+            -- end
           end,
 
           v = function()
-            if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return require("lspsaga.codeaction"):code_action()
-            end
+            -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+            return require("lspsaga.codeaction"):code_action()
+            -- end
           end,
         },
         description = "LSPSaga Code Actions",
@@ -380,9 +381,9 @@ M.config = function()
       {
         "<leader>dp",
         function()
-          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return require("lspsaga.diagnostic"):goto_prev()
-          end
+          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+          return require("lspsaga.diagnostic"):goto_prev()
+          -- end
         end,
         description = "LSPSaga Diagnostic Jump Prev",
         opts = opts,
@@ -390,9 +391,9 @@ M.config = function()
       {
         "<leader>dn",
         function()
-          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return require("lspsaga.diagnostic"):goto_next()
-          end
+          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+          return require("lspsaga.diagnostic"):goto_next()
+          -- end
         end,
         description = "LSPSaga Diagnostic Jump Next",
         opts = opts,
@@ -416,9 +417,9 @@ M.config = function()
       {
         "<leader>K",
         function()
-          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return require("lspsaga.hover"):render_hover_doc("++keep")
-          end
+          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+          return require("lspsaga.hover"):render_hover_doc("++keep")
+          -- end
         end,
         description = "LSPSaga Hover Doc Keep",
         opts = opts,

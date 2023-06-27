@@ -43,19 +43,6 @@ require("lazy").setup({
               { "nvim-treesitter/nvim-treesitter" },
             },
           },
-          -- Rust tools
-          {
-            "simrat39/rust-tools.nvim",
-            ft = { "rust" },
-            config = require("ls-devs.plugins.rust-tools").config,
-            dependencies = { { "nvim-lua/plenary.nvim" } },
-          },
-          -- Clang tools
-          {
-            "p00f/clangd_extensions.nvim",
-            ft = { "c", "cpp" },
-            config = require("ls-devs.plugins.clang-tools").config,
-          },
         },
       },
       -- Snippets
@@ -121,7 +108,7 @@ require("lazy").setup({
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
-    priority = 1000,
+    priority = 10000,
     lazy = false,
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
@@ -192,6 +179,21 @@ require("lazy").setup({
       { "nvim-telescope/telescope-media-files.nvim" },
     },
   },
+  -- Rust tools
+  {
+    "simrat39/rust-tools.nvim",
+    event = { "BufReadPost *.rs" },
+    config = require("ls-devs.plugins.rust-tools").config,
+    dependencies = { { "nvim-lua/plenary.nvim" } },
+  },
+  -- Clang tools
+  {
+    "p00f/clangd_extensions.nvim",
+    event = { "BufReadPost *.cpp *.c" },
+
+    config = require("ls-devs.plugins.clang-tools").config,
+  },
+
   -- UrlView
   {
     "axieax/urlview.nvim",
