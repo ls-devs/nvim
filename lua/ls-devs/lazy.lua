@@ -108,7 +108,7 @@ require("lazy").setup({
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
-    priority = 1000,
+    priority = 10000,
     lazy = false,
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
@@ -189,7 +189,7 @@ require("lazy").setup({
   -- Clang tools
   {
     "p00f/clangd_extensions.nvim",
-        event = { "BufReadPost *.cpp *.c" },
+    event = { "BufReadPost *.cpp *.c" },
 
     config = require("ls-devs.plugins.clang-tools").config,
   },
