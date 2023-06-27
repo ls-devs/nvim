@@ -275,9 +275,7 @@ M.config = function()
       {
         "<C-s>",
         function()
-          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return "<cmd>lua vim.lsp.buf.signature_help()<CR>"
-          end
+          return vim.lsp.buf.signature_help()
         end,
 
         description = "LSP Signature Help",
@@ -294,13 +292,13 @@ M.config = function()
         {
           n = function()
             if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return "<cmd>Lspsaga code_action<CR>"
+              return require("lspsaga.codeaction"):code_action()
             end
           end,
 
           v = function()
             if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return "<cmd>Lspsaga code_action<CR>"
+              return require("lspsaga.codeaction"):code_action()
             end
           end,
         },
@@ -383,7 +381,7 @@ M.config = function()
         "<leader>dp",
         function()
           if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return "<cmd>Lspsaga diagnostic_jump_prev<CR>"
+            return require("lspsaga.diagnostic"):goto_prev()
           end
         end,
         description = "LSPSaga Diagnostic Jump Prev",
@@ -393,10 +391,9 @@ M.config = function()
         "<leader>dn",
         function()
           if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return "<cmd>Lspsaga diagnostic_jump_next<CR>"
+            return require("lspsaga.diagnostic"):goto_next()
           end
         end,
-
         description = "LSPSaga Diagnostic Jump Next",
         opts = opts,
       },
@@ -410,20 +407,19 @@ M.config = function()
         "K",
         function()
           if vim.bo.filetype ~= "rust" then
-            return "<cmd>Lspsaga hover_doc<CR>"
+            return require("lspsaga.hover"):render_hover_doc()
           end
         end,
         description = "LSPSaga Hover Doc",
         opts = opts,
       },
       {
-        "<leader>k",
+        "<leader>K",
         function()
           if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-            return "<cmd>Lspsaga hover_doc ++keep<CR>"
+            return require("lspsaga.hover"):render_hover_doc("++keep")
           end
         end,
-
         description = "LSPSaga Hover Doc Keep",
         opts = opts,
       },
