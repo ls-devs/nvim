@@ -381,9 +381,9 @@ M.config = function()
       {
         "<leader>dp",
         function()
-          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
           return require("lspsaga.diagnostic"):goto_prev()
-          -- end
+          end
         end,
         description = "LSPSaga Diagnostic Jump Prev",
         opts = opts,
@@ -391,9 +391,9 @@ M.config = function()
       {
         "<leader>dn",
         function()
-          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+          if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
           return require("lspsaga.diagnostic"):goto_next()
-          -- end
+          end
         end,
         description = "LSPSaga Diagnostic Jump Next",
         opts = opts,
@@ -417,9 +417,7 @@ M.config = function()
       {
         "<leader>K",
         function()
-          -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
           return require("lspsaga.hover"):render_hover_doc("++keep")
-          -- end
         end,
         description = "LSPSaga Hover Doc Keep",
         opts = opts,

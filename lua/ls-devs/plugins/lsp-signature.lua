@@ -11,8 +11,6 @@ M.config = function()
     timer_interval = 10, -- default timer check interval set to lower value if you want to reduce latency
     toggle_key = "<C-x>", -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
     floating_window_above_cur_line = true,
-    floating_window_off_x = -2,
-    floating_window_off_y = 65,
     noice = true,
   }) -- no need to specify bufnr if you don't use toggle_ke
 end
