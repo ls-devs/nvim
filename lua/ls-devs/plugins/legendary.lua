@@ -97,6 +97,14 @@ M.config = function()
         opts = opts,
       },
 
+      -- Ranger
+      {
+        "<leader>rr",
+        "<cmd>RnvimrToggle<CR>",
+        description = "NeoTree Close",
+        opts = opts,
+      },
+
       -- Telescope
       {
         "<leader>ff",
@@ -382,7 +390,7 @@ M.config = function()
         "<leader>dp",
         function()
           if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-          return require("lspsaga.diagnostic"):goto_prev()
+            return require("lspsaga.diagnostic"):goto_prev()
           end
         end,
         description = "LSPSaga Diagnostic Jump Prev",
@@ -392,7 +400,7 @@ M.config = function()
         "<leader>dn",
         function()
           if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-          return require("lspsaga.diagnostic"):goto_next()
+            return require("lspsaga.diagnostic"):goto_next()
           end
         end,
         description = "LSPSaga Diagnostic Jump Next",

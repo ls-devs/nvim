@@ -138,6 +138,26 @@ require("lazy").setup({
       },
     },
   },
+  -- Ranger
+  {
+    "kevinhwang91/rnvimr",
+    cmd = { "RnvimrToggle" },
+    config = require("ls-devs.plugins.rnvimr").config,
+  },
+
+  {
+    "kelly-lin/ranger.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("ranger-nvim").setup({ replace_netrw = true })
+      vim.api.nvim_set_keymap("n", "<leader>ef", "", {
+        noremap = true,
+        callback = function()
+          require("ranger-nvim").open(true)
+        end,
+      })
+    end,
+  },
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
