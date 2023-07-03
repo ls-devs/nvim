@@ -108,8 +108,9 @@ require("lazy").setup({
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
-    priority = 10000,
-    lazy = false,
+    -- priority = 10000,
+    -- lazy = false,
+    event = "VeryLazy",
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
       "kkharji/sqlite.lua",
@@ -144,6 +145,20 @@ require("lazy").setup({
     cmd = { "RnvimrToggle" },
     config = require("ls-devs.plugins.rnvimr").config,
   },
+
+  -- {
+  --   "kelly-lin/ranger.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("ranger-nvim").setup({ replace_netrw = true })
+  --     vim.api.nvim_set_keymap("n", "<leader>ef", "", {
+  --       noremap = true,
+  --       callback = function()
+  --         require("ranger-nvim").open(true)
+  --       end,
+  --     })
+  --   end,
+  -- },
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
@@ -459,7 +474,7 @@ require("lazy").setup({
   -- Presence
   {
     "andweeb/presence.nvim",
-    lazy = false,
+    event = "VeryLazy",
     config = require("ls-devs.plugins.presence").config,
   },
   -- Json schemas

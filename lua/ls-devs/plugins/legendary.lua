@@ -101,7 +101,7 @@ M.config = function()
       {
         "<leader>rr",
         "<cmd>RnvimrToggle<CR>",
-        description = "NeoTree Close",
+        description = "Open Ranger",
         opts = opts,
       },
 
