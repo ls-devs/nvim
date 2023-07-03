@@ -138,6 +138,12 @@ require("lazy").setup({
       },
     },
   },
+  -- Ranger
+  {
+    "kevinhwang91/rnvimr",
+    cmd = { "RnvimrToggle" },
+    config = require("ls-devs.plugins.rnvimr").config,
+  },
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
