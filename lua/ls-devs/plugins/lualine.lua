@@ -150,6 +150,7 @@ M.config = function()
     end,
     -- icon = icons.ui.Search,
     icon = "",
+    color = { fg = "#ffffff", gui = "bold" },
     cond = function()
       return cmake.is_cmake_project() and cmake.has_cmake_preset()
     end,
@@ -169,6 +170,7 @@ M.config = function()
     end,
     -- icon = icons.ui.Search,
     icon = "",
+    color = { fg = "#ffffff", gui = "bold" },
     cond = function()
       return cmake.is_cmake_project() and not cmake.has_cmake_preset()
     end,
@@ -188,6 +190,7 @@ M.config = function()
     end,
     -- icon = icons.ui.Pencil,
     icon = "",
+    color = { fg = "#ffffff", gui = "bold" },
     cond = function()
       return cmake.is_cmake_project() and not cmake.has_cmake_preset()
     end,
@@ -205,6 +208,7 @@ M.config = function()
       return "Build"
     end,
     -- icon = icons.ui.Gear,
+    color = { fg = "#ffffff", gui = "bold" },
     icon = "",
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
@@ -222,6 +226,7 @@ M.config = function()
       return "[" .. (b_preset and b_preset or "X") .. "]"
     end,
     -- icon = icons.ui.Search,
+    color = { fg = "#ffffff", gui = "bold" },
     icon = "",
     cond = function()
       return cmake.is_cmake_project() and cmake.has_cmake_preset()
@@ -240,6 +245,7 @@ M.config = function()
       local b_target = cmake.get_build_target()
       return "[" .. (b_target and b_target or "X") .. "]"
     end,
+    color = { fg = "#ffffff", gui = "bold" },
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
       if n == 1 then
@@ -255,6 +261,7 @@ M.config = function()
       -- return icons.ui.Debug
       return ""
     end,
+    color = { fg = "#ffffff", gui = "bold" },
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
       if n == 1 then
@@ -270,6 +277,7 @@ M.config = function()
       -- return icons.ui.Run
       return ""
     end,
+    color = { fg = "#ffffff", gui = "bold" },
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
       if n == 1 then
@@ -285,6 +293,7 @@ M.config = function()
       local l_target = cmake.get_launch_target()
       return "[" .. (l_target and l_target or "X") .. "]"
     end,
+    color = { fg = "#ffffff", gui = "bold" },
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
       if n == 1 then
