@@ -187,7 +187,7 @@ M.config = function()
       return "[" .. (kit and kit or "X") .. "]"
     end,
     -- icon = icons.ui.Pencil,
-    icon = "󰙏",
+    icon = "",
     cond = function()
       return cmake.is_cmake_project() and not cmake.has_cmake_preset()
     end,
@@ -222,7 +222,7 @@ M.config = function()
       return "[" .. (b_preset and b_preset or "X") .. "]"
     end,
     -- icon = icons.ui.Search,
-    icon = "",
+    icon = "",
     cond = function()
       return cmake.is_cmake_project() and cmake.has_cmake_preset()
     end,
@@ -253,7 +253,7 @@ M.config = function()
   ins_left({
     function()
       -- return icons.ui.Debug
-      return ""
+      return ""
     end,
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
@@ -268,7 +268,7 @@ M.config = function()
   ins_left({
     function()
       -- return icons.ui.Run
-      return ""
+      return ""
     end,
     cond = cmake.is_cmake_project,
     on_click = function(n, mouse)
