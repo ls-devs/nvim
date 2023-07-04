@@ -145,20 +145,6 @@ require("lazy").setup({
     cmd = { "RnvimrToggle" },
     config = require("ls-devs.plugins.rnvimr").config,
   },
-
-  -- {
-  --   "kelly-lin/ranger.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("ranger-nvim").setup({ replace_netrw = true })
-  --     vim.api.nvim_set_keymap("n", "<leader>ef", "", {
-  --       noremap = true,
-  --       callback = function()
-  --         require("ranger-nvim").open(true)
-  --       end,
-  --     })
-  --   end,
-  -- },
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
@@ -207,12 +193,18 @@ require("lazy").setup({
     config = require("ls-devs.plugins.rust-tools").config,
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
-  -- Clang tools
+  -- Clangd tools
   {
     "p00f/clangd_extensions.nvim",
     event = { "BufReadPost *.cpp *.c" },
 
     config = require("ls-devs.plugins.clangd_extensions").config,
+  },
+  -- Cmake Tools
+  {
+    "Civitasv/cmake-tools.nvim",
+    ft = { "c", "cpp" },
+    config = require("ls-devs.plugins.cmake_tools").config,
   },
 
   -- UrlView
