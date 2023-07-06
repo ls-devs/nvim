@@ -168,7 +168,10 @@ require("lazy").setup({
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "tree-sitter/tree-sitter-cpp" },
-      { "p00f/nvim-ts-rainbow" },
+      {
+        "HiPhish/rainbow-delimiters.nvim",
+        config = require("ls-devs.plugins.rainbow_delimiter").config,
+      },
     },
     build = ":TSUpdate",
   },

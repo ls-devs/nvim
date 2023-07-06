@@ -34,6 +34,7 @@ M.config = function()
       variables = { "bold" },
     },
     integrations = {
+      rainbow_delimiters = true,
       alpha = false,
       treesitter = true,
       native_lsp = {
