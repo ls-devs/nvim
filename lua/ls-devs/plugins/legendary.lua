@@ -119,6 +119,13 @@ M.config = function()
         opts = opts,
       },
       {
+        "<leader>fn",
+        "<cmd>Telescope neoclip<CR>",
+        description = "Telescope Neoclip",
+        opts = opts,
+      },
+
+      {
         "<leader>fb",
         "<cmd>Telescope buffers<CR>",
         description = "Telescope Buffers",
@@ -514,7 +521,7 @@ M.config = function()
       },
 
       -- LazyGit
-      { "<leader>lg", ":LazyGit<CR>", description = "LazyGit" },
+      { "<leader>lg",  ":LazyGit<CR>",           description = "LazyGit" },
 
       -- JUKIT
       -- Splits
@@ -689,6 +696,8 @@ M.config = function()
         description = "Jukit Covert",
         opts = opts,
       },
+      { "<leader>dvo", "<cmd>DiffviewOpen<CR>",  desccription = "DiffviewOpen", opts = opts },
+      { "<leader>dvc", "<cmd>DiffviewClose<CR>", description = "DiffviewClose", opts = opts },
     },
     extensions = {
       -- load keymaps and commands from nvim-tree.lua
