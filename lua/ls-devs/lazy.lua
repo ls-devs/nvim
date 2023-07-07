@@ -206,7 +206,27 @@ require("lazy").setup({
   -- Cmake Tools
   {
     "Civitasv/cmake-tools.nvim",
-    ft = { "c", "cpp" },
+    cmd = {
+      "CMakeBuild",
+      "CMakeRun",
+      "CMakeQuickRun",
+      "CMakeSelectBuildPreset",
+      "CMakeSelectBuildTarget",
+      "CMakeSelectConfigurePreset",
+      "CMakeSelectBuildType",
+      "CMakeSelectKit",
+      "CMakeSelectLaunchTarget",
+      "CMakeQuickDebug",
+      "CMakeOpen",
+      "CMakeClose",
+      "CMakeClean",
+      "CMakeQuickBuild",
+      "CMakeDebug",
+      "CMakeInstall",
+      "CMakeGenerate",
+      "CMakeLaunchArgs",
+      "CMakeStop",
+    },
     config = require("ls-devs.plugins.cmake_tools").config,
   },
 
@@ -352,7 +372,7 @@ require("lazy").setup({
   -- Tmux navigation
   {
     "aserowy/tmux.nvim",
-    cond = function()
+    enabled = function()
       if vim.fn.exists("$TMUX") == 0 then
         return false
       else
