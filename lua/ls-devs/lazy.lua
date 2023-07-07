@@ -452,6 +452,9 @@ require("lazy").setup({
   {
     "sindrets/diffview.nvim",
     keys = require("ls-devs.plugins.diffview").keys,
+    cmd = {
+      "DiffViewOpen",
+    },
     config = require("ls-devs.plugins.diffview").config,
   },
   {
