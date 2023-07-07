@@ -24,9 +24,9 @@ M.config = function()
       console = "integratedTerminal",
     },
     cmake_always_use_terminal = true, -- if true, use terminal for generate, build, clean, install, run, etc, except for debug, else only use terminal for run, use quickfix for others
-    cmake_quickfix_opts = {          -- quickfix settings for cmake, quickfix will be used when `cmake_always_use_terminal` is false
-      show = "always",               -- "always", "only_on_error"
-      position = "belowright",       -- "bottom", "top"
+    cmake_quickfix_opts = {         -- quickfix settings for cmake, quickfix will be used when `cmake_always_use_terminal` is false
+      show = "always",              -- "always", "only_on_error"
+      position = "belowright",      -- "bottom", "top"
       size = 10,
     },
     cmake_terminal_opts = {        -- terminal settings for cmake, terminal will be used for run when `cmake_always_use_terminal` is false or true, will be used for all tasks except for debug when `cmake_always_use_terminal` is true

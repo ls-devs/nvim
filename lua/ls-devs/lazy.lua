@@ -218,7 +218,27 @@ require("lazy").setup({
   -- Cmake Tools
   {
     "Civitasv/cmake-tools.nvim",
-    ft = { "c", "cpp" },
+    cmd = {
+      "CMakeBuild",
+      "CMakeRun",
+      "CMakeQuickRun",
+      "CMakeSelectBuildPreset",
+      "CMakeSelectBuildTarget",
+      "CMakeSelectConfigurePreset",
+      "CMakeSelectBuildType",
+      "CMakeSelectKit",
+      "CMakeSelectLaunchTarget",
+      "CMakeQuickDebug",
+      "CMakeOpen",
+      "CMakeClose",
+      "CMakeClean",
+      "CMakeQuickBuild",
+      "CMakeDebug",
+      "CMakeInstall",
+      "CMakeGenerate",
+      "CMakeLaunchArgs",
+      "CMakeStop",
+    },
     config = require("ls-devs.plugins.cmake_tools").config,
   },
 
