@@ -187,6 +187,18 @@ require("lazy").setup({
         build = "make",
       },
       { "nvim-telescope/telescope-media-files.nvim" },
+      {
+        "AckslD/nvim-neoclip.lua",
+        dependencies = {
+          { "nvim-telescope/telescope.nvim" },
+          { "ibhagwan/fzf-lua" },
+          {
+            "kkharji/sqlite.lua",
+            module = "sqlite",
+          },
+        },
+        config = require("ls-devs.plugins.neoclip").config,
+      },
     },
   },
   -- Rust tools
@@ -352,7 +364,7 @@ require("lazy").setup({
   -- Tmux navigation
   {
     "aserowy/tmux.nvim",
-    cond = function()
+    enabled = function()
       if vim.fn.exists("$TMUX") == 0 then
         return false
       else

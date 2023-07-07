@@ -119,6 +119,13 @@ M.config = function()
         opts = opts,
       },
       {
+        "<leader>fn",
+        "<cmd>Telescope neoclip<CR>",
+        description = "Telescope Neoclip",
+        opts = opts,
+      },
+
+      {
         "<leader>fb",
         "<cmd>Telescope buffers<CR>",
         description = "Telescope Buffers",
