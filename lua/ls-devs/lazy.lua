@@ -113,11 +113,15 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
-      "kkharji/sqlite.lua",
+      {
+        "kkharji/sqlite.lua",
+        event = "VeryLazy",
+      },
       -- Smart Splits
       {
         "mrjones2014/smart-splits.nvim",
         build = "./kitty/install-kittens.bash",
+        event = "VeryLazy",
         config = require("ls-devs.plugins.smart_splits").config,
       },
     },
@@ -151,7 +155,10 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.lualine").config,
     dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
+      {
+        "nvim-tree/nvim-web-devicons",
+        event = "VeryLazy",
+      },
     },
   },
   -- Splash screen
