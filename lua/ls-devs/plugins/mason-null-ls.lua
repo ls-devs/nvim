@@ -11,7 +11,6 @@ M.config = function()
       "luacheck",
       "eslint_d",
       "prettier_d_slim",
-      "rustfmt",
       "shellharden",
       "prismaFmt",
       "cmakelang",
