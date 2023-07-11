@@ -8,7 +8,7 @@ M.config = function()
       "cssls",
       "cssmodules_ls",
       "emmet_ls",
-      -- "emmet-language-server",
+      "emmet_language_server",
       "tsserver",
       "volar",
       "tailwindcss",
