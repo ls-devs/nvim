@@ -9,6 +9,7 @@ M.config = function()
 
   null_ls.setup({
     border = "rounded",
+    debug = true,
     sources = {
       -- PYTHON
       null_ls.builtins.code_actions.refactoring.with({
@@ -19,9 +20,30 @@ M.config = function()
       -- JS / TS
       null_ls.builtins.code_actions.eslint_d,
       null_ls.builtins.diagnostics.eslint_d,
-      null_ls.builtins.formatting.prettier_d_slim.with({
+      null_ls.builtins.formatting.prettierd.with({
         root_dir = require("null-ls.utils").root_pattern("."),
       }),
+      -- null_ls.builtins.formatting.prettier_d_slim.with({
+      --   root_dir = require("null-ls.utils").root_pattern("."),
+      --   filetypes = {
+      --     "javascript",
+      --     "javascriptreact",
+      --     "typescript",
+      --     "typescriptreact",
+      --     "vue",
+      --     "css",
+      --     "scss",
+      --     "less",
+      --     "html",
+      --     "json",
+      --     "jsonc",
+      --     "yaml",
+      --     "markdown",
+      --     "markdown.mdx",
+      --     "graphql",
+      --     "handlebars",
+      --   },
+      -- }),
       -- JSON
       null_ls.builtins.diagnostics.jsonlint,
       null_ls.builtins.formatting.jq,
