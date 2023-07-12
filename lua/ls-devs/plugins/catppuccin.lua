@@ -66,7 +66,7 @@ M.config = function()
       harpoon = false,
       hop = true,
       illuminate = true,
-      indent_blankline = { enabled = true, colored_indent_levels = false },
+      indent_blankline = { enabled = true, colored_indent_levels = true },
       leap = true,
       lightspeed = false,
       lsp_saga = false,
@@ -185,7 +185,7 @@ M.config = function()
           LeapLabelPrimary = { bg = cp.green, fg = cp.base, style = { "bold" and "underline" } },
           LeapLabelSecondary = { bg = cp.sapphire, fg = cp.base, style = { "bold" and "underline" } },
           -- IndentScope
-          MiniIndentscopeSymbol = { fg = cp.flamingo },
+          MiniIndentscopeSymbol = { fg = cp.peach },
           -- UFO
           UfoPreviewSbar = { fg = cp.red, bg = cp.blue },
           -- Keywords
