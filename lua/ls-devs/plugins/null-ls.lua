@@ -21,8 +21,26 @@ M.config = function()
       null_ls.builtins.code_actions.eslint_d,
       null_ls.builtins.diagnostics.eslint_d,
       null_ls.builtins.formatting.prettierd.with({
-        root_dir = require("null-ls.utils").root_pattern("."),
-      }),
+          root_dir = require("null-ls.utils").root_pattern("."),
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+            "vue",
+            "css",
+            "scss",
+            "less",
+            "html",
+            "json",
+            "jsonc",
+            "yaml",
+            "markdown",
+            "markdown.mdx",
+            "graphql",
+            "handlebars",
+          },
+        }),
       -- null_ls.builtins.formatting.prettier_d_slim.with({
       --   root_dir = require("null-ls.utils").root_pattern("."),
       --   filetypes = {

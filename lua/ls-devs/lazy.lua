@@ -108,8 +108,6 @@ require("lazy").setup({
   -- Mapping
   {
     "mrjones2014/legendary.nvim",
-    -- priority = 10000,
-    -- lazy = false,
     event = "VeryLazy",
     config = require("ls-devs.plugins.legendary").config,
     dependencies = {
@@ -248,7 +246,6 @@ require("lazy").setup({
     },
     config = require("ls-devs.plugins.cmake_tools").config,
   },
-
   -- UrlView
   {
     "axieax/urlview.nvim",
@@ -262,7 +259,6 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.fidget").config,
   },
-
   -- Trouble
   {
     "folke/trouble.nvim",
@@ -369,7 +365,7 @@ require("lazy").setup({
       },
     },
   },
-  -- Indent Scope
+  --  Indent Scope
   {
     "echasnovski/mini.indentscope",
     version = false,
@@ -532,19 +528,12 @@ require("lazy").setup({
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-inlayhints").config,
   },
-
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
     build = "pnpm i -g live-server",
     cmd = "LiveServerStart",
     config = require("ls-devs.plugins.live-server").config,
-  },
-  -- Utils
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.indent_blankline").config,
   },
   {
     "abecodes/tabout.nvim",
