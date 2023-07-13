@@ -141,6 +141,12 @@ M.config = function()
     color = { fg = colors.orange },
   })
 
+  ins_left({
+    function()
+      return require("NeoComposer.ui").status_recording()
+    end,
+  })
+
   -- if require("lazy.core.config").plugins["cmake-tools.nvim"]._.loaded then
   --   local cmake = require("cmake-tools")
   --
