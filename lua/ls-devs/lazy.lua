@@ -206,6 +206,13 @@ require("lazy").setup({
       },
     },
   },
+  -- NeoComposer
+  {
+    "ecthelionvi/NeoComposer.nvim",
+    event = "VeryLazy",
+    config = require("ls-devs.plugins.neocomposer").config,
+    dependencies = { "kkharji/sqlite.lua" },
+  },
   -- Rust tools
   {
     "simrat39/rust-tools.nvim",
@@ -217,7 +224,6 @@ require("lazy").setup({
   {
     "p00f/clangd_extensions.nvim",
     event = { "BufReadPost *.cpp *.c" },
-
     config = require("ls-devs.plugins.clangd_extensions").config,
   },
   -- Cmake Tools

@@ -46,4 +46,5 @@ return function()
   telescope.load_extension("media_files")
   telescope.load_extension("aerial")
   telescope.load_extension('neoclip')
+  telescope.load_extension('macros')
 end
