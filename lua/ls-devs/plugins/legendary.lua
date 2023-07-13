@@ -698,6 +698,64 @@ M.config = function()
       },
       { "<leader>dvo", "<cmd>DiffviewOpen<CR>",  desccription = "DiffviewOpen", opts = opts },
       { "<leader>dvc", "<cmd>DiffviewClose<CR>", description = "DiffviewClose", opts = opts },
+
+      -- NeoComposer
+      {
+        "<leader>@",
+        function()
+          require("NeoComposer").play_macro()
+        end,
+        description = "NeoComposer Play Macro",
+        opts = opts,
+      },
+      {
+        "<leader>yq",
+        function()
+          require("NeoComposer").yank_macro()
+        end,
+        description = "NeoComposer Yank Macro",
+        opts = opts,
+      },
+      {
+        "<leader>sq",
+        function()
+          require("NeoComposer").stop_macro()
+        end,
+        description = "NeoComposer Stop Macro",
+        opts = opts,
+      },
+      {
+        "<leader>q",
+        function()
+          require("NeoComposer").toggle_record()
+        end,
+        description = "NeoComposer Record Macro",
+        opts = opts,
+      },
+      {
+        "<leader>qn",
+        function()
+          require("NeoComposer").cycle_next()
+        end,
+        description = "NeoComposer Cycle Next",
+        opts = opts,
+      },
+      {
+        "<leader>qp",
+        function()
+          require("NeoComposer").cycle_prev()
+        end,
+        description = "NeoComposer Cycle Prev",
+        opts = opts,
+      },
+      {
+        "<leader>qm",
+        function()
+          require("NeoComposer").toggle_macro_menu()
+        end,
+        description = "NeoComposer Toggle Menu",
+        opts = opts,
+      },
     },
     extensions = {
       -- load keymaps and commands from nvim-tree.lua
