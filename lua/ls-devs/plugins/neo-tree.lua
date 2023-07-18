@@ -115,7 +115,9 @@ M.config = function()
         },
       },
       hijack_netrw_behavior = "open_current",
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true,
+      },
       use_libuv_file_watcher = true,
       event_handlers = {
         {
@@ -168,9 +170,9 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>e",  "<cmd>NeoTreeFloatToggle<CR>", desc = "NeoTreeFloatToggle" },
-  { "<leader>to", "<cmd>NeoTreeShow<CR>",        desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>NeoTreeClose<CR>",       desc = "NeoTreeClose" },
+  { "<leader>e",  "<cmd>Neotree float<CR>", desc = "NeoTreeFloatToggle" },
+  { "<leader>to", "<cmd>Neotree show<CR>",  desc = "NeoTreeShow" },
+  { "<leader>tc", "<cmd>Neotree close<CR>", desc = "NeoTreeClose" },
 }
 
 return M
