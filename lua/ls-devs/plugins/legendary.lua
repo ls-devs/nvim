@@ -80,19 +80,19 @@ M.config = function()
       -- File explorer
       {
         "<leader>e",
-        "<cmd>NeoTreeFloatToggle<CR>",
+        "<cmd>Neotree float<CR>",
         description = "NeoTree Open Float",
         opts = opts,
       },
       {
         "<leader>to",
-        "<cmd>NeoTreeShow<CR>",
+        "<cmd>Neotree Show<CR>",
         description = "NeoTree Show",
         opts = opts,
       },
       {
         "<leader>tc",
-        "<cmd>NeoTreeClose<CR>",
+        "<cmd>Neotree Close<CR>",
         description = "NeoTree Close",
         opts = opts,
       },

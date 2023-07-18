@@ -127,10 +127,10 @@ require("lazy").setup({
   -- File explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    cmd = { "Neotree", "NeoTreeFloatToggle" },
+    cmd = { "Neotree", "Neotree float" },
     keys = require("ls-devs.plugins.neo-tree").keys,
     config = require("ls-devs.plugins.neo-tree").config,
-    branch = "v2.x",
+    branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",

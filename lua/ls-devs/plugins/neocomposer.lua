@@ -12,13 +12,13 @@ M.config = function()
       green = "#99c794",
     },
     keymaps = {
-      play_macro = "<leader>@",
-      yank_macro = "<leader>yq",
-      stop_macro = "<leader>sq",
-      toggle_record = "<leader>q",
-      cycle_next = "<leader>qn",
-      cycle_prev = "<leader>qp",
-      toggle_macro_menu = "<leader>qm",
+      play_macro = "@",
+      yank_macro = "yq",
+      stop_macro = "cq",
+      toggle_record = "Q",
+      cycle_next = "<c-n>",
+      cycle_prev = "<c-p>",
+      toggle_macro_menu = "<c-q>",
     },
   })
 end
