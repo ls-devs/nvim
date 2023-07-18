@@ -114,6 +114,9 @@ M.config = function()
           "lazy-lock.json",
         },
       },
+      window = {
+        position = "current",
+      },
       hijack_netrw_behavior = "open_current",
       follow_current_file = {
         enabled = true,
@@ -170,9 +173,9 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>e",  "<cmd>Neotree float<CR>", desc = "NeoTreeFloatToggle" },
-  { "<leader>to", "<cmd>Neotree show<CR>",  desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>Neotree close<CR>", desc = "NeoTreeClose" },
+  { "<leader>e",  "<cmd>Neotree floatd<CR>", desc = "NeoTreeFloatToggle" },
+  { "<leader>to", "<cmd>Neotree show<CR>",   desc = "NeoTreeShow" },
+  { "<leader>tc", "<cmd>Neotree close<CR>",  desc = "NeoTreeClose" },
 }
 
 return M
