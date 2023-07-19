@@ -5,9 +5,9 @@ M.config = function()
   local keymap = vim.api.nvim_set_keymap
 
   -- Leader key
-  keymap("", "<Space>", "<Nop>", opts)
   vim.g.mapleader = " "
   vim.g.maplocalleader = " "
+  keymap("", "<Space>", "<Nop>", opts)
 
   require("legendary").setup({
     lazy_nvim = { auto_register = true },
@@ -783,14 +783,15 @@ M.config = function()
           pattern = { "*.vert", "*.frag" },
         },
       },
-      -- {
-      --   { "User LspProgressStatusUpdated" },
-      --   'lua require("lualine").refresh()',
-      --   description = "Refresh Lualine",
-      --   opts = {
-      --     -- group = "lualine_augroup",
-      --   },
-      -- },
+      {
+        { "InsertEnter", "InsertChange" },
+        'lua require("notify").dismiss({ silent = true })',
+        pattern = "*",
+        description = "Notify dismiss",
+        opts = {
+          -- group = "lualine_augroup",
+        },
+      },
     },
     sort = {
       most_recent_first = true,
