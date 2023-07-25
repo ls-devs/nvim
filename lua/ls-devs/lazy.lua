@@ -213,6 +213,18 @@ require("lazy").setup({
     config = require("ls-devs.plugins.neocomposer").config,
     dependencies = { "kkharji/sqlite.lua" },
   },
+  -- Muren
+  {
+    "AckslD/muren.nvim",
+    config = require("ls-devs.plugins.muren").config,
+    cmd = {
+      "MurenToggle",
+      "MurenOpen",
+      "MurenClose",
+      "MurenFresh",
+      "MurenUnique",
+    },
+  },
   -- Rust tools
   {
     "simrat39/rust-tools.nvim",
