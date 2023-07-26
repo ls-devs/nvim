@@ -345,6 +345,7 @@ require("lazy").setup({
   -- Http client
   {
     "rest-nvim/rest.nvim",
+    ft = "http",
     keys = require("ls-devs.plugins.rest-nvim").keys,
     config = require("ls-devs.plugins.rest-nvim").config,
     dependencies = { "nvim-lua/plenary.nvim" },
