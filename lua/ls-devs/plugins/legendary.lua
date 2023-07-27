@@ -699,7 +699,32 @@ M.config = function()
       { "<leader>dvo", "<cmd>DiffviewOpen<CR>",  desccription = "DiffviewOpen", opts = opts },
       { "<leader>dvc", "<cmd>DiffviewClose<CR>", description = "DiffviewClose", opts = opts },
 
-      -- NeoComposer
+      -- Restnvim
+
+      {
+        "<leader>rh",
+        function()
+          require("rest-nvim").run()
+        end,
+        description = "RestNvim",
+        opts = opts,
+      },
+      {
+        "<leader>rl",
+        function()
+          require("rest-nvim").last()
+        end,
+        description = "RestNvimLast",
+        opts = opts,
+      },
+      {
+        "<leader>rp",
+        function()
+          require("rest-nvim").run(true)
+        end,
+        description = "RestNvimPreview",
+        opts = opts,
+      },
     },
     extensions = {
       -- load keymaps and commands from nvim-tree.lua
