@@ -487,6 +487,26 @@ require("lazy").setup({
     keys = require("ls-devs.plugins.lazygit").keys,
   },
   {
+    "lambdalisue/gin.vim",
+    cmd = {
+      "Gin",
+      "GinBuffer",
+      "GinBranch",
+      "GinCd",
+      "GinLcd",
+      "GinTcd",
+      "GinChaperon",
+      "GinDiff",
+      "GinEdit",
+      "GinLog",
+      "GinPatch",
+      "GinStatus",
+    },
+    dependencies = {
+      { "vim-denops/denops.vim" },
+    },
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.gitsigns").config,
