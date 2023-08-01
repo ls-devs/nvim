@@ -147,6 +147,15 @@ M.config = function()
     end,
   })
 
+  ins_left({
+    function()
+      local cur_buf = vim.api.nvim_get_current_buf()
+      return require("hbac.state").is_pinned(cur_buf) and "" or ""
+      -- tip: nerd fonts have pinned/unpinned icons!
+    end,
+    color = { fg = "#ef5f6b", gui = "bold" },
+  })
+
   -- if require("lazy.core.config").plugins["cmake-tools.nvim"]._.loaded then
   --   local cmake = require("cmake-tools")
   --

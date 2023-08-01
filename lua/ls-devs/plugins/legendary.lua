@@ -133,6 +133,12 @@ M.config = function()
       },
       {
         "<leader>fh",
+        "<cmd>Hbac telescope<CR>",
+        description = "Telescope Find Files",
+        opts = opts,
+      },
+      {
+        "<leader>fx",
         "<cmd>Telescope help_tags<CR>",
         description = "Telescope Help Tags",
         opts = opts,
@@ -247,6 +253,32 @@ M.config = function()
         description = "UrlView File",
         opts = opts,
       },
+      -- Hbac
+      {
+        "<leader>ht",
+        "<cmd>Hbac toggle_pin<CR>",
+        description = "HBac Toggle Pin",
+        opts = opts,
+      },
+      {
+        "<leader>hu",
+        "<cmd>Hbac unpin_all<CR>",
+        description = "HBac Unpin All",
+        opts = opts,
+      },
+      {
+        "<leader>hp",
+        "<cmd>Hbac pin_all<CR>",
+        description = "HBac Pin All",
+        opts = opts,
+      },
+      {
+        "<leader>hc",
+        "<cmd>Hbac close_unpinned<CR>",
+        description = "HBac Close Unpinned",
+        opts = opts,
+      },
+
       -- Ufo
       {
         "zR",

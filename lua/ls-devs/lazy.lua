@@ -507,6 +507,22 @@ require("lazy").setup({
     },
   },
   {
+    "nvim-zh/colorful-winsep.nvim",
+    config = require("ls-devs.plugins.winsep").config,
+    event = { "WinNew" },
+  },
+  {
+    "axkirillov/hbac.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      -- these are optional, add them, if you want the telescope module
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = require("ls-devs.plugins.hbac").config,
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.gitsigns").config,
