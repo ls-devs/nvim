@@ -507,6 +507,11 @@ require("lazy").setup({
     },
   },
   {
+    "nvim-zh/colorful-winsep.nvim",
+    config = require("ls-devs.plugins.winsep").config,
+    event = { "WinNew" },
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.gitsigns").config,
