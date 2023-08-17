@@ -141,7 +141,7 @@ M.config = function()
           StorageClass = { fg = cp.red, style = { "italic" } },
           LspInlayHint = { bg = cp.none, fg = cp.overlay1 },
           ColorColumn = { bg = cp.none },
-          Visual = { bg = cp.surface2, style = { "bold" } },
+          Visual = { bg = "#1877F2", fg = "#FFFFFF", style = { "bold" } },
           -- For native lsp configs.
           DiagnosticVirtualTextError = { bg = cp.none },
           DiagnosticVirtualTextWarn = { bg = cp.none },
