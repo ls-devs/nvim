@@ -464,7 +464,7 @@ M.config = function()
       {
         "<leader>K",
         function()
-          return require("lspsaga.hover"):render_hover_doc("++keep")
+          return require("lspsaga.hover"):render_hover_doc({ "++keep" })
         end,
         description = "LSPSaga Hover Doc Keep",
         opts = opts,
@@ -845,9 +845,6 @@ M.config = function()
         'lua require("notify").dismiss({ silent = true })',
         pattern = "*",
         description = "Notify dismiss",
-        opts = {
-          -- group = "lualine_augroup",
-        },
       },
     },
     sort = {

@@ -3,7 +3,7 @@ local M = {}
 M.config = function()
   require("catppuccin").setup({
     flavour = "mocha", -- Can be one of: latte, frappe, macchiato, mocha
-    -- background = { light = "latte", dark = "mocha" },
+    background = { light = "latte", dark = "mocha" },
     dim_inactive = {
       enabled = false,
       -- Dim inactive splits/windows/buffers.
@@ -34,6 +34,7 @@ M.config = function()
       variables = { "bold" },
     },
     integrations = {
+      window_picker = false,
       rainbow_delimiters = true,
       alpha = false,
       treesitter = true,
