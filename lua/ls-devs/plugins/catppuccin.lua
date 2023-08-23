@@ -193,6 +193,8 @@ M.config = function()
           UfoFoldedEllipsis = { fg = cp.mauve, bg = cp.blue, style = { "bold" } },
           CustomContextVt = { fg = cp.overlay2, style = { "bold" and "italic" } },
           FidgetTask = { fg = cp.text, style = { "bold" } },
+          -- Gitsigns
+          GitSignsCurrentLineBlame = { fg = cp.text, style = { "bold" and "italic" } },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },

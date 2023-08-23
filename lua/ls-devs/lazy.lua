@@ -13,6 +13,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- Colorscheme
+  -- {
+  --   "Mofiqul/vscode.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = require("ls-devs.plugins.vscode").config,
+  -- },
+
   {
     "catppuccin/nvim",
     lazy = false,
@@ -654,7 +661,7 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "catppuccin" },
+    colorscheme = { "vscode" },
   },
   checker = {
     enabled = true,
