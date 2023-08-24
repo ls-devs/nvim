@@ -2,9 +2,8 @@ vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set guicursor=i:blinkon1]])
 
-
 local options = {
-  winblend = 0;
+  background = "dark",
   backup = false,
   showtabline = 0,
   clipboard = "unnamedplus",
