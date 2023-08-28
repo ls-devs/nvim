@@ -363,6 +363,12 @@ require("lazy").setup({
     event = "InsertEnter",
     config = require("ls-devs.plugins.autopairs").config,
   },
+  {
+    "utilyre/sentiment.nvim",
+    version = "*",
+    event = "VeryLazy", -- keep for lazy loading
+    config = require("ls-devs.plugins.sentiment").config,
+  },
   -- Surround
   {
     "echasnovski/mini.surround",
@@ -625,6 +631,12 @@ require("lazy").setup({
   {
     "chrisbra/Colorizer",
     cmd = "ColorToggle",
+  },
+  -- Smooth scroll
+  {
+    "karb94/neoscroll.nvim",
+    event = "BufReadPre",
+    config = require("ls-devs.plugins.neoscroll").config,
   },
   -- Screenshot
   {
