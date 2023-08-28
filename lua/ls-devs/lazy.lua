@@ -632,12 +632,6 @@ require("lazy").setup({
     "chrisbra/Colorizer",
     cmd = "ColorToggle",
   },
-  -- Smooth scroll
-  {
-    "karb94/neoscroll.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.neoscroll").config,
-  },
   -- Screenshot
   {
     "krivahtoo/silicon.nvim",
