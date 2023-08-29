@@ -5,6 +5,7 @@ M.config = function()
     ensure_installed = {
       "html",
       "lemminx",
+      "mdx_analyzer",
       "cssls",
       "cssmodules_ls",
       "emmet_ls",
