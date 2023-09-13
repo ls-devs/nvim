@@ -12,14 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- Colorscheme
-  -- {
-  --   "Mofiqul/vscode.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = require("ls-devs.plugins.vscode").config,
-  -- },
-
   {
     "catppuccin/nvim",
     lazy = false,
@@ -99,6 +91,15 @@ require("lazy").setup({
         config = require("ls-devs.plugins.mason").config,
       },
     },
+  },
+  -- Sessions
+  {
+    "gennaro-tedesco/nvim-possession",
+    dependencies = {
+      "ibhagwan/fzf-lua",
+    },
+    event = "VeryLazy",
+    config = require("ls-devs.plugins.possession").config,
   },
   -- Copilot
   {
@@ -559,6 +560,12 @@ require("lazy").setup({
     event = "BufReadPre",
     config = require("ls-devs.plugins.lsp-signature").config,
   },
+  -- -- Flirt
+  -- {
+  --   "tamton-aquib/flirt.nvim",
+  --   event = "VeryLazy",
+  --   config = require("ls-devs.plugins.flirt").config,
+  -- },
   -- Ufo
   {
     "kevinhwang91/nvim-ufo",

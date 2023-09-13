@@ -71,6 +71,31 @@ M.config = function()
         description = "Toggle Copilot",
         opts = opts,
       },
+      -- Possession
+      {
+        "<leader>sl",
+        "<cmd>lua require('nvim-possession').list()<CR>",
+        description = "Possession List",
+        opts = opts,
+      },
+      {
+        "<leader>sn",
+        "<cmd>lua require('nvim-possession').new()<CR>",
+        description = "Possession New",
+        opts = opts,
+      },
+      {
+        "<leader>su",
+        "<cmd>lua require('nvim-possession').update()<CR>",
+        description = "Possession Update",
+        opts = opts,
+      },
+      {
+        "<leader>sd",
+        "<cmd>lua require('nvim-possession').delete()<CR>",
+        description = "Possession Delete",
+        opts = opts,
+      },
       -- Glow
       {
         "<leader>md",
