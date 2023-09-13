@@ -178,8 +178,8 @@ M.config = function()
           LazyH1 = { bold = true, fg = cp.base, bg = cp.peach },
           LazyH2 = { fg = cp.text, bold = true },
           LazySpecial = { fg = cp.lavender, bold = true },
-          LazyProgressTodo = { fg = cp.base, bg = cp.base, bold = true },
-          LazyProgressDone = { fg = cp.pink, bg = cp.base, bold = true },
+          LazyProgressTodo = { fg = cp.none, bg = cp.none, bold = true },
+          LazyProgressDone = { fg = cp.pink, bg = cp.none, bold = true },
           LazyReasonEvent = { fg = cp.peach, bold = true },
           -- Leap
           LeapBackdrop = { fg = cp.none },
