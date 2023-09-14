@@ -1,14 +1,6 @@
 local M = {}
 
 M.config = function()
-  local opts = { noremap = true, silent = true }
-  local keymap = vim.api.nvim_set_keymap
-
-  -- Leader key
-  vim.g.mapleader = " "
-  vim.g.maplocalleader = " "
-  keymap("", "<Space>", "<Nop>", opts)
-
   require("legendary").setup({
     lazy_nvim = { auto_register = true },
     keymaps = {
@@ -96,12 +88,24 @@ M.config = function()
         description = "Possession Delete",
         opts = opts,
       },
+      -- Blink
+      {
+        "<leader><leader>",
+        "<cmd>lua require('blinker').blink_cursorline()<CR>",
+        description = "Blink Cursor",
+      },
       -- Glow
       {
         "<leader>md",
         "<cmd>Glow<CR>",
         description = "Glow",
       },
+      {
+        "<leader>ix",
+        "<cmd>lua require('nvim-market').remove_picker()<CR>",
+        description = "Market Place Remove Picker",
+      },
+
       -- File explorer
       {
         "<leader>e",
