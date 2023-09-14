@@ -1,6 +1,13 @@
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set guicursor=i:blinkon1]])
+local opts = { noremap = true, silent = true }
+local keymap = vim.api.nvim_set_keymap
+
+-- Leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+keymap("", "<Space>", "<Nop>", opts)
 
 local options = {
   background = "dark",

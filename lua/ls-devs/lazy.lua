@@ -457,6 +457,13 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
     config = require("ls-devs.plugins.crates").config,
   },
+  -- Blink
+  {
+    "Grazfather/blinker.nvim",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.blinker").config,
+  },
+
   -- Python
   {
     "luk400/vim-jukit",
