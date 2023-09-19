@@ -101,12 +101,6 @@ M.config = function()
         "<cmd>Glow<CR>",
         description = "Glow",
       },
-      {
-        "<leader>ix",
-        "<cmd>lua require('nvim-market').remove_picker()<CR>",
-        description = "Market Place Remove Picker",
-      },
-
       -- File explorer
       {
         "<leader>e",

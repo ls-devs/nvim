@@ -9,7 +9,7 @@ M.config = function()
     duration = 100,
 
     -- Colour of the blink, if using the default highlight group
-    color = "#b4befe",
+    color = "#cdd6f4",
 
     -- Highlight group to use, determining colour. If overidden, 'color' is
     -- ignored. Using a custom highlight group allows for finer-grained control

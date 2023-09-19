@@ -38,7 +38,7 @@ M.config = function()
       incoming = " ",
       outgoing = " ",
       hover = " ",
-      kind = {},
+      kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
     },
     beacon = {
       enable = true,

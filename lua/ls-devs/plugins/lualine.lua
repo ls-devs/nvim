@@ -37,10 +37,11 @@ M.config = function()
       -- Disable sections and component separators
       component_separators = "",
       section_separators = "",
-      theme = {
-        normal = { c = { fg = colors.fg, bg = nil } },
-        inactive = { c = { fg = colors.fg, bg = colors.bg } },
-      },
+      theme = "catppuccin",
+      -- theme = {
+      -- normal = { c = { fg = colors.fg, bg = nil } },
+      -- inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      -- },
       disabled_filetypes = { "NvimTree", "alpha" },
     },
     sections = {
