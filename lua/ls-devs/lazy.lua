@@ -47,7 +47,7 @@ require("lazy").setup({
       -- Snippets
       {
         "L3MON4D3/LuaSnip",
-        version = "v1.*",
+        version = "v2.*",
         event = "InsertEnter",
       },
     },
@@ -439,7 +439,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim", -- optional
     },
-    version = "1.x.x",              -- recommended
+    version = "2.x.x",              -- recommended
   },
   -- Overseer
   {

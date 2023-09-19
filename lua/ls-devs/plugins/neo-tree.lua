@@ -82,7 +82,7 @@ M.config = function()
       },
     },
     window = {
-      position = "right",
+      position = "float",
       mappings = {
         ["l"] = "open",
         ["S"] = "split_with_window_picker",
