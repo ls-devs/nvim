@@ -3,6 +3,7 @@ local M = {}
 M.config = function()
   require("mason-lspconfig").setup({
     ensure_installed = {
+      "astro",
       "html",
       "lemminx",
       "mdx_analyzer",
