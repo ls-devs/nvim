@@ -107,9 +107,7 @@ M.config = function()
         hide_dotfiles = false,
         always_show = {
           ".gitignore",
-          ".env",
-          ".env.local",
-          ".env.example",
+          "^.env$",
         },
         never_show = {
           ".git",
@@ -123,6 +121,7 @@ M.config = function()
       hijack_netrw_behavior = "open_current",
       follow_current_file = {
         enabled = true,
+        leave_dirs_open = true,
       },
       use_libuv_file_watcher = true,
       event_handlers = {
@@ -177,8 +176,8 @@ end
 
 M.keys = {
   { "<leader>e",  "<cmd>Neotree float<CR>", desc = "NeoTreeFloatToggle" },
-  { "<leader>to", "<cmd>Neotree show<CR>",   desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>Neotree close<CR>",  desc = "NeoTreeClose" },
+  { "<leader>to", "<cmd>Neotree show<CR>",  desc = "NeoTreeShow" },
+  { "<leader>tc", "<cmd>Neotree close<CR>", desc = "NeoTreeClose" },
 }
 
 return M

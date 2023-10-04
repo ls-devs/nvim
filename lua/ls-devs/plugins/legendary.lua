@@ -258,6 +258,13 @@ M.config = function()
         description = "Telescope Git Branches",
         opts = opts,
       },
+      {
+        "<leader>fe",
+        "<cmd>Telescope emoji<CR>",
+        description = "Telescope Emojis",
+        opts = opts,
+      },
+
       -- Urlview
       {
         "<leader>ul",
