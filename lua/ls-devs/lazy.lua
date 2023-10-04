@@ -200,6 +200,7 @@ require("lazy").setup({
         build = "make",
       },
       { "nvim-telescope/telescope-media-files.nvim" },
+      { "xiyaowong/telescope-emoji.nvim" },
       {
         "AckslD/nvim-neoclip.lua",
         dependencies = {

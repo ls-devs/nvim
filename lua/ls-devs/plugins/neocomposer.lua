@@ -11,6 +11,13 @@ M.config = function()
       blue = "#5fb3b3",
       green = "#99c794",
     },
+    queue_most_recent = false,
+    window = {
+      border = "rounded",
+      winhl = {
+        Normal = "Normal",
+      },
+    },
     keymaps = {
       play_macro = "@",
       yank_macro = "yq",
