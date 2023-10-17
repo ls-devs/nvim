@@ -161,7 +161,7 @@ M.config = function()
           -- For fidget.
           FidgetTitle = { fg = cp.blue, style = { "bold" } },
           -- For trouble.nvim
-          TroubleNormal = { bg = cp.base },
+          TroubleNormal = { bg = cp.none },
           -- Mason
           MasonHeader = { fg = cp.base, bg = cp.peach },
           MasonHeaderSecondary = { fg = cp.base, bg = cp.pink },

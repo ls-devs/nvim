@@ -790,7 +790,7 @@ M.config = function()
       },
     },
     extensions = {
-      -- load keymaps and commands from nvim-tree.lua
+      lazy_nvim = true,
       nvim_tree = true,
       op_nvim = true,
       smart_splits = {
