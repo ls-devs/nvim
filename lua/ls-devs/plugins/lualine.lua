@@ -33,6 +33,17 @@ M.config = function()
 
   -- Config
   local config = {
+    extensions = {
+      "mason",
+      "lazy",
+      "neo-tree",
+      "nvim-dap-ui",
+      "trouble",
+      "overseer",
+      "quickfix",
+      "aerial",
+      "man",
+    },
     options = {
       -- Disable sections and component separators
       component_separators = "",

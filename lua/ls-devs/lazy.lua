@@ -74,7 +74,6 @@ require("lazy").setup({
   },
   -- Mason & Managers
   {
-    cmd = "Mason",
     "williamboman/mason-lspconfig.nvim",
     config = require("ls-devs.plugins.mason-lspconfig").config,
     dependencies = {
@@ -107,11 +106,6 @@ require("lazy").setup({
     cmd = "Copilot",
     event = "InsertEnter",
     config = require("ls-devs.plugins.copilot").config,
-  },
-  -- Yuck
-  {
-    "elkowar/yuck.vim",
-    ft = "yuck",
   },
   -- Mapping
   {
