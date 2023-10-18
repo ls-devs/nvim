@@ -82,7 +82,7 @@ M.config = function()
 
   ins_left({
     function()
-      return ""
+      return " "
     end,
     color = function()
       local mode_color = {
@@ -94,7 +94,7 @@ M.config = function()
         c = colors.magenta,
         no = colors.red,
         s = colors.orange,
-        S = colors.orange,
+        S= colors.orange,
         [""] = colors.orange,
         ic = colors.yellow,
         R = colors.violet,
@@ -128,7 +128,7 @@ M.config = function()
   ins_left({
     "diagnostics",
     sources = { "nvim_diagnostic" },
-    symbols = { error = "  ", warn = "  ", info = "  ", hint = "  " },
+    symbols = { error = " ", warn = " ", info = " ", hint = " " },
     diagnostics_color = {
       error = { fg = colors.red, gui = "bold" },
       warn = { fg = colors.yellow, gui = "bold" },
