@@ -788,6 +788,63 @@ M.config = function()
         description = "RestNvimPreview",
         opts = opts,
       },
+      -- NeoComposer
+      {
+        "@",
+        function()
+          require("NeoComposer.macro").play_macro()
+        end,
+        description = "NeoComposer Play Macro",
+        opts = opts,
+      },
+      {
+        "yq",
+        function()
+          require("NeoComposer.macro").yank_macro()
+        end,
+        description = "NeoComposer Yank Macro",
+        opts = opts,
+      },
+      {
+        "sq",
+        function()
+          require("NeoComposer.macro").stop_macro()
+        end,
+        description = "NeoComposer Stop Macro",
+        opts = opts,
+      },
+      {
+        "q",
+        function()
+          require("NeoComposer.macro").toggle_record()
+        end,
+        description = "NeoComposer Record Macro",
+        opts = opts,
+      },
+      {
+        "<c-n>",
+        function()
+          require("NeoComposer.ui").cycle_next()
+        end,
+        description = "NeoComposer Cycle Next",
+        opts = opts,
+      },
+      {
+        "<c-p>",
+        function()
+          require("NeoComposer.ui").cycle_prev()
+        end,
+        description = "NeoComposer Cycle Prev",
+        opts = opts,
+      },
+      {
+        "<c-q>",
+        function()
+          require("NeoComposer.ui").toggle_macro_menu()
+        end,
+        description = "NeoComposer Toggle Menu",
+        opts = opts,
+      },
     },
     extensions = {
       lazy_nvim = true,
