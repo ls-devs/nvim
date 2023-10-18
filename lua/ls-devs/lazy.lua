@@ -88,6 +88,7 @@ require("lazy").setup({
       {
         "williamboman/mason.nvim",
         config = require("ls-devs.plugins.mason").config,
+        event = "VimEnter",
       },
     },
   },
@@ -316,7 +317,7 @@ require("lazy").setup({
   },
   -- Formatter
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = "BufReadPre",
     config = require("ls-devs.plugins.null-ls").config,
   },
