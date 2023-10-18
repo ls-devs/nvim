@@ -159,7 +159,7 @@ require("lazy").setup({
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.lualine").config,
     dependencies = {
       {
@@ -219,7 +219,7 @@ require("lazy").setup({
   -- NeoComposer
   {
     "ecthelionvi/NeoComposer.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.neocomposer").config,
     dependencies = { "kkharji/sqlite.lua" },
   },
@@ -318,7 +318,7 @@ require("lazy").setup({
   },
   {
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
+    event = "BufReadPre",
     config = require("ls-devs.plugins.dressing").config,
   },
   {
@@ -398,7 +398,7 @@ require("lazy").setup({
   {
     "echasnovski/mini.indentscope",
     version = false,
-    event = "BufEnter",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.indentscope").config,
   },
   {
@@ -530,7 +530,7 @@ require("lazy").setup({
   },
   {
     "axkirillov/hbac.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     dependencies = {
       -- these are optional, add them, if you want the telescope module
       "nvim-telescope/telescope.nvim",
