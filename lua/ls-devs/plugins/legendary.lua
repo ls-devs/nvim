@@ -158,7 +158,7 @@ M.config = function()
       {
         "<leader>fh",
         "<cmd>Hbac telescope<CR>",
-        description = "Telescope Find Files",
+        description = "Hbac Telescope",
         opts = opts,
       },
       {
