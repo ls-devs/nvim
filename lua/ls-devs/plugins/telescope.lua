@@ -48,4 +48,5 @@ return function()
   telescope.load_extension("neoclip")
   telescope.load_extension("macros")
   telescope.load_extension("emoji")
+  telescope.load_extension("noice")
 end
