@@ -34,7 +34,6 @@ M.config = function()
   -- Config
   local config = {
     extensions = {
-      "mason",
       "lazy",
       "neo-tree",
       "nvim-dap-ui",

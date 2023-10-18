@@ -76,13 +76,22 @@ require("lazy").setup({
   {
     "williamboman/mason-lspconfig.nvim",
     config = require("ls-devs.plugins.mason-lspconfig").config,
+    event = "VimEnter",
     dependencies = {
       {
         "jay-babu/mason-null-ls.nvim",
         config = require("ls-devs.plugins.mason-null-ls").config,
+        event = "VimEnter",
+        -- Formatter
+        {
+          "nvimtools/none-ls.nvim",
+          event = "BufReadPre",
+          config = require("ls-devs.plugins.null-ls").config,
+        },
       },
       {
         "jay-babu/mason-nvim-dap.nvim",
+        event = "VimEnter",
         config = require("ls-devs.plugins.mason-nvim-dap").config,
       },
       {
@@ -314,12 +323,6 @@ require("lazy").setup({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
-  },
-  -- Formatter
-  {
-    "nvimtools/none-ls.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.null-ls").config,
   },
   {
     "ThePrimeagen/refactoring.nvim",

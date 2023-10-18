@@ -39,6 +39,7 @@ M.config = function()
     },
     automatic_installation = true,
   })
+
 end
 
 return M
