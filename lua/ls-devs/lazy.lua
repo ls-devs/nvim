@@ -81,7 +81,6 @@ require("lazy").setup({
       {
         "jay-babu/mason-null-ls.nvim",
         config = require("ls-devs.plugins.mason-null-ls").config,
-        event = "VimEnter",
         -- Formatter
         {
           "nvimtools/none-ls.nvim",
@@ -91,13 +90,11 @@ require("lazy").setup({
       },
       {
         "jay-babu/mason-nvim-dap.nvim",
-        event = "VimEnter",
         config = require("ls-devs.plugins.mason-nvim-dap").config,
       },
       {
         "williamboman/mason.nvim",
         config = require("ls-devs.plugins.mason").config,
-        event = "VimEnter",
       },
     },
   },
