@@ -65,6 +65,25 @@ M.config = function()
         use_git_status_colors = true,
         highlight = "NeoTreeFileName",
       },
+      file_size = {
+        enabled = true,
+        required_width = 64, -- min width of window required to show this column
+      },
+      type = {
+        enabled = true,
+        required_width = 122, -- min width of window required to show this column
+      },
+      last_modified = {
+        enabled = true,
+        required_width = 88, -- min width of window required to show this column
+      },
+      created = {
+        enabled = true,
+        required_width = 110, -- min width of window required to show this column
+      },
+      symlink_target = {
+        enabled = false,
+      },
       git_status = {
         symbols = {
           -- Change type
@@ -83,6 +102,10 @@ M.config = function()
     },
     window = {
       position = "float",
+      mapping_options = {
+        noremap = true,
+        nowait = true,
+      },
       mappings = {
         ["l"] = "open",
         ["S"] = "split_with_window_picker",
@@ -101,6 +124,12 @@ M.config = function()
           vim.api.nvim_exec("Neotree focus git_status right", true)
         end,
       },
+      fuzzy_finder_mappings = {
+        ["<down>"] = "move_cursor_down",
+        ["<C-n>"] = "move_cursor_down",
+        ["<up>"] = "move_cursor_up",
+        ["<C-p>"] = "move_cursor_up",
+      },
     },
     filesystem = {
       filtered_items = {
@@ -118,10 +147,40 @@ M.config = function()
       window = {
         position = "current",
       },
+      hide_gitignored = true,
       hijack_netrw_behavior = "open_current",
       follow_current_file = {
         enabled = true,
         leave_dirs_open = true,
+      },
+      buffers = {
+        follow_current_file = {
+          enabled = true,     -- This will find and focus the file in the active buffer every time
+          --              -- the current file is changed while the tree is open.
+          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
+        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        show_unloaded = true,
+        window = {
+          mappings = {
+            ["bd"] = "buffer_delete",
+            ["<bs>"] = "navigate_up",
+            ["."] = "set_root",
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+            ["oc"] = { "order_by_created", nowait = false },
+            ["od"] = { "order_by_diagnostics", nowait = false },
+            ["om"] = { "order_by_modified", nowait = false },
+            ["on"] = { "order_by_name", nowait = false },
+            ["os"] = { "order_by_size", nowait = false },
+            ["ot"] = { "order_by_type", nowait = false },
+          },
+          fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+            ["<down>"] = "move_cursor_down",
+            ["<C-n>"] = "move_cursor_down",
+            ["<up>"] = "move_cursor_up",
+            ["<C-p>"] = "move_cursor_up",
+          },
+        },
       },
       use_libuv_file_watcher = true,
       event_handlers = {
