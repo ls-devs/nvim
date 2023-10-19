@@ -2,19 +2,21 @@ local M = {}
 
 M.config = function()
   require("window-picker").setup({
-    autoselect_one = true,
-    include_current_win = false,
+    hint = "floating-big-letter",
+    show_prompt = true,
+    picker_config = {
+      floating_big_letter = {
+        font = "ansi-shadow",
+      },
+    },
     filter_rules = {
-      -- filter using buffer options
+      autoselect_one = true,
+      include_current_win = false,
       bo = {
-        -- if the file type is one of following, the window will be ignored
         filetype = { "NvimTree", "neo-tree", "neo-tree-popup", "NeoTreeFloat", "notify" },
-
-        -- if the buffer type is one of following, the window will be ignored
         buftype = { "terminal", "quickfix" },
       },
     },
-    -- other_win_hl_color = "#e35e4f",
     highlights = {
       statusline = {
         focused = {
