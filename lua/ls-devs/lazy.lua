@@ -189,6 +189,13 @@ require("lazy").setup({
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "tree-sitter/tree-sitter-cpp" },
+      -- Auto Tag
+      {
+        "windwp/nvim-ts-autotag",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = require("ls-devs.plugins.autotag").config,
+      },
+
       {
         "HiPhish/rainbow-delimiters.nvim",
         config = require("ls-devs.plugins.rainbow_delimiter").config,
@@ -196,6 +203,7 @@ require("lazy").setup({
     },
     build = ":TSUpdate",
   },
+
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
