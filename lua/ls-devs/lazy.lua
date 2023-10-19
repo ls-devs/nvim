@@ -247,6 +247,7 @@ require("lazy").setup({
     "p00f/clangd_extensions.nvim",
     event = { "BufReadPost *.cpp *.c" },
     config = require("ls-devs.plugins.clangd_extensions").config,
+    ft = { "c", "cpp" },
   },
   -- Cmake Tools
   {
