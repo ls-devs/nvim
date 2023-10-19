@@ -136,7 +136,9 @@ M.config = function()
         hide_dotfiles = false,
         always_show = {
           ".gitignore",
-          "^.env$",
+          ".env.local",
+          ".env.example",
+          ".env",
         },
         never_show = {
           ".git",
