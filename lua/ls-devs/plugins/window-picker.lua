@@ -3,7 +3,7 @@ local M = {}
 M.config = function()
   require("window-picker").setup({
     autoselect_one = true,
-    include_current = false,
+    include_current_win = false,
     filter_rules = {
       -- filter using buffer options
       bo = {
