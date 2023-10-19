@@ -1,7 +1,5 @@
 local M = {}
 
-local function on_attach(client, bufnr) end
-
 M.config = function()
   require("clangd_extensions").setup({
     server = {
