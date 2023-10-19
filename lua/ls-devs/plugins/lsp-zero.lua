@@ -23,10 +23,10 @@ M.config = function()
     },
   })
 
-  -- lsp.skip_server_setup({ "rust_analyzer" })
-  -- lsp.skip_server_setup({ "hls" })
-  -- lsp.skip_server_setup({ "clangd" })
-  -- lsp.skip_server_setup({ "tsserver" })
+  lsp.skip_server_setup({ "rust_analyzer" })
+  lsp.skip_server_setup({ "hls" })
+  lsp.skip_server_setup({ "clangd" })
+  lsp.skip_server_setup({ "tsserver" })
 
   lsp.on_attach(function(client, bufnr)
     require("lsp-inlayhints").on_attach(client, bufnr)
