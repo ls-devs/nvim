@@ -873,6 +873,11 @@ M.config = function()
         },
       },
       {
+        "LspAttach",
+        'lua require("null-ls").enable({})',
+        description = "Start null-ls when starting a lsp client",
+      },
+      {
         "VimLeave",
         ":silent !prettier_d_slim stop",
         description = "Stop prettier_d_slim",

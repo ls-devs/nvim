@@ -27,19 +27,26 @@ require("lazy").setup({
     config = require("ls-devs.plugins.lsp-zero").config,
     priority = 900,
     dependencies = {
-      -- LSP Support
+      -- LSP Idle Timeout
       {
-        "neovim/nvim-lspconfig",
-        event = "BufReadPre",
+        "hinell/lsp-timeout.nvim",
+        config = require("ls-devs.plugins.lsp-timeout").config,
         dependencies = {
-          -- LSP Enhancement
+          -- LSP Support
           {
-            "glepnir/lspsaga.nvim",
-            event = "LspAttach",
-            config = require("ls-devs.plugins.lsp_saga").config,
+            "neovim/nvim-lspconfig",
+            event = "BufReadPre",
             dependencies = {
-              { "nvim-tree/nvim-web-devicons" },
-              { "nvim-treesitter/nvim-treesitter" },
+              -- LSP Enhancement
+              {
+                "glepnir/lspsaga.nvim",
+                event = "LspAttach",
+                config = require("ls-devs.plugins.lsp_saga").config,
+                dependencies = {
+                  { "nvim-tree/nvim-web-devicons" },
+                  { "nvim-treesitter/nvim-treesitter" },
+                },
+              },
             },
           },
         },
