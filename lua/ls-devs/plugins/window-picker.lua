@@ -3,7 +3,7 @@ local M = {}
 M.config = function()
   require("window-picker").setup({
     hint = "floating-big-letter",
-    show_prompt = true,
+    show_prompt = false,
     picker_config = {
       floating_big_letter = {
         font = "ansi-shadow",

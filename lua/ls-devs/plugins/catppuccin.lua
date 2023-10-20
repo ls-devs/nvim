@@ -34,7 +34,8 @@ M.config = function()
       variables = { "bold" },
     },
     integrations = {
-      window_picker = false,
+      ufo = true,
+      window_picker = true,
       rainbow_delimiters = true,
       alpha = false,
       treesitter = true,
