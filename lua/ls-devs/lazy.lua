@@ -203,7 +203,6 @@ require("lazy").setup({
     },
     build = ":TSUpdate",
   },
-
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
@@ -248,6 +247,16 @@ require("lazy").setup({
       "MurenClose",
       "MurenFresh",
       "MurenUnique",
+    },
+  },
+  -- Data Viewer
+  {
+    "vidocqh/data-viewer.nvim",
+    ft = { "tsv", "csv", "sqlite" },
+    config = require("ls-devs.plugins.dataviewer").config,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "kkharji/sqlite.lua", -- Optional, sqlite support
     },
   },
   -- Rust tools

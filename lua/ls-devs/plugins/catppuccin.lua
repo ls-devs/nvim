@@ -201,6 +201,10 @@ M.config = function()
           FidgetTask = { fg = cp.text, style = { "bold" } },
           -- Gitsigns
           GitSignsCurrentLineBlame = { fg = cp.text, style = { "bold" and "italic" } },
+          -- DataViewer
+          DataViewerColumn0 = { fg = cp.text, style = { "bold" } },
+          DataViewerColumn1 = { fg = cp.text, style = { "bold" } },
+          DataViewerColumn2 = { fg = cp.text, style = { "bold" } },
           -- Keywords
           ["@type"] = { fg = cp.yellow },
           ["@variable"] = { fg = cp.text, style = { "bold" } },
