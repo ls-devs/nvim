@@ -22,11 +22,36 @@ require("lazy").setup({
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
-    event = "BufReadPre",
+    branch = "v3.x",
     config = require("ls-devs.plugins.lsp-zero").config,
     priority = 900,
     dependencies = {
+      -- Mason & Managers
+      {
+        "williamboman/mason-lspconfig.nvim",
+        config = require("ls-devs.plugins.mason-lspconfig").config,
+        event = "VimEnter",
+        dependencies = {
+          {
+            "jay-babu/mason-null-ls.nvim",
+            config = require("ls-devs.plugins.mason-null-ls").config,
+            -- Formatter
+            {
+              "nvimtools/none-ls.nvim",
+              event = "BufReadPre",
+              config = require("ls-devs.plugins.null-ls").config,
+            },
+          },
+          {
+            "jay-babu/mason-nvim-dap.nvim",
+            config = require("ls-devs.plugins.mason-nvim-dap").config,
+          },
+          {
+            "williamboman/mason.nvim",
+            config = require("ls-devs.plugins.mason").config,
+          },
+        },
+      },
       -- LSP Idle Timeout
       {
         "hinell/lsp-timeout.nvim",
@@ -79,32 +104,6 @@ require("lazy").setup({
       },
     },
   },
-  -- Mason & Managers
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = require("ls-devs.plugins.mason-lspconfig").config,
-    event = "VimEnter",
-    dependencies = {
-      {
-        "jay-babu/mason-null-ls.nvim",
-        config = require("ls-devs.plugins.mason-null-ls").config,
-        -- Formatter
-        {
-          "nvimtools/none-ls.nvim",
-          event = "BufReadPre",
-          config = require("ls-devs.plugins.null-ls").config,
-        },
-      },
-      {
-        "jay-babu/mason-nvim-dap.nvim",
-        config = require("ls-devs.plugins.mason-nvim-dap").config,
-      },
-      {
-        "williamboman/mason.nvim",
-        config = require("ls-devs.plugins.mason").config,
-      },
-    },
-  },
   -- Sessions
   {
     "gennaro-tedesco/nvim-possession",
@@ -116,10 +115,15 @@ require("lazy").setup({
   },
   -- Copilot
   {
-    "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
-    config = require("ls-devs.plugins.copilot").config,
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      {
+        "zbirenbaum/copilot.lua",
+        config = require("ls-devs.plugins.copilot").config,
+      },
+    },
+    config = require("ls-devs.plugins.copilot-cmp").config,
   },
   -- Mapping
   {

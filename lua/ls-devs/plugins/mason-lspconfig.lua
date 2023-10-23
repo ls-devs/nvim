@@ -1,6 +1,7 @@
 local M = {}
 
 M.config = function()
+  local lsp_zero = require("lsp-zero")
   require("mason-lspconfig").setup({
     ensure_installed = {
       "astro",
@@ -38,8 +39,13 @@ M.config = function()
       "vls",
     },
     automatic_installation = true,
+    handlers = {
+      lsp_zero.default_setup,
+      rust_analyzer = lsp_zero.noop,
+      hls = lsp_zero.noop,
+      clangd = lsp_zero.noop,
+    },
   })
-
 end
 
 return M
