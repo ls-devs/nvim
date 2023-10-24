@@ -11,5 +11,4 @@ return {
     "vert",
     "frag",
   },
-  root_dir = require("lspconfig.util").root_pattern("."),
 }

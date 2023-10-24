@@ -44,6 +44,7 @@ M.config = function()
       rust_analyzer = lsp_zero.noop,
       hls = lsp_zero.noop,
       clangd = lsp_zero.noop,
+      tsserver = lsp_zero.noop,
     },
   })
 end

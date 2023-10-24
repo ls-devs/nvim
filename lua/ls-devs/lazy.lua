@@ -26,6 +26,11 @@ require("lazy").setup({
     config = require("ls-devs.plugins.lsp-zero").config,
     priority = 900,
     dependencies = {
+      -- Inlay hints
+      {
+        "lvimuser/lsp-inlayhints.nvim",
+        config = require("ls-devs.plugins.lsp-inlayhints").config,
+      },
       -- Mason & Managers
       {
         "williamboman/mason-lspconfig.nvim",
@@ -624,17 +629,11 @@ require("lazy").setup({
   },
   -- Typescript
   {
-    "jose-elias-alvarez/typescript.nvim",
+   "pmizio/typescript-tools.nvim",
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
-    config = require("ls-devs.plugins.typescript").config,
+    config = require("ls-devs.plugins.typescript-tools").config,
   },
 
-  -- Inlay hints
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.lsp-inlayhints").config,
-  },
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",

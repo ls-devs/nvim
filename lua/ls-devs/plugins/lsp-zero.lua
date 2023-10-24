@@ -1,6 +1,9 @@
 local M = {}
 
 M.config = function()
+  local lsp_zero = require("lsp-zero")
+  local ih = require("lsp-inlayhints")
+
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
   vim.diagnostic.config({
@@ -18,12 +21,7 @@ M.config = function()
     },
   })
 
-  local lsp_zero = require("lsp-zero")
-  vim.g.lsp_zero_extend_cmp = 0
-  vim.g.lsp_zero_extend_lspconfig = 0
-
   lsp_zero.on_attach(function(client, bufnr)
-    vim.lsp.inlay_hint(bufnr, true)
     lsp_zero.default_keymaps({ buffer = bufnr })
   end)
 
@@ -31,8 +29,14 @@ M.config = function()
   for _, server in pairs(get_servers()) do
     local has_config, config = pcall(require, "ls-devs.lsp.settings." .. server)
     if has_config then
-      print(server)
-      require("lspconfig")[server].setup(config)
+      require("lspconfig")[server].setup({
+        single_file_support = false,
+        root_dir = require("lspconfig.util").root_pattern("."),
+        on_attach = function(client, bufnr)
+          ih.on_attach(client, bufnr)
+        end,
+        settings = config,
+      })
     end
   end
 end
