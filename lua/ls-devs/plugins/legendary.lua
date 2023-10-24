@@ -1,6 +1,25 @@
 local M = {}
 local opts = { noremap = true, silent = true }
 
+local is_diag_for_cur_pos = function()
+  local diagnostics = vim.diagnostic.get(0)
+  local pos = vim.api.nvim_win_get_cursor(0)
+  if #diagnostics == 0 then
+    return false
+  end
+  local message = vim.tbl_filter(function(d)
+    return d.col == pos[2] and d.lnum == pos[1] - 1
+  end, diagnostics)
+  return #message > 0
+end
+
+local open_help_tab = function(help_cmd, topic)
+  vim.cmd.tabe()
+  local winnr = vim.api.nvim_get_current_win()
+  vim.cmd("silent! " .. help_cmd .. " " .. topic)
+  vim.api.nvim_win_close(winnr, false)
+end
+
 M.config = function()
   require("legendary").setup({
     lazy_nvim = { auto_register = true },
@@ -141,6 +160,21 @@ M.config = function()
         "<cmd>Telescope live_grep<CR>",
         description = "Telescope Live Grep",
         opts = opts,
+      },
+      {
+        "<leader>hg",
+        function()
+          vim.ui.input({ prompt = "Grep help for: " }, function(input)
+            if input == "" or not input then
+              return
+            end
+            open_help_tab("helpgrep", input)
+            if #vim.fn.getqflist() > 0 then
+              vim.cmd.copen()
+            end
+          end)
+        end,
+        description = "Help Grep",
       },
       {
         "<leader>fn",
@@ -484,8 +518,27 @@ M.config = function()
       },
       {
         "K",
-        vim.lsp.buf.hover(),
-        description = "LSPSaga Hover Doc",
+        function()
+          local winid = require("ufo").peekFoldedLinesUnderCursor()
+          if winid then
+            return
+          end
+          local ft = vim.bo.filetype
+          if vim.tbl_contains({ "vim", "help" }, ft) then
+            vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
+            -- elseif M.treesitter_is_css_class_under_cursor() then
+            -- 	cmd("TWValues")
+          elseif vim.tbl_contains({ "man" }, ft) then
+            vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
+          elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+            require("crates").show_popup()
+          elseif is_diag_for_cur_pos() then
+            vim.diagnostic.open_float()
+          else
+            vim.lsp.buf.hover()
+          end
+        end,
+        description = "LSP Hover Doc",
         opts = opts,
       },
       {
