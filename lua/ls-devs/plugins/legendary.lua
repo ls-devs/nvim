@@ -484,19 +484,13 @@ M.config = function()
       },
       {
         "K",
-        function()
-          if vim.bo.filetype ~= "rust" then
-            return require("lspsaga.hover"):render_hover_doc()
-          end
-        end,
+        vim.lsp.buf.hover(),
         description = "LSPSaga Hover Doc",
         opts = opts,
       },
       {
         "<leader>K",
-        function()
-          return require("lspsaga.hover"):render_hover_doc({ "++keep" })
-        end,
+        "<cmd>Lspsaga hover_doc ++silent<CR>",
         description = "LSPSaga Hover Doc Keep",
         opts = opts,
       },
@@ -763,7 +757,6 @@ M.config = function()
       { "<leader>dvc", "<cmd>DiffviewClose<CR>", description = "DiffviewClose", opts = opts },
 
       -- Restnvim
-
       {
         "<leader>rh",
         function()

@@ -4,6 +4,8 @@ M.config = function()
   local treesitter = require("nvim-treesitter.configs")
 
   treesitter.setup({
+    ignore_install = {},
+    modules = {},
     ensure_installed = {
       "lua",
       "markdown",

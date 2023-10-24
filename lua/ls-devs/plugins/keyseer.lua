@@ -1,6 +1,7 @@
 local M = {}
 
 M.config = function()
-  require("leap").add_default_mappings()
+  require("keyseer").setup()
 end
+
 return M

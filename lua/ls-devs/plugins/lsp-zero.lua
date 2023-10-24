@@ -1,12 +1,10 @@
 local M = {}
 
 M.config = function()
-  require("lspconfig.ui.windows").default_options.border = "rounded"
+  local lsp_zero = require("lsp-zero")
+  local ih = require("lsp-inlayhints")
 
-  local lsp = require("lsp-zero").preset({
-    name = "recommended",
-    manage_nvim_cmp = false,
-  })
+  require("lspconfig.ui.windows").default_options.border = "rounded"
 
   vim.diagnostic.config({
     virtual_text = false,
@@ -23,20 +21,10 @@ M.config = function()
     },
   })
 
-  lsp.skip_server_setup({ "rust_analyzer" })
-  lsp.skip_server_setup({ "hls" })
-  lsp.skip_server_setup({ "clangd" })
-  lsp.skip_server_setup({ "tsserver" })
-
-  lsp.on_attach(function(client, bufnr)
-    require("lsp-inlayhints").on_attach(client, bufnr)
-    if client.name == "volar" or client.name == "tsserver" then
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentFormattingRangeProvider = false
-    end
+  lsp_zero.on_attach(function(client, bufnr)
+    lsp_zero.default_keymaps({ buffer = bufnr })
+    ih.on_attach(client, bufnr)
   end)
-
-  require("lspconfig").glslls.setup(require("ls-devs.lsp.settings.glslls"))
 
   local get_servers = require("mason-lspconfig").get_installed_servers
   for _, server in pairs(get_servers()) do
@@ -45,10 +33,6 @@ M.config = function()
       require("lspconfig")[server].setup(config)
     end
   end
-
-  lsp.nvim_workspace()
-
-  lsp.setup()
 
   vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
     config = config or {}

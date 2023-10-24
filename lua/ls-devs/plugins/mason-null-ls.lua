@@ -8,7 +8,6 @@ M.config = function()
       "black",
       "stylua",
       "xmlformatter",
-      "luacheck",
       "eslint_d",
       "shellharden",
       "cmakelang",

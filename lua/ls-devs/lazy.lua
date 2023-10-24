@@ -22,11 +22,41 @@ require("lazy").setup({
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
-    event = "BufReadPre",
+    branch = "v3.x",
     config = require("ls-devs.plugins.lsp-zero").config,
     priority = 900,
     dependencies = {
+      -- Inlay hints
+      {
+        "lvimuser/lsp-inlayhints.nvim",
+        config = require("ls-devs.plugins.lsp-inlayhints").config,
+      },
+      -- Mason & Managers
+      {
+        "williamboman/mason-lspconfig.nvim",
+        config = require("ls-devs.plugins.mason-lspconfig").config,
+        event = "VimEnter",
+        dependencies = {
+          {
+            "jay-babu/mason-null-ls.nvim",
+            config = require("ls-devs.plugins.mason-null-ls").config,
+            -- Formatter
+            {
+              "nvimtools/none-ls.nvim",
+              event = "BufReadPre",
+              config = require("ls-devs.plugins.null-ls").config,
+            },
+          },
+          {
+            "jay-babu/mason-nvim-dap.nvim",
+            config = require("ls-devs.plugins.mason-nvim-dap").config,
+          },
+          {
+            "williamboman/mason.nvim",
+            config = require("ls-devs.plugins.mason").config,
+          },
+        },
+      },
       -- LSP Idle Timeout
       {
         "hinell/lsp-timeout.nvim",
@@ -79,32 +109,6 @@ require("lazy").setup({
       },
     },
   },
-  -- Mason & Managers
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = require("ls-devs.plugins.mason-lspconfig").config,
-    event = "VimEnter",
-    dependencies = {
-      {
-        "jay-babu/mason-null-ls.nvim",
-        config = require("ls-devs.plugins.mason-null-ls").config,
-        -- Formatter
-        {
-          "nvimtools/none-ls.nvim",
-          event = "BufReadPre",
-          config = require("ls-devs.plugins.null-ls").config,
-        },
-      },
-      {
-        "jay-babu/mason-nvim-dap.nvim",
-        config = require("ls-devs.plugins.mason-nvim-dap").config,
-      },
-      {
-        "williamboman/mason.nvim",
-        config = require("ls-devs.plugins.mason").config,
-      },
-    },
-  },
   -- Sessions
   {
     "gennaro-tedesco/nvim-possession",
@@ -116,10 +120,15 @@ require("lazy").setup({
   },
   -- Copilot
   {
-    "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
-    config = require("ls-devs.plugins.copilot").config,
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      {
+        "zbirenbaum/copilot.lua",
+        config = require("ls-devs.plugins.copilot").config,
+      },
+    },
+    config = require("ls-devs.plugins.copilot-cmp").config,
   },
   -- Mapping
   {
@@ -357,13 +366,12 @@ require("lazy").setup({
   -- Easy jump
   {
     "ggandor/flit.nvim",
-    keys = require("ls-devs.plugins.flit").keys,
     config = require("ls-devs.plugins.flit").config,
+    event = "BufReadPost",
     dependencies = {
       {
         "ggandor/leap.nvim",
         config = require("ls-devs.plugins.leap").config,
-        keys = require("ls-devs.plugins.leap").keys,
       },
       {
         "ggandor/leap-spooky.nvim",
@@ -620,17 +628,12 @@ require("lazy").setup({
   },
   -- Typescript
   {
-    "jose-elias-alvarez/typescript.nvim",
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
-    config = require("ls-devs.plugins.typescript").config,
+    config = require("ls-devs.plugins.typescript-tools").config,
   },
 
-  -- Inlay hints
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.lsp-inlayhints").config,
-  },
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
@@ -679,6 +682,12 @@ require("lazy").setup({
     ft = "glsl",
     config = require("ls-devs.plugins.glslViewer").config,
     keys = require("ls-devs.plugins.glslViewer").keys,
+  },
+  {
+    "jokajak/keyseer.nvim",
+    version = "*",
+    cmd = "KeySeer",
+    config = require("ls-devs.plugins.keyseer").config,
   },
 }, {
   defaults = {

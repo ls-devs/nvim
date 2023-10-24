@@ -42,7 +42,7 @@ M.config = function()
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -72,8 +72,10 @@ M.config = function()
         mode = "symbol",
         maxwidth = 50,
         ellipsis_char = "...",
+        symbol_map = { Copilot = "" },
         before = function(entry, vim_item)
           vim_item.menu = ({
+            Copilot = "[Copilot]",
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
             buffer = "[Buffer]",
@@ -84,6 +86,7 @@ M.config = function()
       }),
     },
     sources = {
+      { name = "copilot" },
       { name = "nvim_lsp" },
       { name = "luasnip" },
       { name = "buffer" },
