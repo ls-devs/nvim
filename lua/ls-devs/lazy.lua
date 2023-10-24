@@ -239,6 +239,17 @@ require("lazy").setup({
       },
     },
   },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    config = require("ls-devs.plugins.bqf").config,
+    dependencies = {
+      "junegunn/fzf",
+      build = function()
+        vim.fn["fzf#install"]()
+      end,
+    },
+  },
   -- NeoComposer
   {
     "ecthelionvi/NeoComposer.nvim",
@@ -633,7 +644,11 @@ require("lazy").setup({
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
     config = require("ls-devs.plugins.typescript-tools").config,
   },
-
+  {
+    "sindrets/winshift.nvim",
+    cmd = { "WinShift" },
+    config = require("ls-devs.plugins.winshift").config,
+  },
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
