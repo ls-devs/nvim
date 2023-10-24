@@ -668,7 +668,7 @@ require("lazy").setup({
   },
   {
     "ellisonleao/glow.nvim",
-    ft = "markdown",
+    cmd = "Glow",
     keys = require("ls-devs.plugins.glow").keys,
     config = require("ls-devs.plugins.glow").config,
   },
