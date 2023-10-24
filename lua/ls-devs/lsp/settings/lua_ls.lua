@@ -1,17 +1,22 @@
 return {
-  Lua = {
-    hint = {
-      enable = true,
-    },
-    diagnostics = {
-      globals = { "vim" },
-    },
-    workspace = {
-      library = {
-        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-        [vim.fn.expand("$VIMRUNTIME/lua/vim")] = true,
-        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-        [vim.fn.stdpath("config") .. "/lua"] = true,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = {
+          "vim",
+          "require",
+        },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
       },
     },
   },

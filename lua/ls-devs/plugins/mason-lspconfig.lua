@@ -10,7 +10,6 @@ M.config = function()
       "mdx_analyzer",
       "cssls",
       "cssmodules_ls",
-      "emmet_ls",
       "emmet_language_server",
       "tsserver",
       "volar",

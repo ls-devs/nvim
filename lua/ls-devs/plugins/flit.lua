@@ -11,7 +11,4 @@ M.config = function()
     opts = {},
   })
 end
-
-M.keys = { "f", "F", "t", "T" }
-
 return M

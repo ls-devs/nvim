@@ -366,13 +366,12 @@ require("lazy").setup({
   -- Easy jump
   {
     "ggandor/flit.nvim",
-    keys = require("ls-devs.plugins.flit").keys,
     config = require("ls-devs.plugins.flit").config,
+    event = "BufReadPost",
     dependencies = {
       {
         "ggandor/leap.nvim",
         config = require("ls-devs.plugins.leap").config,
-        keys = require("ls-devs.plugins.leap").keys,
       },
       {
         "ggandor/leap-spooky.nvim",
@@ -629,7 +628,8 @@ require("lazy").setup({
   },
   -- Typescript
   {
-   "pmizio/typescript-tools.nvim",
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
     config = require("ls-devs.plugins.typescript-tools").config,
   },
@@ -682,6 +682,12 @@ require("lazy").setup({
     ft = "glsl",
     config = require("ls-devs.plugins.glslViewer").config,
     keys = require("ls-devs.plugins.glslViewer").keys,
+  },
+  {
+    "jokajak/keyseer.nvim",
+    version = "*",
+    cmd = "KeySeer",
+    config = require("ls-devs.plugins.keyseer").config,
   },
 }, {
   defaults = {

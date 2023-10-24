@@ -14,6 +14,7 @@ M.config = function()
       },
       hover = {
         enabled = false,
+        silent = true,
       },
       signature = {
         enabled = false,
@@ -46,6 +47,8 @@ M.config = function()
       -- Benefit of using Noice for this is the routing and consistent history view
       enabled = true,
       view = "notify",
+      replace = true,
+      merge = true,
     },
     messages = {
       enabled = true,

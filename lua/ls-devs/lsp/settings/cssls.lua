@@ -1,17 +1,17 @@
 return {
-  css = {
-    lint = {
-      unknownAtRules = "ignore",
+    css = {
+      lint = {
+        unknownAtRules = "ignore",
+      },
     },
-  },
-  scss = {
-    lint = {
-      unknownAtRules = "ignore",
+    scss = {
+      lint = {
+        unknownAtRules = "ignore",
+      },
     },
-  },
-  less = {
-    lint = {
-      unknownAtRules = "ignore",
+    less = {
+      lint = {
+        unknownAtRules = "ignore",
+      },
     },
-  },
 }
