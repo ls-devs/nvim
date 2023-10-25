@@ -540,6 +540,29 @@ M.config = function()
         opts = opts,
       },
       {
+        "<c-f>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Forward",
+        opts = opts,
+      },
+      {
+        "<c-b>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Backward",
+        opts = opts,
+      },
+
+      {
         "<leader>K",
         "<cmd>Lspsaga hover_doc ++silent<CR>",
         description = "LSPSaga Hover Doc Keep",
