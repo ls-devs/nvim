@@ -137,7 +137,10 @@ M.config = function()
           -- For base configs.
           Normal = { bg = cp.none },
           CursorLine = { bg = cp.none },
+          CmpBorder = { fg = cp.lavender },
           NormalFloat = { fg = cp.text, bg = true and cp.none or cp.base },
+          Pmenu = { fg = cp.lavender },
+          PmenuSel = { fg = cp.text, bg = "#1877F2", style = { "bold" } },
           CursorLineNr = { fg = cp.pink, bg = cp.none },
           LineNr = { fg = cp.lavender },
           Search = { bg = cp.surface0, fg = cp.pink, style = { "bold" } },

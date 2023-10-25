@@ -141,8 +141,12 @@ M.config = function()
       select = false,
     },
     window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+      completion = cmp.config.window.bordered({
+        winhighlight = "Normal:Normal,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+      }),
+      documentation = cmp.config.window.bordered({
+        winhighlight = "Normal:Normal,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+      }),
     },
     experimental = {
       view = { entries = "native" },
