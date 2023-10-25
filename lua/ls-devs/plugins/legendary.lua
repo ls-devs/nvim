@@ -526,8 +526,6 @@ M.config = function()
           local ft = vim.bo.filetype
           if vim.tbl_contains({ "vim", "help" }, ft) then
             vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
-            -- elseif M.treesitter_is_css_class_under_cursor() then
-            -- 	cmd("TWValues")
           elseif vim.tbl_contains({ "man" }, ft) then
             vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
           elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then

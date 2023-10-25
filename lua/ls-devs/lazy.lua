@@ -601,13 +601,7 @@ require("lazy").setup({
     cmd = "Git",
     keys = require("ls-devs.plugins.vim-fugitive").keys,
   },
-  -- Signature
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "BufReadPre",
-    config = require("ls-devs.plugins.lsp-signature").config,
-  },
-  -- -- Flirt
+  -- Flirt
   -- {
   --   "tamton-aquib/flirt.nvim",
   --   event = "VeryLazy",

@@ -13,38 +13,39 @@ M.config = function()
         enabled = false,
       },
       hover = {
-        enabled = false,
+        enabled = true,
         silent = true,
       },
       signature = {
-        enabled = false,
+        enabled = true,
+        auto_open = {
+          enabled = true,
+          trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
+          luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
+          throttle = 50, -- Debounce lsp signature help request by 50ms
+        },
+        view = nil,  -- when nil, use defaults from documentation
+        opts = {},   -- merged with defaults from documentation
+      },
+      documentation = {
+        view = "hover",
+        opts = {
+          lang = "markdown",
+          replace = true,
+          render = "plain",
+          format = { "{message}" },
+          win_options = { concealcursor = "n", conceallevel = 3 },
+        },
       },
     },
-    -- you can enable a preset for easier configuration
     presets = {
       bottom_search = false,     -- use a classic bottom cmdline for search
       command_palette = true,    -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
-      inc_rename = false,        -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = false,    -- add a border to hover docs and signature help
-    },
-    signature = {
-      enabled = true,
-      auto_open = {
-        enabled = true,
-        trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-        luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-        throttle = 50, -- Debounce lsp signature help request by 50ms
-      },
-      view = nil,   -- when nil, use defaults from documentation
-      opts = {},    -- merged with defaults from documentation
+      inc_rename = true,         -- enables an input dialog for inc-rename.nvim
+      lsp_doc_border = "rounded", -- add a border to hover docs and signature help
     },
     notify = {
-      -- Noice can be used as `vim.notify` so you can route any notification like other messages
-      -- Notification messages have their level and other properties set.
-      -- event is always "notify" and kind can be any log level as a string
-      -- The default routes will forward notifications to nvim-notify
-      -- Benefit of using Noice for this is the routing and consistent history view
       enabled = true,
       view = "notify",
       replace = true,
