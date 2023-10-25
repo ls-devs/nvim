@@ -97,6 +97,25 @@ require("lazy").setup({
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
+      { "FelipeLema/cmp-async-path" },
+      { "pontusk/cmp-sass-variables" },
+      {
+        "jcha0713/cmp-tw2css",
+        config = require("ls-devs.plugins.cmp-tw2css").config,
+      },
+      {
+        "David-Kunz/cmp-npm",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        ft = "json",
+        config = require("ls-devs.plugins.cmp-npm").config,
+      },
+      {
+        "tamago324/cmp-zsh",
+        dependencies = { "Shougo/deol.nvim" },
+        config = require("ls-devs.plugins.cmp-zsh").config,
+      },
+      { "lukas-reineke/cmp-rg" },
+      { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-cmdline" },
       { "saadparwaiz1/cmp_luasnip" },
       { "hrsh7th/cmp-nvim-lsp" },
