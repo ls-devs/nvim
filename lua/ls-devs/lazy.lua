@@ -720,10 +720,12 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "vscode" },
   },
   checker = {
     enabled = true,
     notify = true,
+  },
+  readme = {
+    enabled = true,
   },
 })
