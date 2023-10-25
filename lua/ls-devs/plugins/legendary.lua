@@ -540,6 +540,12 @@ M.config = function()
         opts = opts,
       },
       {
+        "<leader>K",
+        "<cmd>Lspsaga hover_doc ++silent<CR>",
+        description = "LSPSaga Hover Doc Keep",
+        opts = opts,
+      },
+      {
         "<c-f>",
         function()
           if not require("noice.lsp").scroll(4) then
@@ -561,12 +567,13 @@ M.config = function()
         description = "Noice Scroll Hover Doc Backward",
         opts = opts,
       },
-
       {
-        "<leader>K",
-        "<cmd>Lspsaga hover_doc ++silent<CR>",
-        description = "LSPSaga Hover Doc Keep",
-        opts = opts,
+        "<S-Enter>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = { "c" },
+        description = "Redirect Cmdline",
       },
       {
         "<leader>ci",

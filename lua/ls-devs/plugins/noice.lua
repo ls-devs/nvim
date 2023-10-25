@@ -38,6 +38,18 @@ M.config = function()
         },
       },
     },
+    popupmenu = {
+      enabled = true, -- enables the Noice popupmenu UI
+      backend = "nui", -- backend to use to show regular cmdline completions
+      kind_icons = {}, -- set to `false` to disable icons
+    },
+    redirect = {
+      view = "popup",
+      filter = { event = "msg_show" },
+    },
+    health = {
+      checker = true, -- Disable if you don't want health checks to run
+    },
     presets = {
       bottom_search = false,     -- use a classic bottom cmdline for search
       command_palette = true,    -- position the cmdline and popupmenu together
@@ -53,6 +65,40 @@ M.config = function()
     },
     messages = {
       enabled = true,
+    },
+    views = {
+      cmdline_popup = {
+        position = {
+          row = 5,
+          col = "50%",
+        },
+        size = {
+          width = 60,
+          height = "auto",
+        },
+      },
+      popupmenu = {
+        relative = "editor",
+        position = {
+          row = 8,
+          col = "50%",
+        },
+        size = {
+          width = 60,
+          height = 10,
+        },
+        border = {
+          style = "rounded",
+          padding = { 0, 1 },
+        },
+        win_options = {
+          winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+        },
+      },
+    },
+    smart_move = {
+      enabled = true, -- you can disable this behaviour here
+      excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
     },
   })
 end

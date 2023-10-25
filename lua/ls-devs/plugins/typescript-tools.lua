@@ -4,9 +4,6 @@ M.config = function()
   local lsp_zero = require("lsp-zero")
   lsp_zero.extend_lspconfig()
   require("typescript-tools").setup({
-    handlers = {
-      ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-    },
     settings = {
       tsserver_file_preferences = {
         includeInlayParameterNameHints = "all",
