@@ -104,7 +104,13 @@ M.config = function()
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
             buffer = "[Buffer]",
-            path = "[Path]",
+            async_path = "[Path]",
+            emoji = "[Emoji]",
+            cmdline = "[CMD]",
+            npm = "[NPM]",
+            zsh = "[ZSH]",
+            crates = "[Crates]",
+            rg = "[RG]",
           })[entry.source.name]
           return vim_item
         end,
@@ -113,9 +119,21 @@ M.config = function()
     sources = {
       { name = "copilot" },
       { name = "nvim_lsp" },
+      { name = "cmp-tw2css" },
       { name = "luasnip" },
       { name = "buffer" },
-      { name = "path" },
+      {
+        name = "npm",
+        keyword_length = 4,
+      },
+      { name = "async_path" },
+      { name = "sass-variables" },
+      { name = "emoji" },
+      { name = "zsh" },
+      {
+        name = "rg",
+        keyword_length = 3,
+      },
       { name = "crates" },
     },
     confirm_opts = {

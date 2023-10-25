@@ -1,4 +1,5 @@
 return {
+  settings = {
     css = {
       lint = {
         unknownAtRules = "ignore",
@@ -14,4 +15,5 @@ return {
         unknownAtRules = "ignore",
       },
     },
+  },
 }
