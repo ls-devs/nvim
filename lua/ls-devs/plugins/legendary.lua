@@ -526,8 +526,6 @@ M.config = function()
           local ft = vim.bo.filetype
           if vim.tbl_contains({ "vim", "help" }, ft) then
             vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
-            -- elseif M.treesitter_is_css_class_under_cursor() then
-            -- 	cmd("TWValues")
           elseif vim.tbl_contains({ "man" }, ft) then
             vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
           elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
@@ -541,6 +539,29 @@ M.config = function()
         description = "LSP Hover Doc",
         opts = opts,
       },
+      {
+        "<c-f>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Forward",
+        opts = opts,
+      },
+      {
+        "<c-b>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Backward",
+        opts = opts,
+      },
+
       {
         "<leader>K",
         "<cmd>Lspsaga hover_doc ++silent<CR>",
