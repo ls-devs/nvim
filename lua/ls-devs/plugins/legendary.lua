@@ -162,6 +162,12 @@ M.config = function()
         opts = opts,
       },
       {
+        "<leader>fl",
+        "<cmd>Telescope luasnip<CR>",
+        description = "Telescope LuaSnip",
+        opts = opts,
+      },
+      {
         "<leader>hg",
         function()
           vim.ui.input({ prompt = "Grep help for: " }, function(input)
@@ -657,7 +663,6 @@ M.config = function()
         description = "TodoTelescope",
         opts = opts,
       },
-
       -- LazyGit
       { "<leader>lg",  ":LazyGit<CR>",           description = "LazyGit" },
 
