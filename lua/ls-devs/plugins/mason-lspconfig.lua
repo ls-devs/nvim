@@ -11,7 +11,6 @@ M.config = function()
       "cssls",
       "cssmodules_ls",
       "emmet_language_server",
-      "tsserver",
       "volar",
       "tailwindcss",
       "prismals",
@@ -43,7 +42,6 @@ M.config = function()
       rust_analyzer = lsp_zero.noop,
       hls = lsp_zero.noop,
       clangd = lsp_zero.noop,
-      tsserver = lsp_zero.noop,
     },
   })
 end
