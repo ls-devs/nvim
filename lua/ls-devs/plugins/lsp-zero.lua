@@ -2,7 +2,6 @@ local M = {}
 
 M.config = function()
   local lsp_zero = require("lsp-zero")
-  local ih = require("lsp-inlayhints")
 
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
@@ -23,7 +22,7 @@ M.config = function()
 
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
-    ih.on_attach(client, bufnr)
+    require("lsp-inlayhints").on_attach(client, bufnr)
   end)
 
   local get_servers = require("mason-lspconfig").get_installed_servers
