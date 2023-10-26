@@ -434,14 +434,12 @@ require("lazy").setup({
   -- Surround
   {
     "echasnovski/mini.surround",
-    version = false,
     keys = require("ls-devs.plugins.surround").keys,
     config = require("ls-devs.plugins.surround").config,
   },
   -- Buffer Remove
   {
     "echasnovski/mini.bufremove",
-    version = false,
     keys = require("ls-devs.plugins.bufremove").keys,
     config = require("ls-devs.plugins.bufremove").config,
   },
@@ -449,7 +447,6 @@ require("lazy").setup({
   -- Comments
   {
     "echasnovski/mini.comment",
-    version = false,
     keys = require("ls-devs.plugins.comment").keys,
     config = require("ls-devs.plugins.comment").config,
     dependencies = {
@@ -462,7 +459,6 @@ require("lazy").setup({
   --  Indent Scope
   {
     "echasnovski/mini.indentscope",
-    version = false,
     event = "BufReadPost",
     config = require("ls-devs.plugins.indentscope").config,
   },
