@@ -15,9 +15,14 @@ M.config = function()
       folder_level = 2,
       respect_root = false,
       color_mode = true,
+      border_follow = false,
     },
     hover = {
       open_browser = "!brave",
+      border_follow = false,
+    },
+    diagnostic = {
+      border_follow = false,
     },
     rename = {
       quit = "<ESC>",
@@ -38,7 +43,6 @@ M.config = function()
       incoming = " ",
       outgoing = " ",
       hover = " ",
-      kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
     },
     beacon = {
       enable = true,

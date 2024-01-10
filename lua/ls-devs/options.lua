@@ -47,7 +47,6 @@ local options = {
   foldlevel = 99,
   foldlevelstart = 99,
   foldmethod = "manual",
-  -- foldexpr = "nvim_treesitter#foldexpr()",
   foldcolumn = "1",
   foldenable = true,
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],

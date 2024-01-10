@@ -3,7 +3,7 @@ local M = {}
 M.config = function()
   local mason_null_ls = require("mason-null-ls")
   mason_null_ls.setup({
-    automatic_installation = true,
+    handlers = {},
     ensure_installed = {
       "black",
       "stylua",
@@ -29,7 +29,9 @@ M.config = function()
       "commitlint",
       "beautysh",
       "sql_formatter",
+      "prettierd",
     },
+    automatic_installation = true,
   })
 end
 
