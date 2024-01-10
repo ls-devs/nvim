@@ -13,11 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "catppuccin/nvim",
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    name = "catppuccin",
-    config = require("ls-devs.plugins.catppuccin").config,
+    config = require("ls-devs.plugins.tokyonight").config,
   },
   -- Lsp & Managers
   {
@@ -38,14 +37,15 @@ require("lazy").setup({
         event = "VimEnter",
         dependencies = {
           {
-            "jay-babu/mason-null-ls.nvim",
-            config = require("ls-devs.plugins.mason-null-ls").config,
             -- Formatter
-            {
               "nvimtools/none-ls.nvim",
               event = "BufReadPre",
               config = require("ls-devs.plugins.null-ls").config,
-            },
+              dependencies = {
+
+            "jay-babu/mason-null-ls.nvim",
+            config = require("ls-devs.plugins.mason-null-ls").config,
+              }
           },
           {
             "jay-babu/mason-nvim-dap.nvim",
@@ -496,7 +496,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim", -- optional
     },
-    version = "2.x.x",              -- recommended
+    version = "2.x.x",                 -- recommended
   },
   -- Overseer
   {

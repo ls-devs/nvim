@@ -2,19 +2,20 @@ local M = {}
 
 M.config = function()
   local lualine = require("lualine")
+  local c = require("tokyonight.colors").setup()
 
   local colors = {
-    bg = "#101019",
-    fg = "#cdd6f4",
-    yellow = "#f9e2af",
-    cyan = "#89dceb",
-    darkblue = "#45475a",
-    green = "#a6e3a1",
-    orange = "#fab387",
-    violet = "#cba6f7",
-    magenta = "#f5c2e7",
-    blue = "#89b4fa",
-    red = "#f38ba8",
+    bg = c.black,
+    fg = c.dark5,
+    yellow = c.yellow,
+    cyan = c.cyan,
+    darkblue = c.blue0,
+    green = c.hint,
+    orange = c.orange,
+    violet = c.purple,
+    magenta = c.magenta,
+    blue = c.blue,
+    red = c.red,
   }
 
   local conditions = {
@@ -47,11 +48,10 @@ M.config = function()
       -- Disable sections and component separators
       component_separators = "",
       section_separators = "",
-      theme = "catppuccin",
-      -- theme = {
-      -- normal = { c = { fg = colors.fg, bg = nil } },
-      -- inactive = { c = { fg = colors.fg, bg = colors.bg } },
-      -- },
+      theme = {
+        normal = { c = { fg = colors.fg, bg = nil } },
+        inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      },
       disabled_filetypes = { "NvimTree", "alpha" },
     },
     sections = {
@@ -227,7 +227,7 @@ M.config = function()
 
   ins_right({
     "diff",
-    symbols = { added = " ", modified = " ", removed = "✖ " },
+    symbols = { added = " ", modified = " ", removed = "󰛌 " },
     diff_color = {
       added = { fg = colors.green },
       modified = { fg = colors.orange },
