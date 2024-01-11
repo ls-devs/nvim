@@ -948,7 +948,23 @@ M.config = function()
         ":silent !eslint_d stop",
         description = "Stop eslint_d",
         opts = {
-          pattern = { "*.jsx", "*.tsx", "*.vue", "*.js", "*.ts" },
+          pattern = {
+            "*.jsx",
+            "*.tsx",
+            "*.vue",
+            "*.js",
+            "*.ts",
+            "*.css",
+            "*.scss",
+            "*.less",
+            "*.html",
+            "*.json",
+            "*.jsonc",
+            "*.yaml",
+            "*.md",
+            "*.mdx",
+            "*.graphql",
+          },
         },
       },
       {
@@ -958,7 +974,7 @@ M.config = function()
       },
       {
         "VimLeave",
-        ":silent !prettier_d_slim stop",
+        ":silent !prettierd stop",
         description = "Stop prettier_d_slim",
         opts = {
           pattern = {
@@ -983,7 +999,7 @@ M.config = function()
       {
         "VimLeave",
         ":silent !prettierd stop",
-        description = "Stop prettier_d_slim",
+        description = "Stop prettierd",
         opts = {
           pattern = {
             "*.jsx",
