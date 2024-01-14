@@ -37,6 +37,9 @@ M.config = function()
     on_highlights = function(highlights, colors)
       highlights.LspInlayHint = { bg = colors.none, fg = colors.comment }
       highlights.Normal = { bg = colors.none }
+      highlights.DelaySymbol = { bg = colors.none }
+      highlights.PlayingSymbol = { bg = colors.none }
+      highlights.RecordingSymbol = { bg = colors.none }
     end,
   })
   vim.cmd([[colorscheme tokyonight]])
