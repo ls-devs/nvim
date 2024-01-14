@@ -2,6 +2,10 @@ local M = {}
 
 M.config = function()
   require("typescript-tools").setup({
+    on_attach = function(client)
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+    end,
     settings = {
       tsserver_file_preferences = {
         quotePreference = "auto",
@@ -29,26 +33,6 @@ M.config = function()
         includeInlayPropertyDeclarationTypeHints = true,
         includeInlayFunctionLikeReturnTypeHints = true,
         includeInlayEnumMemberValueHints = true,
-      },
-      tsserver_format_options = {
-        insertSpaceAfterCommaDelimiter = true,
-        insertSpaceAfterConstructor = false,
-        insertSpaceAfterSemicolonInForStatements = true,
-        insertSpaceBeforeAndAfterBinaryOperators = true,
-        insertSpaceAfterKeywordsInControlFlowStatements = true,
-        insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
-        insertSpaceBeforeFunctionParenthesis = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
-        insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
-        insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
-        insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
-        insertSpaceAfterTypeAssertion = false,
-        placeOpenBraceOnNewLineForFunctions = false,
-        placeOpenBraceOnNewLineForControlBlocks = false,
-        semicolons = "ignore",
-        indentSwitchCase = true,
       },
       separate_diagnostic_server = false,
       publish_diagnostic_on = "insert_leave",

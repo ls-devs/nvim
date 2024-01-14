@@ -38,14 +38,14 @@ require("lazy").setup({
         dependencies = {
           {
             -- Formatter
-              "nvimtools/none-ls.nvim",
-              event = "BufReadPre",
-              config = require("ls-devs.plugins.null-ls").config,
-              dependencies = {
+            "nvimtools/none-ls.nvim",
+            event = "BufReadPre",
+            config = require("ls-devs.plugins.null-ls").config,
+            dependencies = {
 
-            "jay-babu/mason-null-ls.nvim",
-            config = require("ls-devs.plugins.mason-null-ls").config,
-              }
+              "jay-babu/mason-null-ls.nvim",
+              config = require("ls-devs.plugins.mason-null-ls").config,
+            },
           },
           {
             "jay-babu/mason-nvim-dap.nvim",
@@ -59,24 +59,17 @@ require("lazy").setup({
       },
       -- LSP Idle Timeout
       {
-        "hinell/lsp-timeout.nvim",
-        config = require("ls-devs.plugins.lsp-timeout").config,
+        "neovim/nvim-lspconfig",
+        event = "BufReadPre",
         dependencies = {
-          -- LSP Support
+          -- LSP Enhancement
           {
-            "neovim/nvim-lspconfig",
-            event = "BufReadPre",
+            "glepnir/lspsaga.nvim",
+            event = "LspAttach",
+            config = require("ls-devs.plugins.lsp_saga").config,
             dependencies = {
-              -- LSP Enhancement
-              {
-                "glepnir/lspsaga.nvim",
-                event = "LspAttach",
-                config = require("ls-devs.plugins.lsp_saga").config,
-                dependencies = {
-                  { "nvim-tree/nvim-web-devicons" },
-                  { "nvim-treesitter/nvim-treesitter" },
-                },
-              },
+              { "nvim-tree/nvim-web-devicons" },
+              { "nvim-treesitter/nvim-treesitter" },
             },
           },
         },
@@ -496,7 +489,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim", -- optional
     },
-    version = "2.x.x",                 -- recommended
+    version = "2.x.x",              -- recommended
   },
   -- Overseer
   {

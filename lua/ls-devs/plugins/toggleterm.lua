@@ -1,5 +1,6 @@
 local M = {}
 M.config = function()
+  local colors = require("tokyonight.colors").setup()
   local toggleterm = require("toggleterm")
 
   toggleterm.setup({
@@ -7,7 +8,7 @@ M.config = function()
     open_mapping = [[<c-\>]],
     hide_numbers = true,
     shade_filetypes = {},
-    shade_terminals = true,
+    shade_terminals = false,
     shading_factor = 2,
     start_in_insert = true,
     insert_mappings = true,
@@ -21,6 +22,9 @@ M.config = function()
       highlights = {
         border = "Normal",
         background = "Normal",
+        Normal = {
+          guibg = colors.none,
+        },
       },
     },
   })

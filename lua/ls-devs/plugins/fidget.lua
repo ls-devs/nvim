@@ -9,8 +9,8 @@ M.config = function()
       completed = " Completed", -- message shown when task completes
     },
     align = {
-      bottom = false, -- align fidgets along bottom edge of buffer
-      right = true, -- align fidgets along right edge of buffer
+      bottom = true, -- align fidgets along bottom edge of buffer
+      right = false, -- align fidgets along right edge of buffer
     },
     timer = {
       spinner_rate = 125, -- frame rate of spinner animation, in ms
