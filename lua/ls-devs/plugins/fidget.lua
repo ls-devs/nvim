@@ -9,8 +9,8 @@ M.config = function()
       completed = " Completed", -- message shown when task completes
     },
     align = {
-      bottom = true, -- align fidgets along bottom edge of buffer
-      right = false, -- align fidgets along right edge of buffer
+      bottom = false, -- align fidgets along bottom edge of buffer
+      right = true, -- align fidgets along right edge of buffer
     },
     timer = {
       spinner_rate = 125, -- frame rate of spinner animation, in ms
@@ -18,9 +18,9 @@ M.config = function()
       task_decay = 1500, -- how long to keep around completed task, in ms
     },
     window = {
-      relative = "win", -- where to anchor, either "win" or "editor"
-      blend = 0,       -- &winblend for the window
-      zindex = nil,    -- the zindex value for the window
+      relative = "editor", -- where to anchor, either "win" or "editor"
+      blend = 0,        -- &winblend for the window
+      zindex = nil,     -- the zindex value for the window
       border = "rounded", -- style of border for the fidget window
     },
     fmt = {

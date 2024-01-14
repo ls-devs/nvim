@@ -2,6 +2,7 @@ local M = {}
 
 M.config = function()
   require("overseer").setup({
+    strategy = "toggleterm",
     task_list = {
       bindings = {
         ["?"] = "ShowHelp",

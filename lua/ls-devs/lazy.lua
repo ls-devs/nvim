@@ -499,6 +499,13 @@ require("lazy").setup({
       "OverseerToggle",
     },
     config = require("ls-devs.plugins.overseer").config,
+    dependencies = {
+      -- ToggleTerm
+      {
+        "akinsho/toggleterm.nvim",
+        config = require("ls-devs.plugins.toggleterm").config,
+      },
+    },
   },
   -- Crates.io
   {
