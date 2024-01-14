@@ -42,7 +42,6 @@ require("lazy").setup({
             event = "BufReadPre",
             config = require("ls-devs.plugins.null-ls").config,
             dependencies = {
-
               "jay-babu/mason-null-ls.nvim",
               config = require("ls-devs.plugins.mason-null-ls").config,
             },
@@ -230,6 +229,12 @@ require("lazy").setup({
     cmd = "Telescope",
     config = require("ls-devs.plugins.telescope"),
     dependencies = {
+      -- LazyGit
+      {
+        "kdheepak/lazygit.nvim",
+        keys = require("ls-devs.plugins.lazygit").keys,
+      },
+
       { "nvim-lua/plenary.nvim" },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -332,6 +337,17 @@ require("lazy").setup({
       "CMakeStop",
     },
     config = require("ls-devs.plugins.cmake_tools").config,
+  },
+
+  -- Swift Tools
+  {
+    "wojciech-kulik/xcodebuild.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    config = require("ls-devs.plugins.xcodebuild").config,
+    ft = "swift",
   },
   -- UrlView
   {
@@ -557,12 +573,6 @@ require("lazy").setup({
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-  },
-  -- Git
-  {
-    "kdheepak/lazygit.nvim",
-    cmd = "LazyGit",
-    keys = require("ls-devs.plugins.lazygit").keys,
   },
   {
     "lambdalisue/gin.vim",

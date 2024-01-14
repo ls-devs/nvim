@@ -7,6 +7,8 @@ M.config = function()
     ignore_install = {},
     modules = {},
     ensure_installed = {
+      "swift",
+      "kotlin",
       "lua",
       "markdown",
       "html",

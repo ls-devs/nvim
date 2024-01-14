@@ -30,6 +30,7 @@ M.config = function()
       "beautysh",
       "sql_formatter",
       "prettierd",
+      "ktlint",
     },
     automatic_installation = true,
   })
