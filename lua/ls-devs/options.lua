@@ -48,6 +48,7 @@ local options = {
   foldlevelstart = 99,
   foldmethod = "manual",
   foldcolumn = "1",
+  winblend = 0,
   foldenable = true,
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 }

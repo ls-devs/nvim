@@ -1,10 +1,11 @@
 local M = {}
 
 M.config = function()
+  local c = require("tokyonight.colors").setup()
   require("colorful-winsep").setup({
     -- highlight for Window separator
     highlight = {
-      fg = "#f2cdcd",
+      fg = c.orange,
     },
     -- timer refresh rate
     interval = 30,

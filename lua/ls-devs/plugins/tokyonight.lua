@@ -36,6 +36,7 @@ M.config = function()
     ---@param colors ColorScheme
     on_highlights = function(highlights, colors)
       highlights.LspInlayHint = { bg = colors.none, fg = colors.comment }
+      highlights.Normal = { bg = colors.none }
     end,
   })
   vim.cmd([[colorscheme tokyonight]])
