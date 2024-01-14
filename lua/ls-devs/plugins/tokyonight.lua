@@ -40,6 +40,9 @@ M.config = function()
       highlights.DelaySymbol = { bg = colors.none }
       highlights.PlayingSymbol = { bg = colors.none }
       highlights.RecordingSymbol = { bg = colors.none }
+      highlights.LeapBackdrop = { fg = colors.none }
+      highlights.LeapLabelPrimary = { bg = colors.black, fg = colors.red }
+      highlights.LeapLabelSecondary = { bg = colors.black, fg = colors.blue }
     end,
   })
   vim.cmd([[colorscheme tokyonight]])
