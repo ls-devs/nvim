@@ -123,7 +123,7 @@ M.config = function()
       -- File explorer
       {
         "<leader>e",
-        "<cmd>Neotree float<CR>",
+        "<cmd>Neotree float reveal<CR>",
         description = "NeoTree Open Float",
         opts = opts,
       },
