@@ -398,7 +398,7 @@ require("lazy").setup({
   },
   {
     "ThePrimeagen/refactoring.nvim",
-    ft = { "lua", "python " },
+    ft = { "lua", "python", "typescript", "javascript", "php", "c", "cpp" },
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
