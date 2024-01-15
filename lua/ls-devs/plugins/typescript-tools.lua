@@ -41,7 +41,7 @@ M.config = function()
       tsserver_locale = "fr",
       complete_function_calls = true,
       include_completions_with_insert_text = true,
-      code_lens = "all",
+      code_lens = "off",
       disable_member_code_lens = true,
     },
   })
