@@ -16,6 +16,7 @@ M.config = function()
       respect_root = false,
       color_mode = true,
       border_follow = false,
+      winblend = 0,
     },
     hover = {
       open_browser = "!brave",

@@ -393,7 +393,7 @@ require("lazy").setup({
   },
   {
     "stevearc/dressing.nvim",
-    event = "BufReadPre",
+    event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
   },
   {
