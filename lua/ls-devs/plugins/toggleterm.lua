@@ -24,18 +24,20 @@ M.config = function()
       },
       FloatBorder = {
         guifg = colors.blue,
+        guibg = colors.none,
       },
     },
     float_opts = {
       border = "rounded",
       winblend = 0,
-      width = math.floor(vim.api.nvim_win_get_width(0) / 1.55),
-      height = math.floor(vim.api.nvim_win_get_height(0) / 1.55),
+      width = math.floor(vim.api.nvim_win_get_width(0) / 1.4),
+      height = math.floor(vim.api.nvim_win_get_height(0) / 1.4),
     },
   })
 
   function _G.set_terminal_keymaps()
     local opts = { noremap = true }
+    vim.api.nvim_buf_set_keymap(0, "t", "<C-x>", [[<Cmd>q!<CR>]], opts)
     vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
     vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
     vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
