@@ -516,6 +516,7 @@ require("lazy").setup({
     dependencies = {
       {
         "akinsho/toggleterm.nvim",
+        cmd = "ToggleTerm",
         config = require("ls-devs.plugins.toggleterm").config,
       },
     },

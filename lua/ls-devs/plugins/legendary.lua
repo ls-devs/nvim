@@ -595,8 +595,8 @@ M.config = function()
       },
       {
         "<leader>t",
-        "<cmd>Lspsaga term_toggle<CR>",
-        description = "LSPSaga Toggle Terminal",
+        "<cmd>ToggleTerm<CR>",
+        description = "ToggleTerm",
         opts = opts,
       },
       {
