@@ -229,7 +229,6 @@ require("lazy").setup({
     cmd = "Telescope",
     config = require("ls-devs.plugins.telescope"),
     dependencies = {
-      -- LazyGit
       {
         "kdheepak/lazygit.nvim",
         keys = require("ls-devs.plugins.lazygit").keys,
@@ -515,13 +514,6 @@ require("lazy").setup({
       "OverseerToggle",
     },
     config = require("ls-devs.plugins.overseer").config,
-    dependencies = {
-      -- ToggleTerm
-      {
-        "akinsho/toggleterm.nvim",
-        config = require("ls-devs.plugins.toggleterm").config,
-      },
-    },
   },
   -- Crates.io
   {
@@ -625,15 +617,14 @@ require("lazy").setup({
   },
   {
     "tpope/vim-fugitive",
-    cmd = "Git",
-    keys = require("ls-devs.plugins.vim-fugitive").keys,
+    event = "VeryLazy",
   },
-  -- Flirt
-  -- {
-  --   "tamton-aquib/flirt.nvim",
-  --   event = "VeryLazy",
-  --   config = require("ls-devs.plugins.flirt").config,
-  -- },
+  -- LazyGit
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = "LazyGit",
+    keys = require("ls-devs.plugins.lazygit").keys,
+  },
   -- Ufo
   {
     "kevinhwang91/nvim-ufo",

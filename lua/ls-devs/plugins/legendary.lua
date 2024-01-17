@@ -664,8 +664,10 @@ M.config = function()
         opts = opts,
       },
       -- LazyGit
-      { "<leader>lg",  ":LazyGit<CR>",           description = "LazyGit" },
-
+      { "<leader>lg",  ":LazyGit<CR>",         description = "LazyGit" },
+      -- Fugitive
+      { "<leader>gg",  "<cmd>Git<CR>" },
+      { "<leader>gcf", "<cmd>Gvdiffsplit!<CR>" },
       -- JUKIT
       -- Splits
       {
@@ -917,7 +919,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<c-q>",
+        "<A-q>",
         function()
           require("NeoComposer.ui").toggle_macro_menu()
         end,

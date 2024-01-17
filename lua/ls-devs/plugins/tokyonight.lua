@@ -43,6 +43,10 @@ M.config = function()
       highlights.LeapBackdrop = { fg = colors.none }
       highlights.LeapLabelPrimary = { bg = colors.black, fg = colors.red }
       highlights.LeapLabelSecondary = { bg = colors.black, fg = colors.blue }
+      highlights.SagaWinbarSep = { bg = colors.none }
+      highlights.SagaWinbarFileName = { bg = colors.none }
+      highlights.SagaWinbarFolderName = { bg = colors.none }
+      highlights.SagaWinbarFolder = { bg = colors.none }
     end,
   })
   vim.cmd([[colorscheme tokyonight]])

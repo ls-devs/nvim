@@ -2,9 +2,6 @@ local M = {}
 
 M.config = function()
   require("overseer").setup({
-    strategy = {
-      "toggleterm",
-    },
     float_opts = {
       winblend = 0,
     },
