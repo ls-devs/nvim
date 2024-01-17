@@ -71,7 +71,6 @@ M.config = function()
         maxwidth = 50,
         ellipsis_char = "...",
         symbol_map = {
-          Copilot = "",
           Text = "󰉿",
           Method = "󰆧",
           Function = "󰊕",
@@ -95,20 +94,22 @@ M.config = function()
           Constant = "󰏿",
           Struct = "󰙅",
           Event = "",
+          Copilot = "",
         },
         before = function(entry, vim_item)
           vim_item.menu = ({
-            Copilot = "[Copilot]",
+            Copilot = "[COPILOT]",
             nvim_lsp = "[LSP]",
-            luasnip = "[Snippet]",
-            buffer = "[Buffer]",
-            async_path = "[Path]",
-            emoji = "[Emoji]",
+            luasnip = "[SNIPPET]",
+            buffer = "[BUFFER]",
+            async_path = "[PATH]",
+            emoji = "[EMOJI]",
             cmdline = "[CMD]",
             npm = "[NPM]",
             zsh = "[ZSH]",
-            crates = "[Crates]",
+            crates = "[CRATES]",
             rg = "[RG]",
+            dotenv = "[ENV]",
           })[entry.source.name]
           return vim_item
         end,
@@ -133,6 +134,7 @@ M.config = function()
         keyword_length = 3,
       },
       { name = "crates" },
+      { name = "dotenv" },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,

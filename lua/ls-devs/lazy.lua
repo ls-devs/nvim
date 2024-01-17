@@ -113,6 +113,7 @@ require("lazy").setup({
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-nvim-lua" },
       { "onsails/lspkind.nvim" },
+      { "SergioRibera/cmp-dotenv" },
       -- Snippet Collection (Optional)
       {
         "rafamadriz/friendly-snippets",
@@ -397,7 +398,7 @@ require("lazy").setup({
   },
   {
     "ThePrimeagen/refactoring.nvim",
-    ft = { "lua", "python", "typescript", "javascript", "php", "c", "cpp" },
+    ft = { "lua", "python", "typescript", "typescriptreact", "javascript", "javascriptreact", "php", "c", "cpp" },
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
@@ -504,7 +505,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim", -- optional
     },
-    version = "2.x.x",              -- recommended
+    version = "2.x.x",                 -- recommended
   },
   -- Overseer
   {
@@ -512,6 +513,12 @@ require("lazy").setup({
     cmd = {
       "OverseerRun",
       "OverseerToggle",
+    },
+    dependencies = {
+      {
+        "akinsho/toggleterm.nvim",
+        config = require("ls-devs.plugins.toggleterm").config,
+      },
     },
     config = require("ls-devs.plugins.overseer").config,
   },

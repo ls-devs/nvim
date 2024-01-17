@@ -517,7 +517,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>o",
+        "<leader>lo",
         "<cmd>Lspsaga outline<CR>",
         description = "LSPSaga Outline",
         opts = opts,
