@@ -143,7 +143,7 @@ M.config = function()
       -- Ranger
       {
         "<leader>rr",
-        "<cmd>RnvimrToggle<CR>",
+        "<cmd>lua require('ranger-nvim').open(true)<CR>",
         description = "Open Ranger",
         opts = opts,
       },

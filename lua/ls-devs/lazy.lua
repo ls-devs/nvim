@@ -180,9 +180,8 @@ require("lazy").setup({
   },
   -- Ranger
   {
-    "kevinhwang91/rnvimr",
-    cmd = { "RnvimrToggle" },
-    config = require("ls-devs.plugins.rnvimr").config,
+    "kelly-lin/ranger.nvim",
+    config = require("ls-devs.plugins.ranger").config,
   },
   -- Buffer and status lines
   {
@@ -505,7 +504,7 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim", -- optional
     },
-    version = "2.x.x",                 -- recommended
+    version = "2.x.x",              -- recommended
   },
   -- Overseer
   {
@@ -726,7 +725,7 @@ require("lazy").setup({
 }, {
   defaults = {
     lazy = true,
-    -- version = "*",
+    version = "*",
   },
   ui = {
     border = "rounded",
