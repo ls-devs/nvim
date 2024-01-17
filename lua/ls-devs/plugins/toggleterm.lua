@@ -10,22 +10,27 @@ M.config = function()
     shade_filetypes = {},
     shade_terminals = false,
     shading_factor = 2,
-    start_in_insert = false,
+    start_in_insert = true,
     insert_mappings = true,
     persist_size = true,
     direction = "float",
     close_on_exit = true,
     shell = vim.o.shell,
-    float_opts = {
-      border = "curved",
-      winblend = 0,
-      highlights = {
-        border = "Normal",
-        background = "Normal",
-        Normal = {
-          guibg = colors.none,
-        },
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+      Normal = {
+        guibg = colors.none,
       },
+      FloatBorder = {
+        guifg = colors.blue,
+      },
+    },
+    float_opts = {
+      border = "rounded",
+      winblend = 0,
+      width = math.floor(vim.api.nvim_win_get_width(0) / 1.55),
+      height = math.floor(vim.api.nvim_win_get_height(0) / 1.55),
     },
   })
 
