@@ -131,15 +131,6 @@ require("lazy").setup({
       },
     },
   },
-  -- Sessions
-  {
-    "gennaro-tedesco/nvim-possession",
-    dependencies = {
-      "ibhagwan/fzf-lua",
-    },
-    event = "VeryLazy",
-    config = require("ls-devs.plugins.possession").config,
-  },
   -- Copilot
   {
     cmd = "Copilot",
@@ -718,7 +709,7 @@ require("lazy").setup({
   {
     "krivahtoo/silicon.nvim",
     cmd = "Silicon",
-    config = require("ls-devs.plugins.silicon"),
+    config = require("ls-devs.plugins.silicon").config,
     build = "./install.sh build",
   },
   {
@@ -736,7 +727,7 @@ require("lazy").setup({
 }, {
   defaults = {
     lazy = true,
-    version = "*",
+    -- version = "*",
   },
   ui = {
     border = "rounded",
