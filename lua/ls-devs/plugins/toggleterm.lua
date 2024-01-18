@@ -30,8 +30,8 @@ M.config = function()
     float_opts = {
       border = "rounded",
       winblend = 0,
-      width = math.floor(vim.api.nvim_win_get_width(0) / 1.4),
-      height = math.floor(vim.api.nvim_win_get_height(0) / 1.4),
+      width = math.floor(vim.api.nvim_win_get_width(vim.api.nvim_get_current_win()) / 1.4),
+      height = math.floor(vim.api.nvim_win_get_height(vim.api.nvim_get_current_win()) / 1.4),
     },
   })
 

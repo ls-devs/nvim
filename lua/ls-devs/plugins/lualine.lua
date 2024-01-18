@@ -1,6 +1,17 @@
 local M = {}
 
 M.config = function()
+  local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+    return function(str)
+      local win_width = vim.fn.winwidth(0)
+      if hide_width and win_width < hide_width then
+        return ""
+      elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+        return str:sub(1, trunc_len) .. (no_ellipsis and "" or "...")
+      end
+      return str
+    end
+  end
   local lualine = require("lualine")
   local c = require("tokyonight.colors").setup()
 
@@ -118,6 +129,7 @@ M.config = function()
 
   ins_left({
     "filename",
+    fmt = trunc(120, 20, 60),
     cond = conditions.buffer_not_empty,
     color = { fg = colors.magenta, gui = "bold" },
   })
@@ -220,6 +232,7 @@ M.config = function()
   })
 
   ins_right({
+    fmt = trunc(120, 20, 60),
     "branch",
     icon = "",
     color = { fg = colors.violet, gui = "bold" },

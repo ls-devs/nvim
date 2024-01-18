@@ -23,6 +23,9 @@ M.config = function()
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
     require("lsp-inlayhints").on_attach(client, bufnr)
+    if client.server_capabilities["documentSymbolProvider"] then
+      require("nvim-navic").attach(client, bufnr)
+    end
   end)
 
   local get_servers = require("mason-lspconfig").get_installed_servers
