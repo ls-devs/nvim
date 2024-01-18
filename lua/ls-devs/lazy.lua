@@ -69,6 +69,16 @@ require("lazy").setup({
             dependencies = {
               { "nvim-tree/nvim-web-devicons" },
               { "nvim-treesitter/nvim-treesitter" },
+              {
+                "utilyre/barbecue.nvim",
+                name = "barbecue",
+                version = "*",
+                config = require("ls-devs.plugins.barbecue").config,
+                dependencies = {
+                  "SmiteshP/nvim-navic",
+                  "nvim-tree/nvim-web-devicons", -- optional dependency
+                },
+              },
             },
           },
         },
