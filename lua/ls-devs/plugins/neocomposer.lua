@@ -2,7 +2,7 @@ local M = {}
 
 M.config = function()
   require("NeoComposer").setup({
-    notify = true,
+    notify = false,
     delay_timer = 150,
     colors = {
       bg = 0,

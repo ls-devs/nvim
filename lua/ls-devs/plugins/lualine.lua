@@ -1,17 +1,6 @@
 local M = {}
 
 M.config = function()
-  local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
-    return function(str)
-      local win_width = vim.fn.winwidth(0)
-      if hide_width and win_width < hide_width then
-        return ""
-      elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
-        return str:sub(1, trunc_len) .. (no_ellipsis and "" or "...")
-      end
-      return str
-    end
-  end
   local lualine = require("lualine")
   local c = require("tokyonight.colors").setup()
 
@@ -127,13 +116,6 @@ M.config = function()
     cond = conditions.buffer_not_empty,
   })
 
-  ins_left({
-    "filename",
-    fmt = trunc(120, 20, 60),
-    cond = conditions.buffer_not_empty,
-    color = { fg = colors.magenta, gui = "bold" },
-  })
-
   ins_left({ "location", color = { fg = colors.white, gui = "bold" } })
 
   ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
@@ -165,14 +147,24 @@ M.config = function()
     cond = require("lazy.status").has_updates,
     color = { fg = colors.orange },
   })
-
   ins_left({
+    "filename",
+    fmt = function(str)
+      if string.len(str) >= 35 then
+        return string.sub(str, 0, 35) .. "..."
+      else
+        return str
+      end
+    end,
+    cond = conditions.buffer_not_empty,
+    color = { fg = colors.magenta, gui = "bold" },
+  })
+  ins_right({
     function()
       return require("NeoComposer.ui").status_recording()
     end,
   })
-
-  ins_left({
+  ins_right({
     function()
       local cur_buf = vim.api.nvim_get_current_buf()
       return require("hbac.state").is_pinned(cur_buf) and "" or ""
@@ -181,21 +173,6 @@ M.config = function()
     color = { fg = "#ef5f6b", gui = "bold" },
   })
 
-  -- ins_left({
-  --   function()
-  --     return require("nvim-possession").status()
-  --   end,
-  --   cond = function()
-  --     return require("nvim-possession").status() ~= nil
-  --   end,
-  --   color = { fg = "#ef5f6b", gui = "bold" },
-  -- })
-
-  ins_left({
-    function()
-      return "%="
-    end,
-  })
   ins_right({
     -- Lsp server name .
     function()
@@ -232,7 +209,13 @@ M.config = function()
   })
 
   ins_right({
-    fmt = trunc(120, 20, 60),
+    fmt = function(str)
+      if string.len(str) >= 30 then
+        return string.sub(str, 0, 27) .. "..."
+      else
+        return str
+      end
+    end,
     "branch",
     icon = "",
     color = { fg = colors.violet, gui = "bold" },
@@ -249,6 +232,8 @@ M.config = function()
     cond = conditions.hide_in_width,
   })
 
+  lualine.setup(config)
+  lualine.setup(config)
   lualine.setup(config)
 end
 
