@@ -69,16 +69,6 @@ require("lazy").setup({
             dependencies = {
               { "nvim-tree/nvim-web-devicons" },
               { "nvim-treesitter/nvim-treesitter" },
-              {
-                "utilyre/barbecue.nvim",
-                name = "barbecue",
-                version = "*",
-                config = require("ls-devs.plugins.barbecue").config,
-                dependencies = {
-                  "SmiteshP/nvim-navic",
-                  "nvim-tree/nvim-web-devicons", -- optional dependency
-                },
-              },
             },
           },
         },
@@ -202,6 +192,11 @@ require("lazy").setup({
     event = "VimEnter",
     config = require("ls-devs.plugins.alpha").config,
   },
+  {
+    "levouh/tint.nvim",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.tint").config,
+  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -275,18 +270,6 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.neocomposer").config,
     dependencies = { "kkharji/sqlite.lua" },
-  },
-  -- Muren
-  {
-    "AckslD/muren.nvim",
-    config = require("ls-devs.plugins.muren").config,
-    cmd = {
-      "MurenToggle",
-      "MurenOpen",
-      "MurenClose",
-      "MurenFresh",
-      "MurenUnique",
-    },
   },
   -- Data Viewer
   {
@@ -372,7 +355,6 @@ require("lazy").setup({
   -- Todos
   {
     "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
     event = "BufReadPre",
     config = require("ls-devs.plugins.todo-comments").config,
     dependencies = "nvim-lua/plenary.nvim",
@@ -390,6 +372,7 @@ require("lazy").setup({
       },
     },
   },
+  -- Dressing
   {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -629,11 +612,8 @@ require("lazy").setup({
   },
   {
     "sindrets/diffview.nvim",
-    keys = require("ls-devs.plugins.diffview").keys,
-    cmd = {
-      "DiffViewOpen",
-    },
     config = require("ls-devs.plugins.diffview").config,
+    keys = require("ls-devs.plugins.diffview").keys,
   },
   {
     "tpope/vim-fugitive",
@@ -729,12 +709,6 @@ require("lazy").setup({
     ft = "glsl",
     config = require("ls-devs.plugins.glslViewer").config,
     keys = require("ls-devs.plugins.glslViewer").keys,
-  },
-  {
-    "jokajak/keyseer.nvim",
-    version = "*",
-    cmd = "KeySeer",
-    config = require("ls-devs.plugins.keyseer").config,
   },
 }, {
   defaults = {

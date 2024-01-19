@@ -150,11 +150,16 @@ M.config = function()
   ins_left({
     "filename",
     fmt = function(str)
-      if string.len(str) > 35 then
-        local fileExt = "." .. string.match(str, "[^.]+$")
-        return string.sub(str, 0, 35 - string.len(fileExt)) .. ".." .. fileExt
+      if vim.bo.filetype ~= "toggleterm" then
+        if string.len(str) > 35 then
+          local fileExt = string.match(str, "[^.]+$")
+          return string.sub(str, 0, 35 - string.len(fileExt)) .. "..." .. fileExt
+        else
+          return str
+        end
       else
-        return str
+        local pID = string.gsub(str, "%d+:", "")
+        return string.gsub(pID, ";#toggleterm#%d+", "")
       end
     end,
     cond = conditions.buffer_not_empty,
