@@ -923,6 +923,12 @@ M.config = function()
         description = "NeoComposer Toggle Menu",
         opts = opts,
       },
+      {
+        "<leader>mt",
+        ":MurenToggle<CR>",
+        description = "Muren Toggle",
+        opts = opts,
+      }
     },
     extensions = {
       lazy_nvim = true,

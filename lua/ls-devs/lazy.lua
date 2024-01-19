@@ -271,6 +271,18 @@ require("lazy").setup({
     config = require("ls-devs.plugins.neocomposer").config,
     dependencies = { "kkharji/sqlite.lua" },
   },
+  -- Muren
+  {
+    "AckslD/muren.nvim",
+    config = require("ls-devs.plugins.muren").config,
+    cmd = {
+      "MurenToggle",
+      "MurenOpen",
+      "MurenClose",
+      "MurenFresh",
+      "MurenUnique",
+    },
+  },
   -- Data Viewer
   {
     "vidocqh/data-viewer.nvim",
@@ -713,7 +725,7 @@ require("lazy").setup({
 }, {
   defaults = {
     lazy = true,
-    -- version = "*",
+    version = "*",
   },
   ui = {
     border = "rounded",
