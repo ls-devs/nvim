@@ -386,7 +386,6 @@ require("lazy").setup({
       { "MunifTanjim/nui.nvim", event = "VeryLazy" },
       {
         "rcarriga/nvim-notify",
-        event = "VeryLazy",
         config = require("ls-devs.plugins.notify").config,
       },
     },
@@ -419,6 +418,13 @@ require("lazy").setup({
         config = require("ls-devs.plugins.leap-spooky").config,
       },
     },
+  },
+  -- Coerce
+  {
+    "gregorias/coerce.nvim",
+    tag = "v0.1.1",
+    keys = require("ls-devs.plugins.coerce").keys,
+    config = require("ls-devs.plugins.coerce").config,
   },
   -- Http client
   {

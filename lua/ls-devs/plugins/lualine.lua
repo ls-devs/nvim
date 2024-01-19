@@ -150,8 +150,9 @@ M.config = function()
   ins_left({
     "filename",
     fmt = function(str)
-      if string.len(str) >= 35 then
-        return string.sub(str, 0, 35) .. "..."
+      if string.len(str) > 35 then
+        local fileExt = "." .. string.match(str, "[^.]+$")
+        return string.sub(str, 0, 35 - string.len(fileExt)) .. ".." .. fileExt
       else
         return str
       end

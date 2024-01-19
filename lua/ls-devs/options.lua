@@ -13,7 +13,18 @@ local options = {
   background = "dark",
   backup = false,
   showtabline = 0,
-  clipboard = "unnamedplus",
+  clipboard = {
+    name = "win32yank-wsl",
+    copy = {
+      ["+"] = "win32yank.exe -i --crlf",
+      ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+      ["+"] = "win32yank.exe -o --lf",
+      ["*"] = "win32yank.exe -o --lf",
+    },
+    cache_enabled = true,
+  },
   cmdheight = 0,
   laststatus = 2,
   completeopt = { "menu", "menuone", "noselect" },

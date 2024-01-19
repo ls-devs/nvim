@@ -7,13 +7,15 @@ M.config = function()
     size = 9,
     open_mapping = [[<c-\>]],
     hide_numbers = true,
+    auto_scroll = true,
     shade_filetypes = {},
     shade_terminals = false,
     shading_factor = 2,
-    start_in_insert = true,
+    start_in_insert = false,
     insert_mappings = true,
     persist_size = true,
     direction = "float",
+    quit_on_exit = true,
     close_on_exit = true,
     shell = vim.o.shell,
     highlights = {
@@ -30,7 +32,7 @@ M.config = function()
     float_opts = {
       border = "rounded",
       winblend = 0,
-      width = 85,
+      width = 95,
       height = 25,
     },
   })
