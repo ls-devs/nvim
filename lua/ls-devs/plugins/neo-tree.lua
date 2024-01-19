@@ -113,9 +113,6 @@ M.config = function()
         ["w"] = "open_with_window_picker",
         ["o"] = "open_and_clear_filter",
         ["D"] = "diff_files",
-        ["e"] = function()
-          vim.api.nvim_exec("Neotree focus filesystem right", true)
-        end,
       },
       fuzzy_finder_mappings = {
         ["<C-j>"] = "move_cursor_down",
