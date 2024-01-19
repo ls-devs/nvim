@@ -471,6 +471,12 @@ require("lazy").setup({
       },
     },
   },
+  -- Chainsaw
+  {
+    "chrisgrieser/nvim-chainsaw",
+    config = require("ls-devs.plugins.chainsaw").config,
+    keys = require("ls-devs.plugins.chainsaw").keys,
+  },
   --  Indent Scope
   {
     "echasnovski/mini.indentscope",
