@@ -7,7 +7,7 @@ M.config = function()
       enable_in_insert = false,
     },
     symbol_in_winbar = {
-      enable = false,
+      enable = true,
       separator = "  ",
       ignore_patterns = {},
       hide_keyword = true,

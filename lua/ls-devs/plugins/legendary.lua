@@ -841,9 +841,6 @@ M.config = function()
         description = "Jukit Covert",
         opts = opts,
       },
-      { "<leader>dvo", "<cmd>DiffviewOpen<CR>",  desccription = "DiffviewOpen", opts = opts },
-      { "<leader>dvc", "<cmd>DiffviewClose<CR>", description = "DiffviewClose", opts = opts },
-
       -- Restnvim
       {
         "<leader>rh",
@@ -1042,19 +1039,6 @@ M.config = function()
           if vim.fn.has("wsl") == 1 then
             vim.fn.system("clip.exe", vim.fn.getreg('"'))
           end
-        end,
-      },
-      {
-        {
-          "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
-          "WinResized",
-          "BufWinEnter",
-          "CursorHold",
-          "BufModifiedSet",
-          "InsertLeave",
-        },
-        function()
-          require("barbecue.ui").update()
         end,
       },
     },
