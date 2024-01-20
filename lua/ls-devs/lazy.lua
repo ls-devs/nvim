@@ -199,12 +199,6 @@ require("lazy").setup({
     event = "VimEnter",
     config = require("ls-devs.plugins.alpha").config,
   },
-  -- Tint
-  {
-    "levouh/tint.nvim",
-    event = "BufReadPost",
-    config = require("ls-devs.plugins.tint").config,
-  },
   -- Windows
   {
     "anuvyklack/windows.nvim",
