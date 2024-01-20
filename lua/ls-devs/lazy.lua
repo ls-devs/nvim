@@ -90,7 +90,6 @@ require("lazy").setup({
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
-    branch = "main",
     event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
     config = require("ls-devs.plugins.cmp").config,
     dependencies = {
@@ -167,6 +166,7 @@ require("lazy").setup({
     config = require("ls-devs.plugins.neo-tree").config,
     branch = "v3.x",
     dependencies = {
+      "3rd/image.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
@@ -743,7 +743,7 @@ require("lazy").setup({
 }, {
   defaults = {
     lazy = true,
-    version = "*",
+    -- version = "*",
   },
   ui = {
     border = "rounded",

@@ -19,7 +19,6 @@ M.config = function()
       winblend = 0,
     },
     hover = {
-      open_browser = "!brave",
       border_follow = false,
     },
     diagnostic = {
