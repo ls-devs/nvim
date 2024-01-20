@@ -22,7 +22,6 @@ end
 
 M.config = function()
   require("legendary").setup({
-    lazy_nvim = { auto_register = true },
     keymaps = {
       { "<leader>LL", "<cmd>Legendary<CR>",           description = "Legendary",           opts = opts },
       { "<leader>LK", "<cmd>Legendary keymaps<CR>",   description = "Legendary keymaps",   opts = opts },
@@ -918,7 +917,7 @@ M.config = function()
       },
     },
     extensions = {
-      lazy_nvim = true,
+      lazy_nvim = { auto_register = true },
       nvim_tree = true,
       op_nvim = true,
       smart_splits = {
