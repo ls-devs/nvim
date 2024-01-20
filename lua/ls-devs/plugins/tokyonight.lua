@@ -47,6 +47,8 @@ M.config = function()
       highlights.SagaWinbarFileName = { bg = colors.none }
       highlights.SagaWinbarFolderName = { bg = colors.none }
       highlights.SagaWinbarFolder = { bg = colors.none }
+      highlights.WinBar = { bg = colors.none }
+      highlights.WinBarNC = { bg = colors.none }
     end,
   })
   vim.cmd([[colorscheme tokyonight]])
