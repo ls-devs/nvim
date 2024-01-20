@@ -83,31 +83,6 @@ M.config = function()
         description = "Toggle Copilot",
         opts = opts,
       },
-      -- Possession
-      {
-        "<leader>sl",
-        "<cmd>lua require('nvim-possession').list()<CR>",
-        description = "Possession List",
-        opts = opts,
-      },
-      {
-        "<leader>sn",
-        "<cmd>lua require('nvim-possession').new()<CR>",
-        description = "Possession New",
-        opts = opts,
-      },
-      {
-        "<leader>su",
-        "<cmd>lua require('nvim-possession').update()<CR>",
-        description = "Possession Update",
-        opts = opts,
-      },
-      {
-        "<leader>sd",
-        "<cmd>lua require('nvim-possession').delete()<CR>",
-        description = "Possession Delete",
-        opts = opts,
-      },
       -- Blink
       {
         "<leader><leader>",
@@ -127,19 +102,6 @@ M.config = function()
         description = "NeoTree Open Float",
         opts = opts,
       },
-      {
-        "<leader>to",
-        "<cmd>Neotree Show<CR>",
-        description = "NeoTree Show",
-        opts = opts,
-      },
-      {
-        "<leader>tc",
-        "<cmd>Neotree Close<CR>",
-        description = "NeoTree Close",
-        opts = opts,
-      },
-
       -- Ranger
       {
         "<leader>rr",
@@ -287,7 +249,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>gc",
+        "<leader>tc",
         "<cmd>lua require('telescope.builtin').git_commits()<CR>",
         description = "Telescope Git Commits",
         opts = opts,
@@ -431,7 +393,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>wrn",
+        "<leader>rnw",
         "<cmd>Lspsaga rename ++project<CR>",
         description = "LSPSaga Rename Workspace",
         opts = opts,
@@ -664,10 +626,11 @@ M.config = function()
         opts = opts,
       },
       -- LazyGit
-      { "<leader>lg",  ":LazyGit<CR>",         description = "LazyGit" },
+      { "<leader>lg",  ":LazyGit<CR>",          description = "LazyGit" },
       -- Fugitive
-      { "<leader>gg",  "<cmd>Git<CR>" },
-      { "<leader>gcf", "<cmd>Gvdiffsplit!<CR>" },
+      { "<leader>gg",  "<cmd>Git<CR>",          descript = "Git Fugitive",             opts = opts },
+      { "<leader>gc",  "<cmd>Gdiffsplit!<CR>",  description = "Git Conflict Vertical", opts = opts },
+      { "<leader>gcv", "<cmd>Gvdiffsplit!<CR>", description = "Git Conflict",          opts = opts },
       -- JUKIT
       -- Splits
       {
@@ -928,7 +891,31 @@ M.config = function()
         ":MurenToggle<CR>",
         description = "Muren Toggle",
         opts = opts,
-      }
+      },
+      {
+        "<leader>wm",
+        ":WindowsMaximize<CR>",
+        description = "Maximize Window",
+        opts = opts,
+      },
+      {
+        "<leader>wv",
+        ":WindowsMaximizeVertically<CR>",
+        description = "Maximize Window Vertically",
+        opts = opts,
+      },
+      {
+        "<leader>wh",
+        ":WindowsMaximizeHorizontally<CR>",
+        description = "Maximize Window Horizontally",
+        opts = opts,
+      },
+      {
+        "<leader>we",
+        ":WindowsEqualize<CR>",
+        description = "Equalize Window",
+        opts = opts,
+      },
     },
     extensions = {
       lazy_nvim = true,

@@ -84,6 +84,7 @@ require("lazy").setup({
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
+    branch = "main",
     event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
     config = require("ls-devs.plugins.cmp").config,
     dependencies = {
@@ -192,10 +193,21 @@ require("lazy").setup({
     event = "VimEnter",
     config = require("ls-devs.plugins.alpha").config,
   },
+  -- Tint
   {
     "levouh/tint.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.tint").config,
+  },
+  -- Windows
+  {
+    "anuvyklack/windows.nvim",
+    event = "BufReadPost",
+    dependencies = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim",
+    },
+    config = require("ls-devs.plugins.windows").config,
   },
   -- Treesitter
   {
