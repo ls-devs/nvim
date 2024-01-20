@@ -58,17 +58,23 @@ require("lazy").setup({
       },
       -- LSP Idle Timeout
       {
-        "neovim/nvim-lspconfig",
-        event = "BufReadPre",
+        "hinell/lsp-timeout.nvim",
+        config = require("ls-devs.plugins.lsp-timeout").config,
         dependencies = {
-          -- LSP Enhancement
           {
-            "glepnir/lspsaga.nvim",
-            event = "LspAttach",
-            config = require("ls-devs.plugins.lsp_saga").config,
+            "neovim/nvim-lspconfig",
+            event = "BufReadPre",
             dependencies = {
-              { "nvim-tree/nvim-web-devicons" },
-              { "nvim-treesitter/nvim-treesitter" },
+              -- LSP Enhancement
+              {
+                "glepnir/lspsaga.nvim",
+                event = "LspAttach",
+                config = require("ls-devs.plugins.lsp_saga").config,
+                dependencies = {
+                  { "nvim-tree/nvim-web-devicons" },
+                  { "nvim-treesitter/nvim-treesitter" },
+                },
+              },
             },
           },
         },
