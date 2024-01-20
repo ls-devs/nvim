@@ -1026,14 +1026,6 @@ M.config = function()
         pattern = "*",
         description = "Notify dismiss",
       },
-      {
-        "TextYankPost",
-        function()
-          if vim.fn.has("wsl") == 1 then
-            vim.fn.system("clip.exe", vim.fn.getreg('"'))
-          end
-        end,
-      },
     },
     sort = {
       most_recent_first = true,

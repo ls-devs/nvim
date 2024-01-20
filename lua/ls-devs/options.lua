@@ -13,18 +13,7 @@ local options = {
   background = "dark",
   backup = false,
   showtabline = 0,
-  clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-    cache_enabled = true,
-  },
+  clipboard = "unnamedplus",
   cmdheight = 0,
   laststatus = 2,
   completeopt = { "menu", "menuone", "noselect" },
@@ -63,6 +52,22 @@ local options = {
   foldenable = true,
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 }
+
+-- Keyboard
+if vim.fn.has("wsl") == 1 then
+  vim.g.clipboard = {
+    name = "WslClipboard",
+    copy = {
+      ["+"] = "clip.exe",
+      ["*"] = "clip.exe",
+    },
+    paste = {
+      ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
+end
 
 for k, v in pairs(options) do
   vim.opt[k] = v
