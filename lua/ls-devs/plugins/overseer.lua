@@ -4,6 +4,7 @@ M.config = function()
   require("overseer").setup({
     strategy = {
       "toggleterm",
+      auto_scroll = true,
     },
     float_opts = {
       winblend = 0,

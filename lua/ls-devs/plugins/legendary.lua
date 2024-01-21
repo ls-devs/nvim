@@ -23,6 +23,7 @@ end
 M.config = function()
   require("legendary").setup({
     keymaps = {
+      -- Legendary
       { "<leader>LL", "<cmd>Legendary<CR>",           description = "Legendary",           opts = opts },
       { "<leader>LK", "<cmd>Legendary keymaps<CR>",   description = "Legendary keymaps",   opts = opts },
       { "<leader>LC", "<cmd>Legendary commands<CR>",  description = "Legendary commands",  opts = opts },
@@ -41,29 +42,31 @@ M.config = function()
         description = "Navigate Up & Center",
         opts = opts,
       },
-      -- Resize
-      -- Move text up and down
+      -- Switch both lines down
       {
         "<A-j>",
         { v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
-        description = "Move Text Down",
+        description = "Switch Lines Down",
         opts = opts,
       },
+      -- Switch both lines up
       {
         "<A-k>",
         { v = "<cmd>m .-2<CR>==", x = "<cmd>move '<-2<CR>gv-gv" },
-        description = "Move Text Up",
+        description = "Switch Lines Up",
         opts = opts,
       },
+      -- Paste
       {
         "p",
         { v = '"_dP' },
         description = "Paste Text",
         opts = opts,
       },
+      -- Move line(s) down
       { "J", { x = ":move '>+1<CR>gv-gv" }, opts = opts },
+      -- Move line(s) up
       { "K", { x = ":move '<-2<CR>gv-gv" }, opts = opts },
-
       -- Stay in indent mode
       {
         "<",
@@ -95,14 +98,6 @@ M.config = function()
         description = "NeoTree Open Float",
         opts = opts,
       },
-      -- Ranger
-      {
-        "<leader>rr",
-        "<cmd>lua require('ranger-nvim').open(true)<CR>",
-        description = "Open Ranger",
-        opts = opts,
-      },
-
       -- Telescope
       {
         "<leader>ff",
@@ -122,6 +117,7 @@ M.config = function()
         description = "Telescope LuaSnip",
         opts = opts,
       },
+      -- Grep help
       {
         "<leader>hg",
         function()
@@ -308,7 +304,6 @@ M.config = function()
         description = "HBac Close Unpinned",
         opts = opts,
       },
-
       -- Ufo
       {
         "zR",
@@ -344,11 +339,9 @@ M.config = function()
         description = "Overseer Toggle",
         opts = opts,
       },
-
       -- Live Server
       { "<leader>ss", "<cmd>LiveServerStart<CR>", description = "Start Live Server", opts = opts },
       { "<leader>sk", "<cmd>LiveServerStop<CR>",  description = "Stop Live Server",  opts = opts },
-
       -- LSP & LSP Saga
       {
         "<C-s>",
@@ -361,7 +354,7 @@ M.config = function()
       },
       {
         "gh",
-        "<cmd>Lspsaga lsp_finder<CR>",
+        "<cmd>Lspsaga finder<CR>",
         description = "LSPSaga Finder",
         opts = opts,
       },
@@ -506,39 +499,9 @@ M.config = function()
       },
       {
         "<leader>K",
-        "<cmd>Lspsaga hover_doc ++silent<CR>",
+        "<cmd>Lspsaga hover_doc ++keep<CR>",
         description = "LSPSaga Hover Doc Keep",
         opts = opts,
-      },
-      {
-        "<c-f>",
-        function()
-          if not require("noice.lsp").scroll(4) then
-            return "<c-f>"
-          end
-        end,
-        mode = { "n", "i", "s" },
-        description = "Noice Scroll Hover Doc Forward",
-        opts = opts,
-      },
-      {
-        "<c-b>",
-        function()
-          if not require("noice.lsp").scroll(-4) then
-            return "<c-f>"
-          end
-        end,
-        mode = { "n", "i", "s" },
-        description = "Noice Scroll Hover Doc Backward",
-        opts = opts,
-      },
-      {
-        "<S-Enter>",
-        function()
-          require("noice").redirect(vim.fn.getcmdline())
-        end,
-        mode = { "c" },
-        description = "Redirect Cmdline",
       },
       {
         "<leader>ci",
@@ -552,16 +515,45 @@ M.config = function()
         description = "LSPSaga Outgoing Calls",
         opts = opts,
       },
+      -- Noice scroll doc forward
+      {
+        "<c-f>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Forward",
+        opts = opts,
+      },
+      -- Noice scroll doc backward
+      {
+        "<c-b>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-f>"
+          end
+        end,
+        mode = { "n", "i", "s" },
+        description = "Noice Scroll Hover Doc Backward",
+        opts = opts,
+      },
+      -- Noice Redirects
+      {
+        "<S-Enter>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = { "c" },
+        description = "Redirect Cmdline",
+      },
+
+      -- Toggleterm
       {
         "<leader>t",
         "<cmd>ToggleTerm<CR>",
         description = "ToggleTerm",
-        opts = opts,
-      },
-      {
-        "<leader>t",
-        { t = "<cmd>Lspsaga term_toggle<CR>" },
-        description = "LSPSaga Toggle Terminal",
         opts = opts,
       },
       -- Aerial
@@ -599,7 +591,6 @@ M.config = function()
         description = "Lazy Build",
         opts = opts,
       },
-
       -- Trouble
       {
         "<leader>v",
@@ -616,7 +607,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>tt",
+        "<leader>TT",
         "<cmd>TodoTelescope<CR>",
         description = "TodoTelescope",
         opts = opts,
