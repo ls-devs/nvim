@@ -4,9 +4,21 @@ M.config = function()
   require("diffview").setup()
 end
 
+-- Fix DiffView with Windows
+function DiffviewToggle()
+  local lib = require("diffview.lib")
+  local view = lib.get_current_view()
+  if view then
+    vim.cmd(":DiffviewClose")
+    vim.cmd(":WindowsEnableAutowidth")
+  else
+    vim.cmd(":WindowsDisableAutowidth")
+    vim.cmd(":DiffviewOpen")
+  end
+end
+
 M.keys = {
-  { "<leader>dvo", "<cmd>DiffviewOpen<CR>",  desc = "DiffviewOpen" },
-  { "<leader>dvc", "<cmd>DiffviewClose<CR>", desc = "DiffviewClose" },
+  { "<leader>dvo", "<cmd>lua DiffviewToggle()<CR>", desc = "DiffviewOpen" },
 }
 
 return M
