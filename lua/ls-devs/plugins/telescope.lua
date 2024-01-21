@@ -17,38 +17,38 @@ return function()
           ["<C-k>"] = actions.move_selection_previous,
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+          ["<A-a>"] = actions.toggle_all,
         },
         n = {
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
+          ["<A-a>"] = actions.toggle_all,
         },
-      },
-    },
-    pickers = {
-      find_files = {
-        theme = "dropdown",
-        previewer = true,
-      },
-      buffers = {
-        theme = "dropdown",
-        previewer = true,
       },
     },
     extensions = {
+      emoji = {
+        action = function(emoji)
+          vim.fn.setreg("*", emoji.value)
+          print([[Press p or "*p to paste this emoji ]] .. emoji.value)
+        end,
+      },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
       aerial = {
-        -- Display symbols as <root>.<parent>.<symbol>
         show_nesting = {
-          ["_"] = false, -- This key will be the default
-          json = true, -- You can set the option for specific filetypes
+          ["_"] = false,
+          json = true,
           yaml = true,
         },
       },
-      luasnip = require("telescope.themes").get_dropdown({
-        preview = {
-          check_mime_type = true,
-        },
+      luasnip = {
         search = function(entry)
           return lst.filter_null(entry.context.trigger)
               .. " "
@@ -59,7 +59,7 @@ return function()
               .. lst.filter_description(entry.context.name, entry.context.description)
               .. lst.get_docstring(luasnip, entry.ft, entry.context)[1]
         end,
-      }),
+      },
     },
   })
   telescope.load_extension("fzf")

@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- Colorscheme
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -21,20 +22,21 @@ require("lazy").setup({
   -- Lsp & Managers
   {
     "VonHeikemen/lsp-zero.nvim",
+    event = "BufReadPost",
     branch = "v3.x",
     config = require("ls-devs.plugins.lsp-zero").config,
-    priority = 900,
     dependencies = {
       -- Inlay hints
       {
         "lvimuser/lsp-inlayhints.nvim",
+        event = "BufreadPost",
         config = require("ls-devs.plugins.lsp-inlayhints").config,
       },
       -- Mason & Managers
       {
         "williamboman/mason-lspconfig.nvim",
         config = require("ls-devs.plugins.mason-lspconfig").config,
-        event = "VimEnter",
+        event = "VeryLazy",
         dependencies = {
           {
             -- Formatter
@@ -48,10 +50,12 @@ require("lazy").setup({
           },
           {
             "jay-babu/mason-nvim-dap.nvim",
+            event = "VeryLazy",
             config = require("ls-devs.plugins.mason-nvim-dap").config,
           },
           {
             "williamboman/mason.nvim",
+            event = "VeryLazy",
             config = require("ls-devs.plugins.mason").config,
           },
         },
@@ -59,11 +63,12 @@ require("lazy").setup({
       -- LSP Idle Timeout
       {
         "hinell/lsp-timeout.nvim",
+        event = "BufReadPost",
         config = require("ls-devs.plugins.lsp-timeout").config,
         dependencies = {
           {
             "neovim/nvim-lspconfig",
-            event = "BufReadPre",
+            event = "BufReadPost",
             dependencies = {
               -- LSP Enhancement
               {
@@ -212,7 +217,7 @@ require("lazy").setup({
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.treesitter").config,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
@@ -231,40 +236,48 @@ require("lazy").setup({
     },
     build = ":TSUpdate",
   },
-  -- Telescope
+  -- Telescope & Search
   {
-    "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
-    config = require("ls-devs.plugins.telescope"),
+    "FabianWirth/search.nvim",
+    event = "VeryLazy",
+    config = require("ls-devs.plugins.search").config,
     dependencies = {
       {
-        "kdheepak/lazygit.nvim",
-        keys = require("ls-devs.plugins.lazygit").keys,
-      },
-
-      { "nvim-lua/plenary.nvim" },
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-      },
-      {
-        "benfowler/telescope-luasnip.nvim",
-      },
-      { "nvim-telescope/telescope-media-files.nvim" },
-      { "xiyaowong/telescope-emoji.nvim" },
-      {
-        "AckslD/nvim-neoclip.lua",
+        "nvim-telescope/telescope.nvim",
+        cmd = "Telescope",
+        config = require("ls-devs.plugins.telescope"),
         dependencies = {
-          { "nvim-telescope/telescope.nvim" },
-          { "ibhagwan/fzf-lua" },
           {
-            "kkharji/sqlite.lua",
+            "kdheepak/lazygit.nvim",
+            keys = require("ls-devs.plugins.lazygit").keys,
+          },
+
+          { "nvim-lua/plenary.nvim" },
+          {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+          },
+          {
+            "benfowler/telescope-luasnip.nvim",
+          },
+          { "nvim-telescope/telescope-media-files.nvim" },
+          { "xiyaowong/telescope-emoji.nvim" },
+          {
+            "AckslD/nvim-neoclip.lua",
+            dependencies = {
+              { "nvim-telescope/telescope.nvim" },
+              { "ibhagwan/fzf-lua" },
+              {
+                "kkharji/sqlite.lua",
+              },
+            },
+            config = require("ls-devs.plugins.neoclip").config,
           },
         },
-        config = require("ls-devs.plugins.neoclip").config,
       },
     },
   },
+  -- Better quickfix
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
@@ -345,16 +358,15 @@ require("lazy").setup({
     },
     config = require("ls-devs.plugins.cmake_tools").config,
   },
-
   -- Swift Tools
   {
     "wojciech-kulik/xcodebuild.nvim",
+    ft = "swift",
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "MunifTanjim/nui.nvim",
     },
     config = require("ls-devs.plugins.xcodebuild").config,
-    ft = "swift",
   },
   -- UrlView
   {
@@ -402,6 +414,7 @@ require("lazy").setup({
     event = "VeryLazy",
     config = require("ls-devs.plugins.dressing").config,
   },
+  -- Refactoring
   {
     "ThePrimeagen/refactoring.nvim",
     ft = { "lua", "python", "typescript", "typescriptreact", "javascript", "javascriptreact", "php", "c", "cpp" },
@@ -447,10 +460,11 @@ require("lazy").setup({
     event = "InsertEnter",
     config = require("ls-devs.plugins.autopairs").config,
   },
+  -- Sentiment
   {
     "utilyre/sentiment.nvim",
     version = "*",
-    event = "VeryLazy", -- keep for lazy loading
+    event = "VeryLazy",
     config = require("ls-devs.plugins.sentiment").config,
   },
   -- Surround
@@ -465,7 +479,6 @@ require("lazy").setup({
     keys = require("ls-devs.plugins.bufremove").keys,
     config = require("ls-devs.plugins.bufremove").config,
   },
-
   -- Comments
   {
     "echasnovski/mini.comment",
@@ -490,6 +503,7 @@ require("lazy").setup({
     event = "BufReadPost",
     config = require("ls-devs.plugins.indentscope").config,
   },
+  -- DAP UI
   {
     "rcarriga/nvim-dap-ui",
     keys = require("ls-devs.plugins.dapui").keys,
@@ -505,7 +519,7 @@ require("lazy").setup({
   -- Tmux navigation
   {
     "aserowy/tmux.nvim",
-    enabled = function()
+    cond = function()
       if vim.fn.exists("$TMUX") == 0 then
         return false
       else
@@ -552,10 +566,9 @@ require("lazy").setup({
   -- Blink
   {
     "Grazfather/blinker.nvim",
-    event = "BufReadPost",
     config = require("ls-devs.plugins.blinker").config,
+    keys = require("ls-devs.plugins.blinker").keys,
   },
-
   -- Python
   {
     "luk400/vim-jukit",
@@ -593,55 +606,48 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
   },
-  {
-    "lambdalisue/gin.vim",
-    cmd = {
-      "Gin",
-      "GinBuffer",
-      "GinBranch",
-      "GinCd",
-      "GinLcd",
-      "GinTcd",
-      "GinChaperon",
-      "GinDiff",
-      "GinEdit",
-      "GinLog",
-      "GinPatch",
-      "GinStatus",
-    },
-    dependencies = {
-      { "vim-denops/denops.vim" },
-    },
-  },
+  -- WinSep
   {
     "nvim-zh/colorful-winsep.nvim",
     config = require("ls-devs.plugins.winsep").config,
     event = { "WinNew" },
   },
+  -- Hbac
   {
     "axkirillov/hbac.nvim",
     event = "BufReadPost",
     dependencies = {
-      -- these are optional, add them, if you want the telescope module
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     config = require("ls-devs.plugins.hbac").config,
   },
+  -- Git Blame
   {
-    "lewis6991/gitsigns.nvim",
+    "f-person/git-blame.nvim",
     event = "BufReadPost",
-    config = require("ls-devs.plugins.gitsigns").config,
+    config = require("ls-devs.plugins.git-blame").config,
+    cond = function()
+      return vim.fn.isdirectory(".git") == 1
+    end,
   },
+  -- DiffView
   {
     "sindrets/diffview.nvim",
     config = require("ls-devs.plugins.diffview").config,
     keys = require("ls-devs.plugins.diffview").keys,
+    cond = function()
+      return vim.fn.isdirectory(".git") == 1
+    end,
   },
+  -- Vim-Fugitive
   {
     "tpope/vim-fugitive",
-    event = "VeryLazy",
+    keys = require("ls-devs.plugins.fugitive").keys,
+    cond = function()
+      return vim.fn.isdirectory(".git") == 1
+    end,
   },
   -- LazyGit
   {
@@ -652,6 +658,7 @@ require("lazy").setup({
   -- Ufo
   {
     "kevinhwang91/nvim-ufo",
+    event = "BufRead",
     dependencies = {
       { "kevinhwang91/promise-async" },
       {
@@ -659,14 +666,7 @@ require("lazy").setup({
         config = require("ls-devs.plugins.statuscol").config,
       },
     },
-    event = "BufRead",
     config = require("ls-devs.plugins.ufo").config,
-  },
-  -- Presence
-  {
-    "andweeb/presence.nvim",
-    event = "VeryLazy",
-    config = require("ls-devs.plugins.presence").config,
   },
   -- Json schemas
   {
@@ -680,6 +680,7 @@ require("lazy").setup({
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
     config = require("ls-devs.plugins.typescript-tools").config,
   },
+  -- WinShift
   {
     "sindrets/winshift.nvim",
     cmd = { "WinShift" },
@@ -692,31 +693,32 @@ require("lazy").setup({
     cmd = "LiveServerStart",
     config = require("ls-devs.plugins.live-server").config,
   },
+  -- Tabout
   {
     "abecodes/tabout.nvim",
     event = "BufReadPre",
     config = require("ls-devs.plugins.tabout").config,
   },
+  -- Better Escape
   {
     "max397574/better-escape.nvim",
     event = "BufReadPre",
     config = require("ls-devs.plugins.better_escape").config,
   },
+  -- Glow
   {
     "ellisonleao/glow.nvim",
     cmd = "Glow",
     keys = require("ls-devs.plugins.glow").keys,
     config = require("ls-devs.plugins.glow").config,
   },
+  -- Lastplace
   {
     "ethanholz/nvim-lastplace",
     event = "BufReadPre",
     config = require("ls-devs.plugins.lastplace").config,
   },
-  {
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
-  },
+  -- Colorizer
   {
     "chrisbra/Colorizer",
     cmd = "ColorToggle",
@@ -728,6 +730,7 @@ require("lazy").setup({
     config = require("ls-devs.plugins.silicon").config,
     build = "./install.sh build",
   },
+  -- glslView
   {
     "timtro/glslView-nvim",
     ft = "glsl",
@@ -760,6 +763,9 @@ require("lazy").setup({
   checker = {
     enabled = true,
     notify = true,
+  },
+  readme = {
+    enabled = true,
   },
   readme = {
     enabled = true,

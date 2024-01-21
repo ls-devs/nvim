@@ -18,4 +18,13 @@ M.config = function()
   })
 end
 
+M.keys = {
+  -- Blink
+  {
+    "<leader><leader>",
+    "<cmd>lua require('blinker').blink_cursorline()<CR>",
+    desc = "Blink Cursor",
+  },
+}
+
 return M

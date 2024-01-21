@@ -82,12 +82,6 @@ M.config = function()
         description = "Toggle Copilot",
         opts = opts,
       },
-      -- Blink
-      {
-        "<leader><leader>",
-        "<cmd>lua require('blinker').blink_cursorline()<CR>",
-        description = "Blink Cursor",
-      },
       -- Glow
       {
         "<leader>md",
@@ -149,7 +143,6 @@ M.config = function()
         description = "Telescope Neoclip",
         opts = opts,
       },
-
       {
         "<leader>fb",
         "<cmd>Telescope buffers<CR>",
@@ -216,7 +209,6 @@ M.config = function()
         description = "Telescope aerial",
         opts = opts,
       },
-
       {
         "<leader>fB",
         "<cmd>Telescope current_buffer_fuzzy_find<CR>",
@@ -265,7 +257,13 @@ M.config = function()
         description = "Telescope Emojis",
         opts = opts,
       },
-
+      -- Search
+      {
+        "<leader>st",
+        '<cmd>lua require("search").open()<CR>',
+        description = "Open Search",
+        opts = opts,
+      },
       -- Urlview
       {
         "<leader>ul",
@@ -625,11 +623,7 @@ M.config = function()
         opts = opts,
       },
       -- LazyGit
-      { "<leader>lg",  ":LazyGit<CR>",          description = "LazyGit" },
-      -- Fugitive
-      { "<leader>gg",  "<cmd>Git<CR>",          descript = "Git Fugitive",             opts = opts },
-      { "<leader>gc",  "<cmd>Gdiffsplit!<CR>",  description = "Git Conflict Vertical", opts = opts },
-      { "<leader>gcv", "<cmd>Gvdiffsplit!<CR>", description = "Git Conflict",          opts = opts },
+      { "<leader>lg", ":LazyGit<CR>", description = "LazyGit" },
       -- JUKIT
       -- Splits
       {
@@ -891,22 +885,29 @@ M.config = function()
         description = "Muren Toggle",
         opts = opts,
       },
+      -- Windows
       {
         "<leader>wm",
         ":WindowsMaximize<CR>",
-        description = "Maximize Window",
+        description = "Maximize Windows",
         opts = opts,
       },
       {
         "<leader>wv",
         ":WindowsMaximizeVertically<CR>",
-        description = "Maximize Window Vertically",
+        description = "Maximize Windows Vertically",
         opts = opts,
       },
       {
         "<leader>wh",
         ":WindowsMaximizeHorizontally<CR>",
-        description = "Maximize Window Horizontally",
+        description = "Maximize Windows Horizontally",
+        opts = opts,
+      },
+      {
+        "<leader>wt",
+        ":WindowsToggleAutowidth<CR>",
+        description = "Toggle Windows AutoWidth",
         opts = opts,
       },
       {
