@@ -564,7 +564,6 @@ M.config = function()
         description = "LSPSaga Toggle Terminal",
         opts = opts,
       },
-
       -- Aerial
       { "<leader>at", "<cmd>AerialToggle<CR>", description = "Aerial Toggle", opts = opts },
       { "<leader>an", "<cmd>AerialNext<CR>",   description = "Aerial Next",   opts = opts },

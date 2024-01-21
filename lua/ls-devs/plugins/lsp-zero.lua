@@ -22,7 +22,6 @@ M.config = function()
 
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
-    require("lsp-inlayhints").on_attach(client, bufnr)
   end)
 
   local get_servers = require("mason-lspconfig").get_installed_servers
