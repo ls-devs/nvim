@@ -49,10 +49,9 @@ M.config = function()
       highlights.SagaWinbarFolder = { bg = colors.none }
       highlights.WinBar = { bg = colors.none }
       highlights.WinBarNC = { bg = colors.none }
-      highlights.Question = { bg = colors.bg_highlight, fg = colors.comment }
+      highlights.Blame = { bg = colors.bg_highlight, fg = colors.dark5 }
     end,
   })
-  vim.cmd([[colorscheme tokyonight]])
   vim.cmd([[colorscheme tokyonight]])
 end
 

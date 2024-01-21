@@ -26,12 +26,6 @@ require("lazy").setup({
     branch = "v3.x",
     config = require("ls-devs.plugins.lsp-zero").config,
     dependencies = {
-      -- Inlay hints
-      {
-        "lvimuser/lsp-inlayhints.nvim",
-        event = "BufreadPost",
-        config = require("ls-devs.plugins.lsp-inlayhints").config,
-      },
       -- Mason & Managers
       {
         "williamboman/mason-lspconfig.nvim",
@@ -404,6 +398,7 @@ require("lazy").setup({
       { "MunifTanjim/nui.nvim", event = "VeryLazy" },
       {
         "rcarriga/nvim-notify",
+        event = "BufReadPost",
         config = require("ls-devs.plugins.notify").config,
       },
     },
