@@ -225,42 +225,35 @@ require("lazy").setup({
     },
     build = ":TSUpdate",
   },
-  -- Telescope & Search
+  -- Telescope
   {
-    "FabianWirth/search.nvim",
-    event = "VeryLazy",
-    config = require("ls-devs.plugins.search").config,
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+    config = require("ls-devs.plugins.telescope"),
     dependencies = {
       {
-        "nvim-telescope/telescope.nvim",
-        cmd = "Telescope",
-        config = require("ls-devs.plugins.telescope"),
-        dependencies = {
-          {
-            "kdheepak/lazygit.nvim",
-            keys = require("ls-devs.plugins.lazygit").keys,
-          },
+        "kdheepak/lazygit.nvim",
+        keys = require("ls-devs.plugins.lazygit").keys,
+      },
 
-          { "nvim-lua/plenary.nvim" },
+      { "nvim-lua/plenary.nvim" },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+      },
+      {
+        "benfowler/telescope-luasnip.nvim",
+      },
+      { "nvim-telescope/telescope-media-files.nvim" },
+      { "xiyaowong/telescope-emoji.nvim" },
+      {
+        "AckslD/nvim-neoclip.lua",
+        config = require("ls-devs.plugins.neoclip").config,
+        dependencies = {
+          { "nvim-telescope/telescope.nvim" },
+          { "ibhagwan/fzf-lua" },
           {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-          },
-          {
-            "benfowler/telescope-luasnip.nvim",
-          },
-          { "nvim-telescope/telescope-media-files.nvim" },
-          { "xiyaowong/telescope-emoji.nvim" },
-          {
-            "AckslD/nvim-neoclip.lua",
-            config = require("ls-devs.plugins.neoclip").config,
-            dependencies = {
-              { "nvim-telescope/telescope.nvim" },
-              { "ibhagwan/fzf-lua" },
-              {
-                "kkharji/sqlite.lua",
-              },
-            },
+            "kkharji/sqlite.lua",
           },
         },
       },
