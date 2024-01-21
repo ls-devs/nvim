@@ -15,7 +15,7 @@ M.config = function()
           if filename == nil then
             filename = selection[1]
           end
-          -- any way to open the file without triggering auto-close event of neo-tree?
+
           require("neo-tree.sources.filesystem").navigate(state, state.path, filename)
         end)
         return true
@@ -24,27 +24,27 @@ M.config = function()
   end
 
   require("neo-tree").setup({
-    close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+    close_if_last_window = true,
     popup_border_style = "rounded",
     enable_git_status = true,
     enable_diagnostics = true,
-    enable_normal_mode_for_inputs = true,                            -- Enable normal mode for input dialogs.
-    open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-    sort_case_insensitive = false,                                   -- used when sorting files and directories in the tree
+    enable_normal_mode_for_inputs = true,
+    open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
+    sort_case_insensitive = false,
     default_component_configs = {
       container = {
         enable_character_fade = true,
       },
       indent = {
         indent_size = 2,
-        padding = 1, -- extra padding on left hand side
-        -- indent guides
+        padding = 1,
+
         with_markers = true,
         indent_marker = "│",
         last_indent_marker = "└",
         highlight = "NeoTreeIndentMarker",
-        -- expander config, needed for nesting files
-        with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+
+        with_expanders = nil,
         expander_collapsed = "",
         expander_expanded = "",
         expander_highlight = "NeoTreeExpander",
@@ -53,8 +53,7 @@ M.config = function()
         folder_closed = "",
         folder_open = "",
         folder_empty = "󰜌",
-        -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-        -- then these will never be used.
+
         default = "*",
         highlight = "NeoTreeFileIcon",
       },
@@ -69,12 +68,12 @@ M.config = function()
       },
       git_status = {
         symbols = {
-          -- Change type
-          added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-          modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-          deleted = "✖", -- this can only be used in the git_status source
-          renamed = "󰁕", -- this can only be used in the git_status source
-          -- Status type
+
+          added = "",
+          modified = "",
+          deleted = "✖",
+          renamed = "󰁕",
+
           untracked = "",
           ignored = "",
           unstaged = "󰄱",
@@ -82,38 +81,96 @@ M.config = function()
           conflict = "",
         },
       },
-      -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
+
       file_size = {
         enabled = true,
-        required_width = 64, -- min width of window required to show this column
+        required_width = 64,
       },
       type = {
         enabled = true,
-        required_width = 122, -- min width of window required to show this column
+        required_width = 122,
       },
       last_modified = {
         enabled = true,
-        required_width = 88, -- min width of window required to show this column
+        required_width = 88,
       },
       created = {
         enabled = true,
-        required_width = 110, -- min width of window required to show this column
+        required_width = 110,
       },
       symlink_target = {
         enabled = false,
       },
     },
-    -- A list of functions, each representing a global custom command
-    -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-    -- see `:h neo-tree-custom-commands-global`
     commands = {
+      create_and_focus = function(state)
+        local fs = require("neo-tree.sources.filesystem")
+        local fs_actions = require("neo-tree.sources.filesystem.lib.fs_actions")
+        local commands = require("neo-tree.sources.common.commands")
+
+        local function get_folder_node(nodeState)
+          local tree = nodeState.tree
+          local node = tree:get_node()
+          local last_id = node:get_id()
+
+          while node do
+            local insert_as_local = nodeState.config.insert_as
+            local insert_as_global = require("neo-tree").config.window.insert_as
+            local use_parent
+            if insert_as_local then
+              use_parent = insert_as_local == "sibling"
+            else
+              use_parent = insert_as_global == "sibling"
+            end
+
+            local is_open_dir = node.type == "directory" and (node:is_expanded() or node.empty_expanded)
+            if use_parent and not is_open_dir then
+              return tree:get_node(node:get_parent_id())
+            end
+
+            if node.type == "directory" then
+              return node
+            end
+
+            local parent_id = node:get_parent_id()
+            if not parent_id or parent_id == last_id then
+              return node
+            else
+              last_id = parent_id
+              node = tree:get_node(parent_id)
+            end
+          end
+        end
+
+        local function get_using_root_directory(rootState)
+          local using_root_directory = get_folder_node(rootState):get_id()
+          local show_path = rootState.config.show_path
+          if show_path == "absolute" then
+            using_root_directory = ""
+          elseif show_path == "relative" then
+            using_root_directory = rootState.path
+          end
+          return using_root_directory
+        end
+
+        local function add(addState, callback)
+          local node = get_folder_node(addState)
+          local in_directory = node:get_id()
+          local using_root_directory = get_using_root_directory(addState)
+          fs_actions.create_node(in_directory, callback, using_root_directory)
+        end
+
+        add(state, function(destination)
+          fs.show_new_children(state, destination)
+          vim.cmd.edit(destination)
+        end)
+      end,
       system_open = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        -- macOs: open file in default application in the background.
-        -- Probably you need to adapt the Linux recipe for manage path with spaces. I don't have a mac to try.
+
         vim.api.nvim_command("silent !open -g " .. path)
-        -- Linux: open file in default application
+
         vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
       end,
       telescope_find = function(state)
@@ -130,11 +187,11 @@ M.config = function()
         local node = state.tree:get_node()
         if node and node.type == "file" then
           local file_path = node:get_id()
-          -- reuse built-in commands to open and clear filter
+
           local cmds = require("neo-tree.sources.filesystem.commands")
           cmds.open(state)
           cmds.clear_filter(state)
-          -- reveal the selected file without focusing the tree
+
           require("neo-tree.sources.filesystem").navigate(state, state.path, file_path)
         end
       end,
@@ -178,24 +235,25 @@ M.config = function()
       mappings = {
         ["<space>"] = {
           "toggle_node",
-          nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
+          nowait = true,
         },
         ["<2-LeftMouse>"] = "open",
         ["l"] = "open",
-        ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+        ["<esc>"] = "cancel",
         ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = true } },
         [","] = "focus_preview",
         ["S"] = "split_with_window_picker",
         ["s"] = "vsplit_with_window_picker",
         ["t"] = "open_tabnew",
         ["w"] = "open_with_window_picker",
+
         ["C"] = "close_all_subnodes",
         ["z"] = "close_all_nodes",
         ["Z"] = "expand_all_nodes",
         ["o"] = "open_and_clear_filter",
         ["D"] = "diff_files",
         ["a"] = {
-          "add",
+          "create_and_focus",
           config = {
             show_path = "relative",
           },
@@ -203,7 +261,7 @@ M.config = function()
         ["m"] = {
           "move",
           config = {
-            show_path = "relative", -- "none", "relative", "absolute"
+            show_path = "relative",
           },
         },
 
@@ -212,7 +270,7 @@ M.config = function()
           config = {
             show_path = "relative",
           },
-        }, -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
+        },
         ["d"] = "delete",
         ["r"] = "rename",
         ["y"] = "copy_to_clipboard",
@@ -221,7 +279,7 @@ M.config = function()
         ["c"] = {
           "copy",
           config = {
-            show_path = "relative", -- "none", "relative", "absolute"
+            show_path = "relative",
           },
         },
         ["q"] = "close_window",
@@ -235,41 +293,30 @@ M.config = function()
     nesting_rules = {},
     filesystem = {
       filtered_items = {
-        visible = false, -- when true, they will just be displayed differently than normal items
+        visible = false,
         hide_dotfiles = true,
         hide_gitignored = true,
-        hide_hidden = true, -- only works on Windows for hidden files/directories
+        hide_hidden = true,
         hide_by_name = {
           "node_modules",
         },
-        hide_by_pattern = { -- uses glob style patterns
-          --"*.meta",
-          --"*/src/*/tsconfig.json",
-        },
-        always_show = { -- remains visible even if other settings would normally hide it
-          --".gitignored",
-        },
-        never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
+        hide_by_pattern = {},
+        always_show = {},
+        never_show = {
           ".DS_Store",
-          --"thumbs.db"
         },
-        never_show_by_pattern = { -- uses glob style patterns
-          --".null-ls_*",
-        },
+        never_show_by_pattern = {},
       },
       follow_current_file = {
-        enabled = true,                    -- This will find and focus the file in the active buffer every time
-        --               -- the current file is changed while the tree is open.
-        leave_dirs_open = false,           -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        enabled = true,
+
+        leave_dirs_open = false,
       },
-      group_empty_dirs = false,            -- when true, empty folders will be grouped together
-      hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-      -- in whatever position is specified in window.position
-      -- "open_current",  -- netrw disabled, opening a directory opens within the
-      -- window like netrw would, regardless of window.position
-      -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-      use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
-      -- instead of relying on nvim autocmd events.
+      group_empty_dirs = false,
+      hijack_netrw_behavior = "open_default",
+
+      use_libuv_file_watcher = true,
+
       window = {
         mappings = {
           ["<bs>"] = "navigate_up",
@@ -279,13 +326,13 @@ M.config = function()
             config = {
               show_path = "relative",
             },
-          }, -- takes text input for destination, also accepts the optional config.show_path option like "add".
+          },
           ["."] = "set_root",
           ["H"] = "toggle_hidden",
           ["/"] = "fuzzy_finder",
-          -- ["D"] = "fuzzy_finder_directory",
-          ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
-          -- ["D"] = "fuzzy_sorter_directory",
+
+          ["#"] = "fuzzy_sorter",
+
           ["f"] = "filter_on_submit",
           ["<c-x>"] = "clear_filter",
           ["[g"] = "prev_git_modified",
@@ -299,7 +346,7 @@ M.config = function()
           ["os"] = { "order_by_size", nowait = false },
           ["ot"] = { "order_by_type", nowait = false },
         },
-        fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+        fuzzy_finder_mappings = {
           ["<down>"] = "move_cursor_down",
           ["<C-j>"] = "move_cursor_down",
           ["<up>"] = "move_cursor_up",
@@ -311,10 +358,9 @@ M.config = function()
         system_open = function(state)
           local node = state.tree:get_node()
           local path = node:get_id()
-          -- macOs: open file in default application in the background.
-          -- Probably you need to adapt the Linux recipe for manage path with spaces. I don't have a mac to try.
+
           vim.api.nvim_command("silent !open -g " .. path)
-          -- Linux: open file in default application
+
           vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
         end,
         telescope_find = function(state)
@@ -331,11 +377,11 @@ M.config = function()
           local node = state.tree:get_node()
           if node and node.type == "file" then
             local file_path = node:get_id()
-            -- reuse built-in commands to open and clear filter
+
             local cmds = require("neo-tree.sources.filesystem.commands")
             cmds.open(state)
             cmds.clear_filter(state)
-            -- reveal the selected file without focusing the tree
+
             require("neo-tree.sources.filesystem").navigate(state, state.path, file_path)
           end
         end,
@@ -395,18 +441,17 @@ M.config = function()
       {
         event = "file_opened",
         handler = function(file_path)
-          --auto close
           require("neo-tree").close_all()
         end,
       },
     },
     buffers = {
       follow_current_file = {
-        enabled = true,      -- This will find and focus the file in the active buffer every time
-        --              -- the current file is changed while the tree is open.
-        leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        enabled = true,
+
+        leave_dirs_open = false,
       },
-      group_empty_dirs = true, -- when true, empty folders will be grouped together
+      group_empty_dirs = true,
       show_unloaded = true,
       window = {
         mappings = {

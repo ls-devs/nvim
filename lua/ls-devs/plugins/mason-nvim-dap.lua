@@ -11,7 +11,7 @@ M.config = function()
       "js",
       "chrome",
       "haskell",
-      "kotlin-debug-adapter"
+      "kotlin-debug-adapter",
     },
     automatic_setup = true,
     automatic_installation = true,

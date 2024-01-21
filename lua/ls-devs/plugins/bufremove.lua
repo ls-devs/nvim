@@ -5,7 +5,6 @@ M.config = function()
 end
 
 M.keys = {
-
   {
     "<leader>bd",
     function()

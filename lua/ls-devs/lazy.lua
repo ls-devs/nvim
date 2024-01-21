@@ -35,7 +35,7 @@ require("lazy").setup({
           {
             -- Formatter
             "nvimtools/none-ls.nvim",
-            event = "BufReadPre",
+            event = "BufReadPost",
             config = require("ls-devs.plugins.null-ls").config,
             dependencies = {
               "jay-babu/mason-null-ls.nvim",
@@ -175,11 +175,6 @@ require("lazy").setup({
       },
     },
   },
-  -- Ranger
-  {
-    "kelly-lin/ranger.nvim",
-    config = require("ls-devs.plugins.ranger").config,
-  },
   -- Buffer and status lines
   {
     "nvim-lualine/lualine.nvim",
@@ -258,6 +253,7 @@ require("lazy").setup({
           { "xiyaowong/telescope-emoji.nvim" },
           {
             "AckslD/nvim-neoclip.lua",
+            config = require("ls-devs.plugins.neoclip").config,
             dependencies = {
               { "nvim-telescope/telescope.nvim" },
               { "ibhagwan/fzf-lua" },
@@ -265,7 +261,6 @@ require("lazy").setup({
                 "kkharji/sqlite.lua",
               },
             },
-            config = require("ls-devs.plugins.neoclip").config,
           },
         },
       },
@@ -329,6 +324,7 @@ require("lazy").setup({
   -- Cmake Tools
   {
     "Civitasv/cmake-tools.nvim",
+    config = require("ls-devs.plugins.cmake_tools").config,
     cmd = {
       "CMakeBuild",
       "CMakeRun",
@@ -350,7 +346,6 @@ require("lazy").setup({
       "CMakeLaunchArgs",
       "CMakeStop",
     },
-    config = require("ls-devs.plugins.cmake_tools").config,
   },
   -- Swift Tools
   {
@@ -389,7 +384,7 @@ require("lazy").setup({
     config = require("ls-devs.plugins.todo-comments").config,
     dependencies = "nvim-lua/plenary.nvim",
   },
-  -- UI
+  -- Noice
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -636,14 +631,6 @@ require("lazy").setup({
       return vim.fn.isdirectory(".git") == 1
     end,
   },
-  -- Vim-Fugitive
-  {
-    "tpope/vim-fugitive",
-    keys = require("ls-devs.plugins.fugitive").keys,
-    cond = function()
-      return vim.fn.isdirectory(".git") == 1
-    end,
-  },
   -- LazyGit
   {
     "kdheepak/lazygit.nvim",
@@ -654,6 +641,7 @@ require("lazy").setup({
   {
     "kevinhwang91/nvim-ufo",
     event = "BufRead",
+    config = require("ls-devs.plugins.ufo").config,
     dependencies = {
       { "kevinhwang91/promise-async" },
       {
@@ -661,7 +649,6 @@ require("lazy").setup({
         config = require("ls-devs.plugins.statuscol").config,
       },
     },
-    config = require("ls-devs.plugins.ufo").config,
   },
   -- Json schemas
   {
@@ -684,9 +671,9 @@ require("lazy").setup({
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
-    build = "pnpm i -g live-server",
-    cmd = "LiveServerStart",
     config = require("ls-devs.plugins.live-server").config,
+    cmd = "LiveServerStart",
+    build = "pnpm i -g live-server",
   },
   -- Tabout
   {
@@ -703,9 +690,9 @@ require("lazy").setup({
   -- Glow
   {
     "ellisonleao/glow.nvim",
-    cmd = "Glow",
     keys = require("ls-devs.plugins.glow").keys,
     config = require("ls-devs.plugins.glow").config,
+    cmd = "Glow",
   },
   -- Lastplace
   {
@@ -724,13 +711,6 @@ require("lazy").setup({
     cmd = "Silicon",
     config = require("ls-devs.plugins.silicon").config,
     build = "./install.sh build",
-  },
-  -- glslView
-  {
-    "timtro/glslView-nvim",
-    ft = "glsl",
-    config = require("ls-devs.plugins.glslViewer").config,
-    keys = require("ls-devs.plugins.glslViewer").keys,
   },
 }, {
   defaults = {
