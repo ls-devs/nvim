@@ -175,7 +175,7 @@ require("lazy").setup({
       },
     },
   },
-  -- Buffer and status lines
+  -- Status lines
   {
     "nvim-lualine/lualine.nvim",
     event = "BufReadPost",
@@ -461,6 +461,12 @@ require("lazy").setup({
     "echasnovski/mini.bufremove",
     keys = require("ls-devs.plugins.bufremove").keys,
     config = require("ls-devs.plugins.bufremove").config,
+  },
+  -- Lock Buffers
+  {
+    "stevearc/stickybuf.nvim",
+    event = "BufReadPre",
+    config = require("ls-devs.plugins.stickybuf").config,
   },
   -- Comments
   {
