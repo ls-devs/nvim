@@ -548,14 +548,6 @@ M.config = function()
         mode = { "c" },
         description = "Redirect Cmdline",
       },
-
-      -- Toggleterm
-      {
-        "<leader>t",
-        "<cmd>ToggleTerm<CR>",
-        description = "ToggleTerm",
-        opts = opts,
-      },
       -- Aerial
       { "<leader>at", "<cmd>AerialToggle<CR>", description = "Aerial Toggle", opts = opts },
       { "<leader>an", "<cmd>AerialNext<CR>",   description = "Aerial Next",   opts = opts },
@@ -613,7 +605,26 @@ M.config = function()
         opts = opts,
       },
       -- LazyGit
-      { "<leader>lg", ":LazyGit<CR>", description = "LazyGit" },
+      {
+        "<leader>lg",
+        function()
+          local Terminal = require("toggleterm.terminal").Terminal
+          local lazygit = Terminal:new({
+            cmd = "lazygit",
+            direction = "float",
+            float_opts = {
+              border = "rounded",
+            },
+            on_open = function(term)
+              local keymap = vim.api.nvim_buf_set_keymap
+              keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+              keymap(term.bufnr, "t", "<esc>", "<cmd>close<CR>", { noremap = true, silent = true })
+            end,
+          })
+          lazygit:toggle()
+        end,
+        description = "LazyGit",
+      },
       -- JUKIT
       -- Splits
       {

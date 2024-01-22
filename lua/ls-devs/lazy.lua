@@ -231,11 +231,6 @@ require("lazy").setup({
     cmd = "Telescope",
     config = require("ls-devs.plugins.telescope"),
     dependencies = {
-      {
-        "kdheepak/lazygit.nvim",
-        keys = require("ls-devs.plugins.lazygit").keys,
-      },
-
       { "nvim-lua/plenary.nvim" },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -539,8 +534,8 @@ require("lazy").setup({
     dependencies = {
       {
         "akinsho/toggleterm.nvim",
-        cmd = "ToggleTerm",
         config = require("ls-devs.plugins.toggleterm").config,
+        keys = require("ls-devs.plugins.toggleterm").keys,
       },
     },
     config = require("ls-devs.plugins.overseer").config,
@@ -629,12 +624,6 @@ require("lazy").setup({
     cond = function()
       return vim.fn.isdirectory(".git") == 1
     end,
-  },
-  -- LazyGit
-  {
-    "kdheepak/lazygit.nvim",
-    cmd = "LazyGit",
-    keys = require("ls-devs.plugins.lazygit").keys,
   },
   -- Ufo
   {
