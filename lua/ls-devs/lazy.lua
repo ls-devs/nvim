@@ -527,10 +527,8 @@ require("lazy").setup({
   -- Overseer
   {
     "stevearc/overseer.nvim",
-    cmd = {
-      "OverseerRun",
-      "OverseerToggle",
-    },
+    config = require("ls-devs.plugins.overseer").config,
+    keys = require("ls-devs.plugins.overseer").keys,
     dependencies = {
       {
         "akinsho/toggleterm.nvim",
@@ -538,7 +536,6 @@ require("lazy").setup({
         keys = require("ls-devs.plugins.toggleterm").keys,
       },
     },
-    config = require("ls-devs.plugins.overseer").config,
   },
   -- Crates.io
   {

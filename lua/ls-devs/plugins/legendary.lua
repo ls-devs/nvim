@@ -326,19 +326,6 @@ M.config = function()
           end
         end,
       },
-      -- Overseer
-      {
-        "<leader>or",
-        "<cmd>OverseerRun<CR>",
-        description = "Overseer Run",
-        opts = opts,
-      },
-      {
-        "<leader>ot",
-        "<cmd>OverseerToggle<CR>",
-        description = "Overseer Toggle",
-        opts = opts,
-      },
       -- Live Server
       { "<leader>ss", "<cmd>LiveServerStart<CR>", description = "Start Live Server", opts = opts },
       { "<leader>sk", "<cmd>LiveServerStop<CR>",  description = "Stop Live Server",  opts = opts },
