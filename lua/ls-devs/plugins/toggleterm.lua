@@ -53,7 +53,7 @@ end
 
 M.keys = {
   {
-    "<leader>t",
+    "<leader>z",
     "<cmd>ToggleTerm<CR>",
     desc = "ToggleTerm",
   },
