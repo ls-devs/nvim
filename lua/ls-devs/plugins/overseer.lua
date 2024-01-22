@@ -51,4 +51,23 @@ M.config = function()
   })
 end
 
+-- Fix Overseer with Windows
+local isOpen = false
+function OverseerToggle()
+  if not isOpen then
+    vim.cmd(":OverseerToggle")
+    vim.cmd(":WindowsDisableAutowidth")
+    isOpen = true
+  else
+    vim.cmd(":OverseerToggle")
+    vim.cmd(":WindowsEnableAutowidth")
+    isOpen = false
+  end
+end
+
+M.keys = {
+  { "<leader>or", "<cmd>OverseerRun<CR>",          desc = "Overseer Run" },
+  { "<leader>ot", "<cmd>lua OverseerToggle()<CR>", desc = "Overseer Toggle" },
+}
+
 return M
