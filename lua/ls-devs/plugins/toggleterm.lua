@@ -32,8 +32,9 @@ M.config = function()
     float_opts = {
       border = "rounded",
       winblend = 0,
-      width = 95,
+      width = 100,
       height = 25,
+      title_pos = "left",
     },
   })
 
@@ -51,7 +52,11 @@ M.config = function()
 end
 
 M.keys = {
-  { "<C-y>", ":ToggleTerm<CR>", desc = "ToggleTerm" },
+  {
+    "<leader>t",
+    "<cmd>ToggleTerm<CR>",
+    desc = "ToggleTerm",
+  },
 }
 
 return M

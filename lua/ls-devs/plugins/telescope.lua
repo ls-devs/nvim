@@ -70,5 +70,4 @@ return function()
   telescope.load_extension("emoji")
   telescope.load_extension("noice")
   telescope.load_extension("luasnip")
-  telescope.load_extension("lazygit")
 end

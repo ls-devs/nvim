@@ -7,7 +7,16 @@ M.config = function()
   require("windows").setup({
     ignore = { --			  |windows.ignore|
       buftype = { "quickfix" },
-      filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "Diffview", "DiffviewFiles" },
+      filetype = {
+        "NvimTree",
+        "neo-tree",
+        "undotree",
+        "gundo",
+        "Diffview",
+        "DiffviewFiles",
+        "terminal",
+        "toggleterm",
+      },
     },
   })
 end
