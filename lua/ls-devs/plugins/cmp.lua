@@ -132,6 +132,9 @@ M.config = function()
       {
         name = "rg",
         keyword_length = 3,
+        options = {
+          additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/.ignore.rg",
+        },
       },
       { name = "crates" },
       { name = "dotenv" },

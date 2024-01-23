@@ -1,3 +1,4 @@
 /plugin
 lazy-lock.json
 *.luarc.json
+.ignore.rg
