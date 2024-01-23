@@ -1,28 +1,6 @@
 local M = {}
 
 M.config = function()
-  local function getTelescopeOpts(state, path)
-    return {
-      cwd = path,
-      search_dirs = { path },
-      attach_mappings = function(prompt_bufnr, map)
-        local actions = require("telescope.actions")
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local action_state = require("telescope.actions.state")
-          local selection = action_state.get_selected_entry()
-          local filename = selection.filename
-          if filename == nil then
-            filename = selection[1]
-          end
-
-          require("neo-tree.sources.filesystem").navigate(state, state.path, filename)
-        end)
-        return true
-      end,
-    }
-  end
-
   require("neo-tree").setup({
     close_if_last_window = true,
     popup_border_style = "rounded",
@@ -43,7 +21,6 @@ M.config = function()
         indent_marker = "│",
         last_indent_marker = "└",
         highlight = "NeoTreeIndentMarker",
-
         with_expanders = nil,
         expander_collapsed = "",
         expander_expanded = "",
@@ -52,7 +29,7 @@ M.config = function()
       icon = {
         folder_closed = "",
         folder_open = "",
-        folder_empty = "󰜌",
+        folder_empty = "",
 
         default = "*",
         highlight = "NeoTreeFileIcon",
@@ -68,12 +45,10 @@ M.config = function()
       },
       git_status = {
         symbols = {
-
-          added = "",
-          modified = "",
-          deleted = "✖",
+          added = "",
+          modified = "",
+          deleted = "󰛌",
           renamed = "󰁕",
-
           untracked = "",
           ignored = "",
           unstaged = "󰄱",
@@ -81,7 +56,6 @@ M.config = function()
           conflict = "",
         },
       },
-
       file_size = {
         enabled = true,
         required_width = 64,
@@ -103,86 +77,6 @@ M.config = function()
       },
     },
     commands = {
-      create_and_focus = function(state)
-        local fs = require("neo-tree.sources.filesystem")
-        local fs_actions = require("neo-tree.sources.filesystem.lib.fs_actions")
-        local commands = require("neo-tree.sources.common.commands")
-
-        local function get_folder_node(nodeState)
-          local tree = nodeState.tree
-          local node = tree:get_node()
-          local last_id = node:get_id()
-
-          while node do
-            local insert_as_local = nodeState.config.insert_as
-            local insert_as_global = require("neo-tree").config.window.insert_as
-            local use_parent
-            if insert_as_local then
-              use_parent = insert_as_local == "sibling"
-            else
-              use_parent = insert_as_global == "sibling"
-            end
-
-            local is_open_dir = node.type == "directory" and (node:is_expanded() or node.empty_expanded)
-            if use_parent and not is_open_dir then
-              return tree:get_node(node:get_parent_id())
-            end
-
-            if node.type == "directory" then
-              return node
-            end
-
-            local parent_id = node:get_parent_id()
-            if not parent_id or parent_id == last_id then
-              return node
-            else
-              last_id = parent_id
-              node = tree:get_node(parent_id)
-            end
-          end
-        end
-
-        local function get_using_root_directory(rootState)
-          local using_root_directory = get_folder_node(rootState):get_id()
-          local show_path = rootState.config.show_path
-          if show_path == "absolute" then
-            using_root_directory = ""
-          elseif show_path == "relative" then
-            using_root_directory = rootState.path
-          end
-          return using_root_directory
-        end
-
-        local function add(addState, callback)
-          local node = get_folder_node(addState)
-          local in_directory = node:get_id()
-          local using_root_directory = get_using_root_directory(addState)
-          fs_actions.create_node(in_directory, callback, using_root_directory)
-        end
-
-        add(state, function(destination)
-          fs.show_new_children(state, destination)
-          vim.cmd.edit(destination)
-        end)
-      end,
-      system_open = function(state)
-        local node = state.tree:get_node()
-        local path = node:get_id()
-
-        vim.api.nvim_command("silent !open -g " .. path)
-
-        vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
-      end,
-      telescope_find = function(state)
-        local node = state.tree:get_node()
-        local path = node:get_id()
-        require("telescope.builtin").find_files(getTelescopeOpts(state, path))
-      end,
-      telescope_grep = function(state)
-        local node = state.tree:get_node()
-        local path = node:get_id()
-        require("telescope.builtin").live_grep(getTelescopeOpts(state, path))
-      end,
       open_and_clear_filter = function(state)
         local node = state.tree:get_node()
         if node and node.type == "file" then
@@ -224,7 +118,6 @@ M.config = function()
         end
       end,
     },
-
     window = {
       position = "float",
       width = 40,
@@ -253,7 +146,7 @@ M.config = function()
         ["o"] = "open_and_clear_filter",
         ["D"] = "diff_files",
         ["a"] = {
-          "create_and_focus",
+          "add",
           config = {
             show_path = "relative",
           },
@@ -309,14 +202,11 @@ M.config = function()
       },
       follow_current_file = {
         enabled = true,
-
         leave_dirs_open = false,
       },
       group_empty_dirs = false,
       hijack_netrw_behavior = "open_default",
-
       use_libuv_file_watcher = true,
-
       window = {
         mappings = {
           ["<bs>"] = "navigate_up",
@@ -355,24 +245,6 @@ M.config = function()
       },
 
       commands = {
-        system_open = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-
-          vim.api.nvim_command("silent !open -g " .. path)
-
-          vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
-        end,
-        telescope_find = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-          require("telescope.builtin").find_files(getTelescopeOpts(state, path))
-        end,
-        telescope_grep = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-          require("telescope.builtin").live_grep(getTelescopeOpts(state, path))
-        end,
         open_and_clear_filter = function(state)
           local node = state.tree:get_node()
           if node and node.type == "file" then
@@ -416,12 +288,6 @@ M.config = function()
       },
     },
     event_handlers = {
-      {
-        event = "file_added",
-        handler = function(path)
-          local fs = require("neo-tree.sources.filesystem")
-        end,
-      },
       {
         event = "neo_tree_window_after_open",
         handler = function(args)
