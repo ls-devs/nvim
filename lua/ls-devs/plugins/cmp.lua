@@ -15,7 +15,6 @@ M.config = function()
   end
 
   cmp.setup({
-    preselect = cmp.PreselectMode.None,
     sorting = {
       comparators = {
         cmp.config.compare.offset,
