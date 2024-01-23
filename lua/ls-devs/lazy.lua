@@ -26,6 +26,23 @@ require("lazy").setup({
     branch = "v3.x",
     config = require("ls-devs.plugins.lsp-zero").config,
     dependencies = {
+      -- LSP
+      {
+        "neovim/nvim-lspconfig",
+        event = "BufReadPost",
+        dependencies = {
+          -- LSP Enhancement
+          {
+            "glepnir/lspsaga.nvim",
+            event = "LspAttach",
+            config = require("ls-devs.plugins.lsp_saga").config,
+            dependencies = {
+              { "nvim-tree/nvim-web-devicons" },
+              { "nvim-treesitter/nvim-treesitter" },
+            },
+          },
+        },
+      },
       -- Mason & Managers
       {
         "williamboman/mason-lspconfig.nvim",
@@ -51,30 +68,6 @@ require("lazy").setup({
             "williamboman/mason.nvim",
             event = "VeryLazy",
             config = require("ls-devs.plugins.mason").config,
-          },
-        },
-      },
-      -- LSP Idle Timeout
-      {
-        "hinell/lsp-timeout.nvim",
-        event = "BufReadPost",
-        config = require("ls-devs.plugins.lsp-timeout").config,
-        dependencies = {
-          {
-            "neovim/nvim-lspconfig",
-            event = "BufReadPost",
-            dependencies = {
-              -- LSP Enhancement
-              {
-                "glepnir/lspsaga.nvim",
-                event = "LspAttach",
-                config = require("ls-devs.plugins.lsp_saga").config,
-                dependencies = {
-                  { "nvim-tree/nvim-web-devicons" },
-                  { "nvim-treesitter/nvim-treesitter" },
-                },
-              },
-            },
           },
         },
       },

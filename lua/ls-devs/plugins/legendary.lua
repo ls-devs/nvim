@@ -310,12 +310,14 @@ M.config = function()
         function()
           require("ufo").openAllFolds()
         end,
+        description = "UFO Open All Folds",
       },
       {
         "zM",
         function()
           require("ufo").closeAllFolds()
         end,
+        description = "UFO Close All Folds",
       },
       {
         "<leader>p",
@@ -325,6 +327,7 @@ M.config = function()
             vim.lsp.buf.hover()
           end
         end,
+        description = "UFO Peek Under Cursor",
       },
       -- Live Server
       { "<leader>ss", "<cmd>LiveServerStart<CR>", description = "Start Live Server", opts = opts },
