@@ -1,6 +1,7 @@
 local M = {}
 
 M.config = function()
+---@diagnostic disable-next-line: different-requires
   local lsp_zero = require("lsp-zero")
   require("mason-lspconfig").setup({
     ensure_installed = {

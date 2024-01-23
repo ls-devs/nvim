@@ -18,10 +18,11 @@ M.config = function()
     enabled = function()
       local context = require("cmp.config.context")
       local disabled = false
-      disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
+      disabled = disabled or (vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt")
       disabled = disabled or (vim.fn.reg_recording() ~= "")
       disabled = disabled or (vim.fn.reg_executing() ~= "")
-      disabled = disabled or context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
+      disabled = disabled or context.in_treesitter_capture("comment")
+      disabled = disabled or context.in_syntax_group("Comment")
       if vim.api.nvim_get_mode().mode == "c" then
         return true
       else

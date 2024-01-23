@@ -1,3 +1,4 @@
+---@diagnostic disable: different-requires
 local M = {}
 local opts = { noremap = true, silent = true }
 
