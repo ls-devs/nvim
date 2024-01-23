@@ -7,6 +7,7 @@ M.config = function()
   )
   local dashboard = require("alpha.themes.dashboard")
   local version = vim.version()
+---@diagnostic disable-next-line: different-requires
   local lazy = require("lazy")
 
   local logo = [[

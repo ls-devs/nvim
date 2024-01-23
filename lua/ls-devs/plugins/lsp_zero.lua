@@ -20,10 +20,15 @@ M.config = function()
     },
   })
 
+  ---@diagnostic disable-next-line: unused-local
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
   end)
 
+  local lua_opts = lsp_zero.nvim_lua_ls()
+  require("lspconfig").lua_ls.setup(lua_opts)
+
+  ---@diagnostic disable-next-line: different-requires
   local get_servers = require("mason-lspconfig").get_installed_servers
   for _, server in pairs(get_servers()) do
     local has_config, config = pcall(require, "ls-devs.lsp.settings." .. server)
@@ -32,20 +37,21 @@ M.config = function()
     end
   end
 
-  vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
-    config = config or {}
-    config.focus_id = ctx.method
-    if not (result and result.contents) then
-      return
-    end
-    config.border = "rounded"
-    local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-    markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-    if vim.tbl_isempty(markdown_lines) then
-      return
-    end
-    return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
-  end
+  -- TODO: Check if usefull
+  -- vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
+  --   config = config or {}
+  --   config.focus_id = ctx.method
+  --   if not (result and result.contents) then
+  --     return
+  --   end
+  --   config.border = "rounded"
+  --   local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+  --   markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+  --   if vim.tbl_isempty(markdown_lines) then
+  --     return
+  --   end
+  --   return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
+  -- end
 end
 
 return M

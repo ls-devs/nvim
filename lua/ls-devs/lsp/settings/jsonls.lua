@@ -1,5 +1,4 @@
 local schemastore = require("schemastore")
-
 return {
   settings = {
     json = {

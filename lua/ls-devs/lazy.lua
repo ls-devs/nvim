@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+---@diagnostic disable-next-line: undefined-field
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -24,7 +25,7 @@ require("lazy").setup({
     "VonHeikemen/lsp-zero.nvim",
     event = "BufReadPost",
     branch = "v3.x",
-    config = require("ls-devs.plugins.lsp-zero").config,
+    config = require("ls-devs.plugins.lsp_zero").config,
     dependencies = {
       -- LSP
       {
@@ -46,23 +47,23 @@ require("lazy").setup({
       -- Mason & Managers
       {
         "williamboman/mason-lspconfig.nvim",
-        config = require("ls-devs.plugins.mason-lspconfig").config,
+        config = require("ls-devs.plugins.mason_lspconfig").config,
         event = "VeryLazy",
         dependencies = {
           {
             -- Formatter
             "nvimtools/none-ls.nvim",
             event = "BufReadPost",
-            config = require("ls-devs.plugins.null-ls").config,
+            config = require("ls-devs.plugins.none_ls").config,
             dependencies = {
               "jay-babu/mason-null-ls.nvim",
-              config = require("ls-devs.plugins.mason-null-ls").config,
+              config = require("ls-devs.plugins.mason_null_ls").config,
             },
           },
           {
             "jay-babu/mason-nvim-dap.nvim",
             event = "VeryLazy",
-            config = require("ls-devs.plugins.mason-nvim-dap").config,
+            config = require("ls-devs.plugins.mason_nvim_dap").config,
           },
           {
             "williamboman/mason.nvim",
@@ -83,7 +84,7 @@ require("lazy").setup({
   {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
-    config = require("ls-devs.plugins.cmp").config,
+    config = require("ls-devs.plugins.nvim_cmp").config,
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
@@ -91,18 +92,18 @@ require("lazy").setup({
       { "pontusk/cmp-sass-variables" },
       {
         "jcha0713/cmp-tw2css",
-        config = require("ls-devs.plugins.cmp-tw2css").config,
+        config = require("ls-devs.plugins.cmp_tw2css").config,
       },
       {
         "David-Kunz/cmp-npm",
         dependencies = { "nvim-lua/plenary.nvim" },
         ft = "json",
-        config = require("ls-devs.plugins.cmp-npm").config,
+        config = require("ls-devs.plugins.cmp_npm").config,
       },
       {
         "tamago324/cmp-zsh",
         dependencies = { "Shougo/deol.nvim" },
-        config = require("ls-devs.plugins.cmp-zsh").config,
+        config = require("ls-devs.plugins.cmp_zsh").config,
       },
       { "lukas-reineke/cmp-rg" },
       { "hrsh7th/cmp-emoji" },
@@ -129,7 +130,7 @@ require("lazy").setup({
         config = require("ls-devs.plugins.copilot").config,
       },
     },
-    config = require("ls-devs.plugins.copilot-cmp").config,
+    config = require("ls-devs.plugins.copilot_cmp").config,
   },
   -- Mapping
   {
@@ -154,8 +155,8 @@ require("lazy").setup({
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = { "Neotree", "Neotree float" },
-    keys = require("ls-devs.plugins.neo-tree").keys,
-    config = require("ls-devs.plugins.neo-tree").config,
+    keys = require("ls-devs.plugins.neo_tree").keys,
+    config = require("ls-devs.plugins.neo_tree").config,
     branch = "v3.x",
     dependencies = {
       "3rd/image.nvim",
@@ -164,7 +165,7 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
       {
         "s1n7ax/nvim-window-picker",
-        config = require("ls-devs.plugins.window-picker").config,
+        config = require("ls-devs.plugins.window_picker").config,
       },
     },
   },
@@ -292,7 +293,7 @@ require("lazy").setup({
   {
     "simrat39/rust-tools.nvim",
     event = { "BufReadPost *.rs" },
-    config = require("ls-devs.plugins.rust-tools").config,
+    config = require("ls-devs.plugins.rust_tools").config,
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
   -- Clangd tools
@@ -362,7 +363,7 @@ require("lazy").setup({
   {
     "folke/todo-comments.nvim",
     event = "BufReadPre",
-    config = require("ls-devs.plugins.todo-comments").config,
+    config = require("ls-devs.plugins.todo_comments").config,
     dependencies = "nvim-lua/plenary.nvim",
   },
   -- Noice
@@ -406,7 +407,7 @@ require("lazy").setup({
       },
       {
         "ggandor/leap-spooky.nvim",
-        config = require("ls-devs.plugins.leap-spooky").config,
+        config = require("ls-devs.plugins.leap_spooky").config,
       },
     },
   },
@@ -421,8 +422,8 @@ require("lazy").setup({
   {
     "rest-nvim/rest.nvim",
     ft = "http",
-    keys = require("ls-devs.plugins.rest-nvim").keys,
-    config = require("ls-devs.plugins.rest-nvim").config,
+    keys = require("ls-devs.plugins.rest_nvim").keys,
+    config = require("ls-devs.plugins.rest_nvim").config,
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   -- Auto close pairs
@@ -489,7 +490,7 @@ require("lazy").setup({
       { "mfussenegger/nvim-dap" },
       {
         "theHamsta/nvim-dap-virtual-text",
-        config = require("ls-devs.plugins.nvim-dap-virtual-text").config,
+        config = require("ls-devs.plugins.nvim_dap_virtual_text").config,
       },
     },
   },
@@ -638,7 +639,7 @@ require("lazy").setup({
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
-    config = require("ls-devs.plugins.typescript-tools").config,
+    config = require("ls-devs.plugins.typescript_tools").config,
   },
   -- WinShift
   {
@@ -649,7 +650,7 @@ require("lazy").setup({
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
-    config = require("ls-devs.plugins.live-server").config,
+    config = require("ls-devs.plugins.live_server").config,
     cmd = "LiveServerStart",
     build = "pnpm i -g live-server",
   },
@@ -716,9 +717,6 @@ require("lazy").setup({
   checker = {
     enabled = true,
     notify = true,
-  },
-  readme = {
-    enabled = true,
   },
   readme = {
     enabled = true,
