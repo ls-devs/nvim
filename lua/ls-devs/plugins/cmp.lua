@@ -15,6 +15,7 @@ M.config = function()
   end
 
   cmp.setup({
+    preselect = cmp.PreselectMode.None,
     sorting = {
       comparators = {
         cmp.config.compare.offset,
@@ -116,19 +117,13 @@ M.config = function()
       }),
     },
     sources = {
-      { name = "copilot" },
       { name = "nvim_lsp" },
-      { name = "cmp-tw2css" },
       { name = "luasnip" },
       { name = "buffer" },
-      {
-        name = "npm",
-        keyword_length = 4,
-      },
-      { name = "async_path" },
       { name = "sass-variables" },
+      { name = "async_path" },
+      { name = "dotenv" },
       { name = "emoji" },
-      { name = "zsh" },
       {
         name = "rg",
         keyword_length = 3,
@@ -136,8 +131,14 @@ M.config = function()
           additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/.ignore.rg",
         },
       },
+      { name = "copilot" },
+      { name = "cmp-tw2css" },
+      {
+        name = "npm",
+        keyword_length = 4,
+      },
       { name = "crates" },
-      { name = "dotenv" },
+      { name = "zsh" },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
