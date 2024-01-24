@@ -584,7 +584,7 @@ require("lazy").setup({
   -- WinSep
   {
     "nvim-zh/colorful-winsep.nvim",
-    config = require("ls-devs.plugins.winsep").config,
+    config = require("ls-devs.plugins.colorful_winsep").config,
     event = { "WinNew" },
   },
   -- Hbac
