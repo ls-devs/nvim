@@ -840,7 +840,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "q",
+        "Q",
         function()
           require("NeoComposer.macro").toggle_record()
         end,
