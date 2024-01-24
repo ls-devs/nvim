@@ -908,6 +908,39 @@ M.config = function()
         description = "Equalize Window",
         opts = opts,
       },
+      -- WinShift
+      {
+        "<leader>mh",
+        function()
+          vim.cmd(":WinShift left")
+          vim.cmd(":WindowsEqualize")
+        end,
+        description = "Move Window Left",
+      },
+      {
+        "<leader>ml",
+        function()
+          vim.cmd(":WinShift right")
+          vim.cmd(":WindowsEqualize")
+        end,
+        description = "Move Window Right",
+      },
+      {
+        "<leader>mk",
+        function()
+          vim.cmd(":WinShift up")
+          vim.cmd(":WindowsEqualize")
+        end,
+        description = "Move Window Up",
+      },
+      {
+        "<leader>mj",
+        function()
+          vim.cmd(":WinShift down")
+          vim.cmd(":WindowsEqualize")
+        end,
+        description = "Move Window Down",
+      },
     },
     extensions = {
       lazy_nvim = { auto_register = true },
