@@ -151,9 +151,9 @@ M.config = function()
     "filename",
     fmt = function(str)
       if vim.bo.filetype ~= "toggleterm" then
-        if string.len(str) > 35 then
+        if string.len(str) > 30 then
           local fileExt = string.match(str, "[^.]+$")
-          return string.sub(str, 0, 35 - string.len(fileExt)) .. "..." .. fileExt
+          return string.sub(str, 0, 27 - string.len(fileExt)) .. "..." .. fileExt
         else
           return str
         end
@@ -174,7 +174,6 @@ M.config = function()
     function()
       local cur_buf = vim.api.nvim_get_current_buf()
       return require("hbac.state").is_pinned(cur_buf) and "" or ""
-      -- tip: nerd fonts have pinned/unpinned icons!
     end,
     color = { fg = "#ef5f6b", gui = "bold" },
   })
@@ -217,8 +216,8 @@ M.config = function()
 
   ins_right({
     fmt = function(str)
-      if string.len(str) >= 30 then
-        return string.sub(str, 0, 27) .. "..."
+      if string.len(str) >= 20 then
+        return string.sub(str, 0, 17) .. "..."
       else
         return str
       end
@@ -239,8 +238,6 @@ M.config = function()
     cond = conditions.hide_in_width,
   })
 
-  lualine.setup(config)
-  lualine.setup(config)
   lualine.setup(config)
 end
 
