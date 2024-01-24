@@ -1,6 +1,8 @@
 local M = {}
 
 M.config = function()
+  -- Disable "q" for macro
+  vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
   local colors = require("tokyonight.colors").setup()
   require("NeoComposer").setup({
     notify = false,
@@ -18,6 +20,15 @@ M.config = function()
       winhl = {
         Normal = "Normal",
       },
+    },
+    keymaps = {
+      play_macro = "@",
+      yank_macro = "yq",
+      stop_macro = "cq",
+      toggle_record = "<A-q>",
+      cycle_next = "<leader>qn",
+      cycle_prev = "<leader>qp",
+      toggle_macro_menu = "<leader>q",
     },
   })
 end

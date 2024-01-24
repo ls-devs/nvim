@@ -824,7 +824,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "yq",
+        "<leader>yq",
         function()
           require("NeoComposer.macro").yank_macro()
         end,
@@ -832,7 +832,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "sq",
+        "<leader>sq",
         function()
           require("NeoComposer.macro").stop_macro()
         end,
@@ -840,7 +840,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "Q",
+        "<A-q>",
         function()
           require("NeoComposer.macro").toggle_record()
         end,
@@ -848,7 +848,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<c-n>",
+        "<leader>qn",
         function()
           require("NeoComposer.ui").cycle_next()
         end,
@@ -856,7 +856,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<c-p>",
+        "<leader>qp",
         function()
           require("NeoComposer.ui").cycle_prev()
         end,
@@ -864,7 +864,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<A-q>",
+        "<leader>q",
         function()
           require("NeoComposer.ui").toggle_macro_menu()
         end,
