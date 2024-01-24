@@ -237,7 +237,7 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>tc",
+        "<leader>gc",
         "<cmd>lua require('telescope.builtin').git_commits()<CR>",
         description = "Telescope Git Commits",
         opts = opts,
@@ -940,6 +940,49 @@ M.config = function()
           vim.cmd(":WindowsEqualize")
         end,
         description = "Move Window Down",
+      },
+      -- Tabby
+      {
+        "<leader>ta",
+        ":$tabnew<CR>",
+        description = "New Tab",
+        opts = opts,
+      },
+      {
+        "<leader>tc",
+        ":tabclose<CR>",
+        description = "Close Tab",
+        opts = opts,
+      },
+      {
+        "<leader>to",
+        ":tabonly<CR>",
+        description = "Tab Only",
+        opts = opts,
+      },
+      {
+        "<leader>tn",
+        ":tabn<CR>",
+        description = "Tab Next",
+        opts = opts,
+      },
+      {
+        "<leader>tp",
+        ":tabp<CR>",
+        description = "Tab Previous",
+        opts = opts,
+      },
+      {
+        "<leader>tmp",
+        ":-tabmove<CR>",
+        description = "Tab Move Previous",
+        opts = opts,
+      },
+      {
+        "<leader>tmn",
+        ":+tabmove<CR>",
+        description = "Tab Move Next",
+        opts = opts,
       },
     },
     extensions = {

@@ -169,6 +169,16 @@ require("lazy").setup({
       },
     },
   },
+  -- Tabby
+  {
+    "nanozuki/tabby.nvim",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    event = "BufReadPost",
+    config = require("ls-devs.plugins.tabby").config,
+    cond = function()
+      return vim.bo.filetype ~= "alpha"
+    end,
+  },
   -- Status lines
   {
     "nvim-lualine/lualine.nvim",

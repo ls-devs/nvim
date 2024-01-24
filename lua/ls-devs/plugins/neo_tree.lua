@@ -304,9 +304,7 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>e",  "<cmd>Neotree float reveal<CR>", desc = "NeoTreeFloatToggle reveal" },
-  { "<leader>to", "<cmd>Neotree show<CR>",         desc = "NeoTreeShow" },
-  { "<leader>tc", "<cmd>Neotree close<CR>",        desc = "NeoTreeClose" },
+  { "<leader>e", "<cmd>Neotree float reveal<CR>", desc = "NeoTreeFloatToggle reveal" },
 }
 
 return M
