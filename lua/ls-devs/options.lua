@@ -6,8 +6,8 @@ local keymap = vim.api.nvim_set_keymap
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-keymap("", "<Space>", "<Nop>", opts)
 
+keymap("", "<Space>", "<Nop>", opts)
 local options = {
   background = "dark",
   backup = false,
