@@ -943,7 +943,7 @@ M.config = function()
       },
       -- Tabby
       {
-        "<leader>ta",
+        "<leader>tn",
         ":$tabnew<CR>",
         description = "New Tab",
         opts = opts,
@@ -961,13 +961,13 @@ M.config = function()
         opts = opts,
       },
       {
-        "<leader>tn",
+        "<A-f>",
         ":tabn<CR>",
         description = "Tab Next",
         opts = opts,
       },
       {
-        "<leader>tp",
+        "<A-b>",
         ":tabp<CR>",
         description = "Tab Previous",
         opts = opts,
