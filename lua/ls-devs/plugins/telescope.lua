@@ -18,6 +18,7 @@ return function()
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<A-a>"] = actions.toggle_all,
+          ["<C-s>"] = actions.select_vertical,
         },
         n = {
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -25,6 +26,7 @@ return function()
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
           ["<A-a>"] = actions.toggle_all,
+          ["<C-s>"] = actions.select_vertical,
         },
       },
     },

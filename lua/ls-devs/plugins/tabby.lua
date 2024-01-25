@@ -22,18 +22,17 @@ M.config = function()
   require("tabby.tabline").set(function(line)
     return {
       {
-        { "  ", hl = { fg = colors.green, bg = vim.g["terminal_color_0"], style = "bold" } },
-        line.sep("", theme.fill, theme.fill),
+        { "  ", hl = { fg = colors.green, bg = colors.none, style = "bold" } },
+        line.sep(" ", { bg = colors.none }, { bg = colors.none }),
       },
       line.tabs().foreach(function(tab)
         local hl = tab.is_current() and theme.current_tab or theme.tab
         return {
-          line.sep("", hl, theme.fill),
+          line.sep("", hl, { bg = colors.none }),
           tab.is_current() and "" or "󰆣",
-          tab.number(),
           fName(tab.name()),
           tab.close_btn(""),
-          line.sep("", hl, theme.fill),
+          line.sep("", hl, { bg = colors.none }),
           hl = hl,
           margin = " ",
         }
@@ -41,20 +40,19 @@ M.config = function()
       line.spacer(),
       line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
         return {
-          line.sep("", theme.win, theme.fill),
-          win.is_current() and "" or "",
-          line.sep("", theme.win, theme.fill),
+          line.sep("", theme.win, { bg = colors.none }),
+          win.is_current() and "  " or "  ",
+          line.sep("", theme.win, { bg = colors.none }),
           hl = theme.win,
           margin = " ",
         }
       end),
       {
-        line.sep("", theme.tail, theme.fill),
-        { "  ", hl = theme.tail },
+        line.sep("", theme.tail, { bg = colors.none }),
+        { "  ", hl = { bg = colors.bg_dark, fg = colors.green } },
       },
-      hl = theme.fill,
+      hl = { bg = colors.none },
     }
   end)
 end
-
 return M
