@@ -170,7 +170,6 @@ M.config = function()
   cmp.setup.filetype("gitcommit", {
     sources = cmp.config.sources({
       { name = "cmp_git" },
-    }, {
       { name = "buffer" },
     }),
   })
@@ -186,7 +185,6 @@ M.config = function()
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = "path" },
-    }, {
       { name = "cmdline" },
     }),
   })

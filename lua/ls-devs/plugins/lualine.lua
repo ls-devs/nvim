@@ -147,24 +147,6 @@ M.config = function()
     cond = require("lazy.status").has_updates,
     color = { fg = colors.orange },
   })
-  ins_left({
-    "filename",
-    fmt = function(str)
-      if vim.bo.filetype ~= "toggleterm" then
-        if string.len(str) > 30 then
-          local fileExt = string.match(str, "[^.]+$")
-          return string.sub(str, 0, 27 - string.len(fileExt)) .. "..." .. fileExt
-        else
-          return str
-        end
-      else
-        local pID = string.gsub(str, "%d+:", "")
-        return string.gsub(pID, ";#toggleterm#%d+", "")
-      end
-    end,
-    cond = conditions.buffer_not_empty,
-    color = { fg = colors.magenta, gui = "bold" },
-  })
   ins_right({
     function()
       return require("NeoComposer.ui").status_recording()

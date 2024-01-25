@@ -25,9 +25,6 @@ M.config = function()
     lsp_zero.default_keymaps({ buffer = bufnr })
   end)
 
-  local lua_opts = lsp_zero.nvim_lua_ls()
-  require("lspconfig").lua_ls.setup(lua_opts)
-
   ---@diagnostic disable-next-line: different-requires
   local get_servers = require("mason-lspconfig").get_installed_servers
   for _, server in pairs(get_servers()) do
