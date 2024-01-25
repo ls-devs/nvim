@@ -237,6 +237,7 @@ require("lazy").setup({
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
+      { "jonarrien/telescope-cmdline.nvim" },
       {
         "benfowler/telescope-luasnip.nvim",
       },
