@@ -452,14 +452,14 @@ require("lazy").setup({
   -- Surround
   {
     "echasnovski/mini.surround",
-    keys = require("ls-devs.plugins.surround").keys,
-    config = require("ls-devs.plugins.surround").config,
+    keys = require("ls-devs.plugins.mini_surround").keys,
+    config = require("ls-devs.plugins.mini_surround").config,
   },
   -- Buffer Remove
   {
     "echasnovski/mini.bufremove",
-    keys = require("ls-devs.plugins.bufremove").keys,
-    config = require("ls-devs.plugins.bufremove").config,
+    keys = require("ls-devs.plugins.mini_bufremove").keys,
+    config = require("ls-devs.plugins.mini_bufremove").config,
   },
   -- Lock Buffers
   {
@@ -470,12 +470,12 @@ require("lazy").setup({
   -- Comments
   {
     "echasnovski/mini.comment",
-    keys = require("ls-devs.plugins.comment").keys,
-    config = require("ls-devs.plugins.comment").config,
+    keys = require("ls-devs.plugins.mini_comment").keys,
+    config = require("ls-devs.plugins.mini_comment").config,
     dependencies = {
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
-        event = "BufReadPre",
+        config = require("ls-devs.plugins.nvim_ts_context_comment_string").config,
       },
     },
   },
@@ -489,7 +489,7 @@ require("lazy").setup({
   {
     "echasnovski/mini.indentscope",
     event = "BufReadPost",
-    config = require("ls-devs.plugins.indentscope").config,
+    config = require("ls-devs.plugins.mini_indentscope").config,
   },
   -- DAP UI
   {

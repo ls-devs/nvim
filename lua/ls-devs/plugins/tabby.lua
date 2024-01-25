@@ -9,12 +9,21 @@ M.config = function()
     win = "TabLine",
     tail = "TabLine",
   }
+  local fName = function(str)
+    if string.len(str) > 25 then
+      local fileExt = string.match(str, "[^.]+$")
+      return string.sub(str, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+    else
+      return str
+    end
+  end
   require("tabby").setup({})
+  local colors = require("tokyonight.colors").setup()
   require("tabby.tabline").set(function(line)
     return {
       {
-        { "  ", hl = theme.head },
-        line.sep("", theme.head, theme.fill),
+        { "  ", hl = { fg = colors.green, bg = vim.g["terminal_color_0"], style = "bold" } },
+        line.sep("", theme.fill, theme.fill),
       },
       line.tabs().foreach(function(tab)
         local hl = tab.is_current() and theme.current_tab or theme.tab
@@ -22,7 +31,7 @@ M.config = function()
           line.sep("", hl, theme.fill),
           tab.is_current() and "" or "󰆣",
           tab.number(),
-          tab.name(),
+          fName(tab.name()),
           tab.close_btn(""),
           line.sep("", hl, theme.fill),
           hl = hl,
