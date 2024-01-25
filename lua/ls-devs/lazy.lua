@@ -175,9 +175,6 @@ require("lazy").setup({
     dependencies = "nvim-tree/nvim-web-devicons",
     event = "BufReadPost",
     config = require("ls-devs.plugins.tabby").config,
-    cond = function()
-      return vim.bo.filetype ~= "alpha"
-    end,
   },
   -- Status lines
   {
