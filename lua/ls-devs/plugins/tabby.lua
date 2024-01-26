@@ -9,12 +9,18 @@ M.config = function()
     win = "TabLine",
     tail = "TabLine",
   }
-  local fName = function(str)
-    if string.len(str) > 25 then
-      local fileExt = string.match(str, "[^.]+$")
-      return string.sub(str, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+  local getFileName = function()
+    local tail = vim.fn.expand("%:t")
+    if string.len(tail) > 25 then
+      local fileExt = string.match(tail, "[^.]+$")
+      return string.sub(tail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+    elseif tail == "" or tail == "neo-tree filesystem [1]" or tail == "Overseer task builder" then
+      return vim.bo.filetype
+    elseif string.find(tail, "toggleterm") then
+      local pID = string.gsub(tail, "%d+:", "")
+      return string.gsub(pID, ";#toggleterm#%d+", "")
     else
-      return str
+      return tail
     end
   end
   require("tabby").setup({})
@@ -30,7 +36,7 @@ M.config = function()
         return {
           line.sep("", hl, { bg = colors.none }),
           tab.is_current() and "" or "󰆣",
-          fName(tab.name()),
+          getFileName(),
           tab.close_btn(""),
           line.sep("", hl, { bg = colors.none }),
           hl = hl,
