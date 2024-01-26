@@ -12,4 +12,12 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "<leader>v",
+    "<cmd>Trouble<CR>",
+    desc = "Trouble",
+  },
+}
+
 return M

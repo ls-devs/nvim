@@ -215,4 +215,10 @@ M.config = function()
   })
 end
 
+M.keys = {
+  { "<leader>at", "<cmd>AerialToggle<CR>", desc = "Aerial Toggle" },
+  { "<leader>an", "<cmd>AerialNext<CR>",   desc = "Aerial Next" },
+  { "<leader>ap", "<cmd>AerialPrev<CR>",   desc = "Aerial Prev" },
+}
+
 return M

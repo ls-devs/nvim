@@ -21,4 +21,32 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "<leader>wm",
+    ":WindowsMaximize<CR>",
+    desc = "Maximize Windows",
+  },
+  {
+    "<leader>wv",
+    ":WindowsMaximizeVertically<CR>",
+    desc = "Maximize Windows Vertically",
+  },
+  {
+    "<leader>wh",
+    ":WindowsMaximizeHorizontally<CR>",
+    desc = "Maximize Windows Horizontally",
+  },
+  {
+    "<leader>wt",
+    ":WindowsToggleAutowidth<CR>",
+    desc = "Toggle Windows AutoWidth",
+  },
+  {
+    "<leader>we",
+    ":WindowsEqualize<CR>",
+    desc = "Equalize Window",
+  },
+}
+
 return M

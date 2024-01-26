@@ -124,6 +124,7 @@ require("lazy").setup({
   {
     "zbirenbaum/copilot-cmp",
     config = require("ls-devs.plugins.copilot_cmp").config,
+    keys = require("ls-devs.plugins.copilot").keys,
     cmd = "Copilot",
     dependencies = {
       {
@@ -174,6 +175,7 @@ require("lazy").setup({
     "nanozuki/tabby.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.tabby").config,
+    keys = require("ls-devs.plugins.tabby").keys,
     dependencies = "nvim-tree/nvim-web-devicons",
   },
   -- Status lines
@@ -199,6 +201,7 @@ require("lazy").setup({
     "anuvyklack/windows.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.windows").config,
+    keys = require("ls-devs.plugins.windows").keys,
     dependencies = {
       "anuvyklack/middleclass",
       "anuvyklack/animation.nvim",
@@ -229,7 +232,8 @@ require("lazy").setup({
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
-    config = require("ls-devs.plugins.telescope"),
+    config = require("ls-devs.plugins.telescope").config,
+    keys = require("ls-devs.plugins.telescope").keys,
     cmd = "Telescope",
     dependencies = {
       { "nvim-lua/plenary.nvim" },
@@ -273,19 +277,14 @@ require("lazy").setup({
     "ecthelionvi/NeoComposer.nvim",
     event = "BufReadPost",
     config = require("ls-devs.plugins.neocomposer").config,
+    keys = require("ls-devs.plugins.neocomposer").keys,
     dependencies = { "kkharji/sqlite.lua" },
   },
   -- Muren
   {
     "AckslD/muren.nvim",
     config = require("ls-devs.plugins.muren").config,
-    cmd = {
-      "MurenToggle",
-      "MurenOpen",
-      "MurenClose",
-      "MurenFresh",
-      "MurenUnique",
-    },
+    keys = require("ls-devs.plugins.muren").keys,
   },
   -- Data Viewer
   {
@@ -351,7 +350,7 @@ require("lazy").setup({
   {
     "axieax/urlview.nvim",
     config = require("ls-devs.plugins.urlview").config,
-    cmd = "UrlView",
+    keys = require("ls-devs.plugins.urlview").keys,
   },
   -- Fidget
   {
@@ -364,14 +363,15 @@ require("lazy").setup({
   {
     "folke/trouble.nvim",
     config = require("ls-devs.plugins.trouble").config,
-    cmd = "Trouble",
+    keys = require("ls-devs.plugins.trouble").keys,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   -- Todos
   {
     "folke/todo-comments.nvim",
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = require("ls-devs.plugins.todo_comments").config,
+    keys = require("ls-devs.plugins.todo_comments").keys,
     dependencies = "nvim-lua/plenary.nvim",
   },
   -- Noice
@@ -429,8 +429,8 @@ require("lazy").setup({
   -- Http client
   {
     "rest-nvim/rest.nvim",
-    keys = require("ls-devs.plugins.rest_nvim").keys,
     config = require("ls-devs.plugins.rest_nvim").config,
+    keys = require("ls-devs.plugins.rest_nvim").keys,
     ft = "http",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
@@ -557,33 +557,11 @@ require("lazy").setup({
     "luk400/vim-jukit",
     ft = { "python", "ipynb" },
   },
-  -- NeoAI
-  {
-    "Bryley/neoai.nvim",
-    config = require("ls-devs.plugins.neoai").config,
-    keys = require("ls-devs.plugins.neoai").keys,
-    cmd = {
-      "NeoAI",
-      "NeoAIOpen",
-      "NeoAIClose",
-      "NeoAIToggle",
-      "NeoAIContext",
-      "NeoAIContextOpen",
-      "NeoAIContextClose",
-      "NeoAIInject",
-      "NeoAIInjectCode",
-      "NeoAIInjectContext",
-      "NeoAIInjectContextCode",
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-  },
   -- Aerial
   {
     "stevearc/aerial.nvim",
     config = require("ls-devs.plugins.aerial").config,
-    cmd = "AerialToggle",
+    keys = require("ls-devs.plugins.aerial").keys,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -653,13 +631,13 @@ require("lazy").setup({
   {
     "sindrets/winshift.nvim",
     config = require("ls-devs.plugins.winshift").config,
-    cmd = { "WinShift" },
+    keys = require("ls-devs.plugins.winshift").keys,
   },
   -- Live Server
   {
     "barrett-ruth/live-server.nvim",
     config = require("ls-devs.plugins.live_server").config,
-    cmd = "LiveServerStart",
+    keys = require("ls-devs.plugins.live_server").keys,
     build = "pnpm i -g live-server",
   },
   -- Tabout
@@ -722,7 +700,7 @@ require("lazy").setup({
   ui = {
     border = "rounded",
     size = { width = 0.9, height = 0.9 },
-    wrap = false,
+    wrap = true,
     icons = {
       cmd = " ",
       config = "",

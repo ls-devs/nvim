@@ -58,4 +58,39 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "<leader>mh",
+    function()
+      vim.cmd(":WinShift left")
+      vim.cmd(":WindowsEqualize")
+    end,
+    desc = "Move Window Left",
+  },
+  {
+    "<leader>ml",
+    function()
+      vim.cmd(":WinShift right")
+      vim.cmd(":WindowsEqualize")
+    end,
+    desc = "Move Window Right",
+  },
+  {
+    "<leader>mk",
+    function()
+      vim.cmd(":WinShift up")
+      vim.cmd(":WindowsEqualize")
+    end,
+    desc = "Move Window Up",
+  },
+  {
+    "<leader>mj",
+    function()
+      vim.cmd(":WinShift down")
+      vim.cmd(":WindowsEqualize")
+    end,
+    desc = "Move Window Down",
+  },
+}
+
 return M

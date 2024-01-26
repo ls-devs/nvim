@@ -33,4 +33,56 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "@",
+    function()
+      require("NeoComposer.macro").play_macro()
+    end,
+    desc = "NeoComposer Play Macro",
+  },
+  {
+    "<leader>yq",
+    function()
+      require("NeoComposer.macro").yank_macro()
+    end,
+    desc = "NeoComposer Yank Macro",
+  },
+  {
+    "<leader>sq",
+    function()
+      require("NeoComposer.macro").stop_macro()
+    end,
+    desc = "NeoComposer Stop Macro",
+  },
+  {
+    "<A-q>",
+    function()
+      require("NeoComposer.macro").toggle_record()
+    end,
+    desc = "NeoComposer Record Macro",
+  },
+  {
+    "<leader>qn",
+    function()
+      require("NeoComposer.ui").cycle_next()
+    end,
+    desc = "NeoComposer Cycle Next",
+  },
+  {
+    "<leader>qp",
+    function()
+      require("NeoComposer.ui").cycle_prev()
+    end,
+    desc = "NeoComposer Cycle Prev",
+  },
+  {
+    "<leader>q",
+    function()
+      require("NeoComposer.ui").toggle_macro_menu()
+    end,
+    desc = "NeoComposer Toggle Menu",
+  },
+}
+
 return M

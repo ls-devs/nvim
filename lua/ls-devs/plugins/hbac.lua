@@ -35,4 +35,32 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "<leader>fh",
+    "<cmd>Hbac telescope<CR>",
+    desc = "Hbac Telescope",
+  },
+  {
+    "<leader>ht",
+    "<cmd>Hbac toggle_pin<CR>",
+    desc = "HBac Toggle Pin",
+  },
+  {
+    "<leader>hu",
+    "<cmd>Hbac unpin_all<CR>",
+    desc = "HBac Unpin All",
+  },
+  {
+    "<leader>hp",
+    "<cmd>Hbac pin_all<CR>",
+    desc = "HBac Pin All",
+  },
+  {
+    "<leader>hc",
+    "<cmd>Hbac close_unpinned<CR>",
+    desc = "HBac Close Unpinned",
+  },
+}
+
 return M
