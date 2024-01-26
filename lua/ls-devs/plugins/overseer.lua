@@ -49,11 +49,15 @@ local isOpen = false
 function OverseerToggle()
   if not isOpen then
     vim.cmd(":OverseerToggle")
-    vim.cmd(":WindowsDisableAutowidth")
+    if vim.fn.exists(":WindowsDisableAutowidth") > 0 then
+      vim.cmd(":WindowsDisableAutowidth")
+    end
     isOpen = true
   else
     vim.cmd(":OverseerToggle")
-    vim.cmd(":WindowsEnableAutowidth")
+    if vim.fn.exists(":WindowsEnableAutowidth") > 0 then
+      vim.cmd(":WindowsEnableAutowidth")
+    end
     isOpen = false
   end
 end
