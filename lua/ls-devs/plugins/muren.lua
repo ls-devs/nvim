@@ -62,4 +62,12 @@ M.config = function()
   })
 end
 
+M.keys = {
+  {
+    "<leader>mt",
+    ":MurenToggle<CR>",
+    desc = "Muren Toggle",
+  },
+}
+
 return M

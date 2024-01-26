@@ -30,9 +30,27 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>rh", "<Plug>RestNvim",        desc = "RestNvim" },
-  { "<leader>rl", "<Plug>RestNvimLast",    desc = "RestNvimLast" },
-  { "<leader>rp", "<Plug>RestNvimPreview", desc = "RestNvimPreview" },
+  {
+    "<leader>rh",
+    function()
+      require("rest-nvim").run()
+    end,
+    desc = "RestNvim",
+  },
+  {
+    "<leader>rl",
+    function()
+      require("rest-nvim").last()
+    end,
+    desc = "RestNvimLast",
+  },
+  {
+    "<leader>rp",
+    function()
+      require("rest-nvim").run(true)
+    end,
+    desc = "RestNvimPreview",
+  },
 }
 
 return M

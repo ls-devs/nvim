@@ -69,4 +69,43 @@ M.config = function()
     }
   end)
 end
+
+M.keys = {
+  {
+    "<leader>tn",
+    ":$tabnew<CR>",
+    desc = "New Tab",
+  },
+  {
+    "<leader>tc",
+    ":tabclose<CR>",
+    desc = "Close Tab",
+  },
+  {
+    "<leader>to",
+    ":tabonly<CR>",
+    desc = "Tab Only",
+  },
+  {
+    "<A-f>",
+    ":tabn<CR>",
+    desc = "Tab Next",
+  },
+  {
+    "<A-b>",
+    ":tabp<CR>",
+    desc = "Tab Previous",
+  },
+  {
+    "<leader>tmp",
+    ":-tabmove<CR>",
+    desc = "Tab Move Previous",
+  },
+  {
+    "<leader>tmn",
+    ":+tabmove<CR>",
+    desc = "Tab Move Next",
+  },
+}
+
 return M
