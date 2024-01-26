@@ -86,12 +86,6 @@ M.config = function()
         description = "Toggle Copilot",
         opts = opts,
       },
-      -- Glow
-      {
-        "<leader>md",
-        "<cmd>Glow<CR>",
-        description = "Glow",
-      },
       -- File explorer
       {
         "<leader>e",

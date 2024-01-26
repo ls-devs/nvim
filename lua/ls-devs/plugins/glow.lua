@@ -10,7 +10,7 @@ M.config = function()
 end
 
 M.keys = {
-  { "<leader>md", "<cmd>Glow<CR>", desc = "Glow" },
+  { "<leader>mg", "<cmd>Glow<CR>", desc = "Glow" },
 }
 
 return M
