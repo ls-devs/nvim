@@ -1,11 +1,11 @@
 return {
   "nvim-telescope/telescope.nvim",
+  cmd = "Telescope",
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
     local lst = require("telescope").extensions.luasnip
     local luasnip = require("luasnip")
-
     telescope.setup({
       layout_stategy = "center",
       defaults = {
@@ -63,6 +63,16 @@ return {
                 .. lst.filter_description(entry.context.name, entry.context.description)
                 .. lst.get_docstring(luasnip, entry.ft, entry.context)[1]
           end,
+        },
+        import = {
+          insert_at_top = true,
+          custom_languages = {
+            {
+              regex = [[^(?:import(?:[\"'\s]*([\w*{}\n, ]+)from\s*)?[\"'\s](.*?)[\"'\s].*)]],
+              filetypes = { "typescript", "typescriptreact", "javascript", "react" },
+              extensions = { "js", "ts" },
+            },
+          },
         },
       },
     })
@@ -187,8 +197,12 @@ return {
       "<cmd>Telescope emoji<CR>",
       desc = "Telescope Emojis",
     },
+    {
+      "<leader>fi",
+      "<cmd>Telescope import<CR>",
+      desc = "Telescope Import",
+    },
   },
-  cmd = "Telescope",
   dependencies = {
     { "nvim-lua/plenary.nvim" },
     {
@@ -196,9 +210,7 @@ return {
       build = "make",
     },
     { "jonarrien/telescope-cmdline.nvim" },
-    {
-      "benfowler/telescope-luasnip.nvim",
-    },
+    { "benfowler/telescope-luasnip.nvim" },
     { "nvim-telescope/telescope-media-files.nvim" },
     { "xiyaowong/telescope-emoji.nvim" },
     {
@@ -212,7 +224,7 @@ return {
       },
       opts = {
         history = 1000,
-        enable_persistent_history = false,
+        enable_persistent_history = true,
         length_limit = 1048576,
         continuous_sync = true,
         db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
@@ -245,8 +257,8 @@ return {
           telescope = {
             i = {
               select = "<cr>",
-              paste = "<c-p>",
-              paste_behind = "<c-k>",
+              paste = "<A-p>",
+              paste_behind = "<A-k>",
               replay = "<c-q>", -- replay a macro
               delete = "<c-d>", -- delete an entry
               edit = "<c-e>", -- edit an entry
@@ -271,6 +283,13 @@ return {
           },
         },
       },
+    },
+    {
+      "piersolenski/telescope-import.nvim",
+      dependencies = "nvim-telescope/telescope.nvim",
+      config = function()
+        require("telescope").load_extension("import")
+      end,
     },
   },
 }
