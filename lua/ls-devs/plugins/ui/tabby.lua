@@ -2,31 +2,35 @@ return {
   "nanozuki/tabby.nvim",
   event = "BufReadPost",
   config = function()
-    local getTabName = function()
-      local tail = vim.fn.expand("%:t")
-      if string.find(tail, "filesystem") or tail == "Overseer task builder" then
-        return vim.bo.filetype
+    local getTabName = function(tab)
+      local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
+      local tabName = ""
+      if string.len(tabTail) > 25 then
+        local fileExt = string.match(tabTail, "[^.]+$")
+        tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
       end
-      if string.find(tail, "toggleterm") then
-        local pID = string.gsub(tail, "%d+:", "")
-        return string.gsub(pID, ";#toggleterm#%d+", "")
-      end
-      if string.find(tail, "npm") then
-        return string.gsub(tail, "%d+:", "")
-      end
-      if tail == "" then
+      if string.find(tabTail, "Floating") then
         if vim.bo.filetype == "" then
-          return "[No Name]"
+          local tail = vim.fn.expand("%:t")
+          if string.find(tail, "toggleterm") then
+            local pID = string.gsub(tail, "%d+:", "")
+            tabName = string.gsub(pID, ";#toggleterm#%d+", "")
+          end
+          if string.find(tail, "npm") then
+            tabName = string.gsub(tail, "%d+:", "")
+          end
         else
-          return vim.bo.filetype
+          tabName = vim.bo.filetype
         end
       end
-      if string.len(tail) > 25 then
-        local fileExt = string.match(tail, "[^.]+$")
-        return string.sub(tail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
-      else
-        return tail
+      if string.find(tab.name(), "%[%No Name]%[%d+%+%]") and string.find(vim.bo.filetype, "Overseer") then
+        tabName = vim.bo.filetype
       end
+      if tabName == "" then
+        tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
+      end
+
+      return tabName
     end
 
     require("tabby").setup({})
@@ -42,7 +46,7 @@ return {
           return {
             line.sep("", hl, { bg = colors.none }),
             tab.is_current() and "" or "󰆣",
-            tab.is_current() and getTabName() or tab.name(),
+            getTabName(tab),
             tab.close_btn(""),
             line.sep("", hl, { bg = colors.none }),
             hl = hl,
@@ -70,9 +74,14 @@ return {
       desc = "New Tab",
     },
     {
-      "<leader>tc",
-      ":tabclose<CR>",
-      desc = "Close Tab",
+      "<leader>tn",
+      ":$tabnew<CR>",
+      desc = "New Tab",
+    },
+    {
+      "<leader>tr",
+      ":TabRename",
+      desc = "Rename Tab",
     },
     {
       "<leader>to",
