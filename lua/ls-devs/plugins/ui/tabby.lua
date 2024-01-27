@@ -23,9 +23,13 @@ return {
           tabName = vim.bo.filetype
         end
       end
-      if string.find(tab.name(), "%[%No Name]%[%d+%+%]") and string.find(vim.bo.filetype, "Overseer") then
+      if
+          string.find(tab.name(), "%[%No Name]%[%d+%+%]")
+          and (string.find(vim.bo.filetype, "Overseer") or string.find(vim.bo.filetype, "aerial"))
+      then
         tabName = vim.bo.filetype
       end
+
       if tabName == "" then
         tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
       end
@@ -33,7 +37,7 @@ return {
       return tabName
     end
 
-    require("tabby").setup({})
+    require("tabby").setup()
     local colors = require("tokyonight.colors").setup()
     require("tabby.tabline").set(function(line)
       return {
