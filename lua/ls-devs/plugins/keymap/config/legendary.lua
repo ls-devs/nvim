@@ -659,6 +659,18 @@ return function()
         pattern = "*",
         description = "Notify dismiss",
       },
+      {
+        "TabLeave",
+        function()
+          if vim.fn.exists(":WindowsEnableAutowidth") > 0 then
+            vim.cmd(":WindowsEnableAutowidth")
+          end
+          if vim.fn.exists(":OverseerClose") > 0 then
+            vim.cmd(":OverseerClose")
+          end
+        end,
+        description = "TabLeave Close Overseer",
+      },
     },
     sort = {
       most_recent_first = true,
