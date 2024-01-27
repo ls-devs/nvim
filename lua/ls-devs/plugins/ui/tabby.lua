@@ -2,28 +2,25 @@ return {
   "nanozuki/tabby.nvim",
   event = "BufReadPost",
   config = function()
-    -- TabName
     local getTabName = function()
-      -- Get tail of path
       local tail = vim.fn.expand("%:t")
-
-      -- Handle empty tail / neo-tree / Overseer
-      if tail == "" or tail == "neo-tree filesystem [1]" or tail == "Overseer task builder" then
+      if string.find(tail, "filesystem") or tail == "Overseer task builder" then
         return vim.bo.filetype
       end
-
-      -- Handle toggleterm
       if string.find(tail, "toggleterm") then
         local pID = string.gsub(tail, "%d+:", "")
         return string.gsub(pID, ";#toggleterm#%d+", "")
       end
-
-      -- Handle Overseer custom task
       if string.find(tail, "npm") then
         return string.gsub(tail, "%d+:", "")
       end
-
-      -- Handle Length
+      if tail == "" then
+        if vim.bo.filetype == "" then
+          return "[No Name]"
+        else
+          return vim.bo.filetype
+        end
+      end
       if string.len(tail) > 25 then
         local fileExt = string.match(tail, "[^.]+$")
         return string.sub(tail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
@@ -45,7 +42,7 @@ return {
           return {
             line.sep("", hl, { bg = colors.none }),
             tab.is_current() and "" or "󰆣",
-            getTabName(),
+            tab.is_current() and getTabName() or tab.name(),
             tab.close_btn(""),
             line.sep("", hl, { bg = colors.none }),
             hl = hl,
