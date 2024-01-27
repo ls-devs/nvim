@@ -668,6 +668,9 @@ return function()
           if vim.fn.exists(":OverseerClose") > 0 then
             vim.cmd(":OverseerClose")
           end
+          if vim.fn.exists(":AerialClose") > 0 then
+            vim.cmd(":AerialClose")
+          end
         end,
         description = "TabLeave Close Overseer",
       },
