@@ -10,7 +10,6 @@ return {
   dependencies = {
     {
       "ggandor/leap.nvim",
-      opts = {},
     },
     {
       "ggandor/leap-spooky.nvim",

@@ -8,7 +8,6 @@ return function()
       "codelldb",
       "js",
       "chrome",
-      "haskell",
       "kotlin-debug-adapter",
     },
     automatic_setup = true,

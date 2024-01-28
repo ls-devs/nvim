@@ -19,7 +19,6 @@ return function()
       "php-cs-fixer",
       "proselint",
       "hadolint",
-      "fourmolu",
       "clang-format",
       "cpplint",
       "bash-debug-adapter",

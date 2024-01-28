@@ -1,5 +1,4 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
----@diagnostic disable-next-line: undefined-field
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -10,16 +9,16 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
----@diagnostic disable-next-line: undefined-field
+
 vim.opt.rtp:prepend(lazypath)
 
----@diagnostic disable-next-line: undefined-field
 require("lazy").setup({
   spec = {
     { import = "ls-devs.plugins" },
     { import = "ls-devs.plugins.completion" },
     { import = "ls-devs.plugins.devtools" },
     { import = "ls-devs.plugins.git" },
+    { import = "ls-devs.plugins.highlight" },
     { import = "ls-devs.plugins.keymap" },
     { import = "ls-devs.plugins.lsp" },
     { import = "ls-devs.plugins.movement" },

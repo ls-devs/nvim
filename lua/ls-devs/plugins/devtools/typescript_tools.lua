@@ -44,6 +44,6 @@ return {
       disable_member_code_lens = true,
     },
   },
-  ft = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
+  ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 }
