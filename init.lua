@@ -1,1 +1,1 @@
-require("ls-devs")
+require("ls-devs.config.setup")

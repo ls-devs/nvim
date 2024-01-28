@@ -76,13 +76,9 @@ return {
         },
       },
     })
-    -- TODO: REWORK EXTENSIONS TO LOAD THEM ONLY ON CMD
     telescope.load_extension("fzf")
-    telescope.load_extension("media_files")
-    telescope.load_extension("emoji")
     telescope.load_extension("noice")
     telescope.load_extension("luasnip")
-    telescope.load_extension("cmdline")
   end,
   keys = {
     {
@@ -94,16 +90,6 @@ return {
       "<leader>ft",
       "<cmd>Telescope live_grep<CR>",
       desc = "Telescope Live Grep",
-    },
-    {
-      "<leader>fl",
-      "<cmd>Telescope luasnip<CR>",
-      desc = "Telescope LuaSnip",
-    },
-    {
-      "<leader>fn",
-      "<cmd>Telescope neoclip<CR>",
-      desc = "Telescope Neoclip",
     },
     {
       "<leader>fb",
@@ -151,11 +137,6 @@ return {
       desc = "Telescope Highlights",
     },
     {
-      "<leader>tz",
-      "<cmd>Telescope aerial<CR>",
-      desc = "Telescope aerial",
-    },
-    {
       "<leader>fB",
       "<cmd>Telescope current_buffer_fuzzy_find<CR>",
       desc = "Telescope Current Buffer Fuzzy Find",
@@ -169,11 +150,6 @@ return {
       "<leader>fM",
       "<cmd>Telescope marks<CR>",
       desc = "Telescope Marks",
-    },
-    {
-      "<leader>tm",
-      "<cmd>Telescope media_files<CR>",
-      desc = "Telescope Media Files",
     },
     {
       "<leader>gs",
@@ -191,20 +167,17 @@ return {
       desc = "Telescope Git Branches",
     },
     {
-      "<leader>fe",
-      "<cmd>Telescope emoji<CR>",
-      desc = "Telescope Emojis",
+      "<leader>fl",
+      "<cmd>Telescope luasnip<CR>",
+      desc = "Telescope LuaSnip",
     },
   },
   dependencies = {
     { "nvim-lua/plenary.nvim" },
+    { "benfowler/telescope-luasnip.nvim" },
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
     },
-    { "jonarrien/telescope-cmdline.nvim" },
-    { "benfowler/telescope-luasnip.nvim" },
-    { "nvim-telescope/telescope-media-files.nvim" },
-    { "xiyaowong/telescope-emoji.nvim" },
   },
 }
