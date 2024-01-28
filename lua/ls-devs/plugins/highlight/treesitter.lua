@@ -44,12 +44,10 @@ return {
         "git_rebase",
         "gitattributes",
         "glsl",
-        "hlsl",
         "wgsl",
         "go",
         "make",
         "gomod",
-        "haskell",
         "graphql",
         "v",
       },
@@ -119,13 +117,6 @@ return {
   end,
   dependencies = {
     { "nvim-treesitter/nvim-treesitter-textobjects" },
-    { "tree-sitter/tree-sitter-cpp" },
-    -- Auto Tag
-    {
-      "windwp/nvim-ts-autotag",
-      opts = {},
-      dependencies = { "nvim-treesitter/nvim-treesitter" },
-    },
     {
       "HiPhish/rainbow-delimiters.nvim",
       config = function()

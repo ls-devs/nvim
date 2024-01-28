@@ -81,8 +81,6 @@ return function()
       null_ls.builtins.formatting.sql_formatter,
       -- DOCKER
       null_ls.builtins.diagnostics.hadolint,
-      -- Haskell
-      null_ls.builtins.formatting.fourmolu,
       -- Bash
       null_ls.builtins.formatting.shellharden,
       -- XML

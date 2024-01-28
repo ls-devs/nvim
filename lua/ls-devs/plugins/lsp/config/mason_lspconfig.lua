@@ -1,5 +1,4 @@
 return function()
-  ---@diagnostic disable-next-line: different-requires
   local lsp_zero = require("lsp-zero")
   require("mason-lspconfig").setup({
     ensure_installed = {
@@ -25,7 +24,6 @@ return function()
       "clangd",
       "cmake",
       "lua_ls",
-      "hls",
       "clangd",
       "bashls",
       "vimls",
@@ -39,9 +37,9 @@ return function()
     automatic_installation = true,
     handlers = {
       lsp_zero.default_setup,
-      rust_analyzer = lsp_zero.noop,
-      hls = lsp_zero.noop,
-      clangd = lsp_zero.noop,
+      rust_analyzer = lsp_zero.noop(),
+      clangd = lsp_zero.noop(),
+      cmake = lsp_zero.noop(),
     },
   })
 end

@@ -5,6 +5,7 @@ return {
     -- Disable "q" for macro
     vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
     local colors = require("tokyonight.colors").setup()
+
     require("NeoComposer").setup({
       notify = false,
       delay_timer = 150,
@@ -26,12 +27,13 @@ return {
         play_macro = "@",
         yank_macro = "yq",
         stop_macro = "cq",
-        toggle_record = "<A-q>",
+        toggle_record = "Q",
         cycle_next = "<leader>qn",
         cycle_prev = "<leader>qp",
-        toggle_macro_menu = "<leader>q",
+        toggle_macro_menu = "<A-q>",
       },
     })
+    require("telescope").load_extension("macros")
   end,
   keys = {
     {

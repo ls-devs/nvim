@@ -3,10 +3,7 @@ return {
   event = "VeryLazy",
   config = require("ls-devs.plugins.keymap.config.legendary"),
   dependencies = {
-    {
-      "kkharji/sqlite.lua",
-      event = "VeryLazy",
-    },
+    { "kkharji/sqlite.lua" },
     -- Smart Splits
     {
       "mrjones2014/smart-splits.nvim",
