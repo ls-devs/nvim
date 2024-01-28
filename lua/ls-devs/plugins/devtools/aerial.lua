@@ -8,6 +8,11 @@ return {
     { "<leader>at", "<cmd>AerialToggle<CR>", desc = "Aerial Toggle" },
     { "<leader>an", "<cmd>AerialNext<CR>",   desc = "Aerial Next" },
     { "<leader>ap", "<cmd>AerialPrev<CR>",   desc = "Aerial Prev" },
+    {
+      "<leader>ta",
+      "<cmd>Telescope aerial<CR>",
+      desc = "Telescope aerial",
+    },
   },
   config = function()
     require("aerial").setup({
