@@ -1,6 +1,5 @@
 return {
   "nvim-telescope/telescope-media-files.nvim",
-  cmd = "Telescope media_files",
   keys = {
     {
       "<leader>tm",
