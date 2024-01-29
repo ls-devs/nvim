@@ -1,6 +1,5 @@
 return {
   "xiyaowong/telescope-emoji.nvim",
-  cmd = "Telescope emoji",
   keys = {
     {
       "<leader>fe",

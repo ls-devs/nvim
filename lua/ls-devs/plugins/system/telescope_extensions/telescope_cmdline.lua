@@ -1,6 +1,5 @@
 return {
   "jonarrien/telescope-cmdline.nvim",
-  cmd = "Telescope cmdline",
   keys = {
     {
       "<leader>fcm",

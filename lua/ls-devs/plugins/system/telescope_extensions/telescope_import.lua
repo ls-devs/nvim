@@ -1,6 +1,5 @@
 return {
   "piersolenski/telescope-import.nvim",
-  cmd = "Telescope import",
   keys = {
     {
       "<leader>fi",
