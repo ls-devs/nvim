@@ -4,7 +4,7 @@ return {
     {
       "<leader>fcm",
       "<cmd>Telescope cmdline<CR>",
-      desc = "Telescope Emoji",
+      desc = "Telescope cmdline",
     },
   },
   config = function()
