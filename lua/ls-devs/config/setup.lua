@@ -17,7 +17,7 @@ require("lazy").setup({
   spec = {
     { import = "ls-devs.plugins.completion" },
     { import = "ls-devs.plugins.devtools" },
-    { import = "ls-devs.plugins.git" },
+    { import = "ls-devs.plugins.gittools" },
     { import = "ls-devs.plugins.highlights" },
     { import = "ls-devs.plugins.keymaps" },
     { import = "ls-devs.plugins.lsp" },

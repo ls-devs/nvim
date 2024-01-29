@@ -304,6 +304,9 @@ return {
         },
       },
     },
+    hijack_cursor = {
+      enabled = true,
+    },
   },
   dependencies = {
     "3rd/image.nvim",
