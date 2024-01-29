@@ -23,8 +23,6 @@ return {
     },
   },
   config = function()
-    local opts = { noremap = true, silent = true }
-
     local is_diag_for_cur_pos = function()
       local diagnostics = vim.diagnostic.get(0)
       local pos = vim.api.nvim_win_get_cursor(0)
@@ -47,59 +45,84 @@ return {
     require("legendary").setup({
       keymaps = {
         -- Legendary
-        { "<leader>LL", "<cmd>Legendary<CR>",           description = "Legendary",           opts = opts },
-        { "<leader>LK", "<cmd>Legendary keymaps<CR>",   description = "Legendary keymaps",   opts = opts },
-        { "<leader>LC", "<cmd>Legendary commands<CR>",  description = "Legendary commands",  opts = opts },
-        { "<leader>LA", "<cmd>Legendary autocmds<CR>",  description = "Legendary autocmds",  opts = opts },
-        { "<leader>LF", "<cmd>Legendary functions<CR>", description = "Legendary functions", opts = opts },
+        {
+          "<leader>LL",
+          "<cmd>Legendary<CR>",
+          description = "Legendary",
+          opts = { noremap = true, silent = true },
+        },
+        {
+          "<leader>LK",
+          "<cmd>Legendary keymaps<CR>",
+          description = "Legendary keymaps",
+          opts = { noremap = true, silent = true },
+        },
+        {
+          "<leader>LC",
+          "<cmd>Legendary commands<CR>",
+          description = "Legendary commands",
+          opts = { noremap = true, silent = true },
+        },
+        {
+          "<leader>LA",
+          "<cmd>Legendary autocmds<CR>",
+          description = "Legendary autocmds",
+          opts = { noremap = true, silent = true },
+        },
+        {
+          "<leader>LF",
+          "<cmd>Legendary functions<CR>",
+          description = "Legendary functions",
+          opts = { noremap = true, silent = true },
+        },
         -- Navigate buffers
         {
           "<C-d>",
           "<C-d>zz",
           description = "Navigate Down & Center",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<C-u>",
           "<C-u>zz",
           description = "Navigate Up & Center",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         -- Switch both lines down
         {
           "<A-j>",
           { v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
           description = "Switch Lines Down",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         -- Switch both lines up
         {
           "<A-k>",
           { v = "<cmd>m .-2<CR>==", x = "<cmd>move '<-2<CR>gv-gv" },
           description = "Switch Lines Up",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         -- Paste
         {
           "p",
           { v = '"_dP' },
           description = "Paste Text",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         -- Move line(s) down
-        { "J", { x = ":move '>+1<CR>gv-gv" }, opts = opts },
+        { "J", { x = ":move '>+1<CR>gv-gv" }, opts = { noremap = true, silent = true } },
         -- Move line(s) up
-        { "K", { x = ":move '<-2<CR>gv-gv" }, opts = opts },
+        { "K", { x = ":move '<-2<CR>gv-gv" }, opts = { noremap = true, silent = true } },
         -- Stay in indent mode
         {
           "<",
           { v = "<gv" },
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           ">",
           { v = ">gv" },
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         -- Grep help
         {
@@ -150,103 +173,103 @@ return {
           end,
 
           description = "LSP Signature Help",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "gh",
           "<cmd>Lspsaga finder<CR>",
           description = "LSPSaga Finder",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>ca",
           {
             n = function()
-              -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return require("lspsaga.codeaction"):code_action()
-              -- end
+              if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+                return require("lspsaga.codeaction"):code_action()
+              end
             end,
 
             v = function()
-              -- if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-              return require("lspsaga.codeaction"):code_action()
-              -- end
+              if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
+                return require("lspsaga.codeaction"):code_action()
+              end
             end,
           },
           description = "LSPSaga Code Actions",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>rn",
           "<cmd>Lspsaga rename<CR>",
           description = "LSPSaga Rename",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>rnw",
           "<cmd>Lspsaga rename ++project<CR>",
           description = "LSPSaga Rename Workspace",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "gp",
           "<cmd>Lspsaga peek_definition<CR>",
           description = "LSPSaga Peek Definition",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "gD",
           "<cmd>lua vim.lsp.buf.declaration()<CR>",
           description = "LSP Buf Declaration",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "gd",
           "<cmd>Lspsaga goto_definition<CR>",
           description = "LSPSaga Goto Definition",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "pt",
           "<cmd>Lspsaga peek_type_definition<CR>",
           description = "LSPSaga Peek Type Definition",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "gt",
           "<cmd>Lspsaga goto_type_definition<CR>",
           description = "LSPSaga Goto Type Defintion",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>fm",
           "<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 })<CR>",
           description = "LSP Buf Format",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>cl",
           "<cmd>Lspsaga show_line_diagnostics<CR>",
           description = "LSPSaga Show Line Diagnostics",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>cb",
           "<cmd>Lspsaga show_buf_diagnostics<CR>",
           description = "LSPSaga Show Buf Diagnostics",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>cw",
           "<cmd>Lspsaga show_workspace_diagnostics<CR>",
           description = "LSPSaga Show Workspace Diagnostics",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>cc",
           "<cmd>Lspsaga show_cursor_diagnostics<CR>",
           description = "LSPSaga Show Cursor Diagnostics",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>dp",
@@ -256,7 +279,7 @@ return {
             end
           end,
           description = "LSPSaga Diagnostic Jump Prev",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>dn",
@@ -266,13 +289,13 @@ return {
             end
           end,
           description = "LSPSaga Diagnostic Jump Next",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>lo",
           "<cmd>Lspsaga outline<CR>",
           description = "LSPSaga Outline",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "K",
@@ -295,27 +318,26 @@ return {
             end
           end,
           description = "LSP Hover Doc",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>K",
           "<cmd>Lspsaga hover_doc ++keep<CR>",
           description = "LSPSaga Hover Doc Keep",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>ci",
           "<cmd>Lspsaga incoming_calls<CR>",
           description = "LSPSaga Incoming Calls",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>co",
           "<cmd>Lspsaga outgoing_calls<CR>",
           description = "LSPSaga Outgoing Calls",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
-        -- Noice scroll doc forward
         {
           "<c-f>",
           function()
@@ -325,9 +347,8 @@ return {
           end,
           mode = { "n", "i", "s" },
           description = "Noice Scroll Hover Doc Forward",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
-        -- Noice scroll doc backward
         {
           "<c-b>",
           function()
@@ -337,9 +358,8 @@ return {
           end,
           mode = { "n", "i", "s" },
           description = "Noice Scroll Hover Doc Backward",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
-        -- Noice Redirects
         {
           "<S-Enter>",
           function()
@@ -348,38 +368,36 @@ return {
           mode = { "c" },
           description = "Redirect Cmdline",
         },
-        -- Lazy
         {
           "<leader>l",
           "<cmd>Lazy<CR>",
           description = "Lazy",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>ls",
           "<cmd>Lazy sync<CR>",
           description = "Lazy Sync",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>li",
           "<cmd>Lazy install<CR>",
           description = "Lazy Install",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>lu",
           "<cmd>Lazy update<CR>",
           description = "Lazy Update",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>lc",
           "<cmd>Lazy build<CR>",
           description = "Lazy Build",
-          opts = opts,
+          opts = { noremap = true, silent = true },
         },
-        -- LazyGit
         {
           "<leader>lg",
           function()
@@ -399,179 +417,6 @@ return {
             lazygit:toggle()
           end,
           description = "LazyGit",
-        },
-        -- JUKIT
-        -- Splits
-        {
-          "<leader>jjo",
-          "<cmd>call jukit#splits#output()<CR>",
-          description = "Jukit Splits Output",
-          opts = opts,
-        },
-        {
-          "<leader>jjh",
-          "<cmd>call jukit#splits#history()<CR>",
-          description = "Jukit Splits History",
-          opts = opts,
-        },
-        {
-          "<leader>joh",
-          "<cmd>call jukit#splits#output_and_history()<CR>",
-          description = "Jukit Splits Output & History",
-          opts = opts,
-        },
-        {
-          "<leader>jco",
-          "<cmd>call jukit#splits#close_output_split()<CR>",
-          description = "Jukit Splits Close Output",
-          opts = opts,
-        },
-        {
-          "<leader>jch",
-          "<cmd>call jukit#splits#close_history()<CR>",
-          description = "Jukit Splits Close History",
-          opts = opts,
-        },
-        {
-          "<leader>jca",
-          "<cmd>call jukit#splits#close_output_and_history(1)<CR>",
-          description = "Jukit Splits Close Ouput & History",
-          opts = opts,
-        },
-        {
-          "<leader>jhj",
-          "<cmd>call jukit#splits#out_hist_scroll(1)<CR>",
-          description = "Jukit Splits Scroll Down",
-          opts = opts,
-        },
-        {
-          "<leader>jhk",
-          "<cmd>call jukit#splits#out_hist_scroll(0)<CR>",
-          description = "Jukit Splits Scroll Up",
-          opts = opts,
-        },
-        {
-          "<leader>jht",
-          "<cmd>call jukit#splits#toggle_auto_hist()<CR>",
-          description = "Jukit Toggle Auto History",
-          opts = opts,
-        },
-        -- Cells
-        {
-          "<leader>jcc",
-          "<cmd>call jukit#cells#create_below(0)<CR>",
-          description = "Jukit Cells Create Below",
-          opts = opts,
-        },
-        {
-          "<leader>jcC",
-          "<cmd>call jukit#cells#create_above(0)<CR>",
-          description = "Jukit Cells Create Above",
-          opts = opts,
-        },
-        {
-          "<leader>jct",
-          "<cmd>call jukit#cells#create_below(1)<CR>",
-          description = "Jukit Cells Create Text Below",
-          opts = opts,
-        },
-        {
-          "<leader>jcT",
-          "<cmd>call jukit#cells#create_above(1)<CR>",
-          description = "Jukit Cells Create Text Above",
-          opts = opts,
-        },
-        {
-          "<leader>jcd",
-          "<cmd>call jukit#cells#delete()<CR>",
-          description = "Jukit Cells Delete",
-          opts = opts,
-        },
-        {
-          "<leader>jcm",
-          "<cmd>call jukit#cells#merge_below()<CR>",
-          description = "Jukit Cells Merge Below",
-          opts = opts,
-        },
-        {
-          "<leader>jcM",
-          "<cmd>call jukit#cells#merge_above()<CR>",
-          description = "Jukit Cells Merge Above",
-          opts = opts,
-        },
-        {
-          "<leader>jck",
-          "<cmd>call jukit#cells#move_up()<CR>",
-          description = "Jukit Cells Move Up",
-          opts = opts,
-        },
-        {
-          "<leader>jcj",
-          "<cmd>call jukit#cells#move_down()<CR>",
-          description = "Jukit Cells Move Down",
-          opts = opts,
-        },
-        {
-          "<leader>JJ",
-          "<cmd>call jukit#cells#jump_to_next_cell()<CR>",
-          description = "Jukit Cells Jump To Next",
-          opts = opts,
-        },
-        {
-          "<leader>KK",
-          "<cmd>call jukit#cells#jump_to_previous_cell()<CR>",
-          description = "Jukit Cells Jump To Previous",
-          opts = opts,
-        },
-        {
-          "<leader>jdo",
-          "<cmd>call jukit#cells#delete_outputs(0)<CR>",
-          description = "Jukit Delete Output Cell",
-          opts = opts,
-        },
-        {
-          "<leader>jd",
-          "<cmd>call jukit#cells#delete_outputs(1)<CR>",
-          description = "Jukit Delete Output Text",
-          opts = opts,
-        },
-        -- Send
-        {
-          "<leader>jss",
-          "<cmd>call jukit#send#section(1)<CR>",
-          description = "Jukit Send Section",
-          opts = opts,
-        },
-        {
-          "<leader>jsl",
-          "<cmd>call jukit#send#line()<CR>",
-          description = "Jukit Send Line",
-          opts = opts,
-        },
-        {
-          "<leader>jss",
-          { v = "<cmd>call jukit#send#selection()<CR>" },
-          description = "Jukit Send Selection",
-          opts = opts,
-        },
-        {
-          "<leader>jsu",
-          "<cmd>call jukit#send#until_current_section()<CR>",
-          description = "Jukit Send Until Current Section",
-          opts = opts,
-        },
-        {
-          "<leader>jsa",
-          "<cmd>call jukit#send#all()<CR>",
-          description = "Jukit Send All",
-          opts = opts,
-        },
-        -- Convert
-        {
-          "<leader>jcv",
-          "<cmd>call jukit#convert#notebook_convert('jupyter-notebook')<CR>",
-          description = "Jukit Covert",
-          opts = opts,
         },
       },
       extensions = {
@@ -624,30 +469,6 @@ return {
         {
           "VimLeave",
           ":silent !prettierd stop",
-          description = "Stop prettier_d_slim",
-          opts = {
-            pattern = {
-              "*.jsx",
-              "*.tsx",
-              "*.vue",
-              "*.js",
-              "*.ts",
-              "*.css",
-              "*.scss",
-              "*.less",
-              "*.html",
-              "*.json",
-              "*.jsonc",
-              "*.yaml",
-              "*.md",
-              "*.mdx",
-              "*.graphql",
-            },
-          },
-        },
-        {
-          "VimLeave",
-          ":silent !prettierd stop",
           description = "Stop prettierd",
           opts = {
             pattern = {
@@ -696,7 +517,7 @@ return {
               vim.cmd(":AerialClose")
             end
           end,
-          description = "TabLeave Close Overseer",
+          description = "TabLeave Close Overseer (Tabby)",
         },
       },
       sort = {

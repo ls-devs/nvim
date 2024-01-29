@@ -7,9 +7,6 @@ return {
     vim.g.gitblame_message_when_not_committed = "|   Not commited Yet |"
     vim.g.gitblame_date_format = "%x"
     vim.g.gitblame_delay = 1000
-    vim.g.gitblame_set_extmark_options = {
-      priority = 7,
-    }
     require("gitblame").setup({
       enabled = true,
     })
