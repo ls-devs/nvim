@@ -8,11 +8,15 @@ return {
       "<leader>T",
       "<cmd>TodoTrouble<CR>",
       desc = "TodoTrouble",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>TT",
       "<cmd>TodoTelescope<CR>",
       desc = "TodoTelescope",
+      silent = true,
+      noremap = true,
     },
   },
 }

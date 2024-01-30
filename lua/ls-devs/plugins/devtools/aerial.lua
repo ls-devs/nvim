@@ -5,13 +5,15 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   keys = {
-    { "<leader>at", "<cmd>AerialToggle<CR>", desc = "Aerial Toggle" },
-    { "<leader>an", "<cmd>AerialNext<CR>",   desc = "Aerial Next" },
-    { "<leader>ap", "<cmd>AerialPrev<CR>",   desc = "Aerial Prev" },
+    { "<leader>at", "<cmd>AerialToggle<CR>", desc = "Aerial Toggle", noremap = true, silent = true },
+    { "<leader>an", "<cmd>AerialNext<CR>",   desc = "Aerial Next",   noremap = true, silent = true },
+    { "<leader>ap", "<cmd>AerialPrev<CR>",   desc = "Aerial Prev",   noremap = true, silent = true },
     {
       "<leader>ta",
       "<cmd>Telescope aerial<CR>",
       desc = "Telescope aerial",
+      noremap = true,
+      silent = true,
     },
   },
   config = function()

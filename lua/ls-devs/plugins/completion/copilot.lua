@@ -10,6 +10,8 @@ return {
       "<leader>cp",
       "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>",
       desc = "Toggle Copilot",
+      noremap = true,
+      silent = true,
     },
   },
   dependencies = {

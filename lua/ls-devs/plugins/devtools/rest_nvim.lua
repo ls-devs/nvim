@@ -35,6 +35,8 @@ return {
         require("rest-nvim").run()
       end,
       desc = "RestNvim",
+      noremap = true,
+      silent = true,
     },
     {
       "<leader>rl",
@@ -42,6 +44,8 @@ return {
         require("rest-nvim").last()
       end,
       desc = "RestNvimLast",
+      noremap = true,
+      silent = true,
     },
     {
       "<leader>rp",
@@ -49,6 +53,8 @@ return {
         require("rest-nvim").run(true)
       end,
       desc = "RestNvimPreview",
+      noremap = true,
+      silent = true,
     },
   },
 }

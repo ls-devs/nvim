@@ -9,6 +9,6 @@ return {
     width_ration = 1,
   },
   keys = {
-    { "<leader>mg", "<cmd>Glow<CR>", desc = "Glow" },
+    { "<leader>mg", "<cmd>Glow<CR>", desc = "Glow", noremap = true, silent = true },
   },
 }

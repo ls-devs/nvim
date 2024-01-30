@@ -40,7 +40,7 @@ return {
     })
 
     function _G.set_terminal_keymaps()
-      local opts = { noremap = true }
+      local opts = { noremap = true, silent = true }
       vim.api.nvim_buf_set_keymap(0, "t", "<C-x>", [[<Cmd>q!<CR>]], opts)
       vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
       vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
@@ -56,6 +56,8 @@ return {
       "<leader>z",
       "<cmd>ToggleTerm<CR>",
       desc = "ToggleTerm",
+      noremap = true,
+      silent = true,
     },
   },
 }

@@ -63,6 +63,8 @@ return {
         vim.cmd(":WindowsEqualize")
       end,
       desc = "Move Window Left",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>ml",
@@ -71,6 +73,8 @@ return {
         vim.cmd(":WindowsEqualize")
       end,
       desc = "Move Window Right",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>mk",
@@ -79,6 +83,8 @@ return {
         vim.cmd(":WindowsEqualize")
       end,
       desc = "Move Window Up",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>mj",
@@ -87,6 +93,8 @@ return {
         vim.cmd(":WindowsEqualize")
       end,
       desc = "Move Window Down",
+      silent = true,
+      noremap = true,
     },
   },
 }

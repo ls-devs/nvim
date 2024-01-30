@@ -5,6 +5,8 @@ return {
       "<leader>fi",
       "<cmd>Telescope import<CR>",
       desc = "Telescope Import",
+      noremap = true,
+      silent = true,
     },
   },
   config = function()

@@ -15,6 +15,8 @@ return {
       "<leader>v",
       "<cmd>Trouble<CR>",
       desc = "Trouble",
+      silent = true,
+      noremap = true,
     },
   },
 }

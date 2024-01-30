@@ -62,6 +62,8 @@ return {
       "<leader>mt",
       ":MurenToggle<CR>",
       desc = "Muren Toggle",
+      silent = true,
+      noremap = true,
     },
   },
 }

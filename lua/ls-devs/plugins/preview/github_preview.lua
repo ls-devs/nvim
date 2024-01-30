@@ -21,6 +21,12 @@ return {
     log_level = nil,
   },
   keys = {
-    { "<leader>gp", "<cmd>GithubPreviewToggle<CR>", desc = "Github Preview" },
+    {
+      "<leader>gp",
+      "<cmd>GithubPreviewToggle<CR>",
+      desc = "Github Preview",
+      noremap = true,
+      silent = true,
+    },
   },
 }

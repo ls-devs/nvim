@@ -11,6 +11,8 @@ return {
       "<leader><leader>",
       "<cmd>lua require('blinker').blink_cursorline()<CR>",
       desc = "Blink Cursor",
+      silent = true,
+      noremap = true,
     },
   },
 }
