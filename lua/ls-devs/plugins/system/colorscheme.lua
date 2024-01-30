@@ -49,6 +49,8 @@ return {
         highlights.Blame = { bg = colors.bg_highlight, fg = colors.dark5 }
         highlights.Folded = { bg = colors.none }
         highlights.NeoTreeFileStats = { fg = colors.terminal_black }
+        highlights.CmpItemKindVariable = { fg = colors.magenta }
+        highlights.CmpItemKindSnippet = { fg = colors.hint }
       end,
     })
     vim.cmd.colorscheme("tokyonight")

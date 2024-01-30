@@ -7,7 +7,6 @@ return {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
       { "FelipeLema/cmp-async-path" },
-      { "lukas-reineke/cmp-rg" },
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-cmdline" },
       { "hrsh7th/cmp-nvim-lsp" },
