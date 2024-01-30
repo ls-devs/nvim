@@ -122,6 +122,7 @@ return function()
             crates = "[CRATES]",
             rg = "[RG]",
             dotenv = "[ENV]",
+            ["sass-variables"] = "[SASS]",
           })[entry.source.name]
           return vim_item
         end,
