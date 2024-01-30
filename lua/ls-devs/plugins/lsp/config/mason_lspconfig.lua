@@ -2,6 +2,7 @@ return function()
   local lsp_zero = require("lsp-zero")
   require("mason-lspconfig").setup({
     ensure_installed = {
+      "eslint",
       "astro",
       "html",
       "lemminx",

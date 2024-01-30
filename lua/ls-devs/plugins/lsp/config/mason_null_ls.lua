@@ -6,7 +6,6 @@ return function()
       "black",
       "stylua",
       "xmlformatter",
-      "eslint_d",
       "shellharden",
       "cmakelang",
       "cmakelint",

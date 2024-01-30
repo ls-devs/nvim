@@ -13,8 +13,6 @@ return function()
       null_ls.builtins.diagnostics.pylint,
       null_ls.builtins.formatting.black,
       -- JS / TS
-      null_ls.builtins.code_actions.eslint_d,
-      null_ls.builtins.diagnostics.eslint_d,
       null_ls.builtins.formatting.prettierd.with({
         filetypes = {
           "javascript",

@@ -439,8 +439,8 @@ return {
       autocmds = {
         {
           "VimLeave",
-          ":silent !eslint_d stop",
-          description = "Stop eslint_d",
+          ":silent !prettierd stop",
+          description = "Stop prettierd",
           opts = {
             pattern = {
               "*.jsx",
@@ -465,30 +465,6 @@ return {
           "LspAttach",
           'lua require("null-ls").enable({})',
           description = "Start null-ls when starting a lsp client",
-        },
-        {
-          "VimLeave",
-          ":silent !prettierd stop",
-          description = "Stop prettierd",
-          opts = {
-            pattern = {
-              "*.jsx",
-              "*.tsx",
-              "*.vue",
-              "*.js",
-              "*.ts",
-              "*.css",
-              "*.scss",
-              "*.less",
-              "*.html",
-              "*.json",
-              "*.jsonc",
-              "*.yaml",
-              "*.md",
-              "*.mdx",
-              "*.graphql",
-            },
-          },
         },
         {
           { "BufNewFile", "BufRead" },
