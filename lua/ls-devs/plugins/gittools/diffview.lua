@@ -14,7 +14,13 @@ end
 return {
   "sindrets/diffview.nvim",
   keys = {
-    { "<leader>dvo", "<cmd>lua DiffviewToggle()<CR>", desc = "DiffviewOpen" },
+    {
+      "<leader>dvo",
+      "<cmd>lua DiffviewToggle()<CR>",
+      desc = "DiffviewOpen",
+      noremap = true,
+      silent = true,
+    },
   },
   cond = function()
     return vim.fn.isdirectory(".git") == 1

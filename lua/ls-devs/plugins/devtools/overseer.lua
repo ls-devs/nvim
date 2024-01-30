@@ -11,6 +11,7 @@ function OverseerToggle()
     vim.cmd(":OverseerToggle")
     if vim.fn.exists(":WindowsEnableAutowidth") > 0 then
       vim.cmd(":WindowsEnableAutowidth")
+      vim.cmd(":WindowsEqualize")
     end
     isOpen = false
   end
@@ -62,7 +63,19 @@ return {
     })
   end,
   keys = {
-    { "<leader>or", "<cmd>OverseerRun<CR>",          desc = "Overseer Run" },
-    { "<leader>ot", "<cmd>lua OverseerToggle()<CR>", desc = "Overseer Toggle" },
+    {
+      "<leader>or",
+      "<cmd>OverseerRun<CR>",
+      desc = "Overseer Run",
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>ot",
+      "<cmd>lua OverseerToggle()<CR>",
+      desc = "Overseer Toggle",
+      noremap = true,
+      silent = true,
+    },
   },
 }

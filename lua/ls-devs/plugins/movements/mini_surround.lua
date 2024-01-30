@@ -11,5 +11,5 @@ return {
       update_n_lines = "gzn", -- Update `n_lines`
     },
   },
-  keys = { { "gz", mode = { "n", "v" } } },
+  keys = { { "gz", mode = { "n", "v" }, desc = "Surround", noremap = true, silent = true } },
 }

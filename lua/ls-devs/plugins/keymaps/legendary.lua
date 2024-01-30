@@ -44,7 +44,6 @@ return {
 
     require("legendary").setup({
       keymaps = {
-        -- Legendary
         {
           "<leader>LL",
           "<cmd>Legendary<CR>",
@@ -75,7 +74,6 @@ return {
           description = "Legendary functions",
           opts = { noremap = true, silent = true },
         },
-        -- Navigate buffers
         {
           "<C-d>",
           "<C-d>zz",
@@ -88,32 +86,26 @@ return {
           description = "Navigate Up & Center",
           opts = { noremap = true, silent = true },
         },
-        -- Switch both lines down
         {
           "<A-j>",
           { v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
           description = "Switch Lines Down",
           opts = { noremap = true, silent = true },
         },
-        -- Switch both lines up
         {
           "<A-k>",
           { v = "<cmd>m .-2<CR>==", x = "<cmd>move '<-2<CR>gv-gv" },
           description = "Switch Lines Up",
           opts = { noremap = true, silent = true },
         },
-        -- Paste
         {
           "p",
           { v = '"_dP' },
           description = "Paste Text",
           opts = { noremap = true, silent = true },
         },
-        -- Move line(s) down
         { "J", { x = ":move '>+1<CR>gv-gv" }, opts = { noremap = true, silent = true } },
-        -- Move line(s) up
         { "K", { x = ":move '<-2<CR>gv-gv" }, opts = { noremap = true, silent = true } },
-        -- Stay in indent mode
         {
           "<",
           { v = "<gv" },
@@ -124,7 +116,6 @@ return {
           { v = ">gv" },
           opts = { noremap = true, silent = true },
         },
-        -- Grep help
         {
           "<leader>hg",
           function()
@@ -139,14 +130,15 @@ return {
             end)
           end,
           description = "Help Grep",
+          opts = { noremap = true, silent = true },
         },
-        -- Ufo
         {
           "zR",
           function()
             require("ufo").openAllFolds()
           end,
           description = "UFO Open All Folds",
+          opts = { noremap = true, silent = true },
         },
         {
           "zM",
@@ -154,6 +146,7 @@ return {
             require("ufo").closeAllFolds()
           end,
           description = "UFO Close All Folds",
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>p",
@@ -164,14 +157,13 @@ return {
             end
           end,
           description = "UFO Peek Under Cursor",
+          opts = { noremap = true, silent = true },
         },
-        -- LSP & LSP Saga
         {
           "<C-s>",
           function()
             return vim.lsp.buf.signature_help()
           end,
-
           description = "LSP Signature Help",
           opts = { noremap = true, silent = true },
         },
@@ -311,8 +303,6 @@ return {
               vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
             elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
               require("crates").show_popup()
-            elseif is_diag_for_cur_pos() then
-              vim.diagnostic.open_float()
             else
               vim.lsp.buf.hover()
             end
@@ -367,6 +357,7 @@ return {
           end,
           mode = { "c" },
           description = "Redirect Cmdline",
+          opts = { noremap = true, silent = true },
         },
         {
           "<leader>l",
@@ -417,6 +408,7 @@ return {
             lazygit:toggle()
           end,
           description = "LazyGit",
+          opts = { noremap = true, silent = true },
         },
       },
       extensions = {

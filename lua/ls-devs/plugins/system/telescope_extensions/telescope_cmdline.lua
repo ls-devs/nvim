@@ -5,6 +5,8 @@ return {
       "<leader>fcm",
       "<cmd>Telescope cmdline<CR>",
       desc = "Telescope cmdline",
+      noremap = true,
+      silent = true,
     },
   },
   config = function()

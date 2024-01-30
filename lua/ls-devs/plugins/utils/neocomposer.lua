@@ -42,6 +42,8 @@ return {
         require("NeoComposer.macro").play_macro()
       end,
       desc = "NeoComposer Play Macro",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>yq",
@@ -49,6 +51,8 @@ return {
         require("NeoComposer.macro").yank_macro()
       end,
       desc = "NeoComposer Yank Macro",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>sq",
@@ -56,6 +60,8 @@ return {
         require("NeoComposer.macro").stop_macro()
       end,
       desc = "NeoComposer Stop Macro",
+      silent = true,
+      noremap = true,
     },
     {
       "<A-q>",
@@ -63,6 +69,8 @@ return {
         require("NeoComposer.macro").toggle_record()
       end,
       desc = "NeoComposer Record Macro",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>qn",
@@ -70,6 +78,8 @@ return {
         require("NeoComposer.ui").cycle_next()
       end,
       desc = "NeoComposer Cycle Next",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>qp",
@@ -77,6 +87,8 @@ return {
         require("NeoComposer.ui").cycle_prev()
       end,
       desc = "NeoComposer Cycle Prev",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>q",
@@ -84,6 +96,8 @@ return {
         require("NeoComposer.ui").toggle_macro_menu()
       end,
       desc = "NeoComposer Toggle Menu",
+      silent = true,
+      noremap = true,
     },
   },
   dependencies = { "kkharji/sqlite.lua" },

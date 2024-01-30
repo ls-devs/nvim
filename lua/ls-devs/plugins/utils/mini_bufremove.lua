@@ -7,6 +7,8 @@ return {
         require("mini.bufremove").delete(0, false)
       end,
       desc = "Delete Buffer",
+      silent = true,
+      noremap = true,
     },
     {
       "<leader>bD",
@@ -14,6 +16,8 @@ return {
         require("mini.bufremove").delete(0, true)
       end,
       desc = "Delete Buffer (Force)",
+      silent = true,
+      noremap = true,
     },
   },
 }

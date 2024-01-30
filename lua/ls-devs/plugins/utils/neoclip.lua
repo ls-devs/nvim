@@ -73,6 +73,8 @@ return {
       "<leader>fn",
       "<cmd>Telescope neoclip<CR>",
       desc = "Telescope Neoclip",
+      silent = true,
+      noremap = true,
     },
   },
 }

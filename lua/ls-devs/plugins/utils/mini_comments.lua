@@ -14,6 +14,9 @@ return {
     {
       "gc",
       mode = { "n", "v" },
+      desc = "Comment",
+      silent = true,
+      noremap = true,
     },
   },
   dependencies = {

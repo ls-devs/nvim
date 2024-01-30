@@ -5,6 +5,8 @@ return {
       "<leader>fe",
       "<cmd>Telescope emoji<CR>",
       desc = "Telescope Emoji",
+      noremap = true,
+      silent = true,
     },
   },
   config = function()

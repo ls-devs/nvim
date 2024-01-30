@@ -5,6 +5,8 @@ return {
       "<leader>tm",
       "<cmd>Telescope media_files<CR>",
       desc = "Telescope Media Files",
+      noremap = true,
+      silent = true,
     },
   },
   config = function()

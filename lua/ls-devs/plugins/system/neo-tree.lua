@@ -3,7 +3,13 @@ return {
   branch = "v3.x",
   cmd = { "Neotree", "Neotree float" },
   keys = {
-    { "<leader>e", "<cmd>Neotree float reveal<CR>", desc = "NeoTreeFloatToggle reveal" },
+    {
+      "<leader>e",
+      "<cmd>Neotree float reveal<CR>",
+      desc = "NeoTreeFloatToggle reveal",
+      silent = true,
+      noremap = true,
+    },
   },
   opts = {
     close_if_last_window = true,
