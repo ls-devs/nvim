@@ -1,6 +1,6 @@
 return {
   "nvim-zh/colorful-winsep.nvim",
-  event = { "WinNew" },
+  event = { "BufReadPost" },
   config = function()
     local c = require("tokyonight.colors").setup()
     require("colorful-winsep").setup({
