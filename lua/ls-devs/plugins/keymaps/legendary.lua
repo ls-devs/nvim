@@ -411,7 +411,6 @@ return {
               on_open = function(term)
                 local keymap = vim.api.nvim_buf_set_keymap
                 keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-                keymap(term.bufnr, "t", "<esc>", "<cmd>close<CR>", { noremap = true, silent = true })
               end,
             })
             lazygit:toggle()
