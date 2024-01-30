@@ -2,13 +2,21 @@ return {
   "nanozuki/tabby.nvim",
   event = "BufReadPost",
   config = function()
-    local getTabName = function(tab)
+    local tabName = function(tab)
+      local tabName = tab.name()
+      local winid = vim.api.nvim_tabpage_get_win(tab.id)
+      local bufid = vim.api.nvim_win_get_buf(winid)
+      local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
+      if string.find(file_type, "Overseer") or string.find(file_type, "aerial") then
+        tabName = file_type
+      end
+
       local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
-      local tabName = ""
       if string.len(tabTail) > 25 then
         local fileExt = string.match(tabTail, "[^.]+$")
         tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
       end
+
       if string.find(tabTail, "Floating") then
         if vim.bo.filetype == "" then
           local tail = vim.fn.expand("%:t")
@@ -23,17 +31,10 @@ return {
           tabName = vim.bo.filetype
         end
       end
-      if
-          string.find(tab.name(), "%[%No Name]%[%d+%+%]")
-          and (string.find(vim.bo.filetype, "Overseer") or string.find(vim.bo.filetype, "aerial"))
-      then
-        tabName = vim.bo.filetype
-      end
 
       if tabName == "" then
         tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
       end
-
       return tabName
     end
 
@@ -50,7 +51,7 @@ return {
           return {
             line.sep("", hl, { bg = colors.none }),
             tab.is_current() and "" or "󰆣",
-            getTabName(tab),
+            tabName(tab),
             tab.close_btn(""),
             line.sep("", hl, { bg = colors.none }),
             hl = hl,
