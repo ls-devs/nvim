@@ -1,43 +1,43 @@
+local tabName = function(tab)
+  local tabName = tab.name()
+  local winid = vim.api.nvim_tabpage_get_win(tab.id)
+  local bufid = vim.api.nvim_win_get_buf(winid)
+  local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
+  if string.find(file_type, "Overseer") or string.find(file_type, "aerial") then
+    tabName = file_type
+  end
+
+  local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
+  if string.len(tabTail) > 25 then
+    local fileExt = string.match(tabTail, "[^.]+$")
+    tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+  end
+
+  if string.find(tabTail, "Floating") then
+    if vim.bo.filetype == "" then
+      local tail = vim.fn.expand("%:t")
+      if string.find(tail, "toggleterm") then
+        local pID = string.gsub(tail, "%d+:", "")
+        tabName = string.gsub(pID, ";#toggleterm#%d+", "")
+      end
+      if string.find(tail, "npm") then
+        tabName = string.gsub(tail, "%d+:", "")
+      end
+    else
+      tabName = vim.bo.filetype
+    end
+  end
+
+  if tabName == "" then
+    tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
+  end
+  return string.gsub(tabName, "%[%d+%+%]", "")
+end
+
 return {
   "nanozuki/tabby.nvim",
   event = "BufReadPost",
   config = function()
-    local tabName = function(tab)
-      local tabName = tab.name()
-      local winid = vim.api.nvim_tabpage_get_win(tab.id)
-      local bufid = vim.api.nvim_win_get_buf(winid)
-      local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
-      if string.find(file_type, "Overseer") or string.find(file_type, "aerial") then
-        tabName = file_type
-      end
-
-      local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
-      if string.len(tabTail) > 25 then
-        local fileExt = string.match(tabTail, "[^.]+$")
-        tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
-      end
-
-      if string.find(tabTail, "Floating") then
-        if vim.bo.filetype == "" then
-          local tail = vim.fn.expand("%:t")
-          if string.find(tail, "toggleterm") then
-            local pID = string.gsub(tail, "%d+:", "")
-            tabName = string.gsub(pID, ";#toggleterm#%d+", "")
-          end
-          if string.find(tail, "npm") then
-            tabName = string.gsub(tail, "%d+:", "")
-          end
-        else
-          tabName = vim.bo.filetype
-        end
-      end
-
-      if tabName == "" then
-        tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
-      end
-      return tabName
-    end
-
     require("tabby").setup()
     local colors = require("tokyonight.colors").setup()
     require("tabby.tabline").set(function(line)
