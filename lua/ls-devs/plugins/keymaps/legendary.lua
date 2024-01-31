@@ -210,7 +210,7 @@ return {
           opts = { noremap = true, silent = true },
         },
         {
-          "pt",
+          "td",
           "<cmd>Lspsaga peek_type_definition<CR>",
           description = "LSPSaga Peek Type Definition",
           opts = { noremap = true, silent = true },
