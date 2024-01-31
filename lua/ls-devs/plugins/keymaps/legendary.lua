@@ -23,18 +23,6 @@ return {
     },
   },
   config = function()
-    local is_diag_for_cur_pos = function()
-      local diagnostics = vim.diagnostic.get(0)
-      local pos = vim.api.nvim_win_get_cursor(0)
-      if #diagnostics == 0 then
-        return false
-      end
-      local message = vim.tbl_filter(function(d)
-        return d.col == pos[2] and d.lnum == pos[1] - 1
-      end, diagnostics)
-      return #message > 0
-    end
-
     local open_help_tab = function(help_cmd, topic)
       vim.cmd.tabe()
       local winnr = vim.api.nvim_get_current_win()
