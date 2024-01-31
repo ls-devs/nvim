@@ -4,7 +4,6 @@ return function()
 
   null_ls.setup({
     border = "rounded",
-    debug = true,
     sources = {
       -- PYTHON
       null_ls.builtins.code_actions.refactoring.with({
