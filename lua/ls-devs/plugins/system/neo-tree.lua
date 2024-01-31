@@ -165,13 +165,14 @@ return {
         ["<"] = "prev_source",
         [">"] = "next_source",
         ["i"] = "show_file_details",
+        ["O"] = "system_open",
       },
     },
     nesting_rules = {},
     filesystem = {
       filtered_items = {
         visible = false,
-        hide_dotfiles = false,
+        hide_dotfiles = true,
         hide_gitignored = true,
         hide_hidden = true,
         hide_by_name = {
@@ -181,6 +182,17 @@ return {
         always_show = {
           ".env",
           ".env.local",
+          ".env.mocked",
+          ".env.development",
+          ".env.integration",
+          ".env.valdiation",
+          ".env.production",
+          ".eslintrc.json",
+          ".eslintrc.js",
+          ".prettierrc.json",
+          ".prettierrc.js",
+          ".gitignore",
+          ".dockerignore",
         },
         never_show = {
           ".DS_Store",
@@ -243,6 +255,11 @@ return {
 
             require("neo-tree.sources.filesystem").navigate(state, state.path, file_path)
           end
+        end,
+        system_open = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          vim.fn.jobstart({ "xdg-open", path }, { detach = true })
         end,
       },
     },

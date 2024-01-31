@@ -33,9 +33,6 @@ return function()
           "handlebars",
         },
       }),
-      -- JSON
-      null_ls.builtins.diagnostics.jsonlint,
-      null_ls.builtins.formatting.jq,
       -- LUA
       null_ls.builtins.formatting.stylua,
       -- PRISMA
@@ -64,7 +61,6 @@ return function()
       null_ls.builtins.diagnostics.cmake_lint,
       null_ls.builtins.formatting.cmake_format,
       -- MARKDOWN
-      null_ls.builtins.code_actions.proselint,
       null_ls.builtins.diagnostics.markdownlint,
       null_ls.builtins.formatting.markdownlint,
       -- YAML
@@ -89,10 +85,6 @@ return function()
       null_ls.builtins.diagnostics.cpplint.with({
         filetypes = { "c", "cpp" },
         extra_args = { "--filter=", "-legal/copyright" },
-      }),
-      null_ls.builtins.formatting.clang_format.with({
-        filetypes = { "c", "cpp" },
-        extra_args = { "-style=", "file" },
       }),
       -- GIT
       null_ls.builtins.diagnostics.commitlint,
