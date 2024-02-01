@@ -4,6 +4,9 @@ return {
       runtime = {
         version = "LuaJIT",
       },
+      completion = {
+        callSnippet = "Replace",
+      },
       diagnostics = {
         globals = {
           "vim",

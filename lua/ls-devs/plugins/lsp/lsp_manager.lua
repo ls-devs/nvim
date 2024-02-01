@@ -16,7 +16,6 @@ return {
           opts = require("ls-devs.plugins.lsp.config.lspsaga"),
           dependencies = {
             { "nvim-tree/nvim-web-devicons" },
-            { "nvim-treesitter/nvim-treesitter" },
           },
         },
       },
