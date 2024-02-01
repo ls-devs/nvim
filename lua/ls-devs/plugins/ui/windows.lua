@@ -54,6 +54,7 @@ return {
           "DiffviewFiles",
           "terminal",
           "toggleterm",
+          "neotest-summary",
         },
       },
     })
