@@ -1,6 +1,7 @@
 return function()
-  local lsp_zero = require("lsp-zero")
+  vim.lsp.set_log_level("off")
 
+  local lsp_zero = require("lsp-zero")
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
   vim.diagnostic.config({
@@ -8,6 +9,15 @@ return function()
     update_in_insert = false,
     underline = true,
     severity_sort = true,
+    signs = {
+      priority = 1,
+      text = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN] = "",
+        [vim.diagnostic.severity.INFO] = "",
+        [vim.diagnostic.severity.HINT] = "",
+      },
+    },
     float = {
       focusable = true,
       style = "minmal",
