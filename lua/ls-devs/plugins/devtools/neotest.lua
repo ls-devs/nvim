@@ -22,18 +22,13 @@ return {
           end,
         }),
         require("neotest-vitest"),
-        require("neotest-rust")({
-          args = { "--no-capture" },
-          dap_adapter = "lldb",
-        }),
-        require("neotest-gtest").setup({}),
         require("neotest-playwright").adapter({
           options = {
             persist_project_selection = true,
             enable_dynamic_test_discovery = true,
           },
         }),
-        require("neotest-vim-test")({ ignore_filetypes = { "jest", "rust", "c", "cpp" } }),
+        require("neotest-vim-test"),
       },
       discovery = {
         filter_dir = function(name, rel_path, root)
@@ -118,14 +113,10 @@ return {
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
     "nvim-neotest/neotest-jest",
     "marilari88/neotest-vitest",
-    "rouge8/neotest-rust",
-    "alfaix/neotest-gtest",
-    "rcasia/neotest-bash",
     "thenbe/neotest-playwright",
     {
       "nvim-neotest/neotest-vim-test",
