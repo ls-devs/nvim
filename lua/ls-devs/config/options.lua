@@ -6,8 +6,15 @@ local keymap = vim.api.nvim_set_keymap
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 keymap("", "<Space>", "<Nop>", opts)
+
+-- Disable mouse except scrolling
+keymap("", "<LeftMouse>", "<nop>", opts)
+keymap("", "<2-LeftMouse>", "<nop>", opts)
+keymap("", "<RightMouse>", "<nop>", opts)
+keymap("", "<2-RightMouse>", "<nop>", opts)
+
+-- Options
 local options = {
   background = "dark",
   backup = false,
@@ -20,7 +27,7 @@ local options = {
   fileencoding = "utf-8",
   hlsearch = true,
   ignorecase = true,
-  mouse = "",
+  mouse = "a",
   pumheight = 10,
   showmode = true,
   smartcase = true,
@@ -52,7 +59,7 @@ local options = {
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 }
 
--- Keyboard
+-- Keyboard WSL
 if vim.fn.has("wsl") == 1 then
   vim.g.clipboard = {
     name = "WslClipboard",

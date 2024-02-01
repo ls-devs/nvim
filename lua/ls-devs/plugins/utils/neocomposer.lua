@@ -9,6 +9,7 @@ return {
     require("NeoComposer").setup({
       notify = false,
       delay_timer = 150,
+      queue_most_recent = true,
       colors = {
         bg = colors.none,
         fg = colors.orange,
@@ -17,7 +18,6 @@ return {
         green = colors.green,
         text_bg = colors.none,
       },
-      queue_most_recent = true,
       window = {
         border = "rounded",
         winhl = {
