@@ -1,5 +1,8 @@
 return function()
   require("mason").setup({
+    log_level = {
+      vim.log.levels.OFF,
+    },
     ui = {
       border = "rounded",
       icons = {
