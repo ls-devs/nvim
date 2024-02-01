@@ -12,12 +12,27 @@ return {
       },
 
       library = { plugins = { "neotest" }, types = true },
+      consumers = {
+        playwright = require("neotest-playwright.consumers").consumers,
+      },
       adapters = {
         require("neotest-jest")({
           jestCommand = "npm test --",
-          jestConfigFile = "custom.jest.config.ts",
+          jestConfigFile = function()
+            local file = vim.fn.expand("%:p")
+            if string.find(file, "/packages/") then
+              return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
+            end
+
+            return vim.fn.getcwd() .. "/jest.config.ts"
+          end,
+          jest_test_discovery = false,
           env = { CI = true },
-          cwd = function(path)
+          cwd = function()
+            local file = vim.fn.expand("%:p")
+            if string.find(file, "/packages/") then
+              return string.match(file, "(.-/[^/]+/)src")
+            end
             return vim.fn.getcwd()
           end,
         }),
@@ -31,9 +46,7 @@ return {
         require("neotest-vim-test"),
       },
       discovery = {
-        filter_dir = function(name, rel_path, root)
-          return name ~= "node_modules"
-        end,
+        enabled = false,
       },
     })
   end,
