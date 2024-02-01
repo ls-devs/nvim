@@ -15,6 +15,7 @@ return {
         red = colors.red,
         blue = colors.blue,
         green = colors.green,
+        text_bg = colors.none,
       },
       queue_most_recent = true,
       window = {
