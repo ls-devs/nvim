@@ -66,7 +66,7 @@ return {
       noremap = true,
     },
     {
-      "<leader>ns",
+      "<leader>nq",
       function()
         require("neotest").run.stop()
       end,
@@ -75,7 +75,7 @@ return {
       noremap = true,
     },
     {
-      "<leader>ns",
+      "<leader>na",
       function()
         require("neotest").run.attach()
       end,
