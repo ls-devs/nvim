@@ -26,7 +26,7 @@ require("lazy").setup({
     { import = "ls-devs.plugins.system" },
     { import = "ls-devs.plugins.system.telescope_extensions" },
     { import = "ls-devs.plugins.ui" },
-    { import = "ls-devs.plugins.utils" },
+    { import = "ls-devs.plugins.utilities" },
   },
   defaults = {
     lazy = true,

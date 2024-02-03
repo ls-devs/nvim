@@ -10,7 +10,6 @@ return {
         enabled = true,
         open = "botright split | resize 15",
       },
-
       library = { plugins = { "neotest" }, types = true },
       consumers = {
         playwright = require("neotest-playwright.consumers").consumers,
@@ -120,6 +119,13 @@ return {
         require("neotest").output_panel.open()
       end,
       desc = "NeoTest Panel Open",
+      silent = true,
+      noremap = true,
+    },
+    {
+      "<leader>sn",
+      require("ls-devs.utils.custom_functions").NeotestSetupProject,
+      desc = "Neotest Setup Project",
       silent = true,
       noremap = true,
     },
