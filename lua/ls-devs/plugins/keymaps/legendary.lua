@@ -23,13 +23,6 @@ return {
     },
   },
   config = function()
-    local open_help_tab = function(help_cmd, topic)
-      vim.cmd.tabe()
-      local winnr = vim.api.nvim_get_current_win()
-      vim.cmd("silent! " .. help_cmd .. " " .. topic)
-      vim.api.nvim_win_close(winnr, false)
-    end
-
     require("legendary").setup({
       keymaps = {
         {
@@ -106,17 +99,7 @@ return {
         },
         {
           "<leader>hg",
-          function()
-            vim.ui.input({ prompt = "Grep help for: " }, function(input)
-              if input == "" or not input then
-                return
-              end
-              open_help_tab("helpgrep", input)
-              if #vim.fn.getqflist() > 0 then
-                vim.cmd.copen()
-              end
-            end)
-          end,
+          require("ls-devs.utils.custom_functions").HelpGrep,
           description = "Help Grep",
           opts = { noremap = true, silent = true },
         },
@@ -279,22 +262,7 @@ return {
         },
         {
           "K",
-          function()
-            local winid = require("ufo").peekFoldedLinesUnderCursor()
-            if winid then
-              return
-            end
-            local ft = vim.bo.filetype
-            if vim.tbl_contains({ "vim", "help" }, ft) then
-              vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
-            elseif vim.tbl_contains({ "man" }, ft) then
-              vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
-            elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-              require("crates").show_popup()
-            else
-              vim.lsp.buf.hover()
-            end
-          end,
+          require("ls-devs.utils.custom_functions").CustomHover,
           description = "LSP Hover Doc",
           opts = { noremap = true, silent = true },
         },
@@ -331,7 +299,7 @@ return {
           "<c-b>",
           function()
             if not require("noice.lsp").scroll(-4) then
-              return "<c-f>"
+              return "<c-b>"
             end
           end,
           mode = { "n", "i", "s" },
@@ -379,22 +347,7 @@ return {
         },
         {
           "<leader>lg",
-          function()
-            local Terminal = require("toggleterm.terminal").Terminal
-            local lazygit = Terminal:new({
-              cmd = "lazygit",
-              direction = "float",
-              float_opts = {
-                border = "rounded",
-              },
-              on_open = function(term)
-                local keymap = vim.api.nvim_buf_set_keymap
-                keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-                keymap(term.bufnr, "t", "<esc>", "<cmd>close<CR>", { noremap = true, silent = true })
-              end,
-            })
-            lazygit:toggle()
-          end,
+          require("ls-devs.utils.custom_functions").LazyGit,
           description = "LazyGit",
           opts = { noremap = true, silent = true },
         },
@@ -406,12 +359,9 @@ return {
         smart_splits = {
           directions = { "h", "j", "k", "l" },
           mods = {
-            -- for moving cursor between windows
             move = "<C>",
-            -- for resizing windows
             resize = "<M>",
-            -- for swapping window buffers
-            swap = false, -- false disables creating a binding
+            swap = false,
           },
         },
         diffview = true,

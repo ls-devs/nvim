@@ -6,7 +6,7 @@ return {
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
-      { "FelipeLema/cmp-async-path" },
+      { url = "https://codeberg.org/FelipeLema/cmp-async-path" },
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-cmdline" },
       { "hrsh7th/cmp-nvim-lsp" },
