@@ -1,8 +1,8 @@
 local M = {}
 
--- Utils and Defaults
-local fs = require("efmls-configs.fs")
+-- Defaults & Utils
 local languages = require("efmls-configs.defaults").languages()
+local fs = require("efmls-configs.fs")
 
 -- JS / TS
 local eslint = require("efmls-configs.linters.eslint")
@@ -11,17 +11,15 @@ local prettier = require("efmls-configs.formatters.prettier")
 -- CSS / SCSS / LESS / SASS
 local stylelint = require("efmls-configs.linters.stylelint")
 
--- HTML
-local djlint = require("efmls-configs.linters.djlint")
-
 -- C / CPP
 local cpplint = require("efmls-configs.linters.cpplint")
 local clang_format = require("efmls-configs.formatters.clang_format")
 
--- Prisma
-
 M.languages = vim.tbl_extend("force", languages, {
-	html = { djlint, prettier },
+	html = {
+		require("efmls-configs.linters.djlint"),
+		prettier,
+	},
 	javascript = { eslint, prettier },
 	javascriptreact = { eslint, prettier },
 	typescript = { eslint, prettier },
@@ -35,7 +33,13 @@ M.languages = vim.tbl_extend("force", languages, {
 		prettier,
 	},
 	prisma = {
-		string.format("format '${FILENAME}'", fs.executable("prisma", "NODE")),
+		{
+			formatCommand = string.format("%s format", fs.executable("prisma", fs.Scope.NODE)),
+			formatStdin = false,
+			rootMarkers = {
+				"schema.prisma",
+			},
+		},
 	},
 	docker = {
 		require("efmls-configs.linters.hadolint"),

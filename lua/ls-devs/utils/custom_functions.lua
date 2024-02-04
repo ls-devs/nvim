@@ -50,7 +50,7 @@ M.NeotestSetupProject = function()
 						}),
 					},
 				})
-				require("neotest").setup_project(vim.fn.getcwd(), jestConf)
+				return require("neotest").setup_project(vim.fn.getcwd(), jestConf)
 			end
 			if choice == "neotest-vitest" then
 				local vitestConf = vim.tbl_deep_extend("force", neotestDefault, {
@@ -58,7 +58,7 @@ M.NeotestSetupProject = function()
 						require("neotest-vitest"),
 					},
 				})
-				require("neotest").setup_project(vim.fn.getcwd(), vitestConf)
+				return require("neotest").setup_project(vim.fn.getcwd(), vitestConf)
 			end
 			if choice == "neotest-playwright" then
 				local playwrightConf = vim.tbl_deep_extend("force", neotestDefault, {
@@ -74,7 +74,7 @@ M.NeotestSetupProject = function()
 						}),
 					},
 				})
-				require("neotest").setup_project(vim.fn.getcwd(), playwrightConf)
+				return require("neotest").setup_project(vim.fn.getcwd(), playwrightConf)
 			end
 			if choice == "neotest-vim-test" then
 				local vimTestConf = vim.tbl_deep_extend("force", neotestDefault, {
@@ -82,7 +82,7 @@ M.NeotestSetupProject = function()
 						require("neotest-vim-test"),
 					},
 				})
-				require("neotest").setup_project(vim.fn.getcwd(), vimTestConf)
+				return require("neotest").setup_project(vim.fn.getcwd(), vimTestConf)
 			end
 		end)
 	end)
@@ -102,7 +102,7 @@ M.HelpGrep = function()
 		end
 		open_help_tab("helpgrep", input)
 		if #vim.fn.getqflist() > 0 then
-			vim.cmd.copen()
+			return vim.cmd.copen()
 		end
 	end)
 end
@@ -121,7 +121,7 @@ M.LazyGit = function()
 			keymap(term.bufnr, "t", "<esc>", "<cmd>close<CR>", { noremap = true, silent = true })
 		end,
 	})
-	lazygit:toggle()
+	return lazygit:toggle()
 end
 
 M.CustomHover = function()
@@ -131,13 +131,41 @@ M.CustomHover = function()
 	end
 	local ft = vim.bo.filetype
 	if vim.tbl_contains({ "vim", "help" }, ft) then
-		vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
+		return vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
 	elseif vim.tbl_contains({ "man" }, ft) then
-		vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
+		return vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
 	elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-		require("crates").show_popup()
+		return require("crates").show_popup()
 	else
-		vim.lsp.buf.hover()
+		return vim.lsp.buf.hover()
+	end
+end
+
+M.CustomFormat = function(buf)
+	local function fmt_with_edit()
+		local win_state = vim.fn.winsaveview()
+		vim.lsp.buf.format({ name = "efm", timeout_ms = 5000 })
+		vim.cmd("edit!")
+		vim.fn.winrestview(win_state)
+	end
+
+	local matched_clients = vim.lsp.get_clients({ name = "efm", bufnr = buf })
+	if vim.tbl_isempty(matched_clients) then
+		return
+	end
+
+	local efm = matched_clients[1]
+	local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+	local formatters = efm.config.settings.languages[ft]
+
+	local matches = vim.tbl_filter(function(fmt)
+		return not fmt.formatStdin
+	end, formatters)
+
+	if not vim.tbl_isempty(matches) then
+		return fmt_with_edit()
+	else
+		return vim.lsp.buf.format({ name = "efm", timeout_ms = 5000 })
 	end
 end
 
