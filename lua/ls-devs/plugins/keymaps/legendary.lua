@@ -6,7 +6,6 @@ return {
 		{
 			"mrjones2014/smart-splits.nvim",
 			event = "VeryLazy",
-			build = "./kitty/install-kittens.bash",
 			opts = {
 				resize_mode = {
 					silent = true,

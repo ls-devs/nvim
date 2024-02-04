@@ -1,4 +1,4 @@
 return {
-  "chrisbra/Colorizer",
-  cmd = "ColorToggle",
+	"chrisbra/Colorizer",
+	cmd = "ColorToggle",
 }

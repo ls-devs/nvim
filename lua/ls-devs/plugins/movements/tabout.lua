@@ -1,4 +1,4 @@
 return {
-  "abecodes/tabout.nvim",
-  event = "BufReadPre",
+	"abecodes/tabout.nvim",
+	event = "BufReadPre",
 }
