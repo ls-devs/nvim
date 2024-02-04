@@ -206,7 +206,9 @@ return {
 				{
 					"<leader>fm",
 					mode = { "n", "v" },
-					require("ls-devs.utils.custom_functions").CustomFormat,
+					function()
+						return require("ls-devs.utils.custom_functions").CustomFormat(vim.api.nvim_get_current_buf())
+					end,
 					description = "LSP Buf Format",
 					opts = { noremap = true, silent = true },
 				},
