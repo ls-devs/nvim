@@ -141,4 +141,38 @@ M.CustomHover = function()
 	end
 end
 
+M.CustomFormat = function()
+	local function fmt_with_edit()
+		local win_state = vim.fn.winsaveview()
+		vim.lsp.buf.format({ name = "efm", timeout_ms = 5000 })
+
+		vim.cmd("edit!")
+		vim.fn.winrestview(win_state)
+	end
+
+	local function efm_fmt(buf)
+		local matched_clients = vim.lsp.get_clients({ name = "efm", bufnr = buf })
+
+		if vim.tbl_isempty(matched_clients) then
+			return
+		end
+
+		local efm = matched_clients[1]
+		local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+		local formatters = efm.config.settings.languages[ft]
+
+		local matches = vim.tbl_filter(function(fmt)
+			return not fmt.formatStdin
+		end, formatters)
+
+		if not vim.tbl_isempty(matches) then
+			fmt_with_edit()
+		else
+			vim.lsp.buf.format({ name = "efm", timeout_ms = 5000 })
+		end
+	end
+
+	efm_fmt(vim.api.nvim_get_current_buf())
+end
+
 return M

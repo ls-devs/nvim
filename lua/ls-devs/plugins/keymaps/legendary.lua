@@ -206,9 +206,7 @@ return {
 				{
 					"<leader>fm",
 					mode = { "n", "v" },
-					function()
-						vim.lsp.buf.format({ timeout_ms = 5000 })
-					end,
+					require("ls-devs.utils.custom_functions").CustomFormat,
 					description = "LSP Buf Format",
 					opts = { noremap = true, silent = true },
 				},
