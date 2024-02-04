@@ -1,4 +1,4 @@
 return {
-  "hrsh7th/cmp-nvim-lua",
-  ft = "lua",
+	"hrsh7th/cmp-nvim-lua",
+	ft = "lua",
 }

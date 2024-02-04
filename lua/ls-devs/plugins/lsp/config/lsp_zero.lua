@@ -36,15 +36,6 @@ return function()
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end)
 
-	-- Per-server custom config
-	local get_servers = require("mason-lspconfig").get_installed_servers
-	for _, server in pairs(get_servers()) do
-		local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
-		if has_config then
-			require("lspconfig")[server].setup(config)
-		end
-	end
-
 	-- Efm formatting config
 	local languages = require("ls-devs.plugins.lsp.config.efm_configs").languages
 	require("lspconfig").efm.setup({
@@ -62,4 +53,13 @@ return function()
 			documentRangeFormatting = true,
 		},
 	})
+
+	-- Per-server custom config
+	local get_servers = require("mason-lspconfig").get_installed_servers
+	for _, server in pairs(get_servers()) do
+		local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
+		if has_config then
+			require("lspconfig")[server].setup(config)
+		end
+	end
 end
