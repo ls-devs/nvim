@@ -4,6 +4,7 @@ return function()
     ensure_installed = {
       "python",
       "node2",
+      "bash-debug-adapter",
       "php",
       "codelldb",
       "js",

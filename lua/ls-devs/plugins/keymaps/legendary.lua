@@ -391,11 +391,11 @@ return {
             },
           },
         },
-        {
-          "LspAttach",
-          'lua require("null-ls").enable({})',
-          description = "Start null-ls when starting a lsp client",
-        },
+        -- {
+        --   "LspAttach",
+        --   'lua require("null-ls").enable({})',
+        --   description = "Start null-ls when starting a lsp client",
+        -- },
         {
           { "BufNewFile", "BufRead" },
           ":silent set filetype=glsl",
