@@ -21,6 +21,7 @@ return {
 				build = "make install_jsregexp",
 			},
 			{ "saadparwaiz1/cmp_luasnip" },
+			{ "lukas-reineke/cmp-under-comparator" },
 		},
 	},
 }
