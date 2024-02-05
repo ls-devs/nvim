@@ -267,17 +267,13 @@ return {
 			{
 				event = "neo_tree_window_after_open",
 				handler = function(args)
-					if args.position == "left" or args.position == "right" then
-						vim.cmd("wincmd =")
-					end
+					vim.cmd("set laststatus=0")
 				end,
 			},
 			{
 				event = "neo_tree_window_after_close",
 				handler = function(args)
-					if args.position == "left" or args.position == "right" then
-						vim.cmd("wincmd =")
-					end
+					vim.cmd("set laststatus=3")
 				end,
 			},
 			{

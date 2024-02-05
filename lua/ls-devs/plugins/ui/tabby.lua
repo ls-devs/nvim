@@ -43,7 +43,7 @@ return {
 		require("tabby.tabline").set(function(line)
 			return {
 				{
-					{ "  ", hl = { fg = colors.green, bg = colors.none, style = "bold" } },
+					{ " ", hl = { fg = colors.green, bg = colors.none, style = "bold" } },
 					line.sep(" ", { bg = colors.none }, { bg = colors.none }),
 				},
 				line.tabs().foreach(function(tab)
