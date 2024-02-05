@@ -8,59 +8,71 @@ return {
 			function()
 				require("conform").format({ async = true, lsp_fallback = true, timeout_ms = 5000 })
 			end,
-			mode = "",
+			mode = { "n", "v" },
 			desc = "Format buffer",
 		},
 	},
-	config = function()
-		require("conform").setup({
-			formatters_by_ft = {
-				html = { "prettierd" },
-				javascript = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				css = { "prettierd" },
-				scss = { "prettierd" },
-				sass = { "prettierd" },
-				less = { "prettierd" },
-				json = {
-					"prettierd",
-				},
-				markdown = {
-					"mdformat",
-				},
-				yaml = {
-					"yq",
-				},
-				lua = {
-					"stylua",
-				},
-				cmake = {
-					"gersemi",
-				},
-				sql = {
-					"sqlfluff",
-				},
-				sh = {
-					"shellharden",
-				},
-				python = { "isort", "black" },
-				prisma = { "prisma" },
+	opts = {
+		log_level = vim.log.levels.ERROR,
+		notify_on_error = false,
+		format_on_save = {
+			timeout_ms = 5000,
+			lsp_fallback = true,
+		},
+		formatters_by_ft = {
+			html = { "prettierd" },
+			javascript = { "prettierd" },
+			javascriptreact = { "prettierd" },
+			typescript = { "prettierd" },
+			typescriptreact = { "prettierd" },
+			css = { "prettierd" },
+			scss = { "prettierd" },
+			sass = { "prettierd" },
+			less = { "prettierd" },
+			json = {
+				"prettierd",
 			},
+			markdown = {
+				"mdformat",
+			},
+			yaml = {
+				"yq",
+			},
+			lua = {
+				"stylua",
+			},
+			cmake = {
+				"gersemi",
+			},
+			sql = {
+				"sqlfluff",
+			},
+			sh = {
+				"shellharden",
+			},
+			python = { "isort", "black" },
+			prisma = { "prisma" },
+			["*"] = { "codespell" },
+			["_"] = { "trim_whitespace" },
+		},
+		formatters = {
+			shfmt = {
+				prepend_args = { "-i", "2" },
+			},
+			clang_format = {
+				command = "clang-format",
+				args = { "-dump-config", "$FILENAME" },
+				stdin = false,
+				inherit = false,
+			},
+			gersemi = {
+				command = "gersemi",
+			},
+		},
+	},
+	config = function(_, opts)
+		require("conform").setup(vim.tbl_deep_extend("force", opts, {
 			formatters = {
-				shfmt = {
-					prepend_args = { "-i", "2" },
-				},
-				clang_format = {
-					command = "clang-format",
-					args = { "-dump-config", "$FILENAME" },
-					stdin = false,
-					inherit = false,
-				},
-				gersemi = {
-					command = "gersemi",
-				},
 				prisma = {
 					command = "prisma",
 					args = { "format", "--schema=", "$FILENAME" },
@@ -69,13 +81,6 @@ return {
 					require_cwd = true,
 				},
 			},
-			format_on_save = {
-				timeout_ms = 5000,
-				lsp_fallback = true,
-			},
-			init = function()
-				vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-			end,
-		})
+		}))
 	end,
 }

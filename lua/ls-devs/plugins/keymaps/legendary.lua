@@ -119,17 +119,6 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"<leader>p",
-					function()
-						local winid = require("ufo").peekFoldedLinesUnderCursor()
-						if not winid then
-							vim.lsp.buf.hover()
-						end
-					end,
-					description = "UFO Peek Under Cursor",
-					opts = { noremap = true, silent = true },
-				},
-				{
 					"<C-s>",
 					function()
 						return vim.lsp.buf.signature_help()
@@ -200,7 +189,7 @@ return {
 				{
 					"gt",
 					"<cmd>Lspsaga goto_type_definition<CR>",
-					description = "LSPSaga Goto Type Defintion",
+					description = "LSPSaga Goto Type Definition",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -365,11 +354,6 @@ return {
 					'lua require("notify").dismiss({ silent = true })',
 					pattern = "*",
 					description = "Notify dismiss",
-				},
-				{
-					{ "InsertEnter", "InsertChange", "BufReadPost", "BufWritePost", "BufWritePre", "InsertLeave" },
-					'lua require("lint").try_lint()',
-					description = "Lint File",
 				},
 				{
 					"VimLeave",

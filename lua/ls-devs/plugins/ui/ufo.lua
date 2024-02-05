@@ -1,9 +1,3 @@
-local ftMap = {
-	vim = "indent",
-	python = { "indent" },
-	git = "",
-}
-
 local handler = function(virtText, lnum, endLnum, width, truncate)
 	local newVirtText = {}
 	local suffix = (" 󱞤 %d "):format(endLnum - lnum)
@@ -34,43 +28,42 @@ end
 
 return {
 	"kevinhwang91/nvim-ufo",
-	event = "BufRead",
-	config = function()
-		require("ufo").setup({
-			provider_selector = function(bufnr, filetype, buftype)
-				return ftMap[filetype] or { "treesitter", "indent" }
-			end,
-			fold_virt_text_handler = handler,
-			preview = {
-				win_config = {
-					winhighlight = "Normal:Folded",
-					winblend = 0,
-				},
-				mappings = {
-					scrollU = "<C-u>",
-					scrollD = "<C-d>",
-					jumpTop = "[",
-					jumpBot = "]",
-				},
+	event = "BufReadPost",
+	opts = {
+		provider_selector = function(bufnr, filetype, buftype)
+			return { "treesitter", "indent" }
+		end,
+		fold_virt_text_handler = handler,
+		preview = {
+			win_config = {
+				winhighlight = "Normal:Folded",
+				winblend = 0,
 			},
-		})
-	end,
+			mappings = {
+				scrollU = "<C-u>",
+				scrollD = "<C-d>",
+				jumpTop = "[",
+				jumpBot = "]",
+			},
+		},
+	},
 	dependencies = {
 		{ "kevinhwang91/promise-async" },
 		{
 			"luukvbaal/statuscol.nvim",
-			config = function()
-				require("statuscol").setup({
-
-					foldfunc = "builtin",
-					setopt = true,
-					relculright = true,
+			opts = {
+				foldfunc = "builtin",
+				setopt = true,
+				relculright = true,
+			},
+			config = function(_, opts)
+				require("statuscol").setup(vim.tbl_deep_extend("force", opts, {
 					segments = {
 						{ text = { "%s" }, click = "v:lua.ScSa" },
 						{ text = { require("statuscol.builtin").lnumfunc, " " }, click = "v:lua.ScLa" },
 						{ text = { require("statuscol.builtin").foldfunc, "  " }, click = "v:lua.ScFa" },
 					},
-				})
+				}))
 			end,
 		},
 	},

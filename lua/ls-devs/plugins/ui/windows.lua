@@ -1,6 +1,31 @@
 return {
 	"anuvyklack/windows.nvim",
 	event = "BufReadPost",
+	init = function()
+		vim.o.winwidth = 10
+		vim.o.winminwidth = 10
+		vim.o.equalalways = false
+	end,
+	opts = {
+		ignore = {
+			buftype = { "quickfix" },
+			filetype = {
+				"NvimTree",
+				"neo-tree",
+				"undotree",
+				"gundo",
+				"Diffview",
+				"DiffviewFiles",
+				"terminal",
+				"toggleterm",
+				"neotest-summary",
+			},
+		},
+	},
+	dependencies = {
+		"anuvyklack/middleclass",
+		"anuvyklack/animation.nvim",
+	},
 	keys = {
 		{
 			"<leader>wm",
@@ -37,30 +62,5 @@ return {
 			silent = true,
 			noremap = true,
 		},
-	},
-	config = function()
-		vim.o.winwidth = 10
-		vim.o.winminwidth = 10
-		vim.o.equalalways = false
-		require("windows").setup({
-			ignore = {
-				buftype = { "quickfix" },
-				filetype = {
-					"NvimTree",
-					"neo-tree",
-					"undotree",
-					"gundo",
-					"Diffview",
-					"DiffviewFiles",
-					"terminal",
-					"toggleterm",
-					"neotest-summary",
-				},
-			},
-		})
-	end,
-	dependencies = {
-		"anuvyklack/middleclass",
-		"anuvyklack/animation.nvim",
 	},
 }

@@ -20,7 +20,7 @@ return function()
 		},
 		float = {
 			focusable = true,
-			style = "minmal",
+			style = "minimal",
 			border = "rounded",
 			source = "always",
 			header = "",

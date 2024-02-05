@@ -1,16 +1,18 @@
 return {
 	"nvim-zh/colorful-winsep.nvim",
 	event = { "BufReadPost" },
-	config = function()
-		local c = require("tokyonight.colors").setup()
-		require("colorful-winsep").setup({
+	opts = {
+		interval = 30,
+		no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree" },
+		symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
+		close_event = function() end,
+	},
+	config = function(_, opts)
+		local colors = require("tokyonight.colors").setup()
+		require("colorful-winsep").setup(vim.tbl_deep_extend("force", opts, {
 			highlight = {
-				fg = c.orange,
+				fg = colors.orange,
 			},
-			interval = 30,
-			no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree" },
-			symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
-			close_event = function() end,
 			create_event = function()
 				local win_n = require("colorful-winsep.utils").calculate_number_windows()
 				if win_n == 2 then
@@ -22,6 +24,6 @@ return {
 					end
 				end
 			end,
-		})
+		}))
 	end,
 }
