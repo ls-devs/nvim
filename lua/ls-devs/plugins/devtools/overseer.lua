@@ -1,67 +1,46 @@
--- Fix Overseer with Windows
-local isOpen = false
-function OverseerToggle()
-	if not isOpen then
-		vim.cmd(":OverseerToggle")
-		if vim.fn.exists(":WindowsDisableAutowidth") > 0 then
-			vim.cmd(":WindowsDisableAutowidth")
-		end
-		isOpen = true
-	else
-		vim.cmd(":OverseerToggle")
-		if vim.fn.exists(":WindowsEnableAutowidth") > 0 then
-			vim.cmd(":WindowsEnableAutowidth")
-			vim.cmd(":WindowsEqualize")
-		end
-		isOpen = false
-	end
-end
-
 return {
 	"stevearc/overseer.nvim",
-	config = function()
-		require("overseer").setup({
-			form = {
-				win_opts = {
-					winblend = 0,
-				},
+	opts = {
+		form = {
+			win_opts = {
+				winblend = 0,
 			},
-			confirm = {
-				win_opts = {
-					winblend = 0,
-				},
+		},
+		confirm = {
+			win_opts = {
+				winblend = 0,
 			},
-			task_win = {
-				win_opts = {
-					winblend = 0,
-				},
+		},
+		task_win = {
+			win_opts = {
+				winblend = 0,
 			},
-			task_list = {
-				bindings = {
-					["?"] = "ShowHelp",
-					["g?"] = "ShowHelp",
-					["<CR>"] = "RunAction",
-					["<C-e>"] = "Edit",
-					["o"] = "Open",
-					["<C-v>"] = "OpenVsplit",
-					["<C-s>"] = "OpenSplit",
-					["<C-f>"] = "OpenFloat",
-					["<C-q>"] = "OpenQuickFix",
-					["p"] = "TogglePreview",
-					["<C-o>"] = "IncreaseDetail",
-					["<C-c>"] = "DecreaseDetail",
-					["L"] = "IncreaseAllDetail",
-					["H"] = "DecreaseAllDetail",
-					["["] = "DecreaseWidth",
-					["]"] = "IncreaseWidth",
-					["{"] = "PrevTask",
-					["}"] = "NextTask",
-					["<C-k>"] = "ScrollOutputUp",
-					["<C-j>"] = "ScrollOutputDown",
-				},
+		},
+		task_list = {
+			bindings = {
+				["?"] = "ShowHelp",
+				["g?"] = "ShowHelp",
+				["<CR>"] = "RunAction",
+				["<C-e>"] = "Edit",
+				["o"] = "Open",
+				["<C-v>"] = "OpenVsplit",
+				["<C-s>"] = "OpenSplit",
+				["<C-f>"] = "OpenFloat",
+				["<C-q>"] = "OpenQuickFix",
+				["p"] = "TogglePreview",
+				["<C-o>"] = "IncreaseDetail",
+				["<C-c>"] = "DecreaseDetail",
+				["L"] = "IncreaseAllDetail",
+				["H"] = "DecreaseAllDetail",
+				["["] = "DecreaseWidth",
+				["]"] = "IncreaseWidth",
+				["{"] = "PrevTask",
+				["}"] = "NextTask",
+				["<C-k>"] = "ScrollOutputUp",
+				["<C-j>"] = "ScrollOutputDown",
 			},
-		})
-	end,
+		},
+	},
 	keys = {
 		{
 			"<leader>or",
@@ -72,7 +51,7 @@ return {
 		},
 		{
 			"<leader>ot",
-			"<cmd>lua OverseerToggle()<CR>",
+			require("ls-devs.utils.custom_functions").OverseerToggle,
 			desc = "Overseer Toggle",
 			noremap = true,
 			silent = true,

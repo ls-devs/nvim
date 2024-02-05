@@ -1,16 +1,23 @@
 return {
 	"nvim-neotest/neotest",
-	config = function()
-		require("neotest").setup({
-			output = {
-				enabled = true,
-				open_on_run = true,
-			},
-			output_panel = {
-				enabled = true,
-				open = "botright split | resize 15",
-			},
-			library = { plugins = { "neotest" }, types = true },
+	opts = {
+		output = {
+			enabled = true,
+			open_on_run = true,
+		},
+		output_panel = {
+			enabled = true,
+			open = "botright split | resize 15",
+		},
+		library = { plugins = { "neotest" }, types = true },
+		consumers = {},
+		adapters = {},
+		discovery = {
+			enabled = false,
+		},
+	},
+	config = function(_, opts)
+		require("neotest").setup(vim.tbl_deep_extend("force", opts, {
 			consumers = {
 				playwright = require("neotest-playwright.consumers").consumers,
 			},
@@ -44,10 +51,7 @@ return {
 				}),
 				require("neotest-vim-test"),
 			},
-			discovery = {
-				enabled = false,
-			},
-		})
+		}))
 	end,
 	keys = {
 		{

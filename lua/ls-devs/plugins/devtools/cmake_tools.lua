@@ -56,7 +56,7 @@ return {
 			split_size = 11,
 			single_terminal_per_instance = true, -- Single viewport, multiple windows
 			single_terminal_per_tab = true, -- Single viewport per tab
-			keep_terminal_static_location = true, -- Static location of the viewport if avialable
+			keep_terminal_static_location = true, -- Static location of the viewport if available
 			start_insert_in_launch_task = false, -- If you want to enter terminal with :startinsert upon using :CMakeRun
 			start_insert_in_other_tasks = false, -- If you want to enter terminal with :startinsert upon launching all other cmake tasks in the terminal. Generally set as false
 			focus_on_main_terminal = false, -- Focus on cmake terminal when cmake task is launched. Only used if cmake_always_use_terminal is true.

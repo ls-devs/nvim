@@ -40,7 +40,7 @@ return {
 		{
 			"<leader>jca",
 			"<cmd>call jukit#splits#close_output_and_history(1)<CR>",
-			description = "Jukit Splits Close Ouput & History",
+			description = "Jukit Splits Close Output & History",
 			noremap = true,
 			silent = true,
 		},

@@ -39,7 +39,6 @@ return {
 			end,
 		}
 
-		-- Config
 		local config = {
 			extensions = {
 				"lazy",
@@ -117,6 +116,7 @@ return {
 			end,
 			padding = { right = 1 },
 		})
+
 		ins_left({
 			"filesize",
 			cond = conditions.buffer_not_empty,
@@ -125,6 +125,7 @@ return {
 		ins_left({ "location", color = { fg = colors.white, gui = "bold" } })
 
 		ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+
 		ins_left({
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
@@ -137,6 +138,7 @@ return {
 			},
 			colored = true,
 		})
+
 		ins_left({
 			function()
 				return os.date("%H:%M:%S", os.time())
@@ -146,6 +148,7 @@ return {
 				gui = "bold",
 			},
 		})
+
 		ins_left({
 			function()
 				return require("lazy.status").updates()
@@ -153,12 +156,14 @@ return {
 			cond = require("lazy.status").has_updates,
 			color = { fg = colors.orange },
 		})
+
 		ins_right({
 			function()
 				return require("NeoComposer.ui").status_recording()
 			end,
 			padding = { left = 0, right = 0 },
 		})
+
 		ins_right({
 			function()
 				local cur_buf = vim.api.nvim_get_current_buf()
@@ -168,7 +173,6 @@ return {
 		})
 
 		ins_right({
-			-- Lsp server name .
 			function()
 				local msg = "No Active Lsp"
 				local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })

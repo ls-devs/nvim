@@ -9,7 +9,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
 	},
-	config = {
+	opts = {
 		leader = " ", -- the key you want to use as the leader, default is space
 		homerow = 2, -- the row you want to use as the homerow, default is 2
 		powerFingers = { 2, 3, 6, 7 }, -- the fingers you want to use as the powerfingers, default is {2,3,6,7}

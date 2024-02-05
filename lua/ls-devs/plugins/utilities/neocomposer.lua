@@ -1,15 +1,29 @@
 return {
 	"ecthelionvi/NeoComposer.nvim",
 	event = "BufReadPost",
-	config = function()
-		-- Disable "q" for macro
-		vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
+	opts = {
+		notify = false,
+		delay_timer = 150,
+		queue_most_recent = true,
+		window = {
+			border = "rounded",
+			winhl = {
+				Normal = "Normal",
+			},
+		},
+		keymaps = {
+			play_macro = "@",
+			yank_macro = "yq",
+			stop_macro = "cq",
+			toggle_record = "Q",
+			cycle_next = "<leader>qn",
+			cycle_prev = "<leader>qp",
+			toggle_macro_menu = "<A-q>",
+		},
+	},
+	config = function(_, opts)
 		local colors = require("tokyonight.colors").setup()
-
-		require("NeoComposer").setup({
-			notify = false,
-			delay_timer = 150,
-			queue_most_recent = true,
+		require("NeoComposer").setup(vim.tbl_deep_extend("force", opts, {
 			colors = {
 				bg = colors.none,
 				fg = colors.orange,
@@ -18,23 +32,11 @@ return {
 				green = colors.green,
 				text_bg = colors.none,
 			},
-			window = {
-				border = "rounded",
-				winhl = {
-					Normal = "Normal",
-				},
-			},
-			keymaps = {
-				play_macro = "@",
-				yank_macro = "yq",
-				stop_macro = "cq",
-				toggle_record = "Q",
-				cycle_next = "<leader>qn",
-				cycle_prev = "<leader>qp",
-				toggle_macro_menu = "<A-q>",
-			},
-		})
+		}))
 		require("telescope").load_extension("macros")
+	end,
+	init = function()
+		vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
 	end,
 	keys = {
 		{

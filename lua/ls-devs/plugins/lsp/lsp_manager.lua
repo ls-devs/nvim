@@ -7,15 +7,18 @@ return {
 		-- Mason & Managers
 		{
 			"williamboman/mason-lspconfig.nvim",
-			config = require("ls-devs.plugins.lsp.config.mason_lspconfig"),
+			opts = require("ls-devs.plugins.lsp.config.mason_lspconfig").opts,
+			config = function(_, opts)
+				require("ls-devs.plugins.lsp.config.mason_lspconfig").config(opts)
+			end,
 			dependencies = {
 				{
 					"jay-babu/mason-nvim-dap.nvim",
-					config = require("ls-devs.plugins.lsp.config.mason_nvim_dap"),
+					opts = require("ls-devs.plugins.lsp.config.mason_nvim_dap"),
 				},
 				{
 					"williamboman/mason.nvim",
-					config = require("ls-devs.plugins.lsp.config.mason"),
+					opts = require("ls-devs.plugins.lsp.config.mason"),
 				},
 				{ "neovim/nvim-lspconfig" },
 			},

@@ -10,13 +10,12 @@ return {
 			defaults = {
 				layout_stategy = "vertical",
 				layout_config = {
-					width = 0.85,
+					width = 0.88,
 				},
 				file_ignore_patterns = {
 					".git/",
 					"node_modules/*",
 				},
-				-- center = { width = 10 },
 				mappings = {
 					i = {
 						["<C-j>"] = actions.move_selection_next,
