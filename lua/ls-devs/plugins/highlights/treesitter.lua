@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	cmd = { "TSUpdate", "TSInstall" },
 	event = "BufReadPost",
 	opts = {
 		ignore_install = {},
@@ -112,6 +113,9 @@ return {
 			},
 		},
 	},
+	config = function(_, opts)
+		require("nvim-treesitter.configs").setup(opts)
+	end,
 	init = function()
 		vim.cmd([[hi rainbowcol1 guifg=#7f849c]])
 	end,
