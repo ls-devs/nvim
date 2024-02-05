@@ -36,8 +36,6 @@ return {
 				lua = {
 					"stylua",
 				},
-				c = { "clang_format " },
-				cpp = { "clang_format " },
 				cmake = {
 					"gersemi",
 				},
@@ -55,7 +53,10 @@ return {
 					prepend_args = { "-i", "2" },
 				},
 				clang_format = {
-					command = "clang_format",
+					command = "clang-format",
+					args = { "-dump-config", "$FILENAME" },
+					stdin = false,
+					inherit = false,
 				},
 				gersemi = {
 					command = "gersemi",
@@ -68,7 +69,6 @@ return {
 					require_cwd = true,
 				},
 			},
-
 			format_on_save = {
 				timeout_ms = 500,
 				lsp_fallback = true,

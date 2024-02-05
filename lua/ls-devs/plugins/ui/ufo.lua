@@ -38,11 +38,7 @@ return {
 	config = function()
 		require("ufo").setup({
 			provider_selector = function(bufnr, filetype, buftype)
-				-- if you prefer treesitter provider rather than lsp,
 				return ftMap[filetype] or { "treesitter", "indent" }
-				-- return ftMap[filetype]
-
-				-- refer to ./doc/example.lua for detail
 			end,
 			fold_virt_text_handler = handler,
 			preview = {
@@ -66,13 +62,13 @@ return {
 			config = function()
 				require("statuscol").setup({
 
-					-- foldfunc = "builtin",
-					-- setopt = true,
+					foldfunc = "builtin",
+					setopt = true,
 					relculright = true,
 					segments = {
-						{ text = { require("statuscol.builtin").foldfunc }, click = "v:lua.ScFa" },
 						{ text = { "%s" }, click = "v:lua.ScSa" },
 						{ text = { require("statuscol.builtin").lnumfunc, " " }, click = "v:lua.ScLa" },
+						{ text = { require("statuscol.builtin").foldfunc, "  " }, click = "v:lua.ScFa" },
 					},
 				})
 			end,

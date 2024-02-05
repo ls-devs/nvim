@@ -30,8 +30,6 @@ return function()
 
 	-- Lsp-Zero default config
 	lsp_zero.on_attach(function(client, bufnr)
-		client.server_capabilities.documentFormattingProvider = false
-		client.server_capabilities.documentRangeFormattingProvider = false
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end)
 
