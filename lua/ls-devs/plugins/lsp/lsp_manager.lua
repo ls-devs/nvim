@@ -20,10 +20,5 @@ return {
 				{ "neovim/nvim-lspconfig" },
 			},
 		},
-		-- Formatter
-		{
-			"creativenull/efmls-configs-nvim",
-			version = "v1.x.x",
-		},
 	},
 }

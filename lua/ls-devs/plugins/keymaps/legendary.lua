@@ -204,15 +204,6 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"<leader>fm",
-					mode = { "n", "v" },
-					function()
-						return require("ls-devs.utils.custom_functions").CustomFormat(vim.api.nvim_get_current_buf())
-					end,
-					description = "LSP Buf Format",
-					opts = { noremap = true, silent = true },
-				},
-				{
 					"<leader>cl",
 					"<cmd>Lspsaga show_line_diagnostics<CR>",
 					description = "LSPSaga Show Line Diagnostics",
@@ -370,47 +361,15 @@ return {
 			},
 			autocmds = {
 				{
-					"VimLeave",
-					":silent !prettierd stop",
-					description = "Stop prettierd",
-					opts = {
-						pattern = {
-							"*.jsx",
-							"*.tsx",
-							"*.vue",
-							"*.js",
-							"*.ts",
-							"*.css",
-							"*.scss",
-							"*.less",
-							"*.html",
-							"*.json",
-							"*.jsonc",
-							"*.yaml",
-							"*.md",
-							"*.mdx",
-							"*.graphql",
-						},
-					},
-				},
-				-- {
-				--   "LspAttach",
-				--   'lua require("null-ls").enable({})',
-				--   description = "Start null-ls when starting a lsp client",
-				-- },
-				{
-					{ "BufNewFile", "BufRead" },
-					":silent set filetype=glsl",
-					description = "Set filetype to glsl",
-					opts = {
-						pattern = { "*.vert", "*.frag" },
-					},
-				},
-				{
 					{ "InsertEnter", "InsertChange" },
 					'lua require("notify").dismiss({ silent = true })',
 					pattern = "*",
 					description = "Notify dismiss",
+				},
+				{
+					{ "InsertEnter", "InsertChange", "BufReadPost", "BufWritePost", "BufWritePre", "InsertLeave" },
+					'lua require("lint").try_lint()',
+					description = "Lint File",
 				},
 			},
 			sort = {

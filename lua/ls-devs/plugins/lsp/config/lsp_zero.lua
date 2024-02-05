@@ -30,29 +30,10 @@ return function()
 
 	-- Lsp-Zero default config
 	lsp_zero.on_attach(function(client, bufnr)
-		-- Disable all formatting capabilities and only use EFM
 		client.server_capabilities.documentFormattingProvider = false
 		client.server_capabilities.documentRangeFormattingProvider = false
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end)
-
-	-- Efm formatting config
-	local languages = require("ls-devs.plugins.lsp.config.efm_configs").languages
-	require("lspconfig").efm.setup({
-		on_attach = function(client, bufnr)
-			client.server_capabilities.documentFormattingProvider = true
-			client.server_capabilities.documentRangeFormattingProvider = true
-		end,
-		filetypes = vim.tbl_keys(languages),
-		settings = {
-			rootMarkers = { ".git/" },
-			languages = languages,
-		},
-		init_options = {
-			documentFormatting = true,
-			documentRangeFormatting = true,
-		},
-	})
 
 	-- Per-server custom config
 	local get_servers = require("mason-lspconfig").get_installed_servers

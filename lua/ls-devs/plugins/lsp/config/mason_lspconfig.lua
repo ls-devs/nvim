@@ -31,7 +31,6 @@ return function()
 			"graphql",
 			"wgsl_analyzer",
 			"svelte",
-			"efm",
 			"taplo",
 			"vls",
 			"kotlin_language_server",
@@ -40,7 +39,6 @@ return function()
 		handlers = {
 			lsp_zero.default_setup,
 			rust_analyzer = lsp_zero.noop(),
-			efm = lsp_zero.noop(),
 			clangd = lsp_zero.noop(),
 			cmake = lsp_zero.noop(),
 		},
