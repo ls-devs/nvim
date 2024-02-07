@@ -51,11 +51,12 @@ local options = {
 	scrolloff = 8,
 	sidescrolloff = 12,
 	winblend = 0,
-	foldlevel = 99,
-	foldlevelstart = 99,
-	foldmethod = "manual",
+	startofline = true,
 	foldenable = true,
+	foldlevelstart = 99,
+	foldlevel = 99,
 	foldcolumn = "1",
+	foldmethod = "manual",
 	fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 }
 

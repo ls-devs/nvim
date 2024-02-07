@@ -21,6 +21,7 @@ return {
 		},
 		formatters_by_ft = {
 			html = { "prettierd" },
+			htmldjango = { "djlint" },
 			javascript = { "prettierd" },
 			javascriptreact = { "prettierd" },
 			typescript = { "prettierd" },
@@ -57,22 +58,7 @@ return {
 			},
 			python = { "isort", "black" },
 			prisma = { "prisma" },
-			["*"] = { "codespell" },
 			["_"] = { "trim_whitespace" },
-		},
-		formatters = {
-			shfmt = {
-				prepend_args = { "-i", "2" },
-			},
-			clang_format = {
-				command = "clang-format",
-				args = { "-dump-config", "$FILENAME" },
-				stdin = false,
-				inherit = false,
-			},
-			gersemi = {
-				command = "gersemi",
-			},
 		},
 	},
 	config = function(_, opts)

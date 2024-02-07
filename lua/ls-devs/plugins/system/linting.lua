@@ -5,6 +5,7 @@ return {
 		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 		linters_by_ft = {
 			html = { "djlint" },
+			htmldjango = { "djlint" },
 			css = { "stylelint" },
 			scss = { "stylelint" },
 			sass = { "stylelint" },
@@ -19,7 +20,6 @@ return {
 			cmake = { "cmakelint" },
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
-			["*"] = { "codespell" },
 		},
 		linters = {},
 	},

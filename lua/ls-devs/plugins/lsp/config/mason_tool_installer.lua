@@ -47,7 +47,6 @@ return {
 		"cpplint",
 		"sqlfluff",
 		"shellcheck",
-		"codespell",
 
 		-- Formatters
 		"prettierd",
