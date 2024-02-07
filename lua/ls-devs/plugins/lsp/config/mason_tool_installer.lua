@@ -79,5 +79,5 @@ return {
 
 	start_delay = 3000,
 
-	debounce_hours = 1,
+	debounce_hours = 5,
 }

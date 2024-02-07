@@ -120,7 +120,6 @@ return {
 				},
 				{
 					"<C-s>",
-					mode = "i",
 					function()
 						return vim.lsp.buf.signature_help()
 					end,

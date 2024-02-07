@@ -3,6 +3,9 @@ return {
 	event = "VeryLazy",
 	branch = "v3.x",
 	config = require("ls-devs.plugins.lsp.config.lsp_zero"),
+	init = function()
+		vim.g.lsp_zero_ui_float_border = 0
+	end,
 	dependencies = {
 		-- Mason & Managers
 		{

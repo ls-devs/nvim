@@ -112,9 +112,6 @@ M.LazyGit = function()
 	local lazygit = Terminal:new({
 		cmd = "lazygit",
 		direction = "float",
-		float_opts = {
-			border = "rounded",
-		},
 		on_open = function(term)
 			local keymap = vim.api.nvim_buf_set_keymap
 			keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
