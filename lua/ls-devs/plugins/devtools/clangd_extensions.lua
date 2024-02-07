@@ -1,6 +1,6 @@
 return {
 	"p00f/clangd_extensions.nvim",
-	event = { "BufReadPost *.cpp *.c" },
+	ft = { "c", "cpp" },
 	opts = {
 		server = {
 			on_attach = function(client, bufnr)

@@ -22,6 +22,7 @@ return {
 		"marksman",
 		"rust_analyzer",
 		"pyright",
+		"clangd",
 		"cmake",
 		"lua_ls",
 		"clangd",
@@ -51,12 +52,15 @@ return {
 		-- Formatters
 		"prettierd",
 		"mdformat",
+		"cmakelang",
+		"clang-format",
 		"yq",
 		"stylua",
 		"gersemi",
 		"black",
 		"isort",
-		"sqlfmt",
+		"sql-formatter",
+		"rustfmt",
 		"shellharden",
 
 		-- Debuggers

@@ -48,7 +48,7 @@ return {
 			highlights.LeapLabelSecondary = { bg = colors.black, fg = colors.blue }
 			highlights.WinBar = { bg = colors.none }
 			highlights.WinBarNC = { bg = colors.none }
-			highlights.Blame = { bg = colors.bg_highlight, fg = colors.dark5 }
+			highlights.GitSignsCurrentLineBlame = { bg = colors.bg_highlight, fg = colors.dark5 }
 			highlights.Folded = { bg = colors.none }
 			highlights.NeoTreeFileStats = { fg = colors.terminal_black }
 			highlights.CmpItemKindVariable = { fg = colors.magenta }

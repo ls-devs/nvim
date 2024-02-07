@@ -28,6 +28,8 @@ return {
 			css = { "prettierd" },
 			scss = { "prettierd" },
 			sass = { "prettierd" },
+			c = { "clang_format" },
+			cpp = { "clang_format" },
 			less = { "prettierd" },
 			json = {
 				"prettierd",
@@ -41,11 +43,14 @@ return {
 			lua = {
 				"stylua",
 			},
+			rust = {
+				"rustfmt",
+			},
 			cmake = {
 				"gersemi",
 			},
 			sql = {
-				"sqlfmt",
+				"sql_formatter",
 			},
 			sh = {
 				"shellharden",
