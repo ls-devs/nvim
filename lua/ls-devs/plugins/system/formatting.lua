@@ -45,7 +45,7 @@ return {
 				"gersemi",
 			},
 			sql = {
-				"sqlfluff",
+				"sqlfmt",
 			},
 			sh = {
 				"shellharden",
