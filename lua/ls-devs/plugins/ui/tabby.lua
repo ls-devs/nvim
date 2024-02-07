@@ -96,6 +96,7 @@ return {
 		{
 			"<A-f>",
 			":tabn<CR>",
+			mode = { "n", "i" },
 			desc = "Tab Next",
 			silent = true,
 			noremap = true,
@@ -103,6 +104,7 @@ return {
 		{
 			"<A-b>",
 			":tabp<CR>",
+			mode = { "n", "i" },
 			desc = "Tab Previous",
 			silent = true,
 			noremap = true,

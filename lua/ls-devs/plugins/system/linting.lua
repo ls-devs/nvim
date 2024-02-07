@@ -16,7 +16,7 @@ return {
 			gitcommit = { "gitlint" },
 			c = { "cpplint" },
 			cpp = { "cpplint" },
-			cmake = { "cmake-lint" },
+			cmake = { "cmakelint" },
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
 		},
