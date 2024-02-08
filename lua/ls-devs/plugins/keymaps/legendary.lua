@@ -128,150 +128,10 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"gh",
-					"<cmd>Lspsaga finder<CR>",
-					description = "LSPSaga Finder",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>ca",
-					{
-						n = function()
-							if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-								return require("lspsaga.codeaction"):code_action()
-							end
-						end,
-
-						v = function()
-							if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-								return require("lspsaga.codeaction"):code_action()
-							end
-						end,
-					},
-					description = "LSPSaga Code Actions",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>rn",
-					"<cmd>Lspsaga rename<CR>",
-					description = "LSPSaga Rename",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>rnw",
-					"<cmd>Lspsaga rename ++project<CR>",
-					description = "LSPSaga Rename Workspace",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"gp",
-					"<cmd>Lspsaga peek_definition<CR>",
-					description = "LSPSaga Peek Definition",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"gD",
-					"<cmd>lua vim.lsp.buf.declaration()<CR>",
-					description = "LSP Buf Declaration",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"gd",
-					"<cmd>Lspsaga goto_definition<CR>",
-					description = "LSPSaga Goto Definition",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"td",
-					"<cmd>Lspsaga peek_type_definition<CR>",
-					description = "LSPSaga Peek Type Definition",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"gt",
-					"<cmd>Lspsaga goto_type_definition<CR>",
-					description = "LSPSaga Goto Type Definition",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>cl",
-					"<cmd>Lspsaga show_line_diagnostics<CR>",
-					description = "LSPSaga Show Line Diagnostics",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>cb",
-					"<cmd>Lspsaga show_buf_diagnostics<CR>",
-					description = "LSPSaga Show Buf Diagnostics",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>cw",
-					"<cmd>Lspsaga show_workspace_diagnostics<CR>",
-					description = "LSPSaga Show Workspace Diagnostics",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>cc",
-					"<cmd>Lspsaga show_cursor_diagnostics<CR>",
-					description = "LSPSaga Show Cursor Diagnostics",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>dp",
-					function()
-						if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-							return require("lspsaga.diagnostic"):goto_prev()
-						end
-					end,
-					description = "LSPSaga Diagnostic Jump Prev",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>dn",
-					function()
-						if vim.bo.filetype ~= "cpp" or vim.bo.filetype ~= "c" then
-							return require("lspsaga.diagnostic"):goto_next()
-						end
-					end,
-					description = "LSPSaga Diagnostic Jump Next",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>lo",
-					"<cmd>Lspsaga outline<CR>",
-					description = "LSPSaga Outline",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"K",
-					require("ls-devs.utils.custom_functions").CustomHover,
-					description = "LSP Hover Doc",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>K",
-					"<cmd>Lspsaga hover_doc ++keep<CR>",
-					description = "LSPSaga Hover Doc Keep",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>ci",
-					"<cmd>Lspsaga incoming_calls<CR>",
-					description = "LSPSaga Incoming Calls",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>co",
-					"<cmd>Lspsaga outgoing_calls<CR>",
-					description = "LSPSaga Outgoing Calls",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<c-f>",
+					"<C-f>",
 					function()
 						if not require("noice.lsp").scroll(4) then
-							return "<c-f>"
+							return "<C-f>"
 						end
 					end,
 					mode = { "n", "i", "s" },
@@ -279,10 +139,10 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"<c-b>",
+					"<C-b>",
 					function()
 						if not require("noice.lsp").scroll(-4) then
-							return "<c-b>"
+							return "<C-b>"
 						end
 					end,
 					mode = { "n", "i", "s" },
@@ -290,13 +150,12 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"<S-Enter>",
+					"<A-x>",
 					function()
-						require("noice").redirect(vim.fn.getcmdline())
+						return require("noice").redirect(vim.fn.getcmdline())
 					end,
-					mode = { "c" },
+					mode = "c",
 					description = "Redirect Cmdline",
-					opts = { noremap = true, silent = true },
 				},
 				{
 					"<leader>l",

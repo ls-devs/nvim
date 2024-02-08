@@ -1,6 +1,6 @@
 return {
 	"mrcjkb/rustaceanvim",
-	version = "^4", -- Recommended,
+	version = "^4",
 	ft = { "rust" },
 	init = function()
 		vim.g.rustaceanvim = function()
@@ -13,7 +13,7 @@ return {
 			local cfg = require("rustaceanvim.config")
 			return {
 				server = {
-					capabilities = require("lsp-zero").get_capabilities(),
+					capabilities = require("cmp_nvim_lsp").default_capabilities(),
 				},
 				dap = {
 					adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
