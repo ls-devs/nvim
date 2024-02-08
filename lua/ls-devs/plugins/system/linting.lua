@@ -32,7 +32,7 @@ return {
 
 		local nvim_lint = require("lint")
 
-		if #opts.linter then
+		if opts.linters then
 			for name, linter in pairs(opts.linters) do
 				if type(linter) == "table" and type(nvim_lint.linters[name]) == "table" then
 					nvim_lint.linters[name] = vim.tbl_deep_extend("force", nvim_lint.linters[name], linter)
@@ -42,19 +42,11 @@ return {
 			end
 		end
 
-		nvim_lint.linters_by_ft = opts.linters_by_ft
-
-		function M.debounce(ms, fn)
-			local timer = vim.loop.new_timer()
-			return function(...)
-				local argv = { ... }
-				timer:start(ms, 0, function()
-					timer:stop()
-					vim.schedule_wrap(fn)(unpack(argv))
-				end)
-			end
+		if opts.linters_by_ft then
+			nvim_lint.linters_by_ft = opts.linters_by_ft
 		end
-		function M.lint()
+
+		local function lint()
 			-- Use nvim-lint's logic first:
 			-- * checks if linters exist for the full filetype first
 			-- * otherwise will split filetype by "." and add all those linters
@@ -86,9 +78,20 @@ return {
 			end
 		end
 
+		local function debounce(ms, fn)
+			local timer = vim.loop.new_timer()
+			return function(...)
+				local argv = { ... }
+				timer:start(ms, 0, function()
+					timer:stop()
+					vim.schedule_wrap(fn)(unpack(argv))
+				end)
+			end
+		end
+
 		vim.api.nvim_create_autocmd(opts.events, {
 			group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
-			callback = M.debounce(100, M.lint),
+			callback = debounce(100, lint),
 		})
 	end,
 }
