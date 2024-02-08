@@ -273,7 +273,9 @@ return {
 			{
 				event = "neo_tree_window_after_close",
 				handler = function(args)
-					vim.cmd("set laststatus=3")
+					if vim.bo.filetype ~= "alpha" then
+						vim.cmd("set laststatus=3")
+					end
 				end,
 			},
 			{

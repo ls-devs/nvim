@@ -53,6 +53,7 @@ return {
 			highlights.NeoTreeFileStats = { fg = colors.terminal_black }
 			highlights.CmpItemKindVariable = { fg = colors.magenta }
 			highlights.CmpItemKindSnippet = { fg = colors.hint }
+			highlights.StatusLine = { bg = colors.none }
 		end,
 	},
 	init = function()

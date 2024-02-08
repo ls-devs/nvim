@@ -11,10 +11,6 @@ return {
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			opts = require("ls-devs.plugins.lsp.config.mason_tool_installer"),
-			config = function(_, opts)
-				require("mason-tool-installer").setup(opts)
-				vim.api.nvim_command("MasonToolsUpdate")
-			end,
 			dependencies = {
 				{
 					"williamboman/mason-lspconfig.nvim",
