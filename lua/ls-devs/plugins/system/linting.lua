@@ -21,19 +21,27 @@ return {
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
 		},
-		linters = {},
+		linters = {
+			cpplint = {
+				cmd = vim.env.HOME .. "/.local/share/nvim/mason/packages/cpplint/venv/bin/cpplint",
+			},
+		},
 	},
 	config = function(_, opts)
 		local M = {}
 
 		local nvim_lint = require("lint")
-		for name, linter in pairs(opts.linters) do
-			if type(linter) == "table" and type(nvim_lint.linters[name]) == "table" then
-				nvim_lint.linters[name] = vim.tbl_deep_extend("force", nvim_lint.linters[name], linter)
-			else
-				nvim_lint.linters[name] = linter
+
+		if #opts.linter then
+			for name, linter in pairs(opts.linters) do
+				if type(linter) == "table" and type(nvim_lint.linters[name]) == "table" then
+					nvim_lint.linters[name] = vim.tbl_deep_extend("force", nvim_lint.linters[name], linter)
+				else
+					nvim_lint.linters[name] = linter
+				end
 			end
 		end
+
 		nvim_lint.linters_by_ft = opts.linters_by_ft
 
 		function M.debounce(ms, fn)
