@@ -1,5 +1,6 @@
 return {
 	"mrcjkb/rustaceanvim",
+	version = "^4", -- Recommended,
 	ft = { "rust" },
 	init = function()
 		vim.g.rustaceanvim = function()
@@ -9,9 +10,11 @@ return {
 			local codelldb_path = extension_path .. "adapter/codelldb"
 			local liblldb_path = vim.fn.has("mac") == 1 and extension_path .. "lldb/lib/liblldb.dylib"
 				or extension_path .. "lldb/lib/liblldb.so"
-
 			local cfg = require("rustaceanvim.config")
 			return {
+				server = {
+					capabilities = require("lsp-zero").get_capabilities(),
+				},
 				dap = {
 					adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
 				},

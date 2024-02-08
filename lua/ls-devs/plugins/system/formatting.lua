@@ -29,8 +29,6 @@ return {
 			css = { "prettierd" },
 			scss = { "prettierd" },
 			sass = { "prettierd" },
-			c = { "clang_format" },
-			cpp = { "clang_format" },
 			less = { "prettierd" },
 			json = {
 				"prettierd",
@@ -47,6 +45,8 @@ return {
 			rust = {
 				"rustfmt",
 			},
+			c = { "clang_format" },
+			cpp = { "clang_format" },
 			cmake = {
 				"gersemi",
 			},

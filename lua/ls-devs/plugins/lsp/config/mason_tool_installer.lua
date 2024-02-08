@@ -22,7 +22,6 @@ return {
 		"marksman",
 		"rust_analyzer",
 		"pyright",
-		"clangd",
 		"cmake",
 		"lua_ls",
 		"clangd",
