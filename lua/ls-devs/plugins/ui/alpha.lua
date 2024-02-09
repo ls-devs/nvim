@@ -17,7 +17,7 @@ return {
 ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
-]] .. "\n" .. [[                      ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
+]] .. [[                      ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
 
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
