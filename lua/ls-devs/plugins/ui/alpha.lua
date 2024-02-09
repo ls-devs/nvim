@@ -11,16 +11,13 @@ return {
 		local lazy = require("lazy")
 
 		local logo = [[
-
-
-
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
 ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
 ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
 ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
-]] .. "\n" .. [[                      ]] .. [[v]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
+]] .. "\n" .. [[                      ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
 
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
@@ -28,7 +25,6 @@ return {
 			dashboard.button("f", " " .. " Find file", "<cmd>Telescope find_files <CR>"),
 			dashboard.button("t", " " .. " Find text", "<cmd>Telescope live_grep <CR>"),
 			dashboard.button("r", " " .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
-			dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
 			dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
