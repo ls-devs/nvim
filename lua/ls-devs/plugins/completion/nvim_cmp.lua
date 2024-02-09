@@ -150,7 +150,6 @@ return {
 						},
 					},
 					{ name = "copilot" },
-					{ name = "cmp-tw2css" },
 					{
 						name = "npm",
 						keyword_length = 4,

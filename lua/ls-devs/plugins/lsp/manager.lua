@@ -127,6 +127,7 @@ return {
 					"neovim/nvim-lspconfig",
 					init = function()
 						vim.lsp.set_log_level("OFF")
+						require("lspconfig.ui.windows").default_options.border = "rounded"
 						vim.diagnostic.config({
 							virtual_text = false,
 							update_in_insert = false,
