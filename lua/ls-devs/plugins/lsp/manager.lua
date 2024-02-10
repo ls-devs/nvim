@@ -89,9 +89,9 @@ return {
 			-- Mason LSPs
 			"williamboman/mason-lspconfig.nvim",
 			config = function()
-				local cmp_capabilities = require("mason-lspconfig").setup_handlers({
-					function(server_name)
-						require("lspconfig")[server_name].setup({
+				require("mason-lspconfig").setup_handlers({
+					function(server)
+						require("lspconfig")[server].setup({
 							capabilities = require("cmp_nvim_lsp").default_capabilities(),
 						})
 					end,
@@ -103,7 +103,7 @@ return {
 					local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
 					if has_config then
 						require("lspconfig")[server].setup(vim.tbl_deep_extend("force", config, {
-							capabilities = cmp_capabilities,
+							capabilities = require("cmp_nvim_lsp").default_capabilities(),
 						}))
 					end
 				end

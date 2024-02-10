@@ -9,7 +9,6 @@ return {
 		local dashboard = require("alpha.themes.dashboard")
 		local version = vim.version()
 		local lazy = require("lazy")
-
 		local logo = [[
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
 ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
@@ -17,7 +16,7 @@ return {
 ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
-]] .. [[                      ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
+]] .. "\n" .. [[                      ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
 
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
