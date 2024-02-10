@@ -75,39 +75,34 @@ return {
 			"chrome-debug-adapter",
 			"kotlin-debug-adapter",
 		},
-
 		auto_update = false,
-
 		run_on_start = false,
-
 		start_delay = 3000,
-
 		debounce_hours = 5,
 	},
 	dependencies = {
 		{
 			-- Mason LSPs
 			"williamboman/mason-lspconfig.nvim",
-			config = function()
-				require("mason-lspconfig").setup_handlers({
-					function(server)
-						require("lspconfig")[server].setup({
-							capabilities = require("cmp_nvim_lsp").default_capabilities(),
-						})
+			opts = {
+				handlers = {
+					function(server_name)
+						local has_config, config =
+							pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server_name)
+						if has_config then
+							require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", config, {
+								capabilities = require("cmp_nvim_lsp").default_capabilities(),
+							}))
+						else
+							require("lspconfig")[server_name].setup({
+								capabilities = require("cmp_nvim_lsp").default_capabilities(),
+							})
+						end
 					end,
-					rust_analyzer = function() end,
-					tsserver = function() end,
-				})
-
-				for _, server in pairs(require("mason-lspconfig").get_installed_servers()) do
-					local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
-					if has_config then
-						require("lspconfig")[server].setup(vim.tbl_deep_extend("force", config, {
-							capabilities = require("cmp_nvim_lsp").default_capabilities(),
-						}))
-					end
-				end
-			end,
+					["rust_analyzer"] = function() end,
+					["tsserver"] = function() end,
+				},
+			},
 			dependencies = {
 				{
 					"williamboman/mason.nvim",
