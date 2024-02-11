@@ -12,9 +12,6 @@ return {
 				or extension_path .. "lldb/lib/liblldb.so"
 			local cfg = require("rustaceanvim.config")
 			return {
-				server = {
-					capabilities = require("cmp_nvim_lsp").default_capabilities(),
-				},
 				dap = {
 					adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
 				},

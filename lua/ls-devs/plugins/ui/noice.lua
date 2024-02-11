@@ -125,7 +125,7 @@ return {
 	dependencies = {
 		{ "MunifTanjim/nui.nvim", event = "VeryLazy" },
 		{
-			"rcarriga/nvim-notify",
+			"ls-devs/nvim-notify",
 			event = "BufReadPost",
 			opts = {
 				background_colour = "#000000",

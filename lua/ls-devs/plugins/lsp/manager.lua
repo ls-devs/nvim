@@ -7,6 +7,7 @@ return {
 			-- LSP
 			"eslint",
 			"astro",
+			"vim-language-server",
 			"tsserver",
 			"html",
 			"lemminx",
@@ -82,7 +83,7 @@ return {
 	},
 	dependencies = {
 		{
-			-- Mason LSPs
+			-- Mason
 			"williamboman/mason-lspconfig.nvim",
 			opts = {
 				handlers = {
@@ -93,11 +94,54 @@ return {
 							require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", config, {
 								capabilities = require("cmp_nvim_lsp").default_capabilities(),
 							}))
-						else
 							require("lspconfig")[server_name].setup({
 								capabilities = require("cmp_nvim_lsp").default_capabilities(),
 							})
 						end
+					end,
+					["lua_ls"] = function()
+						require("neodev").setup({
+							library = {
+								enabled = true,
+								runtime = true,
+								types = true,
+								plugins = {
+									"lazy.nvim",
+									"mason.nvim",
+									"mason-lspconfig.nvim",
+									"mason-tool-installer.nvim",
+									"nvim-lspconfig",
+									"lspsaga.nvim",
+									"nvim-treesitter",
+									"nvim-cmp",
+									"conform.nvim",
+									"nvim-lint",
+									"noice.nvim",
+									"neo-tree.nvim",
+									"telescope.nvim",
+									"legendary.nvim",
+									"toggleterm.nvim",
+									"tokyonight.nvim",
+									"plenary.nvim",
+									"neodev.nvim",
+									"neotest",
+								},
+							},
+							setup_jsonls = true,
+							override = function(root_dir, options) end,
+							lspconfig = true,
+							pathStrict = true,
+						})
+						require("lspconfig")["lua_ls"].setup({
+							capabilities = require("cmp_nvim_lsp").default_capabilities(),
+							settings = {
+								Lua = {
+									completion = {
+										callSnippet = "Replace",
+									},
+								},
+							},
+						})
 					end,
 					["rust_analyzer"] = function() end,
 					["tsserver"] = function() end,
@@ -139,11 +183,8 @@ return {
 							},
 							float = {
 								focusable = true,
-								style = "minimal",
 								border = "rounded",
 								source = "always",
-								header = "",
-								prefix = "",
 							},
 						})
 					end,

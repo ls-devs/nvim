@@ -9,7 +9,6 @@ return {
 			enabled = true,
 			open = "botright split | resize 15",
 		},
-		library = { plugins = { "neotest" }, types = true },
 		consumers = {},
 		adapters = {},
 		discovery = {
