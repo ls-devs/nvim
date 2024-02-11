@@ -29,22 +29,21 @@ return {
 		vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 	end,
 	dependencies = {
+		-- DAP Manager
 		{
-			"mfussenegger/nvim-dap",
+			"jay-babu/mason-nvim-dap.nvim",
+			config = function()
+				require("mason-nvim-dap").setup({
+					automatic_setup = true,
+					handlers = {
+						function(config)
+							require("mason-nvim-dap").default_setup(config)
+						end,
+					},
+				})
+			end,
 			dependencies = {
-				{
-					"jay-babu/mason-nvim-dap.nvim",
-					config = function()
-						require("mason-nvim-dap").setup({
-							automatic_setup = true,
-							handlers = {
-								function(config)
-									require("mason-nvim-dap").default_setup(config)
-								end,
-							},
-						})
-					end,
-				},
+				{ "mfussenegger/nvim-dap" },
 			},
 		},
 		{

@@ -1,4 +1,4 @@
-require("ls-devs.config.options")
+require("ls-devs.core.options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -22,7 +22,7 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.keymaps" },
 		{ import = "ls-devs.plugins.lsp" },
 		{ import = "ls-devs.plugins.movements" },
-		{ import = "ls-devs.plugins.preview" },
+		{ import = "ls-devs.plugins.previewers" },
 		{ import = "ls-devs.plugins.system" },
 		{ import = "ls-devs.plugins.system.telescope_extensions" },
 		{ import = "ls-devs.plugins.ui" },
