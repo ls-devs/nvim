@@ -1,62 +1,114 @@
 return {
-	"folke/tokyonight.nvim",
-	lazy = false,
+	"catppuccin/nvim",
+	name = "catppuccin",
 	priority = 1000,
-	opts = {
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		style = "moon", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-		light_style = "day", -- The theme is used when the background is set to light
-		transparent = true, -- Enable this to disable setting the background color
-		terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
-		styles = {
-			-- Style to be applied to different syntax groups
-			-- Value is any valid attr-list value for `:help nvim_set_hl`
-			comments = { italic = true },
-			keywords = { italic = true },
-			functions = {},
-			variables = {},
-			-- Background styles. Can be "dark", "transparent" or "normal"
-			sidebars = "transparent", -- style for sidebars, see below
-			floats = "transparent", -- style for floating windows
-		},
-		sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-		day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
-		hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-		dim_inactive = false, -- dims inactive windows
-		lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
-
-		--- You can override specific color groups to use other groups or a hex color
-		--- function will be called with a ColorScheme table
-		on_colors = function(colors) end,
-
-		--- You can override specific highlights to use other groups or a hex color
-		--- function will be called with a Highlights and ColorScheme table
-		---@param highlights Highlights
-		---@param colors ColorScheme
-		on_highlights = function(highlights, colors)
-			highlights.LspInlayHint = { bg = colors.none, fg = colors.comment }
-			highlights.Normal = { bg = colors.none }
-			highlights.DelaySymbol = { bg = colors.none }
-			highlights.PlayingSymbol = { bg = colors.none }
-			highlights.RecordingSymbol = { bg = colors.none }
-			highlights.DelayText = { bg = colors.none }
-			highlights.PlayingText = { bg = colors.none }
-			highlights.RecordingText = { bg = colors.none }
-			highlights.LeapBackdrop = { fg = colors.none }
-			highlights.LeapLabelPrimary = { bg = colors.black, fg = colors.red }
-			highlights.LeapLabelSecondary = { bg = colors.black, fg = colors.blue }
-			highlights.WinBar = { bg = colors.none }
-			highlights.WinBarNC = { bg = colors.none }
-			highlights.GitSignsCurrentLineBlame = { bg = colors.bg_highlight, fg = colors.dark5 }
-			highlights.Folded = { bg = colors.none }
-			highlights.NeoTreeFileStats = { fg = colors.terminal_black }
-			highlights.CmpItemKindVariable = { fg = colors.magenta }
-			highlights.CmpItemKindSnippet = { fg = colors.hint }
-			highlights.StatusLine = { bg = colors.none }
-		end,
-	},
+	config = function()
+		require("catppuccin").setup({
+			flavour = "mocha", -- latte, frappe, macchiato, mocha
+			background = { -- :h background
+				light = "latte",
+				dark = "mocha",
+			},
+			transparent_background = true, -- disables setting the background color.
+			show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+			term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
+			dim_inactive = {
+				enabled = false, -- dims the background color of inactive window
+				shade = "dark",
+				percentage = 0.15, -- percentage of the shade to apply to the inactive window
+			},
+			no_italic = true, -- Force no italic
+			no_bold = false, -- Force no bold
+			no_underline = false, -- Force no underline
+			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+				comments = { "italic" }, -- Change the style of comments
+				conditionals = { "italic" },
+				loops = {},
+				functions = {},
+				keywords = {},
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = {},
+				operators = {},
+			},
+			color_overrides = {},
+			custom_highlights = function(colors)
+				return {
+					TabLineSel = { fg = colors.green, bg = colors.surface0 },
+					TabLine = { fg = colors.overlay0, bg = colors.surface0 },
+					CmpBorder = { fg = colors.surface2 },
+					Pmenu = { bg = colors.none },
+					Normal = { bg = colors.none },
+					DelaySymbol = { bg = colors.none },
+					PlayingSymbol = { bg = colors.none },
+					RecordingSymbol = { bg = colors.none },
+					DelayText = { bg = colors.none },
+					PlayingText = { bg = colors.none },
+					RecordingText = { bg = colors.none },
+					LeapBackdrop = { fg = colors.none },
+					LeapLabelPrimary = { bg = colors.red, fg = colors.base, style = { "bold" and "underline" } },
+					LeapLabelSecondary = { bg = colors.sapphire, fg = colors.base, style = { "bold" and "underline" } },
+					WinBar = { bg = colors.none },
+					WinBarNC = { bg = colors.none },
+					GitSignsCurrentLineBlame = { fg = colors.overlay1 },
+					Folded = { bg = colors.none },
+					CmpItemKindVariable = { fg = colors.mauve },
+					CmpItemKindSnippet = { fg = colors.blue },
+					StatusLine = { bg = colors.none },
+					Fidget = { fg = colors.overlay1 },
+					TelescopeNormal = { fg = colors.none },
+					MiniIndentscopeSymbol = { fg = colors.peach },
+					-- Mason
+					MasonHeader = { fg = colors.base, bg = colors.peach },
+					MasonHeaderSecondary = { fg = colors.base, bg = colors.pink },
+					MasonHighlight = { fg = colors.pink },
+					MasonHighlightBlock = { bg = colors.pink, fg = colors.base },
+					MasonHighlightBlockBold = { bg = colors.pink, fg = colors.base, bold = true },
+					MasonHighlightSecondary = { fg = colors.red },
+					MasonHighlightBlockSecondary = { bg = colors.red, fg = colors.base },
+					MasonHighlightBlockBoldSecondary = { bg = colors.red, fg = colors.base, bold = true },
+					MasonLink = { fg = colors.rosewater },
+					MasonMuted = { fg = colors.overlay1 },
+					MasonMutedBlock = { bg = colors.surface0, fg = colors.text },
+					MasonMutedBlockBold = { bg = colors.surface0, fg = colors.overlay1, bold = true },
+					MasonError = { fg = colors.red },
+					MasonHeading = { bold = true },
+					-- Lazy
+					LazyButtonActive = { bold = true, fg = colors.base, bg = colors.pink },
+					LazyButton = { fg = colors.text, bold = true },
+					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
+					LazyH2 = { fg = colors.text, bold = true },
+					LazySpecial = { fg = colors.lavender, bold = true },
+					LazyProgressTodo = { fg = colors.none, bg = colors.none, bold = true },
+					LazyProgressDone = { fg = colors.pink, bg = colors.none, bold = true },
+					LazyReasonEvent = { fg = colors.peach, bold = true },
+				}
+			end,
+			integrations = {
+				cmp = true,
+				gitsigns = true,
+				nvimtree = true,
+				treesitter = true,
+				notify = true,
+				leap = true,
+				dap_ui = true,
+				aerial = true,
+				alpha = true,
+				telescope = {
+					enabled = true,
+				},
+				mini = {
+					enabled = true,
+					indentscope_color = "",
+				},
+				-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+			},
+		})
+	end,
 	init = function()
-		vim.cmd.colorscheme("tokyonight")
+		vim.cmd.colorscheme("catppuccin")
 	end,
 }

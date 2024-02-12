@@ -22,11 +22,11 @@ return {
 		},
 	},
 	config = function(_, opts)
-		local colors = require("tokyonight.colors").setup()
+		local colors = require("catppuccin.palettes.mocha")
 		require("NeoComposer").setup(vim.tbl_deep_extend("force", opts, {
 			colors = {
 				bg = colors.none,
-				fg = colors.orange,
+				fg = colors.peach,
 				red = colors.red,
 				blue = colors.blue,
 				green = colors.green,

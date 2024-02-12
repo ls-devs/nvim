@@ -1,5 +1,5 @@
 return {
 	"Aasim-A/scrollEOF.nvim",
-	event = { "CursorMoved", "WinScrolled" },
+	event = { "BufReadPost" },
 	opts = {},
 }

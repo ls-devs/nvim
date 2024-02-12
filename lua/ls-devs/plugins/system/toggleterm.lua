@@ -28,7 +28,7 @@ return {
 		},
 	},
 	config = function(_, opts)
-		local colors = require("tokyonight.colors").setup()
+		local colors = require("catppuccin.palettes.mocha")
 		require("toggleterm").setup(vim.tbl_deep_extend("force", opts, {
 			highlights = {
 				Normal = {

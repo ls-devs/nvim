@@ -39,7 +39,7 @@ return {
 	event = "BufReadPost",
 	config = function()
 		require("tabby").setup()
-		local colors = require("tokyonight.colors").setup()
+		local colors = require("catppuccin.palettes.mocha")
 		require("tabby.tabline").set(function(line)
 			return {
 				{
@@ -64,7 +64,7 @@ return {
 						line.sep("", "TabLine", { bg = colors.none }),
 						win.is_current() and "  " or "  ",
 						line.sep("", "TabLine", { bg = colors.none }),
-						hl = { bg = colors.bg_dark, fg = colors.fg },
+						hl = { bg = colors.surface0, fg = colors.blue },
 						margin = " ",
 					}
 				end),

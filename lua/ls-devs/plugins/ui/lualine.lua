@@ -9,18 +9,18 @@ return {
 	},
 	config = function()
 		local lualine = require("lualine")
-		local c = require("tokyonight.colors").setup()
+		local c = require("catppuccin.palettes.mocha")
 
 		local colors = {
-			bg = c.black,
-			fg = c.dark5,
+			bg = c.base,
+			fg = c.overlay0,
 			yellow = c.yellow,
-			cyan = c.cyan,
-			darkblue = c.blue0,
-			green = c.hint,
-			orange = c.orange,
-			violet = c.purple,
-			magenta = c.magenta,
+			cyan = c.blue,
+			darkblue = c.lavender,
+			green = c.green,
+			orange = c.flamingo,
+			violet = c.mauve,
+			magenta = c.mauve,
 			blue = c.blue,
 			red = c.red,
 		}
@@ -181,8 +181,8 @@ return {
 					return msg
 				end
 				for _, client in ipairs(clients) do
-					local filetypes = client.config.filetypes
-					if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+					local filetype = client.config.get_language_id(vim.api.nvim_get_current_buf(), vim.bo.filetype)
+					if string.find(client.name, filetype) then
 						return client.name
 					end
 				end
