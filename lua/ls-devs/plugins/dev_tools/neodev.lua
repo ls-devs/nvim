@@ -22,7 +22,6 @@ return {
 				"telescope.nvim",
 				"legendary.nvim",
 				"toggleterm.nvim",
-				"tokyonight.nvim",
 				"catppuccin",
 				"plenary.nvim",
 				"neodev.nvim",

@@ -22,16 +22,16 @@ return {
 			extra_test_args = "-parallelizeTargets", -- extra arguments for `xcodebuild test`
 			project_search_max_depth = 3, -- maxdepth of xcodeproj/xcworkspace search while using configuration wizard
 		},
-		logs = {
-			auto_open_on_success_tests = true, -- open logs when tests succeeded
-			auto_open_on_failed_tests = true, -- open logs when tests failed
-			auto_open_on_success_build = true, -- open logs when build succeeded
+		logs = { -- build & test logs
+			auto_open_on_success_tests = false, -- open logs when tests succeeded
+			auto_open_on_failed_tests = false, -- open logs when tests failed
+			auto_open_on_success_build = false, -- open logs when build succeeded
 			auto_open_on_failed_build = true, -- open logs when build failed
 			auto_close_on_app_launch = false, -- close logs when app is launched
 			auto_close_on_success_build = false, -- close logs when build succeeded (only if auto_open_on_success_build=false)
 			auto_focus = true, -- focus logs buffer when opened
 			filetype = "objc", -- file type set for buffer with logs
-			open_command = "silent bo split {path} | resize 20", -- command used to open logs panel. You must use {path} variable to load the log file
+			open_command = "silent botright 20split {path}", -- command used to open logs panel. You must use {path} variable to load the log file
 			logs_formatter = "xcbeautify --disable-colored-output", -- command used to format logs, you can use "" to skip formatting
 			only_summary = false, -- if true logs won't be displayed, just xcodebuild.nvim summary
 			show_warnings = true, -- show warnings in logs summary
@@ -42,15 +42,20 @@ return {
 				vim.cmd("echo '" .. message .. "'")
 			end,
 		},
+		console_logs = {
+			enabled = true, -- enable console logs in dap-ui
+			format_line = function(line) -- format each line of logs
+				return line
+			end,
+			filter_line = function(line) -- filter each line of logs
+				return true
+			end,
+		},
 		marks = {
 			show_signs = true, -- show each test result on the side bar
 			success_sign = "✔", -- passed test icon
 			failure_sign = "✖", -- failed test icon
-			success_sign_hl = "DiagnosticSignOk", -- highlight for success_sign
-			failure_sign_hl = "DiagnosticSignError", -- highlight for failure_sign
 			show_test_duration = true, -- show each test duration next to its declaration
-			success_test_duration_hl = "DiagnosticWarn", -- test duration highlight when test passed
-			failure_test_duration_hl = "DiagnosticError", -- test duration highlight when test failed
 			show_diagnostics = true, -- add test failures to diagnostics
 			file_pattern = "*Tests.swift", -- test diagnostics will be loaded in files matching this pattern (if available)
 		},
@@ -58,42 +63,50 @@ return {
 			show_errors_on_quickfixlist = true, -- add build/test errors to quickfix list
 			show_warnings_on_quickfixlist = true, -- add build warnings to quickfix list
 		},
+		test_explorer = {
+			enabled = true, -- enable Test Explorer
+			auto_open = true, -- open Test Explorer when tests are started
+			auto_focus = true, -- focus Test Explorer when opened
+			open_command = "botright 42vsplit Test Explorer", -- command used to open Test Explorer
+			open_expanded = true, -- open Test Explorer with expanded classes
+			success_sign = "✔", -- passed test icon
+			failure_sign = "✖", -- failed test icon
+			progress_sign = "…", -- progress icon (only used when animate_status=false)
+			disabled_sign = "⏸", -- disabled test icon
+			partial_execution_sign = "‐", -- icon for a class or target when only some tests were executed
+			not_executed_sign = " ", -- not executed or partially executed test icon
+			show_disabled_tests = false, -- show disabled tests
+			animate_status = true, -- animate status while running tests
+			cursor_follows_tests = true, -- moves cursor to the last test executed
+		},
 		code_coverage = {
 			enabled = false, -- generate code coverage report and show marks
 			file_pattern = "*.swift", -- coverage will be shown in files matching this pattern
 			-- configuration of line coverage presentation:
-			covered = {
-				sign_text = "",
-				sign_hl_group = "XcodebuildCoverageFull",
-				number_hl_group = nil,
-				line_hl_group = nil,
-			},
-			partially_covered = {
-				sign_text = "┃",
-				sign_hl_group = "XcodebuildCoveragePartial",
-				number_hl_group = nil,
-				line_hl_group = nil,
-			},
-			not_covered = {
-				sign_text = "┃",
-				sign_hl_group = "XcodebuildCoverageNone",
-				number_hl_group = nil,
-				line_hl_group = nil,
-			},
-			not_executable = {
-				sign_text = "",
-				sign_hl_group = "XcodebuildCoverageNotExecutable",
-				number_hl_group = nil,
-				line_hl_group = nil,
-			},
+			covered_sign = "",
+			partially_covered_sign = "┃",
+			not_covered_sign = "┃",
+			not_executable_sign = "",
 		},
 		code_coverage_report = {
 			warning_coverage_level = 60,
-			warning_level_hl_group = "DiagnosticWarn",
 			error_coverage_level = 30,
-			error_level_hl_group = "DiagnosticError",
-			ok_level_hl_group = "DiagnosticOk",
 			open_expanded = false,
+		},
+		integrations = {
+			nvim_tree = {
+				enabled = true, -- enable updating Xcode project files when using nvim-tree
+				should_update_project = function(path) -- path can lead to directory or file
+					-- it could be useful if you mix Xcode project with SPM for example
+					return true
+				end,
+			},
+		},
+		highlights = {
+			-- you can override here any highlight group used by this plugin
+			-- simple color: XcodebuildCoverageReportOk = "#00ff00",
+			-- link highlights: XcodebuildCoverageReportOk = "DiagnosticOk",
+			-- full customization: XcodebuildCoverageReportOk = { fg = "#00ff00", bold = true },
 		},
 	},
 }

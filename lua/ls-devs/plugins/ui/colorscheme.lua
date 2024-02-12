@@ -89,6 +89,19 @@ return {
 			end,
 			integrations = {
 				cmp = true,
+				dap = true,
+				dashboard = true,
+				fidget = true,
+				indent_blankline = true,
+				window_picker = true,
+				semantic_tokens = true,
+				lsp_saga = true,
+				mason = true,
+				rainbow_delimiters = true,
+				overseer = true,
+				noice = true,
+				neotree = true,
+				neotest = true,
 				gitsigns = true,
 				nvimtree = true,
 				treesitter = true,
@@ -107,8 +120,6 @@ return {
 				-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
 			},
 		})
-	end,
-	init = function()
 		vim.cmd.colorscheme("catppuccin")
 	end,
 }
