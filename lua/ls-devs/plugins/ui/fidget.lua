@@ -36,7 +36,6 @@ return {
 					-- How to format a progress message
 					format_message = function(msg)
 						local message = msg.message
-						print(msg.title)
 						if not message then
 							message = msg.done and " Completed" or " In progress..."
 						end

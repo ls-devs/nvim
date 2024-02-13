@@ -21,11 +21,6 @@ return {
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
 		},
-		linters = {
-			cpplint = {
-				cmd = vim.env.HOME .. "/.local/share/nvim/mason/packages/cpplint/venv/bin/cpplint",
-			},
-		},
 	},
 	config = function(_, opts)
 		local M = {}
@@ -41,6 +36,14 @@ return {
 				end
 			end
 		end
+
+		nvim_lint.linters["cpplint"] = vim.tbl_deep_extend("force", nvim_lint.linters["cpplint"], {
+			cmd = require("mason-registry").get_package("cpplint"):get_install_path() .. "/" .. "venv/bin/cpplint",
+		})
+
+		nvim_lint.linters["gitlint"] = vim.tbl_deep_extend("force", nvim_lint.linters["gitlint"], {
+			cmd = require("mason-registry").get_package("gitlint"):get_install_path() .. "/" .. "venv/bin/gitlint",
+		})
 
 		if opts.linters_by_ft then
 			nvim_lint.linters_by_ft = opts.linters_by_ft

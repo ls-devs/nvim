@@ -158,33 +158,9 @@ return {
 					description = "Redirect Cmdline",
 				},
 				{
-					"<leader>l",
+					"<leader>lz",
 					"<cmd>Lazy<CR>",
 					description = "Lazy",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>ls",
-					"<cmd>Lazy sync<CR>",
-					description = "Lazy Sync",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>li",
-					"<cmd>Lazy install<CR>",
-					description = "Lazy Install",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>lu",
-					"<cmd>Lazy update<CR>",
-					description = "Lazy Update",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>lc",
-					"<cmd>Lazy build<CR>",
-					description = "Lazy Build",
 					opts = { noremap = true, silent = true },
 				},
 				{

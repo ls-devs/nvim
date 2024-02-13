@@ -1,6 +1,6 @@
 return {
 	"folke/noice.nvim",
-	event = "VeryLazy",
+	event = "VimEnter",
 	opts = {
 		lsp = {
 			override = {
@@ -19,12 +19,12 @@ return {
 				enabled = true,
 				auto_open = {
 					enabled = true,
-					trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-					luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-					throttle = 50, -- Debounce lsp signature help request by 50ms
+					trigger = true,
+					luasnip = true,
+					throttle = 50,
 				},
-				view = nil, -- when nil, use defaults from documentation
-				opts = {}, -- merged with defaults from documentation
+				view = nil,
+				opts = {},
 			},
 			documentation = {
 				view = "hover",
@@ -39,7 +39,7 @@ return {
 		},
 		markdown = {
 			hover = {
-				["|(%S-)|"] = vim.cmd.help, -- vim help links
+				["|(%S-)|"] = vim.cmd.help,
 			},
 			highlights = {
 				["|%S-|"] = "@text.reference",
@@ -51,23 +51,23 @@ return {
 			},
 		},
 		popupmenu = {
-			enabled = true, -- enables the Noice popupmenu UI
-			backend = "nui", -- backend to use to show regular cmdline completions
-			kind_icons = {}, -- set to `false` to disable icons
+			enabled = true,
+			backend = "nui",
+			kind_icons = {},
 		},
 		redirect = {
 			view = "popup",
 			filter = { event = "msg_show" },
 		},
 		health = {
-			checker = true, -- Disable if you don't want health checks to run
+			checker = true,
 		},
 		presets = {
-			bottom_search = false, -- use a classic bottom cmdline for search
-			command_palette = true, -- position the cmdline and popupmenu together
-			long_message_to_split = true, -- long messages will be sent to a split
-			inc_rename = true, -- enables an input dialog for inc-rename.nvim
-			lsp_doc_border = "rounded", -- add a border to hover docs and signature help
+			bottom_search = false,
+			command_palette = true,
+			long_message_to_split = true,
+			inc_rename = true,
+			lsp_doc_border = "rounded",
 		},
 		notify = {
 			enabled = true,
@@ -126,7 +126,6 @@ return {
 		{ "MunifTanjim/nui.nvim", event = "VeryLazy" },
 		{
 			"ls-devs/nvim-notify",
-			event = "BufReadPost",
 			opts = {
 				background_colour = "#000000",
 				top_down = false,

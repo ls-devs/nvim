@@ -1,11 +1,8 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = "VeryLazy",
+	event = "BufReadPost",
 	dependencies = {
-		{
-			"nvim-tree/nvim-web-devicons",
-			event = "VeryLazy",
-		},
+		{ "nvim-tree/nvim-web-devicons" },
 	},
 	config = function()
 		local lualine = require("lualine")
@@ -54,10 +51,10 @@ return {
 				-- Disable sections and component separators
 				component_separators = "",
 				section_separators = "",
-				theme = {
-					normal = { c = { fg = colors.fg, bg = nil } },
-					inactive = { c = { fg = colors.fg, bg = colors.bg } },
-				},
+				theme = "catppuccin",
+
+				-- normal = { c = { fg = colors.fg, bg = nil } },
+				-- inactive = { c = { fg = colors.fg, bg = colors.bg } },
 				disabled_filetypes = { "NvimTree", "alpha" },
 			},
 			sections = {
@@ -120,16 +117,17 @@ return {
 		ins_left({
 			"filesize",
 			cond = conditions.buffer_not_empty,
+			color = { fg = c.text },
 		})
 
-		ins_left({ "location", color = { fg = colors.white, gui = "bold" } })
+		ins_left({ "location", color = { fg = c.text, gui = "bold" } })
 
-		ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+		ins_left({ "progress", color = { fg = c.text, gui = "bold" } })
 
 		ins_left({
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
-			symbols = { error = " ", warn = " ", info = " ", hint = " " },
+			symbols = { error = " ", warn = " ", info = " ", hint = " " },
 			diagnostics_color = {
 				error = { fg = colors.red, gui = "bold" },
 				warn = { fg = colors.yellow, gui = "bold" },
@@ -141,12 +139,21 @@ return {
 
 		ins_left({
 			function()
-				return os.date("%H:%M:%S", os.time())
+				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
+				local icon = require("nvim-web-devicons").get_icon_by_filetype(
+					vim.api.nvim_get_option_value("filetype", { buf = 0 })
+				)
+				if lsps and #lsps > 0 then
+					local names = {}
+					for _, lsp in ipairs(lsps) do
+						table.insert(names, lsp.name)
+					end
+					return string.format("%s %s", names[#names], icon)
+				else
+					return icon or ""
+				end
 			end,
-			color = {
-				fg = colors.blue,
-				gui = "bold",
-			},
+			color = { fg = c.blue, gui = "bold" },
 		})
 
 		ins_left({
@@ -166,30 +173,12 @@ return {
 
 		ins_right({
 			function()
-				local cur_buf = vim.api.nvim_get_current_buf()
-				return require("hbac.state").is_pinned(cur_buf) and "" or ""
+				return os.date("%H:%M:%S", os.time())
 			end,
-			color = { fg = "#ef5f6b", gui = "bold" },
-		})
-
-		ins_right({
-			function()
-				local msg = "No Active Lsp"
-				local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-				local clients = vim.lsp.get_clients()
-				if next(clients) == nil then
-					return msg
-				end
-				for _, client in ipairs(clients) do
-					local filetype = client.config.get_language_id(vim.api.nvim_get_current_buf(), vim.bo.filetype)
-					if string.find(client.name, filetype) then
-						return client.name
-					end
-				end
-				return msg
-			end,
-			icon = " LSP :",
-			color = { fg = "#ffffff", gui = "bold" },
+			color = {
+				fg = colors.blue,
+				gui = "bold",
+			},
 		})
 
 		ins_right({
@@ -221,7 +210,7 @@ return {
 
 		ins_right({
 			"diff",
-			symbols = { added = " ", modified = " ", removed = "󰛌 " },
+			symbols = { added = " ", modified = " ", removed = " " },
 			diff_color = {
 				added = { fg = colors.green },
 				modified = { fg = colors.orange },

@@ -63,7 +63,6 @@ return {
 			"black",
 			"isort",
 			"sql-formatter",
-			"rustfmt",
 			"shellharden",
 
 			-- Debuggers
@@ -94,6 +93,7 @@ return {
 							require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", config, {
 								capabilities = require("cmp_nvim_lsp").default_capabilities(),
 							}))
+						else
 							require("lspconfig")[server_name].setup({
 								capabilities = require("cmp_nvim_lsp").default_capabilities(),
 							})
@@ -132,10 +132,10 @@ return {
 							signs = {
 								priority = 1,
 								text = {
-									[vim.diagnostic.severity.ERROR] = " ",
-									[vim.diagnostic.severity.WARN] = " ",
-									[vim.diagnostic.severity.INFO] = " ",
-									[vim.diagnostic.severity.HINT] = " ",
+									[vim.diagnostic.severity.ERROR] = "",
+									[vim.diagnostic.severity.WARN] = "",
+									[vim.diagnostic.severity.INFO] = "",
+									[vim.diagnostic.severity.HINT] = "",
 								},
 							},
 							float = {
