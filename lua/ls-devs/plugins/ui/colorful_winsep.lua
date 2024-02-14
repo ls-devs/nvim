@@ -3,7 +3,7 @@ return {
 	event = { "BufReadPost" },
 	opts = {
 		interval = 30,
-		no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree", "Overseer", "aerial" },
+		no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree", "OverseerList", "aerial" },
 		symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
 		close_event = function() end,
 	},

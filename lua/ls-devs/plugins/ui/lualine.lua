@@ -10,7 +10,7 @@ return {
 
 		local colors = {
 			bg = c.base,
-			fg = c.overlay0,
+			fg = c.text,
 			yellow = c.yellow,
 			cyan = c.blue,
 			darkblue = c.lavender,
@@ -48,14 +48,9 @@ return {
 				"man",
 			},
 			options = {
-				-- Disable sections and component separators
 				component_separators = "",
 				section_separators = "",
 				theme = "catppuccin",
-
-				-- normal = { c = { fg = colors.fg, bg = nil } },
-				-- inactive = { c = { fg = colors.fg, bg = colors.bg } },
-				disabled_filetypes = { "NvimTree", "alpha" },
 			},
 			sections = {
 				lualine_a = {},
@@ -176,7 +171,7 @@ return {
 				return os.date("%H:%M:%S", os.time())
 			end,
 			color = {
-				fg = colors.blue,
+				fg = colors.text,
 				gui = "bold",
 			},
 		})

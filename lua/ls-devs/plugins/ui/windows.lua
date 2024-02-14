@@ -19,6 +19,8 @@ return {
 				"terminal",
 				"toggleterm",
 				"neotest-summary",
+				"OverseerList",
+				"Overseer",
 			},
 		},
 	},

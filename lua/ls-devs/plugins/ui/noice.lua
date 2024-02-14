@@ -123,13 +123,14 @@ return {
 		}))
 	end,
 	dependencies = {
-		{ "MunifTanjim/nui.nvim", event = "VeryLazy" },
+		{ "MunifTanjim/nui.nvim" },
 		{
 			"ls-devs/nvim-notify",
 			opts = {
 				background_colour = "#000000",
 				top_down = false,
 				timeout = 1000,
+				render = "wrapped-compact",
 			},
 		},
 	},

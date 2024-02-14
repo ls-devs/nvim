@@ -265,20 +265,6 @@ return {
 		},
 		event_handlers = {
 			{
-				event = "neo_tree_window_after_open",
-				handler = function(args)
-					vim.cmd("set laststatus=0")
-				end,
-			},
-			{
-				event = "neo_tree_window_after_close",
-				handler = function(args)
-					if vim.bo.filetype ~= "alpha" then
-						vim.cmd("set laststatus=3")
-					end
-				end,
-			},
-			{
 				event = "file_opened",
 				handler = function()
 					require("neo-tree").close_all()

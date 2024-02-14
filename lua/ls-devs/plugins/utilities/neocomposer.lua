@@ -25,12 +25,11 @@ return {
 		local colors = require("catppuccin.palettes.mocha")
 		require("NeoComposer").setup(vim.tbl_deep_extend("force", opts, {
 			colors = {
-				bg = colors.none,
+				bg = colors.base,
 				fg = colors.peach,
 				red = colors.red,
 				blue = colors.blue,
 				green = colors.green,
-				text_bg = colors.none,
 			},
 		}))
 		require("telescope").load_extension("macros")
