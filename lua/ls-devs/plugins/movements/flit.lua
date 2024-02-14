@@ -11,6 +11,7 @@ return {
 		{
 			"ggandor/leap.nvim",
 		},
+		{ "tpope/vim-repeat" },
 		{
 			"ggandor/leap-spooky.nvim",
 			opts = {

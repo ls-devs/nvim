@@ -1,5 +1,12 @@
+-- Hack Catppuccin lazy loading
+vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+vim.cmd("hi AlphaHeader guifg=#cdd6f4")
+vim.cmd("hi AlphaButtons guifg=#89b4fa")
+vim.cmd("hi AlphaShortcut guifg=#fab387")
+vim.cmd("hi Type guifg=#f9e2af")
+
 vim.cmd("set whichwrap+=<,>,[,],h,l")
-vim.cmd([[set iskeyword+=-]])
+vim.cmd("set iskeyword+=-")
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
