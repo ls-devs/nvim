@@ -82,7 +82,7 @@ return {
 	},
 	dependencies = {
 		{
-			-- LSP Manager
+			-- Mason LSPs
 			"williamboman/mason-lspconfig.nvim",
 			opts = {
 				automatic_installation = false,
@@ -96,7 +96,6 @@ return {
 							),
 						})
 					end,
-
 					["lua_ls"] = function() end,
 					["rust_analyzer"] = function() end,
 					["tsserver"] = function() end,
@@ -104,7 +103,6 @@ return {
 			},
 			config = function(_, opts)
 				require("mason-lspconfig").setup(opts)
-
 				-- Setup customs LSPs settings
 				for _, server in ipairs(require("mason-lspconfig").get_installed_servers()) do
 					local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
