@@ -1,6 +1,6 @@
 return {
 	"ggandor/flit.nvim",
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		keys = { f = "f", F = "F", t = "t", T = "T" },
 		labeled_modes = "nvo",
@@ -8,9 +8,7 @@ return {
 		opts = {},
 	},
 	dependencies = {
-		{
-			"ggandor/leap.nvim",
-		},
+		{ "ggandor/leap.nvim" },
 		{ "tpope/vim-repeat" },
 		{
 			"ggandor/leap-spooky.nvim",

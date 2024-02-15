@@ -1,6 +1,6 @@
 return {
 	"nvim-zh/colorful-winsep.nvim",
-	event = { "BufReadPost" },
+	event = { "BufReadPost", "BufReadPost" },
 	opts = {
 		interval = 30,
 		no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree", "OverseerList", "aerial" },

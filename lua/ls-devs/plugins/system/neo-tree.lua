@@ -226,6 +226,7 @@ return {
 					["<c-x>"] = "clear_filter",
 					["[g"] = "prev_git_modified",
 					["]g"] = "next_git_modified",
+					["O"] = "open_and_clear_filter",
 					["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 					["oc"] = { "order_by_created", nowait = false },
 					["od"] = { "order_by_diagnostics", nowait = false },

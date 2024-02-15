@@ -1,6 +1,6 @@
 return {
 	"anuvyklack/windows.nvim",
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	init = function()
 		vim.o.winwidth = 10
 		vim.o.winminwidth = 10

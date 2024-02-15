@@ -1,6 +1,6 @@
 return {
 	"ecthelionvi/NeoComposer.nvim",
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		notify = false,
 		delay_timer = 150,

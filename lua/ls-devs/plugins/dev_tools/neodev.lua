@@ -15,6 +15,7 @@ return {
 				"lspsaga.nvim",
 				"nvim-treesitter",
 				"nvim-cmp",
+				"cmp-nvim-lsp",
 				"conform.nvim",
 				"nvim-lint",
 				"noice.nvim",

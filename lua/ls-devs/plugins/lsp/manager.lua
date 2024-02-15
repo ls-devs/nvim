@@ -85,30 +85,45 @@ return {
 			-- LSP Manager
 			"williamboman/mason-lspconfig.nvim",
 			opts = {
+				automatic_installation = false,
 				handlers = {
 					function(server_name)
-						local has_config, config =
-							pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server_name)
-						if has_config then
-							require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", config, {
-								capabilities = require("cmp_nvim_lsp").default_capabilities(),
-							}))
-						else
-							require("lspconfig")[server_name].setup({
-								capabilities = require("cmp_nvim_lsp").default_capabilities(),
-							})
-						end
+						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
+						})
 					end,
+
 					["lua_ls"] = function() end,
 					["rust_analyzer"] = function() end,
 					["tsserver"] = function() end,
 				},
 			},
+			config = function(_, opts)
+				require("mason-lspconfig").setup(opts)
+
+				-- Setup customs LSPs settings
+				for _, server in ipairs(require("mason-lspconfig").get_installed_servers()) do
+					local has_config, config = pcall(require, "ls-devs.plugins.lsp.servers_settings." .. server)
+					if has_config then
+						require("lspconfig")[server].setup(
+							vim.tbl_deep_extend("force", require("lspconfig")[server], config)
+						)
+					end
+				end
+			end,
 			dependencies = {
 				{
 					"williamboman/mason.nvim",
 					opts = {
 						log_level = vim.log.levels.OFF,
+						pip = {
+							upgrade_pip = true,
+						},
+
 						ui = {
 							border = "rounded",
 							icons = {

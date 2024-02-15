@@ -60,7 +60,7 @@ return {
 					Fidget = { fg = colors.overlay1 },
 					TelescopeNormal = { fg = colors.none },
 					TelescopeSelection = { fg = colors.peach },
-					MiniIndentscopeSymbol = { fg = colors.blue },
+					MiniIndentscopeSymbol = { fg = colors.overlay0 },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },

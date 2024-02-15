@@ -1,5 +1,5 @@
 return {
 	"Aasim-A/scrollEOF.nvim",
-	event = { "BufReadPost" },
-	opts = {},
+	event = { "BufReadPost", "BufNewFile" },
+	opts = true,
 }

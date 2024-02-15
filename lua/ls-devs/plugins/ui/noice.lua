@@ -126,6 +126,7 @@ return {
 		{ "MunifTanjim/nui.nvim" },
 		{
 			"ls-devs/nvim-notify",
+			branch = "fix/fix_index_value",
 			opts = {
 				background_colour = "#000000",
 				top_down = false,

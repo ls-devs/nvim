@@ -27,6 +27,9 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.ui" },
 		{ import = "ls-devs.plugins.utilities" },
 	},
+	dev = {
+		path = "~/Utils/forks",
+	},
 	defaults = {
 		lazy = true,
 		-- version = "*",

@@ -1,7 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	cmd = { "TSUpdate", "TSInstall" },
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		ignore_install = {},
 		modules = {},

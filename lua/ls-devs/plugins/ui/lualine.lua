@@ -1,6 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	dependencies = {
 		{ "nvim-tree/nvim-web-devicons" },
 	},
@@ -51,6 +51,7 @@ return {
 				component_separators = "",
 				section_separators = "",
 				theme = "catppuccin",
+				disabled_filetypes = { "alpha" },
 			},
 			sections = {
 				lualine_a = {},
@@ -135,22 +136,28 @@ return {
 		ins_left({
 			function()
 				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
-				local icon = require("nvim-web-devicons").get_icon_by_filetype(
-					vim.api.nvim_get_option_value("filetype", { buf = 0 })
-				)
 				if lsps and #lsps > 0 then
-					local names = {}
-					for _, lsp in ipairs(lsps) do
-						table.insert(names, lsp.name)
-					end
-					return string.format("%s %s", names[#names], icon)
+					return lsps[#lsps].name
 				else
-					return icon or ""
+					return ""
 				end
 			end,
-			color = { fg = c.blue, gui = "bold" },
+			color = { fg = c.flamingo, gui = "bold" },
 		})
 
+		ins_left({
+			function()
+				local icon = require("nvim-web-devicons").get_icon_color_by_filetype(
+					vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_get_current_buf() })
+				)
+				if icon then
+					return icon
+				else
+					return ""
+				end
+			end,
+			color = { fg = c.flamingo, gui = "bold" },
+		})
 		ins_left({
 			function()
 				return require("lazy.status").updates()
