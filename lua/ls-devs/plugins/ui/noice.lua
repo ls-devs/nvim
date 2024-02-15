@@ -125,8 +125,7 @@ return {
 	dependencies = {
 		{ "MunifTanjim/nui.nvim" },
 		{
-			"ls-devs/nvim-notify",
-			branch = "fix/fix_index_value",
+			"rcarriga/nvim-notify",
 			opts = {
 				background_colour = "#000000",
 				top_down = false,
