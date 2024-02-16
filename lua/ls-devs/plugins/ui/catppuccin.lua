@@ -61,6 +61,9 @@ return {
 					TelescopeNormal = { fg = colors.none },
 					TelescopeSelection = { fg = colors.peach },
 					MiniIndentscopeSymbol = { fg = colors.overlay0 },
+					IncSearch = { fg = colors.base, bg = colors.peach, style = { "bold" } },
+					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
+					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },

@@ -24,6 +24,7 @@ keymap("", "<2-RightMouse>", "<nop>", opts)
 -- Options
 local options = {
 	background = "dark",
+	incsearch = true,
 	backup = false,
 	showtabline = 0,
 	clipboard = "unnamedplus",
