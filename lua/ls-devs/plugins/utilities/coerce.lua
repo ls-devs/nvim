@@ -1,10 +1,10 @@
 return {
 	"gregorias/coerce.nvim",
-	tag = "v0.1.1",
 	config = function()
 		require("coerce").setup({
-			coerce_prefix = "cr",
 			keymap_registry = require("coerce.keymap").keymap_registry(),
+			cases = require("coerce").default_cases,
+			selection_modes = require("coerce").selection_modes,
 		})
 	end,
 	keys = {

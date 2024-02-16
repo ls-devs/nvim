@@ -32,7 +32,6 @@ require("lazy").setup({
 	},
 	defaults = {
 		lazy = true,
-		-- version = "*",
 	},
 	ui = {
 		border = "rounded",
@@ -80,8 +79,14 @@ require("lazy").setup({
 	checker = {
 		enabled = true,
 		notify = true,
+		check_pinned = true,
+		frequency = 3600,
 	},
 	readme = {
 		enabled = true,
+	},
+	profiling = {
+		loader = true,
+		require = true,
 	},
 })
