@@ -8,9 +8,11 @@ return {
 		local luasnip = require("luasnip")
 		telescope.setup({
 			defaults = {
-				layout_stategy = "vertical",
 				layout_config = {
-					width = 0.88,
+					horizontal = {
+						preview_width = 0.5,
+						width = 0.9,
+					},
 				},
 				file_ignore_patterns = {
 					".git/",
@@ -24,10 +26,12 @@ return {
 						["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
 						["<A-a>"] = actions.toggle_all,
 						["<C-s>"] = actions.select_vertical,
-						["<C-h>"] = actions.preview_scrolling_left,
-						["<C-l>"] = actions.preview_scrolling_right,
-						["<C-f>"] = actions.preview_scrolling_down,
-						["<C-u>"] = actions.preview_scrolling_up,
+						["<A-k>"] = actions.preview_scrolling_left,
+						["<A-l>"] = actions.preview_scrolling_right,
+						["<A-f>"] = actions.preview_scrolling_down,
+						["<A-b>"] = actions.preview_scrolling_up,
+						["<A-h>"] = actions.results_scrolling_left,
+						["<A-j>"] = actions.results_scrolling_right,
 					},
 					n = {
 						["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -36,10 +40,12 @@ return {
 						["<C-k>"] = actions.move_selection_previous,
 						["<A-a>"] = actions.toggle_all,
 						["<C-s>"] = actions.select_vertical,
-						["<C-h>"] = actions.preview_scrolling_left,
-						["<C-l>"] = actions.preview_scrolling_right,
-						["<C-f>"] = actions.preview_scrolling_down,
-						["<C-u>"] = actions.preview_scrolling_up,
+						["<A-k>"] = actions.preview_scrolling_left,
+						["<A-l>"] = actions.preview_scrolling_right,
+						["<A-f>"] = actions.preview_scrolling_down,
+						["<A-b>"] = actions.preview_scrolling_up,
+						["<A-h>"] = actions.results_scrolling_left,
+						["<A-j>"] = actions.results_scrolling_right,
 					},
 				},
 			},
