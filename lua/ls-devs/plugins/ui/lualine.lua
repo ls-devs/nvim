@@ -157,7 +157,7 @@ return {
 				end
 			end,
 			color = { fg = c.flamingo, gui = "bold" },
-			padding = { left = 0 },
+			padding = { left = 0, right = 1 },
 		})
 		ins_left({
 			function()
