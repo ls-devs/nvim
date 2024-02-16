@@ -120,9 +120,10 @@ return {
 				},
 				{
 					"<C-s>",
-					mode = "i",
+					mode = { "i", "n" },
 					function()
-						return vim.lsp.buf.signature_help()
+						vim.lsp.buf.signature_help()
+						require("cmp").close()
 					end,
 					description = "LSP Signature Help",
 					opts = { noremap = true, silent = true },
@@ -136,7 +137,7 @@ return {
 					end,
 					mode = { "n", "i", "s" },
 					description = "Noice Scroll Hover Doc Forward",
-					opts = { noremap = true, silent = true },
+					opts = { silent = true, expr = true },
 				},
 				{
 					"<C-b>",
@@ -147,7 +148,7 @@ return {
 					end,
 					mode = { "n", "i", "s" },
 					description = "Noice Scroll Hover Doc Backward",
-					opts = { noremap = true, silent = true },
+					opts = { silent = true, expr = true },
 				},
 				{
 					"<A-x>",

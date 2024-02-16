@@ -143,21 +143,21 @@ M.CustomHover = function()
 	end
 end
 
-local isOpen = false
+local isOverseerOpen = false
 M.OverseerToggle = function()
-	if not isOpen then
+	if not isOverseerOpen then
 		vim.cmd(":OverseerToggle")
 		if vim.fn.exists(":WindowsDisableAutowidth") then
 			vim.cmd(":WindowsDisableAutowidth")
 		end
 		vim.cmd(":WindowsEqualize")
-		isOpen = true
+		isOverseerOpen = true
 	else
 		vim.cmd(":OverseerToggle")
 		if vim.fn.exists(":WindowsEnableAutowidth") then
 			vim.cmd(":WindowsEnableAutowidth")
 		end
-		isOpen = false
+		isOverseerOpen = false
 	end
 end
 

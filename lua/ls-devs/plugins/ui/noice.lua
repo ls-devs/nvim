@@ -18,9 +18,9 @@ return {
 			signature = {
 				enabled = true,
 				auto_open = {
-					enabled = true,
-					trigger = true,
-					luasnip = true,
+					enabled = false,
+					trigger = false,
+					luasnip = false,
 					throttle = 50,
 				},
 				view = nil,

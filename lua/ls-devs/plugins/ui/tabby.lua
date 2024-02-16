@@ -36,7 +36,7 @@ end
 
 return {
 	"nanozuki/tabby.nvim",
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "BufReadPost", "BufWritePost" },
 	config = function()
 		require("tabby").setup()
 		local colors = require("catppuccin.palettes.mocha")

@@ -8,9 +8,11 @@ return {
 		local luasnip = require("luasnip")
 		telescope.setup({
 			defaults = {
+				prompt_prefix = " 🔍 ",
 				layout_config = {
 					horizontal = {
 						preview_width = 0.5,
+						prompt_position = "top",
 						width = 0.9,
 					},
 				},
