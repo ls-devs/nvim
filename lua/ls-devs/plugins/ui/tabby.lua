@@ -3,7 +3,7 @@ local tabName = function(tab)
 	local winid = vim.api.nvim_tabpage_get_win(tab.id)
 	local bufid = vim.api.nvim_win_get_buf(winid)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
-	if string.find(file_type, "Overseer") or string.find(file_type, "aerial") then
+	if string.find(file_type, "Overseer") then
 		tabName = file_type
 	end
 
@@ -42,10 +42,6 @@ return {
 		local colors = require("catppuccin.palettes.mocha")
 		require("tabby.tabline").set(function(line)
 			return {
-				{
-					{ " ", hl = { fg = colors.green, bg = colors.none, style = "bold" } },
-					line.sep(" ", { bg = colors.none }, { bg = colors.none }),
-				},
 				line.tabs().foreach(function(tab)
 					local hl = tab.is_current() and "TabLineSel" or "TabLine"
 					return {
@@ -64,7 +60,7 @@ return {
 						line.sep("", "TabLine", { bg = colors.none }),
 						win.is_current() and "  " or "  ",
 						line.sep("", "TabLine", { bg = colors.none }),
-						hl = { bg = colors.surface0, fg = colors.blue },
+						hl = { bg = colors.surface0, fg = colors.lavender },
 						margin = " ",
 					}
 				end),

@@ -180,7 +180,10 @@ return {
 					mods = {
 						move = "<C>",
 						resize = "<M>",
-						swap = false,
+						swap = {
+							mod = "<C>",
+							prefix = "<leader>",
+						},
 					},
 				},
 				diffview = true,

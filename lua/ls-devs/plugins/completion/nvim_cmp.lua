@@ -113,11 +113,9 @@ return {
 							Constant = "󰏿",
 							Struct = "󰙅",
 							Event = "",
-							Copilot = "",
 						},
 						before = function(entry, vim_item)
 							vim_item.menu = ({
-								Copilot = "[COPILOT]",
 								nvim_lsp = "[LSP]",
 								luasnip = "[SNIPPET]",
 								buffer = "[BUFFER]",
@@ -150,13 +148,11 @@ return {
 							additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/.ignore.rg",
 						},
 					},
-					{ name = "copilot" },
 					{
 						name = "npm",
 						keyword_length = 4,
 					},
 					{ name = "crates" },
-					{ name = "zsh" },
 				},
 				confirm_opts = {
 					behavior = cmp.ConfirmBehavior.Replace,

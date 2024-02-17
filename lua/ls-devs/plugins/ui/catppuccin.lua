@@ -36,7 +36,7 @@ return {
 			color_overrides = {},
 			custom_highlights = function(colors)
 				return {
-					TabLineSel = { fg = colors.green, bg = colors.surface0 },
+					TabLineSel = { fg = colors.lavender, bg = colors.surface0 },
 					TabLine = { fg = colors.overlay0, bg = colors.surface0 },
 					CmpBorder = { fg = colors.surface2 },
 					Pmenu = { bg = colors.none },
@@ -110,7 +110,6 @@ return {
 				notify = true,
 				leap = false,
 				dap_ui = true,
-				aerial = true,
 				alpha = true,
 				telescope = {
 					enabled = true,

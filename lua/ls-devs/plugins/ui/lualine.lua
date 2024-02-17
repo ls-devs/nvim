@@ -44,7 +44,6 @@ return {
 				"trouble",
 				"overseer",
 				"quickfix",
-				"aerial",
 				"man",
 			},
 			options = {

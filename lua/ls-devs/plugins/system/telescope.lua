@@ -64,13 +64,6 @@ return {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
-				aerial = {
-					show_nesting = {
-						["_"] = false,
-						json = true,
-						yaml = true,
-					},
-				},
 				luasnip = {
 					search = function(entry)
 						return lst.filter_null(entry.context.trigger)
