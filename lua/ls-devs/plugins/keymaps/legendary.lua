@@ -2,10 +2,10 @@ return {
 	"mrjones2014/legendary.nvim",
 	event = "VeryLazy",
 	dependencies = {
-		{ "kkharji/sqlite.lua" },
+		{ "kkharji/sqlite.lua", lazy = true },
 		{
 			"mrjones2014/smart-splits.nvim",
-			event = "VeryLazy",
+			lazy = true,
 			opts = {
 				resize_mode = {
 					silent = true,

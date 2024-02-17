@@ -2,8 +2,8 @@ return {
 	"vidocqh/data-viewer.nvim",
 	ft = { "tsv", "csv", "sqlite" },
 	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"kkharji/sqlite.lua", -- Optional, sqlite support
+		{ "nvim-lua/plenary.nvim", lazy = true },
+		{ "kkharji/sqlite.lua", lazy = true },
 	},
 	opts = {
 		autoDisplayWhenOpenFile = false,

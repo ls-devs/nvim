@@ -48,9 +48,10 @@ return {
 		},
 	},
 	dependencies = {
-		{ "kevinhwang91/promise-async" },
+		{ "kevinhwang91/promise-async", lazy = true },
 		{
 			"luukvbaal/statuscol.nvim",
+			lazy = true,
 			opts = {
 				foldfunc = "builtin",
 				setopt = true,

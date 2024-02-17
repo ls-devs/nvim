@@ -83,6 +83,7 @@ return {
 		{
 			-- Mason LSPs
 			"williamboman/mason-lspconfig.nvim",
+			lazy = true,
 			opts = {
 				automatic_installation = false,
 				handlers = {
@@ -228,6 +229,7 @@ return {
 			dependencies = {
 				{
 					"williamboman/mason.nvim",
+					lazy = true,
 					opts = {
 						log_level = vim.log.levels.OFF,
 						pip = {
@@ -245,6 +247,7 @@ return {
 				},
 				{
 					"neovim/nvim-lspconfig",
+					lazy = true,
 					init = function()
 						vim.lsp.set_log_level("OFF")
 						require("lspconfig.ui.windows").default_options.border = "rounded"

@@ -1,5 +1,6 @@
 return {
 	"pmizio/typescript-tools.nvim",
+	ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
 	opts = {
 		on_attach = function(client)
 			client.server_capabilities.documentFormattingProvider = false
@@ -44,6 +45,8 @@ return {
 			disable_member_code_lens = true,
 		},
 	},
-	ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	dependencies = {
+		{ "nvim-lua/plenary.nvim", lazy = true },
+		{ "neovim/nvim-lspconfig", lazy = true },
+	},
 }

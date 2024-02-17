@@ -25,8 +25,8 @@ return {
 		},
 	},
 	dependencies = {
-		"anuvyklack/middleclass",
-		"anuvyklack/animation.nvim",
+		{ "anuvyklack/middleclass", lazy = true },
+		{ "anuvyklack/animation.nvim", lazy = true },
 	},
 	keys = {
 		{

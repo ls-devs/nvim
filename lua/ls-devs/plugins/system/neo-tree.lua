@@ -316,12 +316,13 @@ return {
 		},
 	},
 	dependencies = {
-		"3rd/image.nvim",
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
-		"MunifTanjim/nui.nvim",
+		{ "3rd/image.nvim", lazy = true },
+		{ "nvim-lua/plenary.nvim", lazy = true },
+		{ "nvim-tree/nvim-web-devicons", lazy = true },
+		{ "MunifTanjim/nui.nvim", lazy = true },
 		{
 			"s1n7ax/nvim-window-picker",
+			lazy = true,
 			opts = {
 				hint = "floating-big-letter",
 				show_prompt = false,

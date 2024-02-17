@@ -1,1 +1,1 @@
-require("ls-devs.core.setup")
+require("ls-devs.core")

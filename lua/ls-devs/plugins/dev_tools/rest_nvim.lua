@@ -1,7 +1,7 @@
 return {
 	"rest-nvim/rest.nvim",
 	ft = "http",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	dependencies = { "nvim-lua/plenary.nvim", lazy = true },
 	opts = {
 		result_split_horizontal = false,
 		result_split_in_place = false,

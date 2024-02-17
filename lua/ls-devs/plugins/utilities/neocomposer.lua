@@ -101,5 +101,5 @@ return {
 			noremap = true,
 		},
 	},
-	dependencies = { "kkharji/sqlite.lua" },
+	dependencies = { { "kkharji/sqlite.lua", lazy = true } },
 }

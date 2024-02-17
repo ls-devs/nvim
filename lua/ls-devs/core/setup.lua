@@ -1,4 +1,3 @@
-require("ls-devs.core.options")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -17,7 +16,7 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.completion" },
 		{ import = "ls-devs.plugins.dev_tools" },
 		{ import = "ls-devs.plugins.git_tools" },
-		{ import = "ls-devs.plugins.highlights" },
+		{ import = "ls-devs.plugins.treesitter" },
 		{ import = "ls-devs.plugins.keymaps" },
 		{ import = "ls-devs.plugins.lsp" },
 		{ import = "ls-devs.plugins.movements" },
@@ -84,6 +83,9 @@ require("lazy").setup({
 	},
 	readme = {
 		enabled = true,
+		root = vim.fn.stdpath("state") .. "/lazy/readme",
+		files = { "README.md", "lua/**/README.md" },
+		skip_if_doc_exists = true,
 	},
 	profiling = {
 		loader = true,

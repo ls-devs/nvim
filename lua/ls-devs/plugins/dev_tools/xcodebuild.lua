@@ -2,8 +2,8 @@ return {
 	"wojciech-kulik/xcodebuild.nvim",
 	ft = "swift",
 	dependencies = {
-		"nvim-telescope/telescope.nvim",
-		"MunifTanjim/nui.nvim",
+		{ "nvim-telescope/telescope.nvim", lazy = true },
+		{ "MunifTanjim/nui.nvim", lazy = true },
 	},
 	opts = {
 		restore_on_start = true, -- logs, diagnostics, and marks will be loaded on VimEnter (may affect performance)

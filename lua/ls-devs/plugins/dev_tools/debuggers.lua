@@ -32,6 +32,7 @@ return {
 		-- DAP Manager
 		{
 			"jay-babu/mason-nvim-dap.nvim",
+			lazy = true,
 			config = function()
 				require("mason-nvim-dap").setup({
 					automatic_setup = true,
@@ -48,6 +49,7 @@ return {
 		},
 		{
 			"theHamsta/nvim-dap-virtual-text",
+			lazy = true,
 			opts = {
 				enabled = true, -- enable this plugin (the default)
 				enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)

@@ -123,9 +123,10 @@ return {
 		}))
 	end,
 	dependencies = {
-		{ "MunifTanjim/nui.nvim" },
+		{ "MunifTanjim/nui.nvim", lazy = true },
 		{
 			"rcarriga/nvim-notify",
+			lazy = true,
 			opts = {
 				background_colour = "#000000",
 				top_down = false,

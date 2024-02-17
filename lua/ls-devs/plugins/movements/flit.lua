@@ -8,10 +8,11 @@ return {
 		opts = {},
 	},
 	dependencies = {
-		{ "ggandor/leap.nvim" },
-		{ "tpope/vim-repeat" },
+		{ "ggandor/leap.nvim", lazy = true },
+		{ "tpope/vim-repeat", lazy = true },
 		{
 			"ggandor/leap-spooky.nvim",
+			lazy = true,
 			opts = {
 				affixes = {
 					remote = { window = "r", cross_window = "R" },

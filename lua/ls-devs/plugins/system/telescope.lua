@@ -221,10 +221,11 @@ return {
 		},
 	},
 	dependencies = {
-		{ "nvim-lua/plenary.nvim" },
-		{ "benfowler/telescope-luasnip.nvim" },
+		{ "nvim-lua/plenary.nvim", lazy = true },
+		{ "benfowler/telescope-luasnip.nvim", lazy = true },
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
+			lazy = true,
 			build = "make",
 		},
 	},

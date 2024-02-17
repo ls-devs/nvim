@@ -1,6 +1,6 @@
 return {
 	"folke/trouble.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = { { "nvim-tree/nvim-web-devicons", lazy = true } },
 	opts = {
 		auto_close = true,
 		auto_fold = true,

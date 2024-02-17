@@ -3,6 +3,7 @@ return {
 	ft = "qf",
 	dependencies = {
 		"junegunn/fzf",
+		lazy = true,
 		build = function()
 			vim.fn["fzf#install"]()
 		end,
