@@ -33,7 +33,6 @@ return {
 			"bashls",
 			"vimls",
 			"graphql",
-			"wgsl_analyzer",
 			"svelte",
 			"taplo",
 			"vls",

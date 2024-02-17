@@ -92,12 +92,10 @@ return {
 				local node = state.tree:get_node()
 				if node and node.type == "file" then
 					local file_path = node:get_id()
-
 					local cmds = require("neo-tree.sources.filesystem.commands")
 					cmds.open(state)
 					cmds.clear_filter(state)
-
-					require("neo-tree.sources.filesystem").navigate(state, state.path, file_path)
+					require("neo-tree.command").execute({ action = "close" })
 				end
 			end,
 		},
@@ -226,8 +224,8 @@ return {
 					["<c-x>"] = "clear_filter",
 					["[g"] = "prev_git_modified",
 					["]g"] = "next_git_modified",
-					["O"] = "open_and_clear_filter",
-					["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+					["o"] = "open_and_clear_filter",
+					["?"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 					["oc"] = { "order_by_created", nowait = false },
 					["od"] = { "order_by_diagnostics", nowait = false },
 					["og"] = { "order_by_git_status", nowait = false },
@@ -253,8 +251,7 @@ return {
 						local cmds = require("neo-tree.sources.filesystem.commands")
 						cmds.open(state)
 						cmds.clear_filter(state)
-
-						require("neo-tree.sources.filesystem").navigate(state, state.path, file_path)
+						require("neo-tree.command").execute({ action = "close" })
 					end
 				end,
 				system_open = function(state)
@@ -268,14 +265,13 @@ return {
 			{
 				event = "file_opened",
 				handler = function()
-					require("neo-tree").close_all()
+					require("neo-tree.command").execute({ action = "close" })
 				end,
 			},
 		},
 		buffers = {
 			follow_current_file = {
 				enabled = true,
-
 				leave_dirs_open = false,
 			},
 			group_empty_dirs = true,
@@ -285,7 +281,8 @@ return {
 					["bd"] = "buffer_delete",
 					["<bs>"] = "navigate_up",
 					["."] = "set_root",
-					["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+					-- ["?"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+					["o"] = "open_and_clear_filter",
 					["oc"] = { "order_by_created", nowait = false },
 					["od"] = { "order_by_diagnostics", nowait = false },
 					["om"] = { "order_by_modified", nowait = false },
@@ -306,7 +303,8 @@ return {
 					["gc"] = "git_commit",
 					["gp"] = "git_push",
 					["gg"] = "git_commit_and_push",
-					["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+					-- ["?"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+					["o"] = "open_and_clear_filter",
 					["oc"] = { "order_by_created", nowait = false },
 					["od"] = { "order_by_diagnostics", nowait = false },
 					["om"] = { "order_by_modified", nowait = false },

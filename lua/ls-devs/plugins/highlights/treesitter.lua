@@ -43,8 +43,6 @@ return {
 			"gitignore",
 			"git_rebase",
 			"gitattributes",
-			"glsl",
-			"wgsl",
 			"go",
 			"make",
 			"gomod",
@@ -80,7 +78,7 @@ return {
 					["@function.outer"] = "V",
 					["@class.outer"] = "<c-v>",
 				},
-				include_surrounding_whitespace = true,
+				include_surrounding_whitespace = false,
 			},
 			swap = {
 				enable = true,
@@ -95,19 +93,19 @@ return {
 				enable = true,
 				set_jumps = true,
 				goto_next_start = {
-					["]m"] = "@function.outer",
+					["]f"] = "@function.outer",
 					["]]"] = "@class.outer",
 				},
 				goto_next_end = {
-					["]M"] = "@function.outer",
+					["]F"] = "@function.outer",
 					["]["] = "@class.outer",
 				},
 				goto_previous_start = {
-					["[m"] = "@function.outer",
+					["[f"] = "@function.outer",
 					["[["] = "@class.outer",
 				},
 				goto_previous_end = {
-					["[M"] = "@function.outer",
+					["[F"] = "@function.outer",
 					["[]"] = "@class.outer",
 				},
 			},
@@ -116,11 +114,9 @@ return {
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
 	end,
-	init = function()
-		vim.cmd([[hi rainbowcol1 guifg=#7f849c]])
-	end,
 	dependencies = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		{ "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
 		{
 			"HiPhish/rainbow-delimiters.nvim",
 			config = function()
