@@ -67,6 +67,75 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
+					"<C-i>",
+					"<C-i>zz",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"<C-o>",
+					"<C-o>zz",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"{",
+					"{zz",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"}",
+					"}zz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"}",
+					"}zz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"N",
+					"Nzz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"n",
+					"nzz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"G",
+					"Gzz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"gg",
+					"ggzz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"%",
+					"%zz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"*",
+					"*zz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"#",
+					"#zz",
+					description = "Navigate Up & Center",
+					opts = { noremap = true, silent = true },
+				},
+				{
 					"<A-j>",
 					{ v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
 					description = "Switch Lines Down",
@@ -250,6 +319,35 @@ return {
 						vim.b.focus_disable = ignore_filetypes[vim.bo.filetype]
 					end,
 					description = "Disable focus autoresize for FileType",
+				},
+				{
+					"TextYankPost",
+					function()
+						vim.highlight.on_yank({ timeout = 200, visual = true })
+					end,
+					opts = {
+						pattern = "*",
+					},
+				},
+				{
+					"VimResized",
+					function()
+						vim.cmd("wincmd =")
+					end,
+					opts = {
+						pattern = "*",
+					},
+				},
+				{
+					"FileType",
+					function()
+						vim.bo.bufhidden = "unload"
+						vim.cmd.wincmd("L")
+						vim.cmd.wincmd("=")
+					end,
+					opts = {
+						pattern = "help",
+					},
 				},
 			},
 			sort = {

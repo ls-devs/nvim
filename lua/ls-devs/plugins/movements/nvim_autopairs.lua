@@ -1,6 +1,6 @@
 return {
 	"windwp/nvim-autopairs",
-	event = "InsertEnter",
+	event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
 	opts = {
 		check_ts = true,
 		ts_config = {
@@ -21,13 +21,4 @@ return {
 			highlight_grey = "LineNr",
 		},
 	},
-	config = function(_, opts)
-		require("nvim-autopairs").setup(opts)
-		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-		local cmp = require("cmp")
-		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
-		if vim.o.ft == "clap_input" and vim.o.ft == "guihua" and vim.o.ft == "guihua_rust" then
-			cmp.setup.buffer({ completion = { enable = false } })
-		end
-	end,
 }

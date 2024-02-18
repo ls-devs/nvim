@@ -135,12 +135,11 @@ return {
 				},
 				sources = {
 					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
+					{ name = "buffer", max_item_count = 5 },
+					{ name = "async_path", max_item_count = 3 },
+					{ name = "luasnip", max_item_count = 3 },
 					{ name = "sass-variables" },
-					{ name = "async_path" },
 					{ name = "dotenv" },
-					{ name = "emoji" },
 					{
 						name = "rg",
 						keyword_length = 3,
@@ -153,6 +152,7 @@ return {
 						keyword_length = 4,
 					},
 					{ name = "crates" },
+					{ name = "emoji" },
 				},
 				confirm_opts = {
 					behavior = cmp.ConfirmBehavior.Replace,
@@ -186,6 +186,7 @@ return {
 					{ name = "cmdline" },
 				}),
 			})
+			cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 		end,
 		dependencies = {
 			{ "hrsh7th/cmp-buffer", lazy = true },
