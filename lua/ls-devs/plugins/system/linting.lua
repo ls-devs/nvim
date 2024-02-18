@@ -11,7 +11,6 @@ return {
 			sass = { "stylelint" },
 			less = { "stylelint" },
 			json = { "jsonlint" },
-			markdown = { "markdownlint" },
 			yaml = { "yamllint" },
 			dockerfile = { "hadolint" },
 			gitcommit = { "gitlint" },

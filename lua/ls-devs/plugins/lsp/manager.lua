@@ -44,7 +44,6 @@ return {
 			"djlint",
 			"jsonlint",
 			"hadolint",
-			"markdownlint",
 			"cmakelint",
 			"yamllint",
 			"cpplint",
