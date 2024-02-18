@@ -31,7 +31,7 @@ return {
 				"alpha-nvim",
 				"nvim-web-devicons",
 				"lualine.nvim",
-				"various-textobjects",
+				"nvim-various-textobjs",
 			},
 		},
 		setup_jsonls = true,

@@ -156,216 +156,458 @@ return {
 	},
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
-		local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-		vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-		vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
 	end,
+	keys = {
+		{
+			";",
+			mode = { "n", "x", "o" },
+			function()
+				require("nvim-treesitter.textobjects.repeatable_move").repeat_last_move()
+			end,
+			desc = "TS Repeat Last Move",
+		},
+		{
+			",",
+			mode = { "n", "x", "o" },
+			function()
+				require("nvim-treesitter.textobjects.repeatable_move").repeat_last_move_opposite()
+			end,
+			desc = "TS Repeat Last Move Backward",
+		},
+	},
 	dependencies = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
 		{
 			"chrisgrieser/nvim-various-textobjs",
 			lazy = true,
-			init = function()
-				local keymap = vim.keymap.set
-
-				keymap({ "o", "x" }, "ii", function()
-					if vim.fn.indent(".") == 0 then
-						require("various-textobjs").entireBuffer()
-					else
+			keys = {
+				{
+					"ii",
+					mode = { "o", "x" },
+					function()
+						if vim.fn.indent(".") == 0 then
+							require("various-textobjs").entirebuffer()
+						else
+							require("various-textobjs").indentation("inner", "inner")
+						end
+					end,
+				},
+				{
+					"ai",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").indentation("outer", "inner")
+					end,
+				},
+				{
+					"iI",
+					mode = { "o", "x" },
+					function()
 						require("various-textobjs").indentation("inner", "inner")
-					end
-				end)
-
-				keymap({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation('outer', 'inner')<CR>")
-				keymap({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation('inner', 'inner')<CR>")
-				keymap({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation('outer', 'outer')<CR>")
-
-				keymap({ "o", "x" }, "R", "<cmd>lua require('various-textobjs').restOfIndentation()<CR>")
-
-				keymap({ "o", "x" }, "ag", "<cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>")
-				keymap({ "o", "x" }, "ig", "<cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>")
-
-				keymap({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword('inner')<CR>")
-				keymap({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword('outer')<CR>")
-
-				keymap({ "o", "x" }, "C", "<cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
-
-				keymap({ "o", "x" }, "Q", "<cmd>lua require('various-textobjs').toNextQuotationMark()<CR>")
-
-				keymap({ "o", "x" }, "iq", "<cmd>lua require('various-textobjs').anyQuote('inner')<CR>")
-				keymap({ "o", "x" }, "aq", "<cmd>lua require('various-textobjs').anyQuote('outer')<CR>")
-
-				keymap({ "o", "x" }, "io", "<cmd>lua require('various-textobjs').anyBracket('inner')<CR>")
-				keymap({ "o", "x" }, "ao", "<cmd>lua require('various-textobjs').anyBracket('outer')<CR>")
-
-				keymap({ "o", "x" }, "r", "<cmd>lua require('various-textobjs').restOfParagraph()<CR>")
-
-				keymap({ "o", "x" }, "gG", "<cmd>lua require('various-textobjs').entireBuffer()<CR>")
-
-				keymap({ "o", "x" }, "n", "<cmd>lua require('various-textobjs').nearEoL()<CR>")
-
-				keymap({ "o", "x" }, "g;", "<cmd>lua require('various-textobjs').lastChange()<CR>")
-
-				keymap({ "o", "x" }, "i_", "<cmd>lua require('various-textobjs').lineCharacterwise('inner')<CR>")
-				keymap({ "o", "x" }, "a_", "<cmd>lua require('various-textobjs').lineCharacterwise('outer')<CR>")
-
-				keymap({ "o", "x" }, "|", "<cmd>lua require('various-textobjs').column()<CR>")
-
-				keymap({ "o", "x" }, "qc", "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>")
-
-				keymap({ "o", "x" }, "iN", "<cmd>lua require('various-textobjs').notebookCell('inner')<CR>")
-				keymap({ "o", "x" }, "aN", "<cmd>lua require('various-textobjs').notebookCell('outer')<CR>")
-
-				keymap({ "o", "x" }, "iv", "<cmd>lua require('various-textobjs').value('inner')<CR>")
-				keymap({ "o", "x" }, "av", "<cmd>lua require('various-textobjs').value('outer')<CR>")
-
-				keymap({ "o", "x" }, "ik", "<cmd>lua require('various-textobjs').key('inner')<CR>")
-				keymap({ "o", "x" }, "ak", "<cmd>lua require('various-textobjs').key('outer')<CR>")
-
-				keymap({ "o", "x", "n" }, "gx", function()
-					require("various-textobjs").url()
-					local foundURL = vim.fn.mode():find("v")
-					if foundURL then
-						vim.cmd.normal('"zy')
-						local url = vim.fn.getreg("z")
-						require("ls-devs.utils.custom_functions").OpenURLs(url)
-					else
-						local urlPattern = require("various-textobjs.charwise-textobjs").urlPattern
-						local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-						local urls = {}
-						for url in bufText:gmatch(urlPattern) do
-							table.insert(urls, url)
-						end
-						if #urls == 0 then
-							return
-						end
-						vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
-							if choice then
-								require("ls-devs.utils.custom_functions").OpenURLs(choice)
+					end,
+				},
+				{
+					"aI",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").indentation("outer", "outer")
+					end,
+				},
+				{
+					"R",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").restOfIndentation()
+					end,
+				},
+				{
+					"ag",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").greedyOuterIndentation("inner")
+					end,
+				},
+				{
+					"ig",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").greedyOuterIndentation("outer")
+					end,
+				},
+				{
+					"iS",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").subword("inner")
+					end,
+				},
+				{
+					"aS",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").subword("outer")
+					end,
+				},
+				{
+					"C",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").toNextClosingBracket()
+					end,
+				},
+				{
+					"Q",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").toNextQuotationMark()
+					end,
+				},
+				{
+					"iq",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").anyQuote("inner")
+					end,
+				},
+				{
+					"aq",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").anyQuote("outer")
+					end,
+				},
+				{
+					"io",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").anyBracket("inner")
+					end,
+				},
+				{
+					"ao",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").anyBracket("outer")
+					end,
+				},
+				{
+					"r",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").restOfParagraph()
+					end,
+				},
+				{
+					"gG",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").entireBuffer()
+					end,
+				},
+				{
+					"n",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").nearEoL()
+					end,
+				},
+				{
+					"g;",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").lastChange()
+					end,
+				},
+				{
+					"i_",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").lineCharacterwise("inner")
+					end,
+				},
+				{
+					"a_",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").lineCharacterwise("outer")
+					end,
+				},
+				{
+					"|",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").column()
+					end,
+				},
+				{
+					"qc",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").multiCommentedLines()
+					end,
+				},
+				{
+					"iN",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").notebookCell("inner")
+					end,
+				},
+				{
+					"aN",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").notebookCell("outer")
+					end,
+				},
+				{
+					"iv",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").value("inner")
+					end,
+				},
+				{
+					"av",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").value("outer")
+					end,
+				},
+				{
+					"ik",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").key("inner")
+					end,
+				},
+				{
+					"ak",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").key("outer")
+					end,
+				},
+				{
+					"gx",
+					mode = { "o", "x", "n" },
+					function()
+						require("various-textobjs").url()
+						local foundURL = vim.fn.mode():find("v")
+						if foundURL then
+							vim.cmd.normal('"zy')
+							local url = vim.fn.getreg("z")
+							require("ls-devs.utils.custom_functions").OpenURLs(url)
+						else
+							local urlPattern = require("various-textobjs.charwise-textobjs").urlPattern
+							local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+							local urls = {}
+							for url in bufText:gmatch(urlPattern) do
+								table.insert(urls, url)
 							end
-						end)
-					end
-				end)
-
-				keymap({ "o", "x" }, "in", "<cmd>lua require('various-textobjs').number('inner')<CR>")
-				keymap({ "o", "x" }, "an", "<cmd>lua require('various-textobjs').number('outer')<CR>")
-
-				keymap({ "o", "x" }, "!", "<cmd>lua require('various-textobjs').diagnostic()<CR>")
-
-				keymap({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold('inner')<CR>")
-				keymap({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold('outer')<CR>")
-
-				keymap({ "o", "x" }, "im", "<cmd>lua require('various-textobjs').chainMember('inner')<CR>")
-				keymap({ "o", "x" }, "am", "<cmd>lua require('various-textobjs').chainMember('outer')<CR>")
-
-				keymap({ "o", "x" }, "gw", "<cmd>lua require('various-textobjs').visibleInWindow()<CR>")
-				keymap({ "o", "x" }, "gW", "<cmd>lua require('various-textobjs').restOfWindow()<CR>")
-
-				keymap(
-					{ "o", "x" },
+							if #urls == 0 then
+								return
+							end
+							vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
+								if choice then
+									require("ls-devs.utils.custom_functions").OpenURLs(choice)
+								end
+							end)
+						end
+					end,
+				},
+				{
+					"in",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").number("inner")
+					end,
+				},
+				{
+					"an",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").number("outer")
+					end,
+				},
+				{
+					"!",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").diagnostic()
+					end,
+				},
+				{
+					"iz",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").closedFold("inner")
+					end,
+				},
+				{
+					"az",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").closedFold("outer")
+					end,
+				},
+				{
+					"im",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").chainMember("inner")
+					end,
+				},
+				{
+					"am",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").chainMember("outer")
+					end,
+				},
+				{
+					"gw",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").visibleInWindow()
+					end,
+				},
+				{
+					"gX",
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").restOfWindow()
+					end,
+				},
+				{
 					"il",
-					"<cmd>lua require('various-textobjs').mdlink('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdlink("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"al",
-					"<cmd>lua require('various-textobjs').mdlink('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdlink("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"ie",
-					"<cmd>lua require('various-textobjs').mdEmphasis('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdEmphasis("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"ae",
-					"<cmd>lua require('various-textobjs').mdEmphasis('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdEmphasis("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"iC",
-					"<cmd>lua require('various-textobjs').mdFencedCodeBlock('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdFencedCodeBlock("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"aC",
-					"<cmd>lua require('various-textobjs').mdFencedCodeBlock('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").mdFencedCodeBlock("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"iy",
-					"<cmd>lua require('various-textobjs').pyTripleQuotes('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").pyTripleQuotes("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"ay",
-					"<cmd>lua require('various-textobjs').pyTripleQuotes('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").pyTripleQuotes("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"ic",
-					"<cmd>lua require('various-textobjs').cssSelector('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").cssSelector("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"ac",
-					"<cmd>lua require('various-textobjs').cssSelector('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").cssSelector("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"ix",
-					"<cmd>lua require('various-textobjs').htmlAttribute('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").htmlAttribute("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"ax",
-					"<cmd>lua require('various-textobjs').htmlAttribute('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").htmlAttribute("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"iD",
-					"<cmd>lua require('various-textobjs').doubleSquareBrackets('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").doubleSquareBrackets("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"aD",
-					"<cmd>lua require('various-textobjs').doubleSquareBrackets('outer')<CR>",
-					{ buffer = true }
-				)
-
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").doubleSquareBrackets("outer")
+					end,
+					buffer = true,
+				},
+				{
 					"iP",
-					"<cmd>lua require('various-textobjs').shellPipe('inner')<CR>",
-					{ buffer = true }
-				)
-				keymap(
-					{ "o", "x" },
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").shellPipe("inner")
+					end,
+					buffer = true,
+				},
+				{
 					"aP",
-					"<cmd>lua require('various-textobjs').shellPipe('outer')<CR>",
-					{ buffer = true }
-				)
-			end,
+					mode = { "o", "x" },
+					function()
+						require("various-textobjs").shellPipe("outer")
+					end,
+					buffer = true,
+				},
+			},
 		},
 		{
 			"HiPhish/rainbow-delimiters.nvim",
