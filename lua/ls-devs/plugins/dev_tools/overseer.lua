@@ -51,7 +51,7 @@ return {
 		},
 		{
 			"<leader>ot",
-			require("ls-devs.utils.custom_functions").OverseerToggle,
+			"<cmd>OverseerToggle<CR>",
 			desc = "Overseer Toggle",
 			noremap = true,
 			silent = true,

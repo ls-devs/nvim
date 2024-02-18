@@ -143,24 +143,6 @@ M.CustomHover = function()
 	end
 end
 
-local isOverseerOpen = false
-M.OverseerToggle = function()
-	if not isOverseerOpen then
-		vim.cmd(":OverseerToggle")
-		if vim.fn.exists(":WindowsDisableAutowidth") then
-			vim.cmd(":WindowsDisableAutowidth")
-		end
-		vim.cmd(":WindowsEqualize")
-		isOverseerOpen = true
-	else
-		vim.cmd(":OverseerToggle")
-		if vim.fn.exists(":WindowsEnableAutowidth") then
-			vim.cmd(":WindowsEnableAutowidth")
-		end
-		isOverseerOpen = false
-	end
-end
-
 M.DiffviewToggle = function()
 	local lib = require("diffview.lib")
 	local view = lib.get_current_view()

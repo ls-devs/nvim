@@ -219,6 +219,40 @@ return {
 						},
 					},
 				},
+				{
+					"WinEnter",
+					function()
+						local ignore_buftypes = { "prompt", "popup" }
+						if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
+							vim.w.focus_disable = true
+						else
+							vim.w.focus_disable = false
+						end
+					end,
+					description = "Disable focus autoresize for BufType",
+				},
+				{
+					"FileType",
+					function()
+						local ignore_filetypes = {
+							["neo-tree"] = true,
+							["dap-repl"] = true,
+							SidebarNvim = true,
+							Trouble = true,
+							terminal = true,
+							dapui_console = true,
+							dapui_watches = true,
+							dapui_stacks = true,
+							dapui_breakpoints = true,
+							dapui_scopes = true,
+							OverseerList = true,
+							noice = true,
+							DiffviewFiles = true,
+						}
+						vim.b.focus_disable = ignore_filetypes[vim.bo.filetype]
+					end,
+					description = "Disable focus autoresize for FileType",
+				},
 			},
 			sort = {
 				most_recent_first = true,
