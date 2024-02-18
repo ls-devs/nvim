@@ -76,7 +76,7 @@ return {
 					["l:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
 					["r:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
 
-					["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
+					["aa"] = { query = "@arameter.outer", desc = "Select outer part of a parameter/argument" },
 					["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
 
 					["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
@@ -163,7 +163,210 @@ return {
 	end,
 	dependencies = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
-		{ "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true }, lazy = true },
+		{
+			"chrisgrieser/nvim-various-textobjs",
+			lazy = true,
+			init = function()
+				local keymap = vim.keymap.set
+
+				keymap({ "o", "x" }, "ii", function()
+					if vim.fn.indent(".") == 0 then
+						require("various-textobjs").entireBuffer()
+					else
+						require("various-textobjs").indentation("inner", "inner")
+					end
+				end)
+
+				keymap({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation('outer', 'inner')<CR>")
+				keymap({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation('inner', 'inner')<CR>")
+				keymap({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation('outer', 'outer')<CR>")
+
+				keymap({ "o", "x" }, "R", "<cmd>lua require('various-textobjs').restOfIndentation()<CR>")
+
+				keymap({ "o", "x" }, "ag", "<cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>")
+				keymap({ "o", "x" }, "ig", "<cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>")
+
+				keymap({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword('inner')<CR>")
+				keymap({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword('outer')<CR>")
+
+				keymap({ "o", "x" }, "C", "<cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
+
+				keymap({ "o", "x" }, "Q", "<cmd>lua require('various-textobjs').toNextQuotationMark()<CR>")
+
+				keymap({ "o", "x" }, "iq", "<cmd>lua require('various-textobjs').anyQuote('inner')<CR>")
+				keymap({ "o", "x" }, "aq", "<cmd>lua require('various-textobjs').anyQuote('outer')<CR>")
+
+				keymap({ "o", "x" }, "io", "<cmd>lua require('various-textobjs').anyBracket('inner')<CR>")
+				keymap({ "o", "x" }, "ao", "<cmd>lua require('various-textobjs').anyBracket('outer')<CR>")
+
+				keymap({ "o", "x" }, "r", "<cmd>lua require('various-textobjs').restOfParagraph()<CR>")
+
+				keymap({ "o", "x" }, "gG", "<cmd>lua require('various-textobjs').entireBuffer()<CR>")
+
+				keymap({ "o", "x" }, "n", "<cmd>lua require('various-textobjs').nearEoL()<CR>")
+
+				keymap({ "o", "x" }, "g;", "<cmd>lua require('various-textobjs').lastChange()<CR>")
+
+				keymap({ "o", "x" }, "i_", "<cmd>lua require('various-textobjs').lineCharacterwise('inner')<CR>")
+				keymap({ "o", "x" }, "a_", "<cmd>lua require('various-textobjs').lineCharacterwise('outer')<CR>")
+
+				keymap({ "o", "x" }, "|", "<cmd>lua require('various-textobjs').column()<CR>")
+
+				keymap({ "o", "x" }, "qc", "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>")
+
+				keymap({ "o", "x" }, "iN", "<cmd>lua require('various-textobjs').notebookCell('inner')<CR>")
+				keymap({ "o", "x" }, "aN", "<cmd>lua require('various-textobjs').notebookCell('outer')<CR>")
+
+				keymap({ "o", "x" }, "iv", "<cmd>lua require('various-textobjs').value('inner')<CR>")
+				keymap({ "o", "x" }, "av", "<cmd>lua require('various-textobjs').value('outer')<CR>")
+
+				keymap({ "o", "x" }, "ik", "<cmd>lua require('various-textobjs').key('inner')<CR>")
+				keymap({ "o", "x" }, "ak", "<cmd>lua require('various-textobjs').key('outer')<CR>")
+
+				keymap({ "o", "x", "n" }, "gx", function()
+					require("various-textobjs").url()
+					local foundURL = vim.fn.mode():find("v")
+					if foundURL then
+						vim.cmd.normal('"zy')
+						local url = vim.fn.getreg("z")
+						require("ls-devs.utils.custom_functions").OpenURLs(url)
+					else
+						local urlPattern = require("various-textobjs.charwise-textobjs").urlPattern
+						local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+						local urls = {}
+						for url in bufText:gmatch(urlPattern) do
+							table.insert(urls, url)
+						end
+						if #urls == 0 then
+							return
+						end
+						vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
+							if choice then
+								require("ls-devs.utils.custom_functions").OpenURLs(choice)
+							end
+						end)
+					end
+				end)
+
+				keymap({ "o", "x" }, "in", "<cmd>lua require('various-textobjs').number('inner')<CR>")
+				keymap({ "o", "x" }, "an", "<cmd>lua require('various-textobjs').number('outer')<CR>")
+
+				keymap({ "o", "x" }, "!", "<cmd>lua require('various-textobjs').diagnostic()<CR>")
+
+				keymap({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold('inner')<CR>")
+				keymap({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold('outer')<CR>")
+
+				keymap({ "o", "x" }, "im", "<cmd>lua require('various-textobjs').chainMember('inner')<CR>")
+				keymap({ "o", "x" }, "am", "<cmd>lua require('various-textobjs').chainMember('outer')<CR>")
+
+				keymap({ "o", "x" }, "gw", "<cmd>lua require('various-textobjs').visibleInWindow()<CR>")
+				keymap({ "o", "x" }, "gW", "<cmd>lua require('various-textobjs').restOfWindow()<CR>")
+
+				keymap(
+					{ "o", "x" },
+					"il",
+					"<cmd>lua require('various-textobjs').mdlink('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"al",
+					"<cmd>lua require('various-textobjs').mdlink('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"ie",
+					"<cmd>lua require('various-textobjs').mdEmphasis('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"ae",
+					"<cmd>lua require('various-textobjs').mdEmphasis('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"iC",
+					"<cmd>lua require('various-textobjs').mdFencedCodeBlock('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"aC",
+					"<cmd>lua require('various-textobjs').mdFencedCodeBlock('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"iy",
+					"<cmd>lua require('various-textobjs').pyTripleQuotes('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"ay",
+					"<cmd>lua require('various-textobjs').pyTripleQuotes('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"ic",
+					"<cmd>lua require('various-textobjs').cssSelector('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"ac",
+					"<cmd>lua require('various-textobjs').cssSelector('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"ix",
+					"<cmd>lua require('various-textobjs').htmlAttribute('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"ax",
+					"<cmd>lua require('various-textobjs').htmlAttribute('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"iD",
+					"<cmd>lua require('various-textobjs').doubleSquareBrackets('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"aD",
+					"<cmd>lua require('various-textobjs').doubleSquareBrackets('outer')<CR>",
+					{ buffer = true }
+				)
+
+				keymap(
+					{ "o", "x" },
+					"iP",
+					"<cmd>lua require('various-textobjs').shellPipe('inner')<CR>",
+					{ buffer = true }
+				)
+				keymap(
+					{ "o", "x" },
+					"aP",
+					"<cmd>lua require('various-textobjs').shellPipe('outer')<CR>",
+					{ buffer = true }
+				)
+			end,
+		},
 		{
 			"HiPhish/rainbow-delimiters.nvim",
 			lazy = true,

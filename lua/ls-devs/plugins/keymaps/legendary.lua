@@ -222,11 +222,9 @@ return {
 				{
 					"WinEnter",
 					function()
-						local ignore_buftypes = { "prompt", "popup" }
+						local ignore_buftypes = { "nofile", "prompt", "popup" }
 						if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
-							vim.w.focus_disable = true
-						else
-							vim.w.focus_disable = false
+							vim.b.focus_disable = true
 						end
 					end,
 					description = "Disable focus autoresize for BufType",

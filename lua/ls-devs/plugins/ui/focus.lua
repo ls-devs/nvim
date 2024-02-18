@@ -8,6 +8,14 @@ return {
 			bufnew = false,
 			tmux = false,
 		},
+		autoresize = {
+			enable = true,
+			width = 0,
+			height = 0,
+			minwidth = 0,
+			minheight = 0,
+			height_quickfix = 10,
+		},
 		ui = {
 			number = false,
 			relativenumber = false,
@@ -18,7 +26,6 @@ return {
 			cursorcolumn = false,
 			colorcolumn = {
 				enable = false,
-				list = "+1",
 			},
 			signcolumn = false,
 			winhighlight = false,

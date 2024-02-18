@@ -143,6 +143,19 @@ M.CustomHover = function()
 	end
 end
 
+M.OpenURLs = function(url)
+	local opener
+	if vim.fn.has("macunix") == 1 then
+		opener = "open"
+	elseif vim.fn.has("linux") == 1 then
+		opener = "xdg-open"
+	elseif vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
+		opener = "start"
+	end
+	local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, url)
+	vim.fn.system(openCommand)
+end
+
 M.DiffviewToggle = function()
 	local lib = require("diffview.lib")
 	local view = lib.get_current_view()
