@@ -4,14 +4,6 @@ return {
 	opts = {
 		enable = true,
 		commands = true,
-		autoresize = {
-			enable = true,
-			width = 0,
-			height = 0,
-			minwidth = 0,
-			minheight = 0,
-			height_quickfix = 10,
-		},
 		split = {
 			bufnew = false,
 			tmux = false,
@@ -30,6 +22,29 @@ return {
 			},
 			signcolumn = false,
 			winhighlight = false,
+		},
+	},
+	keys = {
+		{
+			"<leader>wm",
+			"<cmd>FocusMaximise<CR>",
+			desc = "Focus Windows",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"<leader>we",
+			"<cmd>FocusEqualise<CR>",
+			desc = "Equalize Window",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"<leader>wr",
+			"<cmd>FocusAutoresize<CR>",
+			desc = "Equalize Window",
+			silent = true,
+			noremap = true,
 		},
 	},
 }
