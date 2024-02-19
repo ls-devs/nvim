@@ -3,14 +3,15 @@ local tabName = function(tab)
 	local winid = vim.api.nvim_tabpage_get_win(tab.id)
 	local bufid = vim.api.nvim_win_get_buf(winid)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
-	if string.find(file_type, "Overseer") then
-		tabName = file_type
-	end
-
 	local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
-	if string.len(tabTail) > 25 then
-		local fileExt = string.match(tabTail, "[^.]+$")
-		tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+
+	if string.find(file_type, "Overseer") or string.find(file_type, "neo") then
+		tabName = file_type
+	else
+		if string.len(tabTail) > 25 then
+			local fileExt = string.match(tabTail, "[^.]+$")
+			tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+		end
 	end
 
 	if string.find(tabTail, "Floating") then
@@ -31,6 +32,7 @@ local tabName = function(tab)
 	if tabName == "" then
 		tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
 	end
+
 	return string.gsub(tabName, "%[%d+%+%]", "")
 end
 

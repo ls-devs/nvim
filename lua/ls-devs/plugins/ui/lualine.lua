@@ -49,7 +49,45 @@ return {
 			options = {
 				component_separators = "",
 				section_separators = "",
-				theme = "catppuccin",
+				theme = {
+					normal = {
+						a = { bg = c.blue, fg = c.mantle, gui = "bold" },
+						b = { bg = c.surface0, fg = c.blue },
+						c = { bg = nil, fg = c.text },
+					},
+
+					insert = {
+						a = { bg = c.green, fg = c.base, gui = "bold" },
+						b = { bg = c.surface0, fg = c.green },
+					},
+
+					terminal = {
+						a = { bg = c.green, fg = c.base, gui = "bold" },
+						b = { bg = c.surface0, fg = c.green },
+					},
+
+					command = {
+						a = { bg = c.blue, fg = c.base, gui = "bold" },
+						b = { bg = c.surface0, fg = c.peach },
+					},
+
+					visual = {
+						a = { bg = c.mauve, fg = c.base, gui = "bold" },
+						b = { bg = c.surface0, fg = c.mauve },
+					},
+
+					replace = {
+						a = { bg = c.red, fg = c.base, gui = "bold" },
+						b = { bg = c.surface0, fg = c.red },
+					},
+
+					inactive = {
+						a = { bg = nil, fg = c.blue },
+						b = { bg = nil, fg = c.surface1, gui = "bold" },
+						c = { bg = nil, fg = c.overlay0 },
+					},
+				},
+
 				disabled_filetypes = { "alpha" },
 			},
 			sections = {

@@ -102,7 +102,7 @@ return {
 				nvimtree = true,
 				treesitter = true,
 				notify = true,
-				leap = false,
+				leap = true,
 				dap_ui = true,
 				alpha = true,
 				telescope = {
