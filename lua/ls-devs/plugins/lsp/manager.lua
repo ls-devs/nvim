@@ -97,6 +97,11 @@ return {
 					end,
 					["cssls"] = function(server_name)
 						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
 							settings = {
 								css = {
 									lint = {
@@ -119,6 +124,11 @@ return {
 					["jsonls"] = function(server_name)
 						local schemastore = require("schemastore")
 						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
 							settings = {
 								json = {
 									schemas = schemastore.json.schemas(),
@@ -136,6 +146,11 @@ return {
 					end,
 					["pyright"] = function(server_name)
 						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
 							settings = {
 								python = {
 									analysis = {
@@ -153,6 +168,11 @@ return {
 					end,
 					["intelephense"] = function(server_name)
 						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
 							settings = {
 								intelephense = {
 									stubs = {

@@ -3,8 +3,8 @@ return {
 	lazy = true,
 	ft = "markdown",
 	event = {
-		"BufReadPre " .. vim.fn.expand("~") .. "/notes/**.md",
-		"BufNewFile " .. vim.fn.expand("~") .. "/notes/**.md",
+		"BufReadPre " .. vim.fn.expand("~") .. "/Private/notes/**.md",
+		"BufNewFile " .. vim.fn.expand("~") .. "/Private/notes/**.md",
 	},
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },
@@ -13,11 +13,11 @@ return {
 		workspaces = {
 			{
 				name = "Personal",
-				path = "~/notes/personal",
+				path = "~/Private/notes/personal",
 			},
 			{
 				name = "Work",
-				path = "~/notes/work",
+				path = "~/Private/notes/work",
 			},
 		},
 		completion = {
@@ -156,4 +156,8 @@ return {
 
 		yaml_parser = "native",
 	},
+	config = function(_, opts)
+		require("obsidian").setup(opts)
+		vim.o.conceallevel = 2
+	end,
 }
