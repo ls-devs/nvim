@@ -11,7 +11,7 @@ return {
 				prompt_prefix = " 🔍 ",
 				layout_config = {
 					horizontal = {
-						preview_width = 0.5,
+						preview_width = 0.47,
 						prompt_position = "top",
 						width = 0.9,
 					},
