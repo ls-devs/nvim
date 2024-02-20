@@ -59,6 +59,8 @@ return {
 					IncSearch = { fg = colors.base, bg = colors.peach, style = { "bold" } },
 					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
 					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
+					NoiceScrollbarThumb = { bg = colors.blue },
+					BqfPreviewThumb = { bg = colors.blue },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },

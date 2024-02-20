@@ -16,7 +16,7 @@ return {
 			win_vheight = 12,
 			winblend = 0,
 			delay_syntax = 80,
-			border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+			border = "rounded",
 			show_title = true,
 			should_preview_cb = function(bufnr, qwinid)
 				local ret = true

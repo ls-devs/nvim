@@ -166,6 +166,13 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
+					"<leader>nh",
+					function()
+						vim.cmd.noh()
+					end,
+					description = "Remove Highlight Search",
+				},
+				{
 					"<leader>hg",
 					require("ls-devs.utils.custom_functions").HelpGrep,
 					description = "Help Grep",
@@ -291,7 +298,7 @@ return {
 				{
 					"TextYankPost",
 					function()
-						vim.highlight.on_yank({ timeout = 200, visual = true })
+						vim.highlight.on_yank({ timeout = 100, visual = true })
 					end,
 					opts = {
 						pattern = "*",

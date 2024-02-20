@@ -160,10 +160,10 @@ return {
 				},
 				window = {
 					completion = cmp.config.window.bordered({
-						winhighlight = "Normal:Normal,FloatBorder:None,CursorLine:PmenuSel,Search:None",
+						winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
 					}),
 					documentation = cmp.config.window.bordered({
-						winhighlight = "Normal:Normal,FloatBorder:None,CursorLine:PmenuSel,Search:None",
+						winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
 					}),
 				},
 			})
