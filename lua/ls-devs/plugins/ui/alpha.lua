@@ -21,7 +21,11 @@ return {
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
 			dashboard.button("e", "󰙅 " .. " NeoTree", "<cmd>Neotree float<CR>"),
-			dashboard.button("f", " " .. " Find file", "<cmd>Telescope find_files <CR>"),
+			dashboard.button(
+				"f",
+				" " .. " Find file",
+				"<cmd>Telescope find_files hidden=true no_ignore=true no_ignore_parent=true follow=true<CR>"
+			),
 			dashboard.button("t", " " .. " Find text", "<cmd>Telescope live_grep <CR>"),
 			dashboard.button("r", " " .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
 			dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
