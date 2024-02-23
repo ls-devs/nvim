@@ -34,7 +34,7 @@ return {
 				"prettierd",
 			},
 			markdown = {
-				"mdformat",
+				"markdownlint-cli2",
 			},
 			yaml = {
 				"yq",

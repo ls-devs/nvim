@@ -1,30 +1,9 @@
 return {
 	"epwalsh/obsidian.nvim",
 	lazy = true,
-	ft = "markdown",
-	cmd = {
-		"ObsidianOpen",
-		"ObsidianNew",
-		"ObsidianQuickSwitch",
-		"ObsidianFollowLink",
-		"ObsidianBacklinks",
-		"ObsidianTags",
-		"ObsidianToday",
-		"ObsidianYesterday",
-		"ObsidianTomorrow",
-		"ObsidianTemplate",
-		"ObsidianSearch",
-		"ObsidianLink",
-		"ObsidianLinkNew",
-		"ObsidianLinks",
-		"ObsidianExtractNote",
-		"ObsidianWorkspace",
-		"ObsidianPasteImg",
-		"ObsidianRename",
-	},
 	event = {
-		"BufReadPre " .. vim.fn.expand("~") .. "/Private/notes/**.md",
-		"BufNewFile " .. vim.fn.expand("~") .. "/Private/notes/**.md",
+		"BufReadPre " .. "/mnt/c/Users/lseigneurie" .. "/Notes/**.md",
+		"BufNewFile " .. "/mnt/c/Users/lseigneurie" .. "/Notes/**.md",
 	},
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },
@@ -33,17 +12,18 @@ return {
 		workspaces = {
 			{
 				name = "Personal",
-				path = "~/Private/notes/personal",
+				path = "/mnt/c/Users/lseigneurie/Notes/Personal",
 			},
 			{
 				name = "Work",
-				path = "~/Private/notes/work",
+				path = "/mnt/c/Users/lseigneurie/Notes/Work",
 			},
 		},
 		completion = {
 			nvim_cmp = true,
 			min_chars = 2,
 		},
+
 		note_id_func = function(title)
 			local suffix = ""
 			if title ~= nil then
@@ -53,7 +33,7 @@ return {
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
 			end
-			return tostring(os.time()) .. "-" .. suffix
+			return suffix
 		end,
 
 		wiki_link_func = function(opts)
@@ -95,20 +75,10 @@ return {
 		end,
 
 		templates = {
-			subdir = "templates",
+			subdir = "Templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M",
 			substitutions = {},
-		},
-
-		backlinks = {
-			height = 10,
-			wrap = true,
-		},
-
-		tags = {
-			height = 10,
-			wrap = true,
 		},
 
 		follow_url_func = function(url)

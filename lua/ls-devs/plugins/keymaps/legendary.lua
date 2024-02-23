@@ -84,49 +84,41 @@ return {
 				{
 					"}",
 					"}zz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"}",
 					"}zz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"N",
 					"Nzz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"n",
 					"nzz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"G",
 					"Gzz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"gg",
 					"ggzz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"%",
 					"%zz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"*",
 					"*zz",
-					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -294,6 +286,68 @@ return {
 							"*.graphql",
 						},
 					},
+				},
+				{
+					"LspAttach",
+					function(args)
+						local bufnr = args.buf
+						local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+						if client == nil or client.name ~= "emmet_language_server" then
+							return
+						end
+
+						vim.keymap.set("n", "<leader>xe", function()
+							require("nvim-emmet").wrap_with_abbreviation()
+						end, { buffer = bufnr, desc = "Wrap with abbreviation" })
+					end,
+					description = "Setup nvim-emmet",
+					opts = {
+						pattern = {
+							"*.jsx",
+							"*.tsx",
+							"*.vue",
+							"*.html",
+						},
+					},
+				},
+				{
+					"WinEnter",
+					function()
+						local ignore_buftypes = { "nofile", "prompt", "popup" }
+						if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
+							vim.b.focus_disable = true
+						else
+							vim.b.focus_disable = false
+						end
+					end,
+					description = "Disable focus autoresize for BufType",
+				},
+				{
+					"FileType",
+					function()
+						local ignore_filetypes = {
+							"neo-tree",
+							"dap-repl",
+							"SidebarNvim",
+							"Trouble",
+							"terminal",
+							"dapui_console",
+							"dapui_watches",
+							"dapui_stacks",
+							"dapui_breakpoints",
+							"dapui_scopes",
+							"OverseerList",
+							"noice",
+							"DiffviewFiles",
+						}
+						if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+							vim.b.focus_disable = true
+						else
+							vim.b.focus_disable = false
+						end
+					end,
+					description = "Disable focus autoresize for FileType",
 				},
 				{
 					"TextYankPost",

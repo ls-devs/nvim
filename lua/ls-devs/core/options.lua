@@ -57,6 +57,7 @@ local options = {
 	scrolloff = 8,
 	sidescrolloff = 12,
 	winblend = 0,
+	pumblend = 0,
 	startofline = true,
 	wrap = false,
 	foldcolumn = "1",

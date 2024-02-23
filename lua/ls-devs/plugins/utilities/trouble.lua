@@ -13,8 +13,8 @@ return {
 	keys = {
 		{
 			"<leader>v",
-			"<cmd>Trouble<CR>",
-			desc = "Trouble",
+			"<cmd>TroubleToggle<CR>",
+			desc = "TroubleToggle",
 			silent = true,
 			noremap = true,
 		},

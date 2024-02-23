@@ -32,6 +32,7 @@ return {
 				"nvim-web-devicons",
 				"lualine.nvim",
 				"nvim-various-textobjs",
+				"obsidian.nvim",
 			},
 		},
 		setup_jsonls = true,

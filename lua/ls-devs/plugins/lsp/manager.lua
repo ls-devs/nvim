@@ -16,7 +16,6 @@ return {
 			"cssmodules_ls",
 			"emmet_language_server",
 			"volar",
-			"tailwindcss",
 			"prismals",
 			"jsonls",
 			"intelephense",
@@ -52,7 +51,7 @@ return {
 
 			-- Formatters
 			"prettierd",
-			"mdformat",
+			"markdownlint-cli2",
 			"cmakelang",
 			"clang-format",
 			"yq",

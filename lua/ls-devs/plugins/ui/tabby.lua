@@ -38,7 +38,7 @@ end
 
 return {
 	"nanozuki/tabby.nvim",
-	event = { "BufReadPost", "BufWritePost" },
+	event = { "BufReadPost", "BufWritePost", "BufNewFile" },
 	config = function()
 		require("tabby").setup()
 		local colors = require("catppuccin.palettes.mocha")
@@ -47,11 +47,11 @@ return {
 				line.tabs().foreach(function(tab)
 					local hl = tab.is_current() and "TabLineSel" or "TabLine"
 					return {
-						line.sep("", hl, { bg = colors.none }),
+						line.sep("", { bg = colors.surface0 }, { bg = colors.none }),
 						tab.is_current() and "" or "󰆣",
 						tabName(tab),
 						tab.close_btn(""),
-						line.sep("", hl, { bg = colors.none }),
+						line.sep("", { bg = colors.surface0 }, { bg = colors.none }),
 						hl = hl,
 						margin = " ",
 					}

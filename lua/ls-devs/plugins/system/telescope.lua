@@ -95,7 +95,7 @@ return {
 	keys = {
 		{
 			"<leader>ff",
-			"<cmd>Telescope find_files<CR>",
+			"<cmd>Telescope find_files hidden=true no_ignore=true no_ignore_parent=true follow=true<CR>",
 			desc = "Telescope Find Files",
 			silent = true,
 			noremap = true,
@@ -193,21 +193,21 @@ return {
 		},
 		{
 			"<leader>gs",
-			"<cmd>lua require('telescope.builtin').git_status()<CR>",
+			"<cmd>Telescope git_status<CR>",
 			desc = "Telescope Git Status",
 			silent = true,
 			noremap = true,
 		},
 		{
 			"<leader>gc",
-			"<cmd>lua require('telescope.builtin').git_commits()<CR>",
+			"<cmd>Telescope git_commits<CR>",
 			desc = "Telescope Git Commits",
 			silent = true,
 			noremap = true,
 		},
 		{
 			"<leader>gb",
-			"<cmd>lua require('telescope.builtin').git_branches()<CR>",
+			"<cmd>Telescope git_branches<CR>",
 			desc = "Telescope Git Branches",
 			silent = true,
 			noremap = true,
