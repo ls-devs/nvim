@@ -16,6 +16,7 @@ return {
 			"cssmodules_ls",
 			"emmet_language_server",
 			"volar",
+			"tailwindcss",
 			"prismals",
 			"jsonls",
 			"intelephense",
@@ -118,6 +119,21 @@ return {
 									},
 								},
 							},
+						})
+					end,
+					["tailwindcss"] = function(server_name)
+						require("lspconfig")[server_name].setup({
+							capabilities = vim.tbl_deep_extend(
+								"force",
+								vim.lsp.protocol.make_client_capabilities(),
+								require("cmp_nvim_lsp").default_capabilities()
+							),
+							root_dir = require("lspconfig.util").root_pattern(
+								"tailwind.config.js",
+								"tailwind.config.cjs",
+								"tailwind.config.mjs",
+								"tailwind.config.ts"
+							),
 						})
 					end,
 					["jsonls"] = function(server_name)

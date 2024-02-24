@@ -33,6 +33,7 @@ return {
 				"lualine.nvim",
 				"nvim-various-textobjs",
 				"obsidian.nvim",
+				"diffview.nvim",
 			},
 		},
 		setup_jsonls = true,

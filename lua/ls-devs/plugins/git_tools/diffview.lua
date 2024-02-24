@@ -23,7 +23,7 @@ return {
 				winbar_info = true,
 			},
 			merge_tool = {
-				layout = "diff3_horizontal",
+				layout = "diff3_mixed",
 				disable_diagnostics = true,
 				winbar_info = true,
 			},
@@ -64,23 +64,24 @@ return {
 					multi_file = {},
 				},
 			},
-			win_config = {
-				position = "bottom",
-				height = 16,
-				win_opts = {},
-			},
+			win_config = function()
+				local c = { type = "float", border = "rounded" }
+				local editor_width = vim.o.columns
+				local editor_height = vim.o.lines
+				c.width = math.min(100, editor_width)
+				c.height = math.min(24, editor_height)
+				c.col = math.floor(editor_width * 0.5 - c.width * 0.5)
+				c.row = math.floor(editor_height * 0.5 - c.height * 0.5)
+				return c
+			end,
 		},
-		commit_log_panel = {
-			win_config = {
-				win_opts = {},
-			},
+		hooks = {
+			view_opened = function()
+				require("diffview.actions").toggle_files()
+			end,
 		},
-		default_args = {
-			DiffviewOpen = {},
-			DiffviewFileHistory = {},
-		},
-		hooks = {},
 	},
+	cmd = "Diffview",
 	config = function(_, opts)
 		require("diffview").setup(opts)
 		require("diffview.ui.panel").Panel.default_config_float.border = "rounded"

@@ -19,7 +19,8 @@ return {
 				includeInlayFunctionLikeReturnTypeHints = true,
 				includeInlayEnumMemberValueHints = true,
 			},
-			code_lens = "all",
+			code_lens = "off",
+			disable_member_code_lens = true,
 		},
 	},
 	dependencies = {

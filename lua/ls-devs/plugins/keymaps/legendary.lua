@@ -312,44 +312,6 @@ return {
 					},
 				},
 				{
-					"WinEnter",
-					function()
-						local ignore_buftypes = { "nofile", "prompt", "popup" }
-						if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
-							vim.b.focus_disable = true
-						else
-							vim.b.focus_disable = false
-						end
-					end,
-					description = "Disable focus autoresize for BufType",
-				},
-				{
-					"FileType",
-					function()
-						local ignore_filetypes = {
-							"neo-tree",
-							"dap-repl",
-							"SidebarNvim",
-							"Trouble",
-							"terminal",
-							"dapui_console",
-							"dapui_watches",
-							"dapui_stacks",
-							"dapui_breakpoints",
-							"dapui_scopes",
-							"OverseerList",
-							"noice",
-							"DiffviewFiles",
-						}
-						if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-							vim.b.focus_disable = true
-						else
-							vim.b.focus_disable = false
-						end
-					end,
-					description = "Disable focus autoresize for FileType",
-				},
-				{
 					"TextYankPost",
 					function()
 						vim.highlight.on_yank({ timeout = 100, visual = true })

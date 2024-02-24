@@ -3,5 +3,9 @@ return {
 	cond = function()
 		return vim.fn.isdirectory(".git") == 1
 	end,
-	cmd = "Git",
+	cmd = {
+		"Git",
+		"Gdiffsplit",
+		"Gvdiffsplit",
+	},
 }
