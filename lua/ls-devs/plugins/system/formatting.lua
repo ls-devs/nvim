@@ -30,32 +30,17 @@ return {
 			scss = { "prettierd" },
 			sass = { "prettierd" },
 			less = { "prettierd" },
-			json = {
-				"prettierd",
-			},
-			markdown = {
-				"markdownlint-cli2",
-			},
-			yaml = {
-				"yq",
-			},
-			lua = {
-				"stylua",
-			},
-			rust = {
-				"rustfmt",
-			},
+			json = { "prettierd" },
+			markdown = { "markdownlint-cli2" },
+			yaml = { "yq" },
+			kotlin = { "ktlint" },
+			lua = { "stylua" },
+			rust = { "rustfmt" },
 			c = { "clang_format" },
 			cpp = { "clang_format" },
-			cmake = {
-				"gersemi",
-			},
-			sql = {
-				"sql_formatter",
-			},
-			sh = {
-				"shellharden",
-			},
+			cmake = { "gersemi" },
+			sql = { "sql_formatter" },
+			sh = { "shellharden" },
 			python = { "isort", "black" },
 			prisma = { "prisma" },
 			["_"] = { "trim_whitespace" },

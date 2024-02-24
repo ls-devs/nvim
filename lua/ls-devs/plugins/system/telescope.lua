@@ -219,6 +219,13 @@ return {
 			silent = true,
 			noremap = true,
 		},
+		{
+			"gr",
+			"<cmd>Telescope lsp_references<CR>",
+			desc = "Telescope LSP References",
+			silent = true,
+			noremap = true,
+		},
 	},
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },

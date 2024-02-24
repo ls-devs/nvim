@@ -49,6 +49,7 @@ return {
 			"cpplint",
 			"sqlfluff",
 			"shellcheck",
+			"ktlint",
 
 			-- Formatters
 			"prettierd",

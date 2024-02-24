@@ -51,7 +51,6 @@ local options = {
 	tabstop = 2,
 	cursorline = true,
 	number = true,
-	relativenumber = true,
 	numberwidth = 2,
 	signcolumn = "yes:1",
 	scrolloff = 8,

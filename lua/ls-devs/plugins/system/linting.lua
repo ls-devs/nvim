@@ -12,6 +12,7 @@ return {
 			less = { "stylelint" },
 			json = { "jsonlint" },
 			yaml = { "yamllint" },
+			kotlin = { "ktlint" },
 			dockerfile = { "hadolint" },
 			gitcommit = { "gitlint" },
 			c = { "cpplint" },
