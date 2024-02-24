@@ -2,8 +2,8 @@ return {
 	"epwalsh/obsidian.nvim",
 	lazy = true,
 	event = {
-		"BufReadPre " .. "/mnt/c/Users/lseigneurie" .. "/Notes/**.md",
-		"BufNewFile " .. "/mnt/c/Users/lseigneurie" .. "/Notes/**.md",
+		"BufReadPre " .. vim.env.NOTESDIR .. "/**.md",
+		"BufNewFile " .. vim.env.NOTESDIR .. "/**.md",
 	},
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },
@@ -12,11 +12,11 @@ return {
 		workspaces = {
 			{
 				name = "Personal",
-				path = "/mnt/c/Users/lseigneurie/Notes/Personal",
+				path = vim.env.NOTESDIR .. "/Personal",
 			},
 			{
 				name = "Work",
-				path = "/mnt/c/Users/lseigneurie/Notes/Work",
+				path = vim.env.NOTESDIR .. "/Work",
 			},
 		},
 		completion = {
