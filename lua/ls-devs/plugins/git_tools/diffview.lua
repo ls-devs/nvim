@@ -20,16 +20,16 @@ return {
 		view = {
 			default = {
 				layout = "diff2_horizontal",
-				winbar_info = true,
+				winbar_info = false,
 			},
 			merge_tool = {
 				layout = "diff3_mixed",
 				disable_diagnostics = true,
-				winbar_info = true,
+				winbar_info = false,
 			},
 			file_history = {
 				layout = "diff2_horizontal",
-				winbar_info = true,
+				winbar_info = false,
 			},
 		},
 		file_panel = {
@@ -78,6 +78,7 @@ return {
 		hooks = {
 			view_opened = function()
 				require("diffview.actions").toggle_files()
+				vim.cmd("set laststatus=3")
 			end,
 		},
 	},

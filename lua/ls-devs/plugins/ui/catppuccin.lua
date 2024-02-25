@@ -65,6 +65,8 @@ return {
 					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
 					NoiceScrollbarThumb = { bg = colors.blue },
 					BqfPreviewThumb = { bg = colors.blue },
+					DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
+					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },
