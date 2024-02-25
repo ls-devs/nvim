@@ -44,6 +44,10 @@ return {
 		local colors = require("catppuccin.palettes.mocha")
 		require("tabby.tabline").set(function(line)
 			return {
+				{
+					line.sep(" ", {}, {}),
+					{ "   ", hl = { fg = colors.green, bg = colors.none } },
+				},
 				line.tabs().foreach(function(tab)
 					local hl = tab.is_current() and "TabLineSel" or "TabLine"
 					return {

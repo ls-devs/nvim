@@ -1,6 +1,6 @@
 return {
 	"nvim-zh/colorful-winsep.nvim",
-	-- event = { "WinNew" },
+	event = { "WinNew" },
 	opts = {
 		hi = {
 			fg = "#f5e0dc",

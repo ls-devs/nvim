@@ -144,58 +144,35 @@ return {
 				}
 				return { fg = mode_color[vim.fn.mode()] }
 			end,
-			padding = { right = 1 },
+			padding = { left = 1, right = 2 },
 		})
 
 		ins_left({
-			"filesize",
-			cond = conditions.buffer_not_empty,
-			color = { fg = c.text },
+			fmt = function(str)
+				if string.len(str) >= 25 then
+					return string.sub(str, 0, 22) .. "..."
+				else
+					return str
+				end
+			end,
+			"branch",
+			icon = "󰘬",
+			color = { fg = colors.violet, gui = "bold" },
 		})
 
-		ins_left({ "location", color = { fg = c.text, gui = "bold" } })
-
-		ins_left({ "progress", color = { fg = c.text, gui = "bold" } })
+		ins_left({ "filetype", colored = true, icon = { align = "left" } })
 
 		ins_left({
-			"diagnostics",
-			sources = { "nvim_diagnostic" },
-			symbols = { error = " ", warn = " ", info = " ", hint = " " },
-			diagnostics_color = {
-				error = { fg = colors.red, gui = "bold" },
-				warn = { fg = colors.yellow, gui = "bold" },
-				info = { fg = colors.white, gui = "bold" },
-				hint = { fg = colors.cyan, gui = "bold" },
+			"diff",
+			symbols = { added = " ", modified = " ", removed = " " },
+			diff_color = {
+				added = { fg = colors.green },
+				modified = { fg = colors.orange },
+				removed = { fg = colors.red },
 			},
-			colored = true,
+			cond = conditions.hide_in_width,
 		})
 
-		ins_left({
-			function()
-				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
-				if lsps and #lsps > 0 then
-					return lsps[#lsps].name
-				else
-					return ""
-				end
-			end,
-			color = { fg = c.flamingo, gui = "bold" },
-		})
-
-		ins_left({
-			function()
-				local icon = require("nvim-web-devicons").get_icon_color_by_filetype(
-					vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_get_current_buf() })
-				)
-				if icon then
-					return icon
-				else
-					return ""
-				end
-			end,
-			color = { fg = c.flamingo, gui = "bold" },
-			padding = { left = 0, right = 1 },
-		})
 		ins_left({
 			function()
 				return require("lazy.status").updates()
@@ -208,18 +185,36 @@ return {
 			function()
 				return require("NeoComposer.ui").status_recording()
 			end,
-			padding = { left = 0, right = 0 },
+			padding = { left = 0, right = 1 },
 		})
 
 		ins_right({
 			function()
-				return os.date("%H:%M:%S", os.time())
+				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
+				if lsps and #lsps > 0 then
+					return lsps[#lsps].name
+				else
+					return ""
+				end
 			end,
-			color = {
-				fg = colors.text,
-				gui = "bold",
-			},
+			color = { fg = c.flamingo, gui = "bold" },
+			icon = " ",
 		})
+
+		ins_right({
+			"diagnostics",
+			sources = { "nvim_diagnostic" },
+			symbols = { error = " ", warn = " ", info = " ", hint = " " },
+			diagnostics_color = {
+				error = { fg = colors.red, gui = "bold" },
+				warn = { fg = colors.yellow, gui = "bold" },
+				info = { fg = colors.white, gui = "bold" },
+				hint = { fg = colors.cyan, gui = "bold" },
+			},
+			colored = true,
+		})
+
+		ins_right({ "location", color = { fg = colors.text, gui = "bold" } })
 
 		ins_right({
 			"o:encoding",
@@ -236,27 +231,14 @@ return {
 		})
 
 		ins_right({
-			fmt = function(str)
-				if string.len(str) >= 20 then
-					return string.sub(str, 0, 17) .. "..."
-				else
-					return str
-				end
+			function()
+				return os.date("%H:%M:%S", os.time())
 			end,
-			"branch",
-			icon = "",
-			color = { fg = colors.violet, gui = "bold" },
-		})
-
-		ins_right({
-			"diff",
-			symbols = { added = " ", modified = " ", removed = " " },
-			diff_color = {
-				added = { fg = colors.green },
-				modified = { fg = colors.orange },
-				removed = { fg = colors.red },
+			color = {
+				fg = colors.blue,
+				gui = "bold",
 			},
-			cond = conditions.hide_in_width,
+			padding = { left = 1, right = 0 },
 		})
 
 		lualine.setup(config)
