@@ -72,15 +72,6 @@ return {
 			noremap = true,
 		},
 		{
-			"<leader>nd",
-			function()
-				require("neotest").run.run({ strategy = "dap" })
-			end,
-			desc = "NeoTest Debug Nearest Test",
-			silent = true,
-			noremap = true,
-		},
-		{
 			"<leader>nq",
 			function()
 				require("neotest").run.stop()

@@ -6,21 +6,7 @@ return {
 	},
 	config = function()
 		local lualine = require("lualine")
-		local c = require("catppuccin.palettes.mocha")
-
-		local colors = {
-			bg = c.base,
-			fg = c.text,
-			yellow = c.yellow,
-			cyan = c.blue,
-			darkblue = c.lavender,
-			green = c.green,
-			orange = c.flamingo,
-			violet = c.mauve,
-			magenta = c.mauve,
-			blue = c.blue,
-			red = c.red,
-		}
+		local colors = require("catppuccin.palettes.mocha")
 
 		local conditions = {
 			buffer_not_empty = function()
@@ -51,40 +37,40 @@ return {
 				section_separators = "",
 				theme = {
 					normal = {
-						a = { bg = c.blue, fg = c.mantle, gui = "bold" },
-						b = { bg = c.surface0, fg = c.blue },
-						c = { bg = nil, fg = c.text },
+						a = { bg = colors.blue, fg = colors.mantle, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.blue },
+						c = { bg = nil, fg = colors.text },
 					},
 
 					insert = {
-						a = { bg = c.green, fg = c.base, gui = "bold" },
-						b = { bg = c.surface0, fg = c.green },
+						a = { bg = colors.green, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.green },
 					},
 
 					terminal = {
-						a = { bg = c.green, fg = c.base, gui = "bold" },
-						b = { bg = c.surface0, fg = c.green },
+						a = { bg = colors.green, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.green },
 					},
 
 					command = {
-						a = { bg = c.blue, fg = c.base, gui = "bold" },
-						b = { bg = c.surface0, fg = c.peach },
+						a = { bg = colors.blue, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.peach },
 					},
 
 					visual = {
-						a = { bg = c.mauve, fg = c.base, gui = "bold" },
-						b = { bg = c.surface0, fg = c.mauve },
+						a = { bg = colors.mauve, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.mauve },
 					},
 
 					replace = {
-						a = { bg = c.red, fg = c.base, gui = "bold" },
-						b = { bg = c.surface0, fg = c.red },
+						a = { bg = colors.red, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.red },
 					},
 
 					inactive = {
-						a = { bg = nil, fg = c.blue },
-						b = { bg = nil, fg = c.surface1, gui = "bold" },
-						c = { bg = nil, fg = c.overlay0 },
+						a = { bg = nil, fg = colors.blue },
+						b = { bg = nil, fg = colors.surface1, gui = "bold" },
+						c = { bg = nil, fg = colors.overlay0 },
 					},
 				},
 
@@ -124,21 +110,21 @@ return {
 				local mode_color = {
 					n = colors.red,
 					i = colors.green,
-					v = colors.blue,
+					v = colors.teal,
 					[""] = colors.blue,
-					V = colors.blue,
-					c = colors.magenta,
+					V = colors.sapphire,
+					c = colors.flamingo,
 					no = colors.red,
 					s = colors.orange,
 					S = colors.orange,
 					ic = colors.yellow,
-					R = colors.violet,
-					Rv = colors.violet,
+					R = colors.mauve,
+					Rv = colors.mauve,
 					cv = colors.red,
 					ce = colors.red,
-					r = colors.cyan,
-					rm = colors.cyan,
-					["r?"] = colors.cyan,
+					r = colors.sapphire,
+					rm = colors.sapphire,
+					["r?"] = colors.sapphire,
 					["!"] = colors.red,
 					t = colors.red,
 				}
@@ -157,7 +143,7 @@ return {
 			end,
 			"branch",
 			icon = "󰘬",
-			color = { fg = colors.violet, gui = "bold" },
+			color = { fg = colors.mauve, gui = "bold" },
 		})
 
 		ins_left({ "filetype", colored = true, icon = { align = "left" } })
@@ -197,7 +183,7 @@ return {
 					return ""
 				end
 			end,
-			color = { fg = c.flamingo, gui = "bold" },
+			color = { fg = colors.flamingo, gui = "bold" },
 			icon = " ",
 		})
 
@@ -209,7 +195,7 @@ return {
 				error = { fg = colors.red, gui = "bold" },
 				warn = { fg = colors.yellow, gui = "bold" },
 				info = { fg = colors.white, gui = "bold" },
-				hint = { fg = colors.cyan, gui = "bold" },
+				hint = { fg = colors.sapphire, gui = "bold" },
 			},
 			colored = true,
 		})

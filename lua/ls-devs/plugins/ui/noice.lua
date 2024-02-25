@@ -133,6 +133,17 @@ return {
 				timeout = 1000,
 				render = "wrapped-compact",
 			},
+			keys = {
+				{
+					"<leader>nd",
+					function()
+						require("notify").dismiss({ silent = true })
+					end,
+					desc = "Notify Dismiss",
+					silent = true,
+					noremap = true,
+				},
+			},
 		},
 	},
 }
