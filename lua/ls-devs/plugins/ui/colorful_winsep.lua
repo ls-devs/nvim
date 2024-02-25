@@ -15,7 +15,7 @@ return {
 			"DiffviewFiles",
 		},
 		symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
-		smooth = false,
+		smooth = true,
 		anchor = {
 			left = { height = 1, x = -1, y = -1 },
 			right = { height = 1, x = -1, y = 0 },

@@ -26,8 +26,9 @@ return {
 				" " .. " Find file",
 				"<cmd>Telescope find_files hidden=true no_ignore=true no_ignore_parent=true follow=true<CR>"
 			),
-			dashboard.button("t", " " .. " Find text", "<cmd>Telescope live_grep <CR>"),
-			dashboard.button("r", " " .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
+			dashboard.button("t", " " .. " Find text", "<cmd>Telescope live_grep<CR>"),
+			dashboard.button("r", " " .. " Recent files", "<cmd>Telescope oldfiles<CR>"),
+			dashboard.button("s", " " .. " Sessions", "<cmd>Telescope persisted<CR>"),
 			dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),

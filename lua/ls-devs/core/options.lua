@@ -65,6 +65,7 @@ local options = {
 	foldlevel = 99,
 	foldmethod = "manual",
 	fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
+	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
 -- Keyboard WSL

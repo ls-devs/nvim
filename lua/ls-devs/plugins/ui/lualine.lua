@@ -23,15 +23,6 @@ return {
 		}
 
 		local config = {
-			extensions = {
-				"lazy",
-				"neo-tree",
-				"nvim-dap-ui",
-				"trouble",
-				"overseer",
-				"quickfix",
-				"man",
-			},
 			options = {
 				component_separators = "",
 				section_separators = "",
