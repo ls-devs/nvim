@@ -336,9 +336,12 @@ return {
 							"dapui_watches",
 							"dapui_stacks",
 							"dapui_breakpoints",
+							"dapui_repl",
 							"dapui_scopes",
 							"OverseerList",
 							"noice",
+							"dbui",
+							"dbout",
 						}
 						if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
 							vim.b.focus_disable = true

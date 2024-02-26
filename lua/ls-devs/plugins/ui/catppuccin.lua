@@ -67,6 +67,9 @@ return {
 					BqfPreviewThumb = { bg = colors.blue },
 					DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
 					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
+					NotificationInfo = { bg = colors.none, fg = colors.text },
+					NotificationError = { bg = colors.none, fg = colors.red },
+					NotificationWarning = { bg = colors.none, fg = colors.yellow },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },

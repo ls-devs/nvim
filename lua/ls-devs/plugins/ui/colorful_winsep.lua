@@ -1,6 +1,6 @@
 return {
 	"nvim-zh/colorful-winsep.nvim",
-	event = { "WinNew" },
+	-- event = { "WinNew" },
 	opts = {
 		hi = {
 			fg = "#f5e0dc",
@@ -13,6 +13,8 @@ return {
 			"NvimTree",
 			"OverseerList",
 			"DiffviewFiles",
+			"dbui",
+			"dbout",
 		},
 		symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
 		smooth = true,
