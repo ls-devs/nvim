@@ -14,7 +14,7 @@ return {
 	},
 	opts = {
 		log_level = vim.log.levels.ERROR,
-		notify_on_error = false,
+		notify_on_error = true,
 		format_on_save = {
 			timeout_ms = 5000,
 			lsp_fallback = true,

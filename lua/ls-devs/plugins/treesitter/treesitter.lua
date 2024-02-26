@@ -117,9 +117,8 @@ return {
 					["]c"] = { query = "@class.outer", desc = "Next class start" },
 					["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
 					["]l"] = { query = "@loop.outer", desc = "Next loop start" },
-
-					["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-					["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+					["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope start" },
+					["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold start" },
 				},
 				goto_next_end = {
 					["]F"] = { query = "@call.outer", desc = "Next function call end" },
@@ -127,6 +126,8 @@ return {
 					["]C"] = { query = "@class.outer", desc = "Next class end" },
 					["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
 					["]L"] = { query = "@loop.outer", desc = "Next loop end" },
+					["]S"] = { query = "@scope", query_group = "locals", desc = "Next scope end" },
+					["]Z"] = { query = "@fold", query_group = "folds", desc = "Next fold end" },
 				},
 				goto_previous_start = {
 					["[f"] = { query = "@call.outer", desc = "Prev function call start" },
@@ -134,6 +135,8 @@ return {
 					["[c"] = { query = "@class.outer", desc = "Prev class start" },
 					["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
 					["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
+					["[s"] = { query = "@scope", query_group = "locals", desc = "Prev scope start" },
+					["[z"] = { query = "@fold", query_group = "folds", desc = "Prev fold start" },
 				},
 				goto_previous_end = {
 					["[F"] = { query = "@call.outer", desc = "Prev function call end" },
@@ -141,6 +144,8 @@ return {
 					["[C"] = { query = "@class.outer", desc = "Prev class end" },
 					["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
 					["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
+					["[s"] = { query = "@scope", query_group = "locals", desc = "Prev scope end" },
+					["[z"] = { query = "@fold", query_group = "folds", desc = "Prev fold end" },
 				},
 			},
 		},
