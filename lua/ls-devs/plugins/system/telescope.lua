@@ -124,6 +124,14 @@ return {
 		},
 		{
 			"<leader>fp",
+			function()
+				require("telescope.builtin").oldfiles({
+					cwd_only = true,
+					tiebreak = function(current_entry, existing_entry, _)
+						return current_entry.index < existing_entry.index
+					end,
+				})
+			end,
 			"<cmd>Telescope oldfiles<CR>",
 			desc = "Telescope Recent Files",
 			silent = true,

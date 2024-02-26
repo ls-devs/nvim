@@ -108,14 +108,18 @@ M.HelpGrep = function()
 end
 
 M.LazyGit = function()
+	local editor_width = vim.o.columns
+	local editor_height = vim.o.lines
 	local Terminal = require("toggleterm.terminal").Terminal
 	local lazygit = Terminal:new({
 		cmd = "lazygit",
 		direction = "float",
 		float_opts = {
 			border = "rounded",
-			width = 125,
-			height = 35,
+			width = math.min(125, editor_width),
+			height = math.min(35, editor_height),
+			col = 10,
+			row = math.floor(editor_height * 0.5 - math.min(35, editor_height) * 0.5),
 		},
 		on_open = function(term)
 			local keymap = vim.api.nvim_buf_set_keymap

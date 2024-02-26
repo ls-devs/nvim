@@ -106,8 +106,8 @@ return {
 					V = colors.sapphire,
 					c = colors.flamingo,
 					no = colors.red,
-					s = colors.orange,
-					S = colors.orange,
+					s = colors.peach,
+					S = colors.peach,
 					ic = colors.yellow,
 					R = colors.mauve,
 					Rv = colors.mauve,
@@ -144,7 +144,7 @@ return {
 			symbols = { added = " ", modified = " ", removed = " " },
 			diff_color = {
 				added = { fg = colors.green },
-				modified = { fg = colors.orange },
+				modified = { fg = colors.peach },
 				removed = { fg = colors.red },
 			},
 			cond = conditions.hide_in_width,
@@ -155,7 +155,7 @@ return {
 				return require("lazy.status").updates()
 			end,
 			cond = require("lazy.status").has_updates,
-			color = { fg = colors.orange },
+			color = { fg = colors.peach },
 		})
 
 		ins_right({
@@ -185,24 +185,23 @@ return {
 			diagnostics_color = {
 				error = { fg = colors.red, gui = "bold" },
 				warn = { fg = colors.yellow, gui = "bold" },
-				info = { fg = colors.white, gui = "bold" },
+				info = { fg = colors.text, gui = "bold" },
 				hint = { fg = colors.sapphire, gui = "bold" },
 			},
 			colored = true,
 		})
 
 		ins_right({ "location", color = { fg = colors.text, gui = "bold" } })
+		ins_right({ "progress", color = { fg = colors.text, gui = "bold" } })
 
 		ins_right({
-			"o:encoding",
-			fmt = string.upper,
+			"encoding",
 			cond = conditions.hide_in_width,
 			color = { fg = colors.green, gui = "bold" },
 		})
 
 		ins_right({
 			"fileformat",
-			fmt = string.upper,
 			icons_enabled = false,
 			color = { fg = colors.green, gui = "bold" },
 		})

@@ -28,7 +28,14 @@ return {
 				"<cmd>Telescope find_files hidden=true no_ignore=true no_ignore_parent=true follow=true<CR>"
 			),
 			dashboard.button("t", " " .. " Find Text", "<cmd>Telescope live_grep<CR>"),
-			dashboard.button("r", " " .. " Recent Files", "<cmd>Telescope oldfiles<CR>"),
+			dashboard.button("r", " " .. " Recent Files", function()
+				require("telescope.builtin").oldfiles({
+					cwd_only = true,
+					tiebreak = function(current_entry, existing_entry, _)
+						return current_entry.index < existing_entry.index
+					end,
+				})
+			end),
 			dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
