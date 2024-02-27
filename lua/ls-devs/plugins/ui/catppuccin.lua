@@ -98,6 +98,7 @@ return {
 			integrations = {
 				cmp = true,
 				dap = true,
+				harpoon = true,
 				dashboard = true,
 				fidget = true,
 				window_picker = true,
