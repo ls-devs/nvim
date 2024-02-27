@@ -1,6 +1,6 @@
 return {
 	"j-hui/fidget.nvim",
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "LspAttach" },
 	config = function()
 		require("fidget").setup({
 			progress = {

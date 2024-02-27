@@ -289,7 +289,7 @@ return {
 				{
 					"neovim/nvim-lspconfig",
 					lazy = true,
-					init = function()
+					config = function()
 						vim.lsp.set_log_level("OFF")
 						require("lspconfig.ui.windows").default_options.border = "rounded"
 						vim.diagnostic.config({
