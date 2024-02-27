@@ -31,7 +31,7 @@ return {
 		{
 			"<leader>sw",
 			"<cmd>SessionSave<CR>",
-			desc = "Session Save",
+			desc = "Save Session",
 			silent = true,
 			noremap = true,
 		},

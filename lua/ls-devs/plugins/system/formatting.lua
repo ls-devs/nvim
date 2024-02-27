@@ -39,7 +39,7 @@ return {
 			c = { "clang_format" },
 			cpp = { "clang_format" },
 			cmake = { "gersemi" },
-			sql = { "sql_formatter" },
+			sql = { "sql-formatter" },
 			sh = { "shellharden" },
 			python = { "isort", "black" },
 			prisma = { "prisma" },
@@ -51,7 +51,7 @@ return {
 			formatters = {
 				prisma = {
 					command = "prisma",
-					args = { "format", "--schema=", "$FILENAME" },
+					args = { "format" },
 					stdin = false,
 					cwd = require("conform.util").root_file({ "schema.prisma" }),
 					require_cwd = true,
