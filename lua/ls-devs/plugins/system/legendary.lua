@@ -372,8 +372,10 @@ return {
 				{
 					"BufEnter",
 					function()
-						vim.cmd("set conceallevel=3")
-						vim.cmd("set concealcursor=nvi")
+						if vim.bo.filetype == "norg" then
+							vim.cmd("set conceallevel=2")
+							vim.cmd("set wrap")
+						end
 					end,
 					opts = {
 						pattern = "*.norg",

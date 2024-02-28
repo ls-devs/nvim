@@ -1,7 +1,6 @@
 return {
 	{
 		"nvim-neorg/neorg",
-		dependencies = { "nvim-lua/plenary.nvim", "folke/zen-mode.nvim" },
 		event = {
 			"BufReadPre " .. vim.env.NOTESDIR .. "/**.md",
 			"BufNewFile " .. vim.env.NOTESDIR .. "/**.md",
@@ -19,11 +18,17 @@ return {
 			{
 				"<leader>nw",
 				function()
-					vim.ui.select({ "Personal", "Work" }, {
+					vim.ui.select({ "Notes", "Personal", "Work" }, {
 						prompt = "Choose a Workspace",
 					}, function(choice)
 						if choice then
-							vim.cmd("Neorg workspace " .. choice)
+							if choice == "Notes" then
+								vim.cmd("Neorg workspace " .. choice)
+								vim.cmd("cd " .. vim.env.NOTESDIR)
+							else
+								vim.cmd("Neorg workspace " .. choice)
+								vim.cmd("cd " .. vim.env.NOTESDIR .. "/" .. choice)
+							end
 						end
 					end)
 				end,
@@ -36,43 +41,51 @@ return {
 			require("neorg").setup({
 				load = {
 					["core.defaults"] = {},
-					["core.concealer"] = {},
-					["core.ui"] = {},
-					["core.export"] = {},
-					["core.export.markdown"] = {},
-					["core.highlights"] = {},
-					["core.mode"] = {},
-					["core.queries.native"] = {},
-					["core.presenter"] = {
-						config = {
-							zen_mode = "zen-mode",
-						},
-					},
-					["core.manoeuvre"] = {},
-					["core.storage"] = {},
-					["core.dirman"] = {
-						config = {
-							workspaces = {
-								Personal = vim.env.NOTESDIR .. "/Personal",
-								Work = vim.env.NOTESDIR .. "/Work",
-							},
-							default_workspace = "Personal",
-						},
-					},
-					["core.integrations.nvim-cmp"] = {},
-					["core.integrations.treesitter"] = {},
-					["core.syntax"] = {},
-					["core.autocommands"] = {},
 					["core.completion"] = {
 						config = {
 							engine = "nvim-cmp",
 							name = "neorg",
 						},
 					},
-					["core.ui.calendar"] = {},
+					["core.concealer"] = {
+						config = {
+							icons = {
+								code_block = {
+									conceal = true,
+								},
+							},
+						},
+					},
+					["core.dirman"] = {
+						config = {
+							workspaces = {
+								Notes = vim.env.NOTESDIR .. "/",
+								Personal = vim.env.NOTESDIR .. "/Personal",
+								Work = vim.env.NOTESDIR .. "/Work",
+							},
+							default_workspace = "Notes",
+						},
+					},
+					["core.export"] = {},
+					["core.export.markdown"] = {},
+					["core.manoeuvre"] = {},
+					["core.presenter"] = {
+						config = {
+							zen_mode = "zen-mode",
+						},
+					},
 					["core.summary"] = {},
+					["core.ui.calendar"] = {},
 				},
 			})
 		end,
+		dependencies = {
+			{
+				"folke/zen-mode.nvim",
+				lazy = true,
+				opts = {},
+			},
+			{ "nvim-lua/plenary.nvim" },
+		},
 	},
 }

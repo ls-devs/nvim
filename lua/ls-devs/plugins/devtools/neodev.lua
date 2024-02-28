@@ -35,6 +35,7 @@ return {
 				"obsidian.nvim",
 				"diffview.nvim",
 				"neorg",
+				"statuscol.nvim",
 			},
 		},
 		setup_jsonls = true,
