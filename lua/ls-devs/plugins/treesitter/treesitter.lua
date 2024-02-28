@@ -46,6 +46,8 @@ return {
 			"gomod",
 			"graphql",
 			"v",
+			"norg",
+			"norg_meta",
 		},
 		sync_install = true,
 		auto_install = true,

@@ -127,6 +127,7 @@ return {
 								crates = "[CRATES]",
 								rg = "[RG]",
 								dotenv = "[ENV]",
+								neorg = "[NEORG]",
 								["sass-variables"] = "[SASS]",
 							})[entry.source.name]
 							return vim_item
@@ -140,6 +141,7 @@ return {
 					{ name = "luasnip", max_item_count = 3 },
 					{ name = "sass-variables" },
 					{ name = "dotenv" },
+					{ name = "neorg" },
 					{
 						name = "rg",
 						keyword_length = 3,
