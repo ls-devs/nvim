@@ -20,6 +20,7 @@ return {
 							Personal = vim.env.NOTESDIR .. "/Personal",
 							Work = vim.env.NOTESDIR .. "/Work",
 						},
+						default_workspace = "Personal",
 					},
 				},
 				["core.integrations.nvim-cmp"] = {},
