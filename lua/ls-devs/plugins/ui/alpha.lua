@@ -36,7 +36,7 @@ return {
 					end,
 				})
 			end),
-			dashboard.button("l", " " .. " Lazy", "<cmd>Lazy<CR>"),
+			dashboard.button("l", "󰒲 " .. " Lazy", "<cmd>Lazy<CR>"),
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 		}
