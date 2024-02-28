@@ -34,6 +34,7 @@ return {
 				"nvim-various-textobjs",
 				"obsidian.nvim",
 				"diffview.nvim",
+				"neorg",
 			},
 		},
 		setup_jsonls = true,

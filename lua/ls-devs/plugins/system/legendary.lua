@@ -370,6 +370,16 @@ return {
 					},
 				},
 				{
+					"BufEnter",
+					function()
+						vim.cmd("set conceallevel=3")
+						vim.cmd("set concealcursor=nvi")
+					end,
+					opts = {
+						pattern = "*.norg",
+					},
+				},
+				{
 					"FileType",
 					function()
 						vim.bo.bufhidden = "unload"
