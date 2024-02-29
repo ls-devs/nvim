@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		{ import = "ls-devs.plugins.completion" },
+		{ import = "ls-devs.plugins.completion.completion_modules" },
 		{ import = "ls-devs.plugins.devtools" },
 		{ import = "ls-devs.plugins.git" },
 		{ import = "ls-devs.plugins.lsp" },
@@ -21,7 +22,7 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.preview" },
 		{ import = "ls-devs.plugins.system" },
 		{ import = "ls-devs.plugins.system.telescope_extensions" },
-		{ import = "ls-devs.plugins.treesitter" },
+		{ import = "ls-devs.plugins.system.treesitter_modules" },
 		{ import = "ls-devs.plugins.ui" },
 		{ import = "ls-devs.plugins.utilities" },
 	},
