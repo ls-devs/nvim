@@ -96,13 +96,7 @@ return {
 					prompt = "Choose a Workspace",
 				}, function(choice)
 					if choice then
-						if choice == "Notes" then
-							vim.cmd("Neorg workspace " .. choice)
-							vim.cmd("cd " .. vim.env.NOTESDIR)
-						else
-							vim.cmd("Neorg workspace " .. choice)
-							vim.cmd("cd " .. vim.env.NOTESDIR .. "/" .. choice)
-						end
+						vim.cmd("Neorg workspace " .. choice)
 					end
 				end)
 			end,

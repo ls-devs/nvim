@@ -15,7 +15,7 @@ return {
 			return diagnostic.message
 		end,
 		gap_size = 1,
-		scope = "cursor",
+		scope = "line",
 		padding_top = 0,
 		padding_right = 0,
 		text_align = "right",
@@ -23,7 +23,7 @@ return {
 		inline_padding_left = 0,
 		update_event = { "DiagnosticChanged", "BufReadPost" },
 		toggle_event = {},
-		show_sign = false,
+		show_sign = true,
 		render_event = { "DiagnosticChanged", "CursorMoved" },
 		border_chars = {
 			top_left = "┌",
