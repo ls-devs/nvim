@@ -169,7 +169,13 @@ return {
 			function()
 				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
 				if lsps and #lsps > 0 then
-					return lsps[#lsps].name
+					for _, lsp in ipairs(lsps) do
+						if string.find(lsp.name, vim.bo.filetype) then
+							return lsp.name
+						else
+							return lsps[#lsps].name
+						end
+					end
 				else
 					return ""
 				end
