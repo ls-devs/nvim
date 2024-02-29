@@ -191,8 +191,8 @@ return {
 			diagnostics_color = {
 				error = { fg = colors.red, gui = "bold" },
 				warn = { fg = colors.yellow, gui = "bold" },
-				info = { fg = colors.text, gui = "bold" },
-				hint = { fg = colors.sapphire, gui = "bold" },
+				info = { fg = colors.saphire, gui = "bold" },
+				hint = { fg = colors.teal, gui = "bold" },
 			},
 			colored = true,
 		})

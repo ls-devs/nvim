@@ -3,20 +3,20 @@ return {
 	ft = "gitcommit",
 	opts = {
 		filetypes = { "gitcommit", "octo" },
-		remotes = { "upstream", "origin" }, -- in order of most to least prioritized
-		enableRemoteUrlRewrites = false, -- enable git url rewrites, see https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
+		remotes = { "upstream", "origin" },
+		enableRemoteUrlRewrites = false,
 		git = {
 			commits = {
 				limit = 100,
 			},
 		},
 		github = {
-			hosts = {}, -- list of private instances of github
+			hosts = {},
 			issues = {
 				fields = { "title", "number", "body", "updatedAt", "state" },
-				filter = "all", -- assigned, created, mentioned, subscribed, all, repos
+				filter = "all",
 				limit = 100,
-				state = "open", -- open, closed, all
+				state = "open",
 			},
 			mentions = {
 				limit = 100,
@@ -24,21 +24,21 @@ return {
 			pull_requests = {
 				fields = { "title", "number", "body", "updatedAt", "state" },
 				limit = 100,
-				state = "open", -- open, closed, merged, all
+				state = "open",
 			},
 		},
 		gitlab = {
-			hosts = {}, -- list of private instances of gitlab
+			hosts = {},
 			issues = {
 				limit = 100,
-				state = "opened", -- opened, closed, all
+				state = "opened",
 			},
 			mentions = {
 				limit = 100,
 			},
 			merge_requests = {
 				limit = 100,
-				state = "opened", -- opened, closed, locked, merged
+				state = "opened",
 			},
 		},
 		trigger_actions = {
@@ -97,7 +97,7 @@ return {
 				},
 			},
 			github = {
-				hosts = {}, -- list of private instances of github
+				hosts = {},
 				issues = {
 					sort_by = sort.github.issues,
 					format = format.github.issues,
@@ -112,7 +112,7 @@ return {
 				},
 			},
 			gitlab = {
-				hosts = {}, -- list of private instances of gitlab
+				hosts = {},
 				issues = {
 					sort_by = sort.gitlab.issues,
 					format = format.gitlab.issues,

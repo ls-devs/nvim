@@ -137,11 +137,16 @@ return {
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "buffer", max_item_count = 5 },
-					{ name = "async_path", max_item_count = 3 },
+					{
+						name = "async_path",
+						max_item_count = 3,
+						option = {
+							show_hidden_files_by_default = true,
+						},
+					},
 					{ name = "luasnip", max_item_count = 3 },
 					{ name = "sass-variables" },
 					{ name = "dotenv" },
-					{ name = "neorg" },
 					{
 						name = "rg",
 						keyword_length = 3,
@@ -175,7 +180,12 @@ return {
 					{ name = "buffer" },
 				}),
 			})
-			cmp.setup.cmdline("/", {
+			cmp.setup.filetype("norg", {
+				sources = cmp.config.sources({
+					{ name = "neorg" },
+				}),
+			})
+			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{ name = "buffer" },
@@ -184,7 +194,7 @@ return {
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({
-					{ name = "path" },
+					{ name = "async-path" },
 					{ name = "cmdline" },
 				}),
 			})
