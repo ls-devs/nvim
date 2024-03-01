@@ -119,7 +119,6 @@ return {
 								nvim_lsp = "[LSP]",
 								luasnip = "[SNIPPET]",
 								buffer = "[BUFFER]",
-								async_path = "[PATH]",
 								emoji = "[EMOJI]",
 								cmdline = "[CMD]",
 								npm = "[NPM]",
@@ -137,13 +136,6 @@ return {
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "buffer", max_item_count = 5 },
-					{
-						name = "async_path",
-						max_item_count = 3,
-						option = {
-							show_hidden_files_by_default = true,
-						},
-					},
 					{ name = "luasnip", max_item_count = 3 },
 					{ name = "sass-variables" },
 					{ name = "dotenv" },
@@ -194,7 +186,6 @@ return {
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({
-					{ name = "async-path" },
 					{ name = "cmdline" },
 				}),
 			})
@@ -202,8 +193,6 @@ return {
 		end,
 		dependencies = {
 			{ "hrsh7th/cmp-buffer", lazy = true },
-			{ "hrsh7th/cmp-path", lazy = true },
-			{ url = "https://codeberg.org/FelipeLema/cmp-async-path", lazy = true },
 			{ "hrsh7th/cmp-emoji", lazy = true },
 			{ "hrsh7th/cmp-cmdline", lazy = true },
 			{ "hrsh7th/cmp-nvim-lsp", lazy = true },
