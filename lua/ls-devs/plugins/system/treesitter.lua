@@ -187,7 +187,7 @@ return {
 		{
 			"chrisgrieser/nvim-various-textobjs",
 			lazy = true,
-			init = function()
+			config = function()
 				---@diagnostic disable-next-line: duplicate-set-field
 				require("various-textobjs.utils").notFoundMsg = function() end
 			end,
