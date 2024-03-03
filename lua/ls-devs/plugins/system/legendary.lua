@@ -399,7 +399,7 @@ return {
 				{
 					"User",
 					function()
-						vim.cmd.hi("Cursor", "guibg=black")
+						vim.cmd.hi("Cursor", "guibg=black guifg=white")
 					end,
 					opts = {
 						pattern = "LeapEnter",
@@ -409,7 +409,7 @@ return {
 				{
 					"User",
 					function()
-						vim.cmd.hi("Cursor", "guifg=none")
+						vim.cmd.hi("Cursor", "guibg=#cdd6f4 guifg=#1e1e2e")
 					end,
 					opts = {
 						pattern = "LeapLeave",
