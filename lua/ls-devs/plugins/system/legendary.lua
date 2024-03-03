@@ -399,8 +399,7 @@ return {
 				{
 					"User",
 					function()
-						vim.cmd.hi("Cursor", "blend=100")
-						vim.opt.guicursor:append({ "a:Cursor/lCursor" })
+						vim.cmd.hi("Cursor", "guibg=black")
 					end,
 					opts = {
 						pattern = "LeapEnter",
@@ -410,8 +409,7 @@ return {
 				{
 					"User",
 					function()
-						vim.cmd.hi("Cursor", "blend=0")
-						vim.opt.guicursor:remove({ "a:Cursor/lCursor" })
+						vim.cmd.hi("Cursor", "guifg=none")
 					end,
 					opts = {
 						pattern = "LeapLeave",
