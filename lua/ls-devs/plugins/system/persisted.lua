@@ -1,6 +1,5 @@
 return {
 	"olimorris/persisted.nvim",
-	event = "VeryLazy",
 	opts = {
 		save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
 		silent = false,

@@ -47,7 +47,6 @@ return {
 			"graphql",
 			"v",
 			"norg",
-			"norg_meta",
 		},
 		sync_install = true,
 		auto_install = true,
@@ -72,11 +71,6 @@ return {
 					["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
 					["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
 					["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
-
-					["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
-					["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
-					["l:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
-					["r:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
 
 					["aa"] = { query = "@arameter.outer", desc = "Select outer part of a parameter/argument" },
 					["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },

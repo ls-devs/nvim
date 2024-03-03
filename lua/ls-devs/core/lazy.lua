@@ -29,6 +29,10 @@ require("lazy").setup({
 	defaults = {
 		lazy = true,
 	},
+	install = {
+		missing = true,
+		colorscheme = { "catppuccin" },
+	},
 	ui = {
 		border = "rounded",
 		size = { width = 0.8, height = 0.8 },
@@ -58,6 +62,12 @@ require("lazy").setup({
 			},
 		},
 	},
+	checker = {
+		enabled = true,
+		notify = true,
+		check_pinned = true,
+		frequency = 3600,
+	},
 	change_detection = {
 		enabled = true,
 		notify = true,
@@ -67,16 +77,11 @@ require("lazy").setup({
 			enabled = true,
 		},
 		reset_packpath = true,
-	},
-	install = {
-		missing = true,
-		colorscheme = { "catppuccin" },
-	},
-	checker = {
-		enabled = true,
-		notify = true,
-		check_pinned = true,
-		frequency = 3600,
+		rtp = {
+			reset = true,
+			paths = {},
+			disabled_plugins = {},
+		},
 	},
 	readme = {
 		enabled = true,

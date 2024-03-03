@@ -91,7 +91,7 @@ return {
 	-- Mason LSP Configuration
 	{
 		"williamboman/mason-lspconfig.nvim",
-		event = "VeryLazy",
+		event = "LspAttach",
 		opts = {
 			automatic_installation = false,
 			handlers = {
@@ -276,8 +276,10 @@ return {
 			},
 		},
 		dependencies = {
-			{ -- Mason Core
+			-- Mason Core
+			{
 				"williamboman/mason.nvim",
+				cmd = "Mason",
 				lazy = true,
 				opts = {
 					log_level = vim.log.levels.OFF,
@@ -294,7 +296,8 @@ return {
 					},
 				},
 			},
-			{ -- LSP Configuration Core
+			-- LSP Configuration Core
+			{
 				"neovim/nvim-lspconfig",
 				lazy = true,
 				config = function()
