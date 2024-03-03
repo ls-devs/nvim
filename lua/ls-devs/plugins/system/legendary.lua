@@ -354,11 +354,12 @@ return {
 				{
 					"TextYankPost",
 					function()
-						vim.highlight.on_yank({ timeout = 100, visual = true })
+						vim.highlight.on_yank({ timeout = 60, visual = true })
 					end,
 					opts = {
 						pattern = "*",
 					},
+					description = "Blink on yank",
 				},
 				{
 					"VimResized",
@@ -368,6 +369,7 @@ return {
 					opts = {
 						pattern = "*",
 					},
+					description = "Autoresize on window resize",
 				},
 				{
 					"BufEnter",
@@ -380,6 +382,7 @@ return {
 					opts = {
 						pattern = "*.norg",
 					},
+					description = "Change conceal and wrap for note taking",
 				},
 				{
 					"FileType",
@@ -391,6 +394,29 @@ return {
 					opts = {
 						pattern = "help",
 					},
+					description = "Vertical Help",
+				},
+				{
+					"User",
+					function()
+						vim.cmd.hi("Cursor", "blend=100")
+						vim.opt.guicursor:append({ "a:Cursor/lCursor" })
+					end,
+					opts = {
+						pattern = "LeapEnter",
+					},
+					description = "Fix Cursor on LeapEnter",
+				},
+				{
+					"User",
+					function()
+						vim.cmd.hi("Cursor", "blend=0")
+						vim.opt.guicursor:remove({ "a:Cursor/lCursor" })
+					end,
+					opts = {
+						pattern = "LeapLeave",
+					},
+					description = "Fix Cursor on LeapLeave",
 				},
 			},
 			sort = {

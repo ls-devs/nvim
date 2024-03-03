@@ -16,7 +16,7 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.completion" },
 		{ import = "ls-devs.plugins.completion.completion_modules" },
 		{ import = "ls-devs.plugins.devtools" },
-		{ import = "ls-devs.plugins.git" },
+		{ import = "ls-devs.plugins.gittools" },
 		{ import = "ls-devs.plugins.lsp" },
 		{ import = "ls-devs.plugins.movement" },
 		{ import = "ls-devs.plugins.preview" },

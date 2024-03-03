@@ -5,7 +5,6 @@ return {
 		keys = { f = "f", F = "F", t = "t", T = "T" },
 		labeled_modes = "nvo",
 		multiline = true,
-		opts = {},
 	},
 	dependencies = {
 		{ "ggandor/leap.nvim", lazy = true },
