@@ -163,7 +163,6 @@ return {
 				["<"] = "prev_source",
 				[">"] = "next_source",
 				["i"] = "show_file_details",
-				["O"] = "system_open",
 			},
 		},
 		nesting_rules = {},
@@ -253,11 +252,6 @@ return {
 						cmds.clear_filter(state)
 						require("neo-tree.command").execute({ action = "close" })
 					end
-				end,
-				system_open = function(state)
-					local node = state.tree:get_node()
-					local path = node:get_id()
-					vim.fn.jobstart({ "xdg-open", path }, { detach = true })
 				end,
 			},
 		},

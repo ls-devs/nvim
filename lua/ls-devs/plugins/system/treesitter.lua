@@ -81,8 +81,8 @@ return {
 					["aa"] = { query = "@arameter.outer", desc = "Select outer part of a parameter/argument" },
 					["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
 
-					["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
-					["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
+					["ac"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
+					["ic"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
 
 					["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
 					["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
@@ -93,8 +93,8 @@ return {
 					["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
 					["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
 
-					["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
-					["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+					["at"] = { query = "@class.outer", desc = "Select outer part of a class" },
+					["it"] = { query = "@class.inner", desc = "Select inner part of a class" },
 				},
 			},
 			swap = {
@@ -187,6 +187,10 @@ return {
 		{
 			"chrisgrieser/nvim-various-textobjs",
 			lazy = true,
+			init = function()
+				---@diagnostic disable-next-line: duplicate-set-field
+				require("various-textobjs.utils").notFoundMsg = function() end
+			end,
 			keys = {
 				{
 					"ii",
@@ -413,7 +417,12 @@ return {
 								table.insert(urls, url)
 							end
 							if #urls == 0 then
-								return
+								if vim.fn.exists("Browse") then
+									vim.cmd("Browse")
+									return
+								else
+									return
+								end
 							end
 							vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
 								if choice then
@@ -480,7 +489,7 @@ return {
 					end,
 				},
 				{
-					"gX",
+					"gW",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").restOfWindow()
@@ -551,7 +560,7 @@ return {
 					buffer = true,
 				},
 				{
-					"ic",
+					"is",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").cssSelector("inner")
@@ -559,7 +568,7 @@ return {
 					buffer = true,
 				},
 				{
-					"ac",
+					"as",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").cssSelector("outer")
