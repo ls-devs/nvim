@@ -102,6 +102,10 @@ return {
 		window = {
 			position = "float",
 			width = 40,
+			popup = {
+				size = { height = "35", width = "80" },
+				position = "50%",
+			},
 			mapping_options = {
 				noremap = true,
 				nowait = true,
