@@ -91,7 +91,7 @@ return {
 	-- Mason LSP Configuration
 	{
 		"williamboman/mason-lspconfig.nvim",
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_installation = false,
 			handlers = {

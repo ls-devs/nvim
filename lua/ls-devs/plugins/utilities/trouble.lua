@@ -10,6 +10,7 @@ return {
 			toggle_fold = { "zA", "za", "l" }, -- toggle fold of current filetoggle_fold = {"zA", "za"}, -- toggle fold of current file
 		},
 	},
+	cmd = "Trouble",
 	keys = {
 		{
 			"<leader>v",
