@@ -1,5 +1,5 @@
 return {
-	"ThePrimeagen/git-worktree.nvim",
+	"polarmutex/git-worktree.nvim",
 	config = function()
 		require("telescope").load_extension("git_worktree")
 		require("git-worktree").on_tree_change(function(op, metadata)
@@ -18,7 +18,7 @@ return {
 			silent = true,
 		},
 		{
-			"<leader>cw",
+			"<leader>gW",
 			function()
 				require("telescope").extensions.git_worktree.create_git_worktree()
 			end,
