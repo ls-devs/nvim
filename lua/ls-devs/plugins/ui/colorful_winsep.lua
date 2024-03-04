@@ -6,13 +6,7 @@ return {
 			fg = "#f5e0dc",
 		},
 		no_exec_files = {
-			"packer",
 			"TelescopePrompt",
-			"mason",
-			"CompetiTest",
-			"NvimTree",
-			"OverseerList",
-			"DiffviewFiles",
 			"dbui",
 			"dbout",
 		},

@@ -70,6 +70,7 @@ return {
 					NotificationInfo = { bg = colors.none, fg = colors.text },
 					NotificationError = { bg = colors.none, fg = colors.red },
 					NotificationWarning = { bg = colors.none, fg = colors.yellow },
+					SagaBeacon = { bg = colors.red },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },
