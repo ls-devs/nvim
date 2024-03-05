@@ -2,7 +2,9 @@ return {
 	"dgagn/diagflow.nvim",
 	event = "LspAttach",
 	opts = {
-		enable = true,
+		enable = function()
+			return vim.bo.filetype ~= "lazy"
+		end,
 		max_width = 60,
 		max_height = 10,
 		severity_colors = {
@@ -15,14 +17,14 @@ return {
 			return diagnostic.message
 		end,
 		gap_size = 1,
-		scope = "line",
+		scope = "cursor",
 		padding_top = 0,
 		padding_right = 0,
 		text_align = "right",
 		placement = "top",
 		inline_padding_left = 0,
 		update_event = { "DiagnosticChanged", "BufReadPost" },
-		toggle_event = {},
+		toggle_event = { "InsertEnter" },
 		show_sign = true,
 		render_event = { "DiagnosticChanged", "CursorMoved" },
 		border_chars = {
