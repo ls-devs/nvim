@@ -195,6 +195,9 @@ return {
 				hint = { fg = colors.teal, gui = "bold" },
 			},
 			colored = true,
+			cond = function()
+				return vim.bo.filetype ~= "lazy"
+			end,
 		})
 
 		ins_right({ "location", color = { fg = colors.text, gui = "bold" } })
