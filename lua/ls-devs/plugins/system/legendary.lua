@@ -342,6 +342,7 @@ return {
 							"noice",
 							"dbui",
 							"dbout",
+							"lazy",
 						}
 						if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
 							vim.b.focus_disable = true
