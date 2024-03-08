@@ -20,8 +20,8 @@ return {
 
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
-			dashboard.button("e", "󰙅 " .. " NeoTree", "<cmd>Neotree float<CR>"),
-			dashboard.button("s", " " .. " Session", "<cmd>Telescope persisted<CR>"),
+			dashboard.button("e", "󰙅 " .. " File System", "<cmd>Neotree float<CR>"),
+			dashboard.button("s", " " .. " Sessions", "<cmd>Telescope persisted<CR>"),
 			dashboard.button(
 				"f",
 				" " .. " Find File",
