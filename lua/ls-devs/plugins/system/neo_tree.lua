@@ -16,7 +16,6 @@ return {
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
-		-- enable_cursor_hijack = true,
 		open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
 		sort_case_insensitive = false,
 		default_component_configs = {

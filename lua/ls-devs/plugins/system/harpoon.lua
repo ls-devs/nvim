@@ -67,7 +67,7 @@ return {
 			function()
 				require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
 			end,
-			desc = "Harpoon add to list",
+			desc = "Harpoon toggle list",
 			noremap = true,
 			silent = true,
 		},
