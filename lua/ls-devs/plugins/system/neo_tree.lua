@@ -16,7 +16,6 @@ return {
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
-		enable_normal_mode_for_inputs = true,
 		-- enable_cursor_hijack = true,
 		open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
 		sort_case_insensitive = false,
@@ -264,6 +263,12 @@ return {
 				event = "file_opened",
 				handler = function()
 					require("neo-tree.command").execute({ action = "close" })
+				end,
+			},
+			{
+				event = "neo_tree_popup_input_ready",
+				handler = function(input)
+					vim.cmd("stopinsert")
 				end,
 			},
 		},
