@@ -51,6 +51,7 @@ return {
 			lazy = true,
 			opts = {
 				relculright = true,
+				setopt = true,
 			},
 			config = function(_, opts)
 				require("statuscol").setup(vim.tbl_deep_extend("force", opts, {

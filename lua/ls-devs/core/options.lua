@@ -15,12 +15,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
 
--- Disable mouse except scrolling
-keymap("", "<LeftMouse>", "<nop>", opts)
-keymap("", "<2-LeftMouse>", "<nop>", opts)
-keymap("", "<RightMouse>", "<nop>", opts)
-keymap("", "<2-RightMouse>", "<nop>", opts)
-
 -- Options
 local options = {
 	background = "dark",
@@ -54,7 +48,6 @@ local options = {
 	tabstop = 2,
 	cursorline = true,
 	number = true,
-	numberwidth = 2,
 	signcolumn = "yes:1",
 	scrolloff = 8,
 	sidescrolloff = 12,

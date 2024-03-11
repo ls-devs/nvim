@@ -13,14 +13,17 @@ return {
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
+
 		dap.listeners.before.event_terminated["dapui_config"] = function()
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
+
 		dap.listeners.before.event_exited["dapui_config"] = function()
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
+
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 		vim.fn.sign_define(
 			"DapBreakpointCondition",
