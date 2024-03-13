@@ -16,15 +16,7 @@ return {
 						name = "neorg",
 					},
 				},
-				["core.concealer"] = {
-					config = {
-						icons = {
-							code_block = {
-								conceal = true,
-							},
-						},
-					},
-				},
+				["core.concealer"] = {},
 				["core.dirman"] = {
 					config = {
 						workspaces = {

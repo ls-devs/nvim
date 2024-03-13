@@ -146,12 +146,12 @@ return {
 			},
 		},
 		incremental_selection = {
-			enable = true,
+			enable = false,
 			keymaps = {
-				init_selection = "<C-space>",
-				node_incremental = "<C-space>",
-				scrope_incremental = false,
-				node_decremental = "<bs>",
+				init_selection = "<C-Space>",
+				node_incremental = "<C-Space>",
+				scope_incremental = false,
+				node_decremental = "<BS>",
 			},
 		},
 	},
