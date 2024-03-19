@@ -36,6 +36,7 @@ return {
 				"diffview.nvim",
 				"neorg",
 				"statuscol.nvim",
+				"neotab.nvim",
 			},
 		},
 		setup_jsonls = true,

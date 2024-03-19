@@ -5,6 +5,7 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
+		local neotab = require("neotab")
 		local luasnip_vscode_loader = require("luasnip/loaders/from_vscode")
 		luasnip_vscode_loader.lazy_load()
 
@@ -64,10 +65,8 @@ return {
 						cmp.select_next_item()
 					elseif luasnip.expand_or_locally_jumpable() then
 						luasnip.expand_or_jump()
-					elseif has_words_before() then
-						cmp.complete()
 					else
-						fallback()
+						neotab.tabout()
 					end
 				end, { "i", "s" }),
 				["<S-Tab>"] = cmp.mapping(function(fallback)
