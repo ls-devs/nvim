@@ -10,6 +10,7 @@ return {
 			"lua",
 			"markdown",
 			"html",
+			"htmldjango",
 			"css",
 			"javascript",
 			"typescript",

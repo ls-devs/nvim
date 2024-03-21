@@ -10,15 +10,11 @@ return {
 		{ "ggandor/leap.nvim", lazy = true },
 		{ "tpope/vim-repeat", lazy = true },
 		{
-			"ggandor/leap-spooky.nvim",
+			"rasulomaroff/telepath.nvim",
 			lazy = true,
-			opts = {
-				affixes = {
-					remote = { window = "r", cross_window = "R" },
-					magnetic = { window = "m", cross_window = "M" },
-				},
-				paste_on_remote_yank = false,
-			},
+			config = function()
+				require("telepath").use_default_mappings({ overwrite = true })
+			end,
 		},
 	},
 }
