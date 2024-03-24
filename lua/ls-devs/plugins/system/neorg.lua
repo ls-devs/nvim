@@ -4,7 +4,6 @@ return {
 		"BufReadPre " .. vim.env.NOTESDIR .. "/**.md",
 		"BufNewFile " .. vim.env.NOTESDIR .. "/**.md",
 	},
-	build = ":Neorg sync-parsers",
 	cmd = "Neorg",
 	config = function()
 		require("neorg").setup({
@@ -72,6 +71,7 @@ return {
 			},
 		},
 		{ "nvim-lua/plenary.nvim" },
+		{ "luarocks.nvim" },
 	},
 	keys = {
 		{
