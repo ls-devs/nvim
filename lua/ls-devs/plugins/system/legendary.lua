@@ -377,13 +377,12 @@ return {
 					function()
 						if vim.bo.filetype == "norg" then
 							vim.cmd("set conceallevel=2")
-							vim.cmd("set wrap")
 						end
 					end,
 					opts = {
 						pattern = "*.norg",
 					},
-					description = "Change conceal and wrap for note taking",
+					description = "Change conceal for note taking",
 				},
 				{
 					"FileType",
