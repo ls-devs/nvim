@@ -3,7 +3,7 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		keys = { f = "f", F = "F", t = "t", T = "T" },
-		labeled_modes = "nvo",
+		labeled_modes = "nv",
 		multiline = true,
 	},
 	dependencies = {

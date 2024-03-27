@@ -1,9 +1,21 @@
 return {
 	"m4xshen/smartcolumn.nvim",
-	event = { "BufEnter", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		colorcolumn = "100",
-		disabled_filetypes = { "help", "lazy", "alpha", "mason" },
+		disabled_filetypes = {
+			"alpha",
+			"NvimTree",
+			"lazy",
+			"mason",
+			"help",
+			"checkhealth",
+			"lspinfo",
+			"noice",
+			"Trouble",
+			"fish",
+			"zsh",
+		},
 		scope = "file",
 	},
 }

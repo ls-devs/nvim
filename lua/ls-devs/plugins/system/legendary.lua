@@ -377,6 +377,7 @@ return {
 					function()
 						if vim.bo.filetype == "norg" then
 							vim.cmd("set conceallevel=2")
+							vim.cmd("set concealcursor=nc")
 						end
 					end,
 					opts = {

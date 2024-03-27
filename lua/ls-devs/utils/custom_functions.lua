@@ -142,11 +142,6 @@ M.CustomHover = function()
 		return vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
 	elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
 		return require("crates").show_popup()
-	elseif vim.tbl_contains({ "markdown" }, ft) and vim.fn.exists(":ObsidianFollowLink") then
-		local has_obsidian, _ = pcall(require, "obsidian")
-		if has_obsidian then
-			vim.cmd(":ObsidianFollowLink")
-		end
 	else
 		return vim.lsp.buf.hover()
 	end

@@ -25,7 +25,6 @@ return {
 			indent = {
 				indent_size = 2,
 				padding = 1,
-
 				with_markers = true,
 				indent_marker = "│",
 				last_indent_marker = "└",
@@ -337,7 +336,14 @@ return {
 					autoselect_one = true,
 					include_current_win = false,
 					bo = {
-						filetype = { "NvimTree", "neo-tree", "neo-tree-popup", "NeoTreeFloat", "notify" },
+						filetype = {
+							"NvimTree",
+							"neo-tree",
+							"neo-tree-popup",
+							"NeoTreeFloat",
+							"notify",
+							"fidget",
+						},
 						buftype = { "terminal", "quickfix" },
 					},
 				},

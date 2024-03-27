@@ -137,7 +137,12 @@ return {
 			color = { fg = colors.mauve, gui = "bold" },
 		})
 
-		ins_left({ "filetype", colored = true, icon = { align = "left" } })
+		ins_left({
+			"filetype",
+			colored = true,
+			icon = { align = "left" },
+			padding = { left = 0, right = 1 },
+		})
 
 		ins_left({
 			"diff",
@@ -171,9 +176,18 @@ return {
 				if lsps and #lsps > 0 then
 					for _, lsp in ipairs(lsps) do
 						if string.find(lsp.name, vim.bo.filetype) then
+							if string.len(lsp.name) >= 17 then
+								return string.sub(lsp.name, 0, 14) .. "..."
+							else
+								return lsp.name
+							end
 							return lsp.name
 						else
-							return lsps[#lsps].name
+							if string.len(lsps[#lsps].name) >= 17 then
+								return string.sub(lsps[#lsps].name, 0, 14) .. "..."
+							else
+								return lsps[#lsps].name
+							end
 						end
 					end
 				else
@@ -181,7 +195,20 @@ return {
 				end
 			end,
 			color = { fg = colors.flamingo, gui = "bold" },
-			icon = " ",
+			icon = "",
+		})
+
+		ins_right({
+			function()
+				local linter = require("lint").linters_by_ft[vim.bo.filetype]
+				if linter then
+					return linter[1]
+				else
+					return ""
+				end
+			end,
+			color = { fg = colors.flamingo, gui = "bold" },
+			icon = "",
 		})
 
 		ins_right({
