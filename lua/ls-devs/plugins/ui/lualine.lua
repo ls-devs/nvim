@@ -195,7 +195,7 @@ return {
 				end
 			end,
 			color = { fg = colors.flamingo, gui = "bold" },
-			icon = "",
+			icon = " ",
 		})
 
 		ins_right({
@@ -208,7 +208,8 @@ return {
 				end
 			end,
 			color = { fg = colors.flamingo, gui = "bold" },
-			icon = "",
+			padding = { left = 1, right = 0 },
+			icon = "",
 		})
 
 		ins_right({

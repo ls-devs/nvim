@@ -410,6 +410,17 @@ return {
 				{
 					"User",
 					function()
+						require("ufo").enable()
+						require("persisted").save({ session = vim.g.persisted_loaded_session })
+						vim.api.nvim_input("<ESC>:%bd!<CR>")
+					end,
+					opts = {
+						pattern = "PersistedTelescopeLoadPre",
+					},
+				},
+				{
+					"User",
+					function()
 						vim.cmd.hi("Cursor", "guibg=#cdd6f4 guifg=#1e1e2e")
 					end,
 					opts = {

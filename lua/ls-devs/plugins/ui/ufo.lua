@@ -1,6 +1,6 @@
 return {
 	"kevinhwang91/nvim-ufo",
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "BufRead" },
 	opts = {
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }
@@ -49,6 +49,7 @@ return {
 		{
 			"luukvbaal/statuscol.nvim",
 			lazy = true,
+			event = { "BufReadPost", "BufNewFile" },
 			opts = {
 				relculright = true,
 				setopt = true,

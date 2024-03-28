@@ -37,6 +37,7 @@ return {
 				"neorg",
 				"statuscol.nvim",
 				"neotab.nvim",
+				"nvim-ufo",
 			},
 		},
 		setup_jsonls = true,
