@@ -41,7 +41,7 @@ return {
 			cmake = { "gersemi" },
 			sql = { "sql-formatter" },
 			sh = { "shellharden" },
-			python = { "isort", "black" },
+			python = { "autopep8" },
 			prisma = { "prisma" },
 			["_"] = { "trim_whitespace" },
 		},

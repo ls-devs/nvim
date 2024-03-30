@@ -57,6 +57,7 @@ return {
 				"yamllint",
 				"cpplint",
 				"sqlfluff",
+				"pylint",
 				"shellcheck",
 				"ktlint",
 				"codespell",
@@ -69,8 +70,7 @@ return {
 				"yq",
 				"stylua",
 				"gersemi",
-				"black",
-				"isort",
+				"autopep8",
 				"sql-formatter",
 				"shellharden",
 
@@ -188,10 +188,6 @@ return {
 									useLibraryCodeForTypes = true,
 									diagnosticMode = "workspace",
 									autoSearchPaths = true,
-									inlayHints = {
-										variableTypes = true,
-										functionReturnTypes = true,
-									},
 								},
 							},
 						},

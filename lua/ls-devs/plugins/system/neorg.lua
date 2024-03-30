@@ -55,6 +55,7 @@ return {
 						cursorcolumn = false,
 						foldcolumn = "0",
 						list = false,
+						laststatus = 0,
 					},
 				},
 				plugins = {
