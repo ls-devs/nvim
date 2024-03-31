@@ -221,7 +221,6 @@ return {
 	},
 	dependencies = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
-		{ "windwp/nvim-ts-autotag" },
 		{
 			"chrisgrieser/nvim-various-textobjs",
 			lazy = true,
