@@ -60,7 +60,21 @@ local options = {
 	foldlevelstart = 99,
 	foldlevel = 99,
 	foldmethod = "manual",
-	fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
+	-- fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
+	fillchars = {
+		eob = "~",
+		foldsep = " ",
+		fold = " ",
+		foldopen = "",
+		foldclose = "",
+		horiz = "━",
+		horizup = "┻",
+		horizdown = "┳",
+		vert = "┃",
+		vertleft = "┫",
+		vertright = "┣",
+		verthoriz = "╋",
+	},
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 

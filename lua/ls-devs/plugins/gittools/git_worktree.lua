@@ -1,6 +1,9 @@
 return {
 	"polarmutex/git-worktree.nvim",
 	config = function()
+		require("git-worktree").setup({
+			update_on_change_command = "",
+		})
 		require("telescope").load_extension("git_worktree")
 		require("git-worktree").on_tree_change(function(op, metadata)
 			if op == require("git-worktree").Operations.Switch then
