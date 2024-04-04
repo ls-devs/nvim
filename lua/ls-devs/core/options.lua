@@ -60,7 +60,6 @@ local options = {
 	foldlevelstart = 99,
 	foldlevel = 99,
 	foldmethod = "manual",
-	-- fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 	fillchars = {
 		eob = "~",
 		foldsep = " ",

@@ -398,28 +398,6 @@ return {
 					description = "Vertical Help",
 				},
 				{
-					"BufEnter",
-					function()
-						vim.opt.fillchars = {
-							eob = "~",
-							foldsep = " ",
-							fold = " ",
-							foldopen = "",
-							foldclose = "",
-							horiz = "━",
-							horizup = "┻",
-							horizdown = "┳",
-							vert = "┃",
-							vertleft = "┫",
-							vertright = "┣",
-							verthoriz = "╋",
-						}
-					end,
-					opts = {
-						pattern = "*",
-					},
-				},
-				{
 					"User",
 					function()
 						vim.cmd.hi("Cursor", "guibg=black guifg=white")
