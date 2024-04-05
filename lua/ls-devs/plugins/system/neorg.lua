@@ -73,6 +73,7 @@ return {
 		},
 		{ "nvim-lua/plenary.nvim" },
 		{ "luarocks.nvim" },
+		{ "jmbuhr/otter.nvim" },
 	},
 	keys = {
 		{

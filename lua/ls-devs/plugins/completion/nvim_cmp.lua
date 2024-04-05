@@ -132,6 +132,7 @@ return {
 			},
 			sources = {
 				{ name = "nvim_lsp" },
+				{ name = "otter" },
 				{ name = "buffer", max_item_count = 5 },
 				{ name = "luasnip", max_item_count = 3 },
 				{ name = "sass-variables" },

@@ -2,7 +2,7 @@ return {
 	"olimorris/persisted.nvim",
 	opts = {
 		save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
-		silent = false,
+		silent = true,
 		use_git_branch = true,
 		default_branch = "main",
 		autosave = false,

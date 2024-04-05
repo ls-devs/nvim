@@ -412,12 +412,29 @@ return {
 					function()
 						require("ufo").enable()
 						require("persisted").save({ session = vim.g.persisted_loaded_session })
-						vim.api.nvim_input("<ESC>:%bd!<CR>")
+						vim.api.nvim_input("<ESC>:silent %bd!<CR>")
+						require("persisted").stop()
 					end,
 					opts = {
 						pattern = "PersistedTelescopeLoadPre",
 					},
 				},
+				-- {
+				-- 	"WinLeave",
+				-- 	function()
+				-- 		if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+				-- 			vim.api.nvim_feedkeys(
+				-- 				vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+				-- 				"i",
+				-- 				false
+				-- 			)
+				-- 			print("ok")
+				-- 		end
+				-- 	end,
+				-- 	opts = {
+				-- 		pattern = "*",
+				-- 	},
+				-- },
 				{
 					"User",
 					function()
