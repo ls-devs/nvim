@@ -21,7 +21,6 @@ return {
 			cmake = { "cmakelint" },
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
-			["*"] = { "codespell" },
 		},
 	},
 	config = function(_, opts)

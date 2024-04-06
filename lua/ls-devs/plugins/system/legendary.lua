@@ -238,6 +238,17 @@ return {
 					description = "LazyGit",
 					opts = { noremap = true, silent = true },
 				},
+				{
+					"<leader>cs",
+					function()
+						if require("lint").linters_by_ft["*"] == nil then
+							require("lint").linters_by_ft["*"] = { "codespell" }
+							vim.cmd(":edit!")
+						end
+					end,
+					description = "Start codespell linter",
+					opts = { noremap = true, silent = true },
+				},
 			},
 			extensions = {
 				lazy_nvim = { auto_register = true },
