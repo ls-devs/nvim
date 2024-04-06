@@ -2,19 +2,62 @@ return {
 	"rasulomaroff/reactive.nvim",
 	event = "VeryLazy",
 	init = function()
-		-- Quickfix for this issue https://github.com/nvim-telescope/telescope.nvim/issues/2501
-		vim.api.nvim_create_augroup("my_telescope", { clear = true })
-		vim.api.nvim_create_autocmd({ "WinLeave" }, {
-			group = "my_telescope",
-			pattern = "*",
-			callback = function()
-				if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
-					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
-				end
-			end,
-		})
+		vim.cmd("hi link CursorLineFold CursorLineNr")
 	end,
 	opts = {
 		load = { "catppuccin-mocha-cursor", "catppuccin-mocha-cursorline" },
+		configs = {
+			["catppuccin-mocha-cursor"] = {
+				modes = {
+					i = {
+						hl = {
+							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+						},
+					},
+					n = {
+						hl = {
+							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+						},
+					},
+
+					no = {
+						operators = {
+							d = {
+								hl = {
+									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+								},
+							},
+							y = {
+								hl = {
+									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+								},
+							},
+							c = {
+								hl = {
+									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+								},
+							},
+						},
+					},
+					R = {
+						hl = {
+							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+						},
+					},
+					-- visual
+					[{ "v", "V", "\x16" }] = {
+						hl = {
+							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+						},
+					},
+					-- select
+					[{ "s", "S", "\x13" }] = {
+						hl = {
+							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+						},
+					},
+				},
+			},
+		},
 	},
 }

@@ -375,10 +375,8 @@ return {
 				{
 					"BufEnter",
 					function()
-						if vim.bo.filetype == "norg" then
-							vim.cmd("set conceallevel=2")
-							vim.cmd("set concealcursor=nc")
-						end
+						vim.cmd("set conceallevel=2")
+						vim.cmd("set concealcursor=nc")
 					end,
 					opts = {
 						pattern = "*.norg",
@@ -410,6 +408,16 @@ return {
 				{
 					"User",
 					function()
+						vim.cmd.hi("Cursor", "guibg=none guifg=#1e1e2e")
+					end,
+					opts = {
+						pattern = "LeapLeave",
+					},
+					description = "Fix Cursor on LeapLeave",
+				},
+				{
+					"User",
+					function()
 						require("ufo").enable()
 						require("persisted").save({ session = vim.g.persisted_loaded_session })
 						vim.api.nvim_input("<ESC>:silent %bd!<CR>")
@@ -419,31 +427,20 @@ return {
 						pattern = "PersistedTelescopeLoadPre",
 					},
 				},
-				-- {
-				-- 	"WinLeave",
-				-- 	function()
-				-- 		if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
-				-- 			vim.api.nvim_feedkeys(
-				-- 				vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
-				-- 				"i",
-				-- 				false
-				-- 			)
-				-- 			print("ok")
-				-- 		end
-				-- 	end,
-				-- 	opts = {
-				-- 		pattern = "*",
-				-- 	},
-				-- },
 				{
-					"User",
+					"WinLeave",
 					function()
-						vim.cmd.hi("Cursor", "guibg=#cdd6f4 guifg=#1e1e2e")
+						if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+							vim.api.nvim_feedkeys(
+								vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+								"i",
+								false
+							)
+						end
 					end,
 					opts = {
-						pattern = "LeapLeave",
+						pattern = "*",
 					},
-					description = "Fix Cursor on LeapLeave",
 				},
 			},
 			sort = {

@@ -3,15 +3,15 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		signs = {
-			add = { text = "│" },
-			change = { text = "│" },
+			add = { text = "┃" },
+			change = { text = "┃" },
 			delete = { text = "_" },
 			topdelete = { text = "‾" },
 			changedelete = { text = "~" },
 			untracked = { text = "┆" },
 		},
-		signcolumn = false,
-		numhl = true,
+		signcolumn = true,
+		numhl = false,
 		linehl = false,
 		word_diff = false,
 		watch_gitdir = {
