@@ -50,6 +50,7 @@ return {
 					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
 					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
 					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
+					CursorLineSign = { bg = colors.none },
 					-- GitSigns
 					GitSignsCurrentLineBlame = { fg = colors.overlay1 },
 					-- Fidget
@@ -80,6 +81,11 @@ return {
 					NotificationInfo = { bg = colors.none, fg = colors.text },
 					NotificationError = { bg = colors.none, fg = colors.red },
 					NotificationWarning = { bg = colors.none, fg = colors.yellow },
+					NotifyINFOTitle = { style = { "bold" } },
+					NotifyDEBUGTitle = { style = { "bold" } },
+					NotifyWARNTitle = { style = { "bold" } },
+					NotifyTRACETitle = { style = { "bold" } },
+					NotifyERRORTitle = { style = { "bold" } },
 					-- LspSaga
 					SagaBeacon = { bg = colors.red },
 					-- Diagnostics
@@ -97,7 +103,7 @@ return {
 					LspDiagnosticsVirtualTextHint = { style = { "bold" } },
 					-- Noice
 					NoiceVirtualText = { fg = colors.sky, style = { "bold" } },
-					NoiceCmdLineIcon = { fg = colors.teal, style = {} },
+					NoiceCmdlineIcon = { fg = colors.teal, style = { "bold" } },
 					NoiceScrollbarThumb = { bg = colors.blue },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },

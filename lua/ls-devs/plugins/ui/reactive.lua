@@ -3,6 +3,7 @@ return {
 	event = "VeryLazy",
 	init = function()
 		vim.cmd("hi link CursorLineFold CursorLineNr")
+		vim.cmd("hi link CursorLineSign CursorLineNr")
 	end,
 	opts = {
 		load = { "catppuccin-mocha-cursor", "catppuccin-mocha-cursorline" },

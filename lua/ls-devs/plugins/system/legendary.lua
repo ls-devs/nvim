@@ -260,13 +260,14 @@ return {
 				{
 					{ "InsertEnter", "InsertChange" },
 					'lua require("notify").dismiss({ silent = true })',
-					pattern = "*",
+					opts = {
+						pattern = "*",
+					},
 					description = "Notify dismiss",
 				},
 				{
 					"VimLeave",
 					":silent !prettierd stop",
-					description = "Stop prettierd",
 					opts = {
 						pattern = {
 							"*.jsx",
@@ -286,6 +287,7 @@ return {
 							"*.graphql",
 						},
 					},
+					description = "Stop prettierd",
 				},
 				{
 					"LspAttach",
@@ -301,7 +303,6 @@ return {
 							require("nvim-emmet").wrap_with_abbreviation()
 						end, { buffer = bufnr, desc = "Wrap with abbreviation" })
 					end,
-					description = "Setup nvim-emmet",
 					opts = {
 						pattern = {
 							"*.jsx",
@@ -310,6 +311,7 @@ return {
 							"*.html",
 						},
 					},
+					description = "Setup nvim-emmet",
 				},
 				{
 					"WinEnter",
@@ -426,6 +428,7 @@ return {
 					opts = {
 						pattern = "PersistedTelescopeLoadPre",
 					},
+					description = "Remove buffers when persisted load a session + Fix UFO",
 				},
 				{
 					"WinLeave",
@@ -441,6 +444,21 @@ return {
 					opts = {
 						pattern = "*",
 					},
+					description = "Fix Reactive.nvim insert mode when loaded with Telescope",
+				},
+				{
+					"BufWinEnter",
+					function()
+						local mark = vim.api.nvim_buf_get_mark(0, '"')
+						local lcount = vim.api.nvim_buf_line_count(0)
+						if mark[1] > 0 and mark[1] <= lcount then
+							pcall(vim.api.nvim_win_set_cursor, 0, mark)
+						end
+					end,
+					opts = {
+						pattern = "*",
+					},
+					description = "Remember last place of the visited buffer",
 				},
 			},
 			sort = {

@@ -1,7 +1,7 @@
 return {
 	"ecthelionvi/NeoComposer.nvim",
 	opts = {
-		notify = false,
+		notify = true,
 		delay_timer = 150,
 		queue_most_recent = true,
 		window = {
@@ -32,6 +32,7 @@ return {
 			},
 		}))
 		require("telescope").load_extension("macros")
+		vim.cmd("hi Preview guibg=" .. colors.surface0 .. " guifg=" .. colors.flamingo)
 	end,
 	init = function()
 		vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
