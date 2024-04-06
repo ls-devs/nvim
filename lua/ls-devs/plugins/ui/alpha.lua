@@ -3,7 +3,7 @@ return {
 	event = "VimEnter",
 	config = function()
 		vim.api.nvim_exec2(
-			[[autocmd FileType alpha set laststatus=0 | set fillchars+=eob:\ | autocmd BufUnload <buffer> set laststatus=3]],
+			[[autocmd FileType alpha set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3]],
 			{ output = false }
 		)
 		local dashboard = require("alpha.themes.dashboard")

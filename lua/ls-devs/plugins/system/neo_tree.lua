@@ -114,7 +114,7 @@ return {
 				},
 				["<2-LeftMouse>"] = "open",
 				["l"] = "open",
-				["<esc>"] = "cancel",
+				["<esc>"] = "close_window",
 				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
 				[","] = "focus_preview",
 				["S"] = "split_with_window_picker",

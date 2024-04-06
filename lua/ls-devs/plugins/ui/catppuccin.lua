@@ -10,7 +10,7 @@ return {
 				dark = "mocha",
 			},
 			transparent_background = true,
-			show_end_of_buffer = true,
+			show_end_of_buffer = false,
 			term_colors = true,
 			no_italic = false,
 			no_bold = false,
