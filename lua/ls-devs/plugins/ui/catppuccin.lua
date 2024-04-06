@@ -33,49 +33,72 @@ return {
 			color_overrides = {},
 			custom_highlights = function(colors)
 				return {
+					-- Base NEOVIM
 					TabLineSel = { fg = colors.lavender, bg = colors.surface0 },
 					TabLine = { fg = colors.overlay0, bg = colors.surface0 },
-					CmpBorder = { fg = colors.surface2 },
 					Pmenu = { bg = colors.none },
 					Normal = { bg = colors.none },
-					DelaySymbol = { bg = colors.none },
 					NormalFloat = { bg = colors.none },
 					FloatBorder = { bg = colors.none },
 					FloatShadow = { bg = colors.none },
 					FloatShadowThrough = { bg = colors.none },
+					WinBar = { bg = colors.none },
+					WinBarNC = { bg = colors.none },
+					Folded = { bg = colors.none },
+					StatusLine = { bg = colors.none },
+					IncSearch = { fg = colors.base, bg = colors.peach, style = { "bold" } },
+					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
+					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
+					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
+					-- GitSigns
+					GitSignsCurrentLineBlame = { fg = colors.overlay1 },
+					-- Fidget
+					Fidget = { fg = colors.overlay1 },
+					-- Bqf
+					BqfPreviewThumb = { bg = colors.blue },
+					-- DiffView
+					DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
+					-- NeoComposer
+					DelaySymbol = { bg = colors.none },
 					PlayingSymbol = { bg = colors.none },
 					RecordingSymbol = { bg = colors.none },
 					DelayText = { bg = colors.none },
 					PlayingText = { bg = colors.none },
 					RecordingText = { bg = colors.none },
+					-- Leap
 					LeapBackdrop = { fg = colors.none },
 					LeapLabelPrimary = { bg = colors.red, fg = colors.base, style = { "bold" and "underline" } },
 					LeapLabelSecondary = { bg = colors.sapphire, fg = colors.base, style = { "bold" and "underline" } },
-					WinBar = { bg = colors.none },
-					WinBarNC = { bg = colors.none },
-					GitSignsCurrentLineBlame = { fg = colors.overlay1 },
-					Folded = { bg = colors.none },
+					-- CMP
 					CmpItemKindVariable = { fg = colors.mauve },
+					CmpBorder = { fg = colors.surface2 },
 					CmpItemKindSnippet = { fg = colors.blue },
-					StatusLine = { bg = colors.none },
-					Fidget = { fg = colors.overlay1 },
+					-- Telescope
 					TelescopeNormal = { fg = colors.none },
 					TelescopeSelection = { fg = colors.peach },
-					IncSearch = { fg = colors.base, bg = colors.peach, style = { "bold" } },
-					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
-					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
-					NoiceScrollbarThumb = { bg = colors.blue },
-					BqfPreviewThumb = { bg = colors.blue },
-					DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
-					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
+					-- Notify
 					NotificationInfo = { bg = colors.none, fg = colors.text },
 					NotificationError = { bg = colors.none, fg = colors.red },
 					NotificationWarning = { bg = colors.none, fg = colors.yellow },
+					-- LspSaga
 					SagaBeacon = { bg = colors.red },
+					-- Diagnostics
 					DiagnosticInfo = { style = { "bold" } },
 					DiagnosticWarn = { style = { "bold" } },
 					DiagnosticError = { style = { "bold" } },
 					DiagnosticHint = { style = { "bold" } },
+					DiagnosticVirtualTextInfo = { style = { "bold" } },
+					DiagnosticVirtualTextWarn = { style = { "bold" } },
+					DiagnosticVirtualTextError = { style = { "bold" } },
+					DiagnosticVirtualTextHint = { style = { "bold" } },
+					LspDiagnosticsVirtualTextInformation = { style = { "bold" } },
+					LspDiagnosticsVirtualTextWarning = { style = { "bold" } },
+					LspDiagnosticsVirtualTextError = { style = { "bold" } },
+					LspDiagnosticsVirtualTextHint = { style = { "bold" } },
+					-- Noice
+					NoiceVirtualText = { fg = colors.sky, style = { "bold" } },
+					NoiceCmdLineIcon = { fg = colors.teal, style = {} },
+					NoiceScrollbarThumb = { bg = colors.blue },
 					-- Lazy
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },
