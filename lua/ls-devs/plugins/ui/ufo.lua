@@ -49,7 +49,6 @@ return {
 		{
 			"luukvbaal/statuscol.nvim",
 			lazy = true,
-			event = { "BufReadPost", "BufNewFile" },
 			opts = {
 				relculright = true,
 				setopt = true,
