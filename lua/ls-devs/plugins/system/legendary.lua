@@ -421,7 +421,7 @@ return {
 				{
 					"User",
 					function()
-						vim.cmd.hi("Cursor", "guibg=none guifg=#1e1e2e")
+						vim.cmd.hi("Cursor", "guibg=white guifg=#1e1e2e blend=0")
 					end,
 					opts = {
 						pattern = "LeapLeave",
