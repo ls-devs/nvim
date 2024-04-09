@@ -185,9 +185,9 @@ return {
 						settings = {
 							python = {
 								analysis = {
-									useLibraryCodeForTypes = true,
-									diagnosticMode = "workspace",
 									autoSearchPaths = true,
+									diagnosticMode = "openFilesOnly",
+									useLibraryCodeForTypes = true,
 								},
 							},
 						},
