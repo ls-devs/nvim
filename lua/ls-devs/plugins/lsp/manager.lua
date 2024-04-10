@@ -70,7 +70,7 @@ return {
 				"yq",
 				"stylua",
 				"gersemi",
-				"autopep8",
+				"black",
 				"sql-formatter",
 				"shellharden",
 
