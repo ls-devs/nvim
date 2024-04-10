@@ -10,17 +10,8 @@ return {
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end,
 		settings = {
-			tsserver_file_preferences = {
-				includeInlayParameterNameHints = "all",
-				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-				includeInlayFunctionParameterTypeHints = true,
-				includeInlayVariableTypeHints = true,
-				includeInlayPropertyDeclarationTypeHints = true,
-				includeInlayFunctionLikeReturnTypeHints = true,
-				includeInlayEnumMemberValueHints = true,
-			},
-			code_lens = "all",
-			disable_member_code_lens = false,
+			code_lens = "off",
+			disable_member_code_lens = true,
 		},
 	},
 	dependencies = {

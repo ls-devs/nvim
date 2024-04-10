@@ -432,14 +432,11 @@ return {
 					"User",
 					function()
 						require("ufo").enable()
-						require("persisted").save({ session = vim.g.persisted_loaded_session })
-						vim.api.nvim_input("<ESC>:silent %bd!<CR>")
-						require("persisted").stop()
 					end,
 					opts = {
-						pattern = "PersistedTelescopeLoadPre",
+						pattern = "SessionLoadPost",
 					},
-					description = "Remove buffers when persisted load a session + Fix UFO",
+					description = "Fix UFO with Sessions",
 				},
 				{
 					"WinLeave",

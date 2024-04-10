@@ -243,16 +243,17 @@ return {
 			color = { fg = colors.green, gui = "bold" },
 		})
 
-		-- ins_right({
-		-- 	function()
-		-- 		return os.date("%H:%M:%S", os.time())
-		-- 	end,
-		-- 	color = {
-		-- 		fg = colors.blue,
-		-- 		gui = "bold",
-		-- 	},
-		-- 	padding = { left = 1, right = 0 },
-		-- })
+		ins_right({
+			function()
+				return os.date("%H:%M:%S", os.time())
+			end,
+			color = {
+				fg = colors.blue,
+				gui = "bold",
+			},
+			padding = { left = 1, right = 0 },
+			cond = conditions.hide_in_width,
+		})
 
 		lualine.setup(config)
 	end,

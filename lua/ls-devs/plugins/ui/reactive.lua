@@ -1,6 +1,6 @@
 return {
 	"rasulomaroff/reactive.nvim",
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile" },
 	init = function()
 		vim.cmd("hi link CursorLineFold CursorLineNr")
 		vim.cmd("hi link CursorLineSign CursorLineNr")
@@ -20,7 +20,6 @@ return {
 							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
 						},
 					},
-
 					no = {
 						operators = {
 							d = {
@@ -45,13 +44,11 @@ return {
 							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
 						},
 					},
-					-- visual
 					[{ "v", "V", "\x16" }] = {
 						hl = {
 							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
 						},
 					},
-					-- select
 					[{ "s", "S", "\x13" }] = {
 						hl = {
 							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
