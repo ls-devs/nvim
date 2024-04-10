@@ -9,12 +9,6 @@ return {
 		local luasnip_vscode_loader = require("luasnip/loaders/from_vscode")
 		luasnip_vscode_loader.lazy_load()
 
-		local has_words_before = function()
-			local unpack = unpack or table.unpack
-			local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-			return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-		end
-
 		cmp.setup({
 			enabled = function()
 				local context = require("cmp.config.context")
@@ -116,7 +110,6 @@ return {
 							nvim_lsp = "[LSP]",
 							luasnip = "[SNIPPET]",
 							buffer = "[BUFFER]",
-							emoji = "[EMOJI]",
 							cmdline = "[CMD]",
 							npm = "[NPM]",
 							zsh = "[ZSH]",
@@ -134,7 +127,8 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "otter" },
 				{ name = "buffer", max_item_count = 5 },
-				{ name = "luasnip", max_item_count = 3 },
+				{ name = "luasnip", max_item_count = 5 },
+				{ name = "nvim_lua" },
 				{ name = "sass-variables" },
 				{ name = "dotenv" },
 				{
@@ -149,7 +143,6 @@ return {
 					keyword_length = 4,
 				},
 				{ name = "crates" },
-				{ name = "emoji" },
 			},
 			confirm_opts = {
 				behavior = cmp.ConfirmBehavior.Replace,
@@ -188,19 +181,23 @@ return {
 			}),
 		})
 		cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+
+		require("luasnip.loaders.from_vscode").lazy_load()
 	end,
 	dependencies = {
 		{ "hrsh7th/cmp-buffer", lazy = true },
-		{ "hrsh7th/cmp-emoji", lazy = true },
 		{ "hrsh7th/cmp-cmdline", lazy = true },
 		{ "hrsh7th/cmp-nvim-lsp", lazy = true },
 		{ "onsails/lspkind.nvim", lazy = true },
 		{ "SergioRibera/cmp-dotenv", lazy = true },
-		{ "rafamadriz/friendly-snippets", lazy = true },
 		{
 			"L3MON4D3/LuaSnip",
 			lazy = true,
 			build = "make install_jsregexp",
+			dependencies = {
+
+				{ "rafamadriz/friendly-snippets", lazy = true },
+			},
 		},
 		{ "saadparwaiz1/cmp_luasnip", lazy = true },
 		{ "lukas-reineke/cmp-under-comparator", lazy = true },
