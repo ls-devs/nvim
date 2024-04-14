@@ -49,7 +49,9 @@ return {
 					"before_load",
 					vim.o.sessionoptions:match("buffer") and "before_save",
 				},
-				force = false, -- or fun(buf): boolean
+				force = function(buf)
+					return vim.api.nvim_get_option_value("buftype", { buf = buf }) == "terminal"
+				end,
 			},
 			nvim_tree = true,
 			neo_tree = true,
@@ -82,6 +84,10 @@ return {
 			},
 		},
 	},
+	config = function(_, opts)
+		require("possession").setup(opts)
+		require("telescope").load_extension("possession")
+	end,
 	cmd = {
 		"PossessionSave",
 		"PossessionLoad",

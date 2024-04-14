@@ -151,7 +151,9 @@ M.OpenURLs = function(url)
 	local opener
 	if vim.fn.has("macunix") == 1 then
 		opener = "open"
-	elseif vim.fn.has("linux") == 1 then
+	elseif vim.fn.has("wsl") == 1 then
+		opener = "wslview"
+	elseif vim.fn.has("linux") == 1 and vim.fn.has("wsl") == 0 then
 		opener = "xdg-open"
 	elseif vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
 		opener = "start"

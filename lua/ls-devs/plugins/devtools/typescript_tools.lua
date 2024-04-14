@@ -10,8 +10,8 @@ return {
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end,
 		settings = {
-			code_lens = "off",
-			disable_member_code_lens = true,
+			code_lens = "all",
+			disable_member_code_lens = false,
 		},
 	},
 	dependencies = {

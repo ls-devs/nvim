@@ -13,6 +13,18 @@ return {
 			search_engine = "google",
 		},
 	},
+	config = function(_, opts)
+		local browser = function()
+			if vim.fn.has("wsl") then
+				return "wslview"
+			else
+				return "os_specific"
+			end
+		end
+		require("gx").setup(vim.tbl_deep_extend("force", opts, {
+			open_browser_app = browser(),
+		}))
+	end,
 	init = function()
 		vim.g.netrw_nogx = 1
 	end,
