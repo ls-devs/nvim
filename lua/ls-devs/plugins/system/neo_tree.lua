@@ -100,7 +100,7 @@ return {
 			position = "float",
 			width = 40,
 			popup = {
-				size = { height = "35", width = "80" },
+				size = { height = "40", width = "90" },
 				position = "50%",
 			},
 			mapping_options = {
