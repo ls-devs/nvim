@@ -129,6 +129,7 @@ M.LazyGit = function()
 			vim.cmd("startinsert!")
 			local keymap = vim.api.nvim_buf_set_keymap
 			keymap(term.bufnr, "t", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+			keymap(term.bufnr, "t", "<esc>", "<cmd>close<CR>", { noremap = true, silent = true })
 		end,
 	})
 	return lazygit:toggle()
