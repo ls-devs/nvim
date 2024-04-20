@@ -1,10 +1,15 @@
 return {
 	"ggandor/flit.nvim",
-	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		keys = { f = "f", F = "F", t = "t", T = "T" },
 		labeled_modes = "nv",
 		multiline = true,
+	},
+	keys = {
+		"f",
+		"F",
+		"t",
+		"T",
 	},
 	dependencies = {
 		{ "ggandor/leap.nvim", lazy = true },

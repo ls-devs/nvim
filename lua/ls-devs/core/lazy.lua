@@ -62,6 +62,7 @@ require("lazy").setup({
 				"‒",
 			},
 		},
+		browser = "wslview",
 	},
 	checker = {
 		enabled = true,
