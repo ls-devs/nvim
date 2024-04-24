@@ -167,5 +167,4 @@ return {
 			hover = true,
 		},
 	},
-	dependencies = { "nvim-lua/plenary.nvim" },
 }

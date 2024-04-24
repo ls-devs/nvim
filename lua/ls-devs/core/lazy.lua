@@ -21,6 +21,7 @@ require("lazy").setup({
 		{ import = "ls-devs.plugins.movement" },
 		{ import = "ls-devs.plugins.preview" },
 		{ import = "ls-devs.plugins.system" },
+		{ import = "ls-devs.plugins.system.dependencies" },
 		{ import = "ls-devs.plugins.system.telescope_extensions" },
 		{ import = "ls-devs.plugins.system.treesitter_modules" },
 		{ import = "ls-devs.plugins.ui" },

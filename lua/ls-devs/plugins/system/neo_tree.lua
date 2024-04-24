@@ -100,7 +100,7 @@ return {
 			position = "float",
 			width = 40,
 			popup = {
-				size = { height = "40", width = "90" },
+				size = { height = "35", width = "90" },
 				position = "50%",
 			},
 			mapping_options = {
@@ -318,7 +318,6 @@ return {
 	},
 	dependencies = {
 		{ "3rd/image.nvim", lazy = true },
-		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ "nvim-tree/nvim-web-devicons", lazy = true },
 		{ "MunifTanjim/nui.nvim", lazy = true },
 		{
