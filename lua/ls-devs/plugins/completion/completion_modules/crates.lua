@@ -167,4 +167,5 @@ return {
 			hover = true,
 		},
 	},
+	dependencies = { "plenary.nvim", lazy = true },
 }

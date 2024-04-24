@@ -1,5 +1,6 @@
 return {
 	"David-Kunz/cmp-npm",
+	dependencies = { "plenary.nvim", lazy = true },
 	event = {
 		"BufReadPost package.json",
 		"BufNewFile package.json",

@@ -15,6 +15,7 @@ return {
 		},
 	},
 	dependencies = {
+		{ "plenary.nvim", lazy = true },
 		{ "neovim/nvim-lspconfig", lazy = true },
 	},
 }

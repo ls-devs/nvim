@@ -71,8 +71,9 @@ return {
 				},
 			},
 		},
-		{ "luarocks.nvim" },
-		{ "jmbuhr/otter.nvim" },
+		{ "plenary.nvim", lazy = true },
+		{ "luarocks.nvim", lazy = true },
+		{ "jmbuhr/otter.nvim", lazy = true },
 	},
 	keys = {
 		{

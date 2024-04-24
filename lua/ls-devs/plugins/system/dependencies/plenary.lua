@@ -1,5 +1,6 @@
 -- Package required for :
 -- Neo Tree
+-- Telescope
 -- Todo Comments
 -- Typescript Tools
 -- Crates.nvim
@@ -10,6 +11,5 @@
 
 return {
 	"nvim-lua/plenary.nvim",
-	event = "VeryLazy",
 	priority = 1000,
 }

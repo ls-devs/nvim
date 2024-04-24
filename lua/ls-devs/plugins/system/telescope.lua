@@ -236,6 +236,7 @@ return {
 		},
 	},
 	dependencies = {
+		{ "plenary.nvim", lazy = true },
 		{ "benfowler/telescope-luasnip.nvim", lazy = true },
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",

@@ -125,15 +125,18 @@ return {
 		},
 	},
 	dependencies = {
-		"antoinemadec/FixCursorHold.nvim",
-		"nvim-treesitter/nvim-treesitter",
-		"nvim-neotest/neotest-jest",
-		"marilari88/neotest-vitest",
-		"thenbe/neotest-playwright",
+		{ "plenary.nvim", lazy = true },
+		{ "antoinemadec/FixCursorHold.nvim", lazy = true },
+		{ "nvim-treesitter/nvim-treesitter", lazy = true },
+		{ "nvim-neotest/neotest-jest", lazy = true },
+		{ "marilari88/neotest-vitest", lazy = true },
+		{ "thenbe/neotest-playwright", lazy = true },
 		{
 			"nvim-neotest/neotest-vim-test",
+			lazy = true,
 			dependencies = {
 				"vim-test/vim-test",
+				lazy = true,
 			},
 		},
 	},

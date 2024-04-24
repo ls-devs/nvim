@@ -1,5 +1,6 @@
 return {
 	"sindrets/diffview.nvim",
+	dependencies = { "plenary.nvim", lazy = true },
 	opts = {
 		diff_binaries = false,
 		enhanced_diff_hl = true,

@@ -2,6 +2,7 @@ return {
 	"folke/todo-comments.nvim",
 	event = "BufReadPost",
 	opts = {},
+	dependencies = { "plenary.nvim", lazy = true },
 	keys = {
 		{
 			"<leader>T",

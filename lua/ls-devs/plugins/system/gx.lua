@@ -28,5 +28,6 @@ return {
 	init = function()
 		vim.g.netrw_nogx = 1
 	end,
+	dependencies = { "plenary.nvim", lazy = true },
 	submodules = false,
 }
