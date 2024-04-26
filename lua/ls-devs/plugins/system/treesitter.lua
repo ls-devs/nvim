@@ -21,6 +21,8 @@ return {
 			"scss",
 			"c",
 			"python",
+			"requirements",
+			"ini",
 			"pug",
 			"php",
 			"java",
