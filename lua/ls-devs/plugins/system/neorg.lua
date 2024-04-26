@@ -20,8 +20,6 @@ return {
 					config = {
 						workspaces = {
 							Notes = vim.env.NOTESDIR .. "/",
-							Personal = vim.env.NOTESDIR .. "/Personal",
-							Work = vim.env.NOTESDIR .. "/Work",
 						},
 						default_workspace = "Notes",
 					},
@@ -85,15 +83,7 @@ return {
 		},
 		{
 			"<leader>nw",
-			function()
-				vim.ui.select({ "Notes", "Personal", "Work" }, {
-					prompt = "Choose a Workspace",
-				}, function(choice)
-					if choice then
-						vim.cmd("Neorg workspace " .. choice)
-					end
-				end)
-			end,
+			":Neorg workspace Notes<CR>",
 			desc = "Select Neorg Workspace",
 			silent = true,
 			noremap = true,
