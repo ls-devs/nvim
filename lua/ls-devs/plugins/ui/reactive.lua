@@ -12,46 +12,56 @@ return {
 				modes = {
 					i = {
 						hl = {
-							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+							ReactiveCursor = { bg = "none" },
 						},
 					},
 					n = {
 						hl = {
-							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+							ReactiveCursor = { bg = "none" },
 						},
 					},
 					no = {
 						operators = {
 							d = {
 								hl = {
-									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+									ReactiveCursor = { bg = "none" },
 								},
 							},
 							y = {
 								hl = {
-									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+									ReactiveCursor = { bg = "none" },
 								},
 							},
 							c = {
 								hl = {
-									ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+									ReactiveCursor = { bg = "none" },
 								},
 							},
 						},
 					},
 					R = {
 						hl = {
-							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+							ReactiveCursor = { bg = "none" },
 						},
 					},
-					[{ "v", "V", "\x16" }] = {
+					v = {
 						hl = {
-							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+							ReactiveCursor = { bg = "none" },
+						},
+					},
+					V = {
+						hl = {
+							ReactiveCursor = { bg = "none" },
+						},
+					},
+					["\x16"] = {
+						hl = {
+							ReactiveCursor = { bg = "none" },
 						},
 					},
 					[{ "s", "S", "\x13" }] = {
 						hl = {
-							ReactiveCursor = { bg = "none", fg = "#1e1e2e", blend = 0 },
+							ReactiveCursor = { bg = "none" },
 						},
 					},
 				},

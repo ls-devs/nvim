@@ -51,6 +51,7 @@ return {
 					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
 					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
 					CursorLineSign = { bg = colors.none },
+					Cursor = { bg = "#ffffff" },
 					-- GitSigns
 					GitSignsCurrentLineBlame = { fg = colors.overlay1 },
 					-- Fidget

@@ -468,6 +468,16 @@ return {
 					},
 					description = "Remember last place of the visited buffer",
 				},
+				{
+					"VimLeave",
+					function()
+						vim.cmd('set guicursor= | call chansend(v:stderr, "\x1b[5 q")')
+					end,
+					opts = {
+						pattern = "*",
+					},
+					description = "Reset Cursor on VimLeave",
+				},
 			},
 			sort = {
 				most_recent_first = true,
