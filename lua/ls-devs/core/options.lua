@@ -4,10 +4,10 @@ vim.cmd("hi AlphaHeader guifg=#cdd6f4")
 vim.cmd("hi AlphaButtons guifg=#89b4fa")
 vim.cmd("hi AlphaShortcut guifg=#fab387")
 vim.cmd("hi Type guifg=#f9e2af")
-vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd("set iskeyword+=-")
+vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 

@@ -1,8 +1,9 @@
 return {
-	"polarmutex/git-worktree.nvim",
-	branch = "v2",
+	"ls-devs/git-worktree.nvim",
+	-- branch = "v2",
 	config = function()
 		require("git-worktree").setup({
+			update_on_change_command = "",
 			on_tree_change = function(op, metadata)
 				if op == require("git-worktree").Operations.Switch then
 					print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
