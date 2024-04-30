@@ -59,7 +59,17 @@ return {
 							ReactiveCursor = { bg = "none" },
 						},
 					},
-					[{ "s", "S", "\x13" }] = {
+					s = {
+						hl = {
+							ReactiveCursor = { bg = "none" },
+						},
+					},
+					S = {
+						hl = {
+							ReactiveCursor = { bg = "none" },
+						},
+					},
+					["\x13"] = {
 						hl = {
 							ReactiveCursor = { bg = "none" },
 						},
