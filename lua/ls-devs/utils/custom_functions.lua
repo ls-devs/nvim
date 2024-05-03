@@ -147,7 +147,7 @@ M.CustomHover = function()
 	elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
 		return require("crates").show_popup()
 	else
-		return vim.lsp.buf.hover()
+		return vim.cmd(":Lspsaga hover_doc ++silent")
 	end
 end
 
