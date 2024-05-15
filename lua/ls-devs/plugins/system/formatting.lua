@@ -30,6 +30,7 @@ return {
 			json = { "prettierd" },
 			markdown = { "markdownlint-cli2" },
 			yaml = { "yq" },
+			-- kotlin = { "ktfmt" },
 			kotlin = { "ktlint" },
 			lua = { "stylua" },
 			rust = { "rustfmt" },

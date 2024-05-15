@@ -59,7 +59,7 @@ return {
 					-- Bqf
 					BqfPreviewThumb = { bg = colors.blue },
 					-- DiffView
-					DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
+					-- DiffDelete = { fg = colors.overlay0, bg = colors.none, style = {} },
 					-- NeoComposer
 					DelaySymbol = { bg = colors.none },
 					PlayingSymbol = { bg = colors.none },
@@ -133,6 +133,7 @@ return {
 			end,
 			integrations = {
 				cmp = true,
+				diffview = true,
 				dap = true,
 				harpoon = true,
 				dashboard = true,
