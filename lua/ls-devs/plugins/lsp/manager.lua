@@ -60,7 +60,7 @@ return {
 				"pylint",
 				"shellcheck",
 				"ktlint",
-				-- "ktfmt",
+				"ktfmt",
 				"codespell",
 
 				-- Formatters

@@ -26,7 +26,6 @@ return {
 				},
 				["core.export"] = {},
 				["core.export.markdown"] = {},
-				["core.manoeuvre"] = {},
 				["core.presenter"] = {
 					config = {
 						zen_mode = "zen-mode",
