@@ -57,7 +57,7 @@ return {
 				"yamllint",
 				"cpplint",
 				"sqlfluff",
-				"pylint",
+				"ruff",
 				"shellcheck",
 				"ktlint",
 				"ktfmt",

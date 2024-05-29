@@ -11,7 +11,7 @@ return {
 			sass = { "stylelint" },
 			less = { "stylelint" },
 			json = { "jsonlint" },
-			python = { "pylint" },
+			python = { "ruff" },
 			yaml = { "yamllint" },
 			kotlin = { "ktlint" },
 			dockerfile = { "hadolint" },
