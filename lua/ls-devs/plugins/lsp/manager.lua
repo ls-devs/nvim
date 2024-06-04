@@ -269,7 +269,6 @@ return {
 						},
 					})
 				end,
-				["lua_ls"] = function() end,
 				["rust_analyzer"] = function() end,
 				["tsserver"] = function() end,
 			},

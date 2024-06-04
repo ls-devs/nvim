@@ -126,6 +126,10 @@ return {
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "otter" },
+				{
+					name = "lazydev",
+					group_index = 0,
+				},
 				{ name = "buffer", max_item_count = 5 },
 				{ name = "luasnip", max_item_count = 5 },
 				{ name = "nvim_lua" },
