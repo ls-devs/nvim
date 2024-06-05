@@ -37,10 +37,14 @@ return {
 			"neotab.nvim",
 			"nvim-ufo",
 		},
+		integrations = {
+			lspconfig = true,
+			cmp = true,
+			coq = false,
+		},
 		enabled = function(root_dir)
 			return true
 		end,
-		cmp = true,
 	},
 	dependencies = {
 		{ "Bilal2453/luvit-meta", lazy = true },
