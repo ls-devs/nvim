@@ -51,7 +51,7 @@ return {
 		},
 		{
 			"<leader>ot",
-			"<cmd>OverseerToggle<CR>",
+			"<cmd>OverseerToggle left<CR>",
 			desc = "Overseer Toggle",
 			noremap = true,
 			silent = true,

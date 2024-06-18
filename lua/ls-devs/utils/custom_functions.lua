@@ -127,7 +127,6 @@ M.LazyGit = function()
 		},
 		on_open = function(term)
 			local keymap = vim.api.nvim_buf_set_keymap
-			keymap(term.bufnr, "t", "q", "<cmd>exit<CR>", { noremap = true, silent = true })
 			keymap(term.bufnr, "t", "<esc>", "<cmd>exit<CR>", { noremap = true, silent = true })
 		end,
 	})
