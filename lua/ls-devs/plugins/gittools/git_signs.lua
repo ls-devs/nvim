@@ -39,9 +39,6 @@ return {
 			row = 0,
 			col = 1,
 		},
-		yadm = {
-			enable = false,
-		},
 	},
 	cond = function()
 		return vim.fn.isdirectory(".git") == 1
