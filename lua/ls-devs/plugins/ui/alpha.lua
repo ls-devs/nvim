@@ -6,6 +6,11 @@ return {
 			[[autocmd FileType alpha set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3]],
 			{ output = false }
 		)
+		vim.api.nvim_exec2(
+			[[autocmd FileType alpha set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2]],
+			{ output = false }
+		)
+
 		local dashboard = require("alpha.themes.dashboard")
 		local version = vim.version()
 		local lazy = require("lazy")
