@@ -71,6 +71,7 @@ return {
 		{ "plenary.nvim", lazy = true },
 		{ "luarocks.nvim", lazy = true },
 		{ "jmbuhr/otter.nvim", lazy = true },
+		{ "nvim-treesitter/nvim-treesitter", lazy = true },
 	},
 	keys = {
 		{
