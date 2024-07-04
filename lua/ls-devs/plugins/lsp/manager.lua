@@ -269,6 +269,17 @@ return {
 						},
 					})
 				end,
+				["kotlin_language_server"] = function(server_name)
+					require("lspconfig")[server_name].setup({
+						capabilities = vim.tbl_deep_extend(
+							"force",
+							{},
+							vim.lsp.protocol.make_client_capabilities(),
+							require("cmp_nvim_lsp").default_capabilities()
+						),
+						root_dir = require("lspconfig.util").root_pattern("", "settings.gradle.kts", "gradlew"),
+					})
+				end,
 				["rust_analyzer"] = function() end,
 				["tsserver"] = function() end,
 			},
@@ -299,7 +310,7 @@ return {
 				"neovim/nvim-lspconfig",
 				lazy = true,
 				config = function()
-					vim.lsp.set_log_level("OFF")
+					vim.lsp.set_log_level("DEBUG")
 					require("lspconfig.ui.windows").default_options.border = "rounded"
 					vim.diagnostic.config({
 						virtual_text = false,
