@@ -45,7 +45,11 @@ return {
 					end,
 
 					format_annote = function(msg)
-						return msg.title .. " "
+						if msg.title then
+							return msg.title .. " "
+						else
+							return ""
+						end
 					end,
 
 					format_group_name = function(group)
@@ -103,7 +107,7 @@ return {
 					enable = true,
 				},
 				["xcodebuild-nvim"] = {
-					enable = false,
+					enable = true,
 				},
 			},
 

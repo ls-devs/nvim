@@ -269,17 +269,6 @@ return {
 						},
 					})
 				end,
-				["kotlin_language_server"] = function(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						root_dir = require("lspconfig.util").root_pattern("", "settings.gradle.kts", "gradlew"),
-					})
-				end,
 				["rust_analyzer"] = function() end,
 				["tsserver"] = function() end,
 			},
@@ -343,6 +332,15 @@ return {
 					})
 					vim.fn.sign_define("DiagnosticSignHint", {
 						text = " ",
+					})
+
+					require("lspconfig")["sourcekit"].setup({
+						capabilities = vim.tbl_deep_extend(
+							"force",
+							{},
+							vim.lsp.protocol.make_client_capabilities(),
+							require("cmp_nvim_lsp").default_capabilities()
+						),
 					})
 				end,
 			},
