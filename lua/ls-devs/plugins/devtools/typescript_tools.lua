@@ -10,7 +10,7 @@ return {
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end,
 		settings = {
-			code_lens = "off",
+			code_lens = "all",
 			disable_member_code_lens = true,
 		},
 	},

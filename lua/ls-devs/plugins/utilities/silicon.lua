@@ -4,7 +4,7 @@ return {
   cmd = "Silicon",
   config = function()
     local colors = require("catppuccin.palettes.mocha")
-    require("silicon").setup({
+    require("nvim-silicon").setup({
       font = "FiraCode Nerd Font=44",
       theme = "Catppuccin-mocha",
       background = colors.lavender,
