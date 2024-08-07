@@ -177,6 +177,10 @@ return {
 				end,
 				["pyright"] = function(server_name)
 					require("lspconfig")[server_name].setup({
+						before_init = function(_, config)
+							config.settings.python.pythonPath =
+								require("ls-devs.utils.custom_functions").get_python_path(config.root_dir)
+						end,
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
