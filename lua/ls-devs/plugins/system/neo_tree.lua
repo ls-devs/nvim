@@ -178,6 +178,7 @@ return {
 				hide_by_pattern = {},
 				always_show = {
 					".env",
+					".env.example",
 					".env.local",
 					".env.mocked",
 					".env.development",

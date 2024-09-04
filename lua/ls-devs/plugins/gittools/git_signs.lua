@@ -26,6 +26,7 @@ return {
 			delay = 1000,
 			ignore_whitespace = false,
 			virt_text_priority = 100,
+			use_focus = true,
 		},
 		current_line_blame_formatter = "   <author> • <author_time:%d/%m/%Y> • <summary> ",
 		sign_priority = 6,
