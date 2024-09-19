@@ -249,6 +249,39 @@ return {
 					description = "Start codespell linter",
 					opts = { noremap = true, silent = true },
 				},
+				{
+					"<leader>ip",
+					function()
+						local venv = os.getenv("VIRTUAL_ENV")
+						if venv ~= nil then
+							venv = string.match(venv, "/.+/(.+)")
+							vim.cmd(("MoltenInit %s"):format(venv))
+						else
+							vim.cmd("MoltenInit python3")
+						end
+					end,
+					description = "Start Molten",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"<leader>ml",
+					":MoltenEvaluateLine<CR>",
+					description = "MoltenEvaluateLine",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"<leader>mv",
+					":<C-u>MoltenEvaluateVisual<CR>gv",
+					mode = { "v" },
+					description = "MoltenEvaluateVisual",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"<leader>mr",
+					":MoltenReevaluateCell<CR>",
+					description = "MoltenReevaluateCell",
+					opts = { noremap = true, silent = true },
+				},
 			},
 			extensions = {
 				lazy_nvim = { auto_register = true },

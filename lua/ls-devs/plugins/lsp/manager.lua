@@ -15,7 +15,7 @@ return {
 				"eslint",
 				"astro",
 				"vim-language-server",
-				"tsserver",
+				"ts_ls",
 				"html",
 				"lemminx",
 				"mdx_analyzer",
@@ -274,7 +274,7 @@ return {
 					})
 				end,
 				["rust_analyzer"] = function() end,
-				["tsserver"] = function() end,
+				["ts_ls"] = function() end,
 			},
 		},
 		dependencies = {

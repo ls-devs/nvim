@@ -2,6 +2,7 @@
 -- Neorg
 -- Rest.nvim
 -- Nvim-Spider
+-- Molten.nvim
 
 return {
 	"vhyrro/luarocks.nvim",
@@ -14,6 +15,7 @@ return {
 			"nvim-nio", -- Rest.nvim
 			"mimetypes", -- Rest.nvim
 			"xml2lua", -- Rest.nvim
+			"magick", -- Molten.nvim
 		},
 	},
 }

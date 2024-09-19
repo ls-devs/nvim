@@ -12,6 +12,7 @@ return {
 		settings = {
 			code_lens = "all",
 			disable_member_code_lens = true,
+			expose_as_code_action = "all",
 		},
 	},
 	dependencies = {

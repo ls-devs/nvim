@@ -2,7 +2,7 @@ return {
 	"folke/lazydev.nvim",
 	ft = "lua",
 	opts = {
-		debug = true,
+		debug = false,
 		library = {
 			"luvit-meta/library",
 			"lazy.nvim",
