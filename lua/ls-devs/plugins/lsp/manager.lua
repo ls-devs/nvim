@@ -13,6 +13,8 @@ return {
 			ensure_installed = {
 				-- LSP
 				"eslint",
+				"sonarlint-language-server",
+				"jdtls",
 				"astro",
 				"vim-language-server",
 				"ts_ls",

@@ -132,6 +132,29 @@ return {
 		{ "marilari88/neotest-vitest", lazy = true },
 		{ "thenbe/neotest-playwright", lazy = true },
 		{
+			"rcasia/neotest-java",
+			ft = "java",
+			dependencies = {
+				"mfussenegger/nvim-jdtls",
+			},
+		},
+		{
+			"nvim-neotest/neotest",
+			dependencies = {
+				"nvim-neotest/nvim-nio",
+				"nvim-lua/plenary.nvim",
+				"antoinemadec/FixCursorHold.nvim",
+				"nvim-treesitter/nvim-treesitter",
+			},
+			opts = {
+				adapters = {
+					["neotest-java"] = {
+						-- config here
+					},
+				},
+			},
+		},
+		{
 			"nvim-neotest/neotest-vim-test",
 			lazy = true,
 			dependencies = {
