@@ -3,7 +3,6 @@ return {
 	init = function()
 		require("telescope").load_extension("git_worktree")
 	end,
-	version = "^2",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	keys = {
 		{
