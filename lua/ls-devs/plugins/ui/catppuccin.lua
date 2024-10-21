@@ -70,7 +70,7 @@ return {
 					-- Leap
 					LeapBackdrop = { fg = colors.none },
 					LeapLabelPrimary = { bg = colors.red, fg = colors.base, style = { "bold" and "underline" } },
-					LeapLabelSecondary = { bg = colors.sapphire, fg = colors.base, style = { "bold" and "underline" } },
+					LeapLabelSecondary = { bg = colors.green, fg = colors.base, style = { "bold" and "underline" } },
 					-- CMP
 					CmpItemKindVariable = { fg = colors.mauve },
 					CmpBorder = { fg = colors.surface2 },
@@ -151,7 +151,7 @@ return {
 				nvimtree = true,
 				treesitter = true,
 				notify = true,
-				leap = true,
+				leap = false,
 				dap_ui = true,
 				alpha = true,
 				telescope = {
