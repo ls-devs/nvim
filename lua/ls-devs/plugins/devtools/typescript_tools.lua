@@ -11,12 +11,12 @@ return {
 		end,
 		settings = {
 			code_lens = "all",
-			disable_member_code_lens = true,
+			disable_member_code_lens = false,
 			expose_as_code_action = "all",
 		},
 	},
 	dependencies = {
-		{ "plenary.nvim", lazy = true },
+		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ "neovim/nvim-lspconfig", lazy = true },
 	},
 }

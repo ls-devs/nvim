@@ -125,7 +125,6 @@ return {
 			},
 			sources = {
 				{ name = "nvim_lsp" },
-				{ name = "otter" },
 				{
 					name = "lazydev",
 					group_index = 0,

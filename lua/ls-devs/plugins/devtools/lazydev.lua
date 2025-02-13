@@ -24,7 +24,6 @@ return {
 			"catppuccin",
 			"plenary.nvim",
 			"neodev.nvim",
-			"otter.nvim",
 			"neotest",
 			"fidget.nvim",
 			"alpha-nvim",
