@@ -1,6 +1,6 @@
 return {
 	"polarmutex/git-worktree.nvim",
-	init = function()
+	config = function()
 		require("telescope").load_extension("git_worktree")
 	end,
 	dependencies = { "nvim-lua/plenary.nvim" },

@@ -143,8 +143,8 @@ M.CustomHover = function()
 		return vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
 	elseif vim.tbl_contains({ "man" }, ft) then
 		return vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
-	elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-		return require("crates").show_popup()
+	-- elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+	-- 	return require("crates").show_popup()
 	else
 		return vim.lsp.buf.hover()
 		-- return vim.cmd(":Lspsaga hover_doc ++silent")

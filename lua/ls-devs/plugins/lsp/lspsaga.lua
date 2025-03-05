@@ -20,6 +20,7 @@ return {
 		},
 		hover = {
 			border_follow = false,
+			max_height = 0.5,
 		},
 		diagnostic = {
 			border_follow = false,
