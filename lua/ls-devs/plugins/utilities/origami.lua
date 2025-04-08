@@ -4,6 +4,8 @@ return {
 	opts = {
 		keepFoldsAcrossSessions = false,
 		pauseFoldsOnSearch = true,
-		setupFoldKeymaps = true,
+		foldKeymaps = {
+			setup = true,
+		},
 	},
 }
