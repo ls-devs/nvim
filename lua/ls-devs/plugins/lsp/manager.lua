@@ -26,7 +26,7 @@ return {
 				"css-variables-language-server",
 				"somesass_ls",
 				"emmet_language_server",
-				"volar",
+				"vue_ls",
 				"tailwindcss",
 				"prismals",
 				"jsonls",
