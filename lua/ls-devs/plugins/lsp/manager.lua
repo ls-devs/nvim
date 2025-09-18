@@ -100,7 +100,7 @@ return {
 			automatic_installation = false,
 			handlers = {
 				function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -110,7 +110,7 @@ return {
 					})
 				end,
 				["cssls"] = function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -137,7 +137,7 @@ return {
 					})
 				end,
 				["tailwindcss"] = function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -153,7 +153,7 @@ return {
 					})
 				end,
 				["kotlin_language_server"] = function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -168,7 +168,7 @@ return {
 				end,
 				["jsonls"] = function(server_name)
 					local schemastore = require("schemastore")
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -191,7 +191,7 @@ return {
 					})
 				end,
 				["pyright"] = function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						on_init = function(client)
 							client.config.settings.python.pythonPath =
 								require("ls-devs.utils.custom_functions").get_python_path(client.config.root_dir)
@@ -214,7 +214,7 @@ return {
 					})
 				end,
 				["intelephense"] = function(server_name)
-					require("lspconfig")[server_name].setup({
+					vim.lsp.config(server_name).setup({
 						capabilities = vim.tbl_deep_extend(
 							"force",
 							{},
@@ -318,7 +318,7 @@ return {
 				"neovim/nvim-lspconfig",
 				lazy = true,
 				config = function()
-					vim.lsp.set_log_level("OFF")
+					vim.lsp.log.set_level("OFF")
 					require("lspconfig.ui.windows").default_options.border = "rounded"
 					vim.diagnostic.config({
 						virtual_text = false,
@@ -351,15 +351,6 @@ return {
 					})
 					vim.fn.sign_define("DiagnosticSignHint", {
 						text = " ",
-					})
-
-					require("lspconfig")["sourcekit"].setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
 					})
 				end,
 			},

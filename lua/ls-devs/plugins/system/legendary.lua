@@ -401,7 +401,7 @@ return {
 				{
 					"TextYankPost",
 					function()
-						vim.highlight.on_yank({ timeout = 60, visual = true })
+						vim.hl.on_yank({ timeout = 60, visual = true })
 					end,
 					opts = {
 						pattern = "*",
