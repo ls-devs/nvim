@@ -46,12 +46,11 @@ return {
 				"graphql",
 				"svelte",
 				"taplo",
-				"vls",
 				"kotlin_language_server",
 
 				-- Lintters
 				"gitlint",
-				"stylelint",
+				-- "stylelint",
 				"djlint",
 				"jsonlint",
 				"hadolint",

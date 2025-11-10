@@ -78,8 +78,11 @@ local options = {
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
--- Keyboard WSL
-if vim.fn.has("wsl") == 1 then
+-- Keyboard WSL - Détection Docker ou WSL natif
+local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
+local in_wsl = vim.fn.has("wsl") == 1
+
+if in_docker or in_wsl then
 	vim.g.clipboard = {
 		name = "WslClipboard",
 		copy = {
@@ -93,7 +96,6 @@ if vim.fn.has("wsl") == 1 then
 		cache_enabled = 0,
 	}
 end
-
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
