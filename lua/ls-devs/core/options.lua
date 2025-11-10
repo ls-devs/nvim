@@ -82,17 +82,18 @@ local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.docker
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker or in_wsl then
+	-- Utiliser win32yank pour le clipboard (fonctionne en Docker et WSL natif)
 	vim.g.clipboard = {
-		name = "WslClipboard",
+		name = "win32yank-wsl",
 		copy = {
-			["+"] = "clip.exe",
-			["*"] = "clip.exe",
+			["+"] = "win32yank.exe -i --crlf",
+			["*"] = "win32yank.exe -i --crlf",
 		},
 		paste = {
-			["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			["+"] = "win32yank.exe -o --lf",
+			["*"] = "win32yank.exe -o --lf",
 		},
-		cache_enabled = 0,
+		cache_enabled = 1,
 	}
 end
 
