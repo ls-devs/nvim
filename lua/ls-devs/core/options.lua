@@ -78,7 +78,6 @@ local options = {
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
--- Keyboard WSL - Détection Docker ou WSL natif
 local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
@@ -86,12 +85,12 @@ if in_docker or in_wsl then
 	vim.g.clipboard = {
 		name = "WslClipboard",
 		copy = {
-			["+"] = "/mnt/c/Windows/System32/clip.exe",
-			["*"] = "/mnt/c/Windows/System32/clip.exe",
+			["+"] = "clip.exe",
+			["*"] = "clip.exe",
 		},
 		paste = {
-			["+"] = '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			["*"] = '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
 		},
 		cache_enabled = 0,
 	}
