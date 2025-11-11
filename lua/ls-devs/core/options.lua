@@ -16,32 +16,32 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
 
--- Configuration clipboard AVANT tout (pour Docker WSL2 avec win32yank)
+-- ✨ Configuration clipboard AVANT tout (Docker WSL2 avec wrapper win32yank)
 local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker or in_wsl then
-	-- ✨ win32yank.exe est dans /opt/win32yank (installé dans Dockerfile)
-	local win32yank_path = "/opt/win32yank/win32yank.exe"
+	-- ✨ Utiliser le wrapper qui pointe vers win32yank de l'hôte
+	local win32yank_wrapper = "/usr/local/bin/win32yank"
 
-	-- Vérifier si win32yank existe et est exécutable
-	local win32yank_exists = vim.fn.filereadable(win32yank_path) == 1
+	-- Vérifier si le wrapper existe
+	local wrapper_exists = vim.fn.executable(win32yank_wrapper) == 1
 
-	if win32yank_exists then
+	if wrapper_exists then
 		vim.g.clipboard = {
-			name = "win32yank",
+			name = "win32yank-wrapper",
 			copy = {
-				["+"] = { win32yank_path, "-i", "--crlf" },
-				["*"] = { win32yank_path, "-i", "--crlf" },
+				["+"] = { win32yank_wrapper, "-i", "--crlf" },
+				["*"] = { win32yank_wrapper, "-i", "--crlf" },
 			},
 			paste = {
-				["+"] = { win32yank_path, "-o", "--lf" },
-				["*"] = { win32yank_path, "-o", "--lf" },
+				["+"] = { win32yank_wrapper, "-o", "--lf" },
+				["*"] = { win32yank_wrapper, "-o", "--lf" },
 			},
 			cache_enabled = false,
 		}
 	else
-		-- Fallback vers clip.exe et powershell si win32yank n'est pas disponible
+		-- Fallback vers clip.exe et powershell
 		vim.g.clipboard = {
 			name = "WslClipboard",
 			copy = {
