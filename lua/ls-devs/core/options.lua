@@ -4,10 +4,10 @@ vim.cmd("hi AlphaHeader guifg=#cdd6f4")
 vim.cmd("hi AlphaButtons guifg=#89b4fa")
 vim.cmd("hi AlphaShortcut guifg=#fab387")
 vim.cmd("hi Type guifg=#f9e2af")
-
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd("set iskeyword+=-")
 vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
+
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -65,8 +65,8 @@ local options = {
 		eob = " ",
 		foldsep = " ",
 		fold = " ",
-		foldopen = "",
-		foldclose = "",
+		foldopen = "",
+		foldclose = "",
 		horiz = "━",
 		horizup = "┻",
 		horizdown = "┳",
@@ -78,22 +78,35 @@ local options = {
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
+-- Configuration clipboard pour Docker WSL2
 local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker or in_wsl then
-	-- Utiliser win32yank pour le clipboard (fonctionne en Docker et WSL natif)
+	-- Solution avec chemins complets Windows via /mnt/c
 	vim.g.clipboard = {
-		name = "win32yank-wsl",
+		name = "WslClipboard",
 		copy = {
-			["+"] = "win32yank.exe -i --crlf",
-			["*"] = "win32yank.exe -i --crlf",
+			["+"] = { "/mnt/c/Windows/System32/clip.exe" },
+			["*"] = { "/mnt/c/Windows/System32/clip.exe" },
 		},
 		paste = {
-			["+"] = "win32yank.exe -o --lf",
-			["*"] = "win32yank.exe -o --lf",
+			["+"] = {
+				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+				"-NoLogo",
+				"-NoProfile",
+				"-c",
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			},
+			["*"] = {
+				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+				"-NoLogo",
+				"-NoProfile",
+				"-c",
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			},
 		},
-		cache_enabled = 1,
+		cache_enabled = false,
 	}
 end
 
