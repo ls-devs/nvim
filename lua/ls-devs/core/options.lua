@@ -28,19 +28,19 @@ if in_docker or in_wsl then
 			["*"] = { "/mnt/c/Windows/System32/clip.exe" },
 		},
 		paste = {
-			["+"] = { 
+			["+"] = {
 				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
 				"-NoLogo",
-				"-NoProfile", 
+				"-NoProfile",
 				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
 			},
 			["*"] = {
 				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
 				"-NoLogo",
 				"-NoProfile",
 				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
 			},
 		},
 		cache_enabled = false,
