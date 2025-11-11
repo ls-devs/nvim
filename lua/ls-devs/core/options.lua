@@ -7,6 +7,7 @@ vim.cmd("hi Type guifg=#f9e2af")
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd("set iskeyword+=-")
 vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
+
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -15,45 +16,65 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
 
--- Configuration clipboard AVANT tout (pour Docker WSL2)
+-- Configuration clipboard AVANT tout (pour Docker WSL2 avec win32yank)
 local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker or in_wsl then
-	-- Solution avec chemins complets Windows via /mnt/c
-	vim.g.clipboard = {
-		name = "WslClipboard",
-		copy = {
-			["+"] = { "/mnt/c/Windows/System32/clip.exe" },
-			["*"] = { "/mnt/c/Windows/System32/clip.exe" },
-		},
-		paste = {
-			["+"] = {
-				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
-				"-NoLogo",
-				"-NoProfile",
-				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+	-- Solution avec win32yank.exe (optimal pour WSL/Docker)
+	local win32yank_path = "/usr/local/bin/wsl/win32yank.exe"
+	
+	-- Vérifier si win32yank existe et est exécutable
+	local win32yank_exists = vim.fn.filereadable(win32yank_path) == 1
+	
+	if win32yank_exists then
+		vim.g.clipboard = {
+			name = "win32yank",
+			copy = {
+				["+"] = { win32yank_path, "-i", "--crlf" },
+				["*"] = { win32yank_path, "-i", "--crlf" },
 			},
-			["*"] = {
-				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
-				"-NoLogo",
-				"-NoProfile",
-				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			paste = {
+				["+"] = { win32yank_path, "-o", "--lf" },
+				["*"] = { win32yank_path, "-o", "--lf" },
 			},
-		},
-		cache_enabled = false,
-	}
+			cache_enabled = false,
+		}
+	else
+		-- Fallback vers clip.exe et powershell si win32yank n'est pas disponible
+		vim.g.clipboard = {
+			name = "WslClipboard",
+			copy = {
+				["+"] = { "/mnt/c/Windows/System32/clip.exe" },
+				["*"] = { "/mnt/c/Windows/System32/clip.exe" },
+			},
+			paste = {
+				["+"] = {
+					"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+					"-NoLogo",
+					"-NoProfile",
+					"-c",
+					'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+				},
+				["*"] = {
+					"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+					"-NoLogo",
+					"-NoProfile",
+					"-c",
+					'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+				},
+			},
+			cache_enabled = false,
+		}
+	end
 end
 
--- Options (clipboard enlevé d'ici et mis après)
+-- Options principales
 local options = {
 	background = "dark",
 	incsearch = true,
 	backup = false,
 	showtabline = 2,
-	-- clipboard = "unnamedplus",  -- ❌ ENLEVÉ D'ICI
 	cmdheight = 0,
 	laststatus = 3,
 	completeopt = { "menu", "menuone", "noselect" },
