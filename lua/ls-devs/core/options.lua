@@ -7,7 +7,6 @@ vim.cmd("hi Type guifg=#f9e2af")
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd("set iskeyword+=-")
 vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
-
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -16,13 +15,45 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
 
--- Options
+-- Configuration clipboard AVANT tout (pour Docker WSL2)
+local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
+local in_wsl = vim.fn.has("wsl") == 1
+
+if in_docker or in_wsl then
+	-- Solution avec chemins complets Windows via /mnt/c
+	vim.g.clipboard = {
+		name = "WslClipboard",
+		copy = {
+			["+"] = { "/mnt/c/Windows/System32/clip.exe" },
+			["*"] = { "/mnt/c/Windows/System32/clip.exe" },
+		},
+		paste = {
+			["+"] = { 
+				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+				"-NoLogo",
+				"-NoProfile", 
+				"-c",
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+			},
+			["*"] = {
+				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+				"-NoLogo",
+				"-NoProfile",
+				"-c",
+				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
+			},
+		},
+		cache_enabled = false,
+	}
+end
+
+-- Options (clipboard enlevé d'ici et mis après)
 local options = {
 	background = "dark",
 	incsearch = true,
 	backup = false,
 	showtabline = 2,
-	clipboard = "unnamedplus",
+	-- clipboard = "unnamedplus",  -- ❌ ENLEVÉ D'ICI
 	cmdheight = 0,
 	laststatus = 3,
 	completeopt = { "menu", "menuone", "noselect" },
@@ -78,38 +109,9 @@ local options = {
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
--- Configuration clipboard pour Docker WSL2
-local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
-local in_wsl = vim.fn.has("wsl") == 1
-
-if in_docker or in_wsl then
-	-- Solution avec chemins complets Windows via /mnt/c
-	vim.g.clipboard = {
-		name = "WslClipboard",
-		copy = {
-			["+"] = { "/mnt/c/Windows/System32/clip.exe" },
-			["*"] = { "/mnt/c/Windows/System32/clip.exe" },
-		},
-		paste = {
-			["+"] = { 
-				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
-				"-NoLogo",
-				"-NoProfile", 
-				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
-			},
-			["*"] = {
-				"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
-				"-NoLogo",
-				"-NoProfile",
-				"-c",
-				'[Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'
-			},
-		},
-		cache_enabled = false,
-	}
-end
-
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
+
+-- ✅ Activer clipboard APRÈS avoir défini vim.g.clipboard
+vim.opt.clipboard = "unnamedplus"
