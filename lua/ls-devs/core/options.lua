@@ -21,12 +21,12 @@ local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.docker
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker or in_wsl then
-	-- Solution avec win32yank.exe (optimal pour WSL/Docker)
-	local win32yank_path = "/usr/local/bin/wsl/win32yank.exe"
-	
+	-- ✨ win32yank.exe est dans /opt/win32yank (installé dans Dockerfile)
+	local win32yank_path = "/opt/win32yank/win32yank.exe"
+
 	-- Vérifier si win32yank existe et est exécutable
 	local win32yank_exists = vim.fn.filereadable(win32yank_path) == 1
-	
+
 	if win32yank_exists then
 		vim.g.clipboard = {
 			name = "win32yank",
