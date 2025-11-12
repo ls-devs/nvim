@@ -16,30 +16,80 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
 
--- ✨ Configuration clipboard AVANT tout (Docker WSL2 avec wrapper win32yank)
-local in_docker = os.getenv("container") ~= nil or vim.fn.filereadable("/.dockerenv") == 1
+-- ═══════════════════════════════════════════════════════════════════
+-- 📋 CONFIGURATION CLIPBOARD (Docker OSC52 ou WSL win32yank)
+-- ═══════════════════════════════════════════════════════════════════
+
+-- Détecter l'environnement
+local in_docker = os.getenv("container") == "docker" or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
-if in_docker or in_wsl then
-	-- ✨ Utiliser le wrapper qui pointe vers win32yank de l'hôte
-	local win32yank_wrapper = "/usr/local/bin/win32yank"
+if in_docker then
+	-- ═══════════════════════════════════════════════════════════════
+	-- 🐳 MODE DOCKER : Utiliser OSC52
+	-- ═══════════════════════════════════════════════════════════════
 
-	-- Vérifier si le wrapper existe
-	local wrapper_exists = vim.fn.executable(win32yank_wrapper) == 1
+	local function copy_osc52(lines)
+		local text = table.concat(lines, "\n")
+		local base64 = vim.base64.encode(text)
+		local osc52 = string.format("\027]52;c;%s\027\\", base64)
+		io.stdout:write(osc52)
+		io.stdout:flush()
+	end
 
-	if wrapper_exists then
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = copy_osc52,
+			["*"] = copy_osc52,
+		},
+		paste = {
+			["+"] = function()
+				return vim.split(vim.fn.getreg("+"), "\n")
+			end,
+			["*"] = function()
+				return vim.split(vim.fn.getreg("*"), "\n")
+			end,
+		},
+	}
+
+	vim.notify("📋 OSC 52 clipboard activé (Docker)", vim.log.levels.INFO)
+elseif in_wsl then
+	-- ═══════════════════════════════════════════════════════════════
+	-- 🪟 MODE WSL : Utiliser win32yank ou clip.exe
+	-- ═══════════════════════════════════════════════════════════════
+
+	-- Chercher win32yank dans plusieurs emplacements possibles
+	local win32yank_paths = {
+		"/usr/local/bin/win32yank",
+		"/usr/local/bin/win32yank.exe",
+		vim.fn.expand("$HOME/.local/bin/win32yank.exe"),
+		"/mnt/c/tools/win32yank.exe",
+	}
+
+	local win32yank_path = nil
+	for _, path in ipairs(win32yank_paths) do
+		if vim.fn.executable(path) == 1 then
+			win32yank_path = path
+			break
+		end
+	end
+
+	if win32yank_path then
+		-- Utiliser win32yank si disponible
 		vim.g.clipboard = {
-			name = "win32yank-wrapper",
+			name = "win32yank",
 			copy = {
-				["+"] = { win32yank_wrapper, "-i", "--crlf" },
-				["*"] = { win32yank_wrapper, "-i", "--crlf" },
+				["+"] = { win32yank_path, "-i", "--crlf" },
+				["*"] = { win32yank_path, "-i", "--crlf" },
 			},
 			paste = {
-				["+"] = { win32yank_wrapper, "-o", "--lf" },
-				["*"] = { win32yank_wrapper, "-o", "--lf" },
+				["+"] = { win32yank_path, "-o", "--lf" },
+				["*"] = { win32yank_path, "-o", "--lf" },
 			},
 			cache_enabled = false,
 		}
+		vim.notify("📋 win32yank clipboard activé (WSL)", vim.log.levels.INFO)
 	else
 		-- Fallback vers clip.exe et powershell
 		vim.g.clipboard = {
@@ -66,10 +116,14 @@ if in_docker or in_wsl then
 			},
 			cache_enabled = false,
 		}
+		vim.notify("📋 clip.exe clipboard activé (WSL fallback)", vim.log.levels.WARN)
 	end
 end
 
--- Options principales
+-- ═══════════════════════════════════════════════════════════════════
+-- ⚙️ OPTIONS PRINCIPALES
+-- ═══════════════════════════════════════════════════════════════════
+
 local options = {
 	background = "dark",
 	incsearch = true,
