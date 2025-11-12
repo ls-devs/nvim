@@ -1,4 +1,3 @@
--- Hack Catppuccin lazy loading
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi AlphaHeader guifg=#cdd6f4")
 vim.cmd("hi AlphaButtons guifg=#89b4fa")
@@ -11,24 +10,13 @@ vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Curs
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
--- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("", "<Space>", "<Nop>", opts)
-
--- ═══════════════════════════════════════════════════════════════════
--- 📋 CONFIGURATION CLIPBOARD (Docker OSC52 ou WSL win32yank)
--- ═══════════════════════════════════════════════════════════════════
-
--- Détecter l'environnement
 local in_docker = os.getenv("container") == "docker" or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
 if in_docker then
-	-- ═══════════════════════════════════════════════════════════════
-	-- 🐳 MODE DOCKER : Utiliser OSC52
-	-- ═══════════════════════════════════════════════════════════════
-
 	local function copy_osc52(lines)
 		local text = table.concat(lines, "\n")
 		local base64 = vim.base64.encode(text)
@@ -55,11 +43,6 @@ if in_docker then
 
 	vim.notify("📋 OSC 52 clipboard activé (Docker)", vim.log.levels.INFO)
 elseif in_wsl then
-	-- ═══════════════════════════════════════════════════════════════
-	-- 🪟 MODE WSL : Utiliser win32yank ou clip.exe
-	-- ═══════════════════════════════════════════════════════════════
-
-	-- Chercher win32yank dans plusieurs emplacements possibles
 	local win32yank_paths = {
 		"/usr/local/bin/win32yank",
 		"/usr/local/bin/win32yank.exe",
@@ -76,7 +59,6 @@ elseif in_wsl then
 	end
 
 	if win32yank_path then
-		-- Utiliser win32yank si disponible
 		vim.g.clipboard = {
 			name = "win32yank",
 			copy = {
@@ -89,9 +71,7 @@ elseif in_wsl then
 			},
 			cache_enabled = false,
 		}
-		vim.notify("📋 win32yank clipboard activé (WSL)", vim.log.levels.INFO)
 	else
-		-- Fallback vers clip.exe et powershell
 		vim.g.clipboard = {
 			name = "WslClipboard",
 			copy = {
@@ -116,13 +96,8 @@ elseif in_wsl then
 			},
 			cache_enabled = false,
 		}
-		vim.notify("📋 clip.exe clipboard activé (WSL fallback)", vim.log.levels.WARN)
 	end
 end
-
--- ═══════════════════════════════════════════════════════════════════
--- ⚙️ OPTIONS PRINCIPALES
--- ═══════════════════════════════════════════════════════════════════
 
 local options = {
 	background = "dark",
@@ -188,5 +163,4 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
--- ✅ Activer clipboard APRÈS avoir défini vim.g.clipboard
 vim.opt.clipboard = "unnamedplus"
