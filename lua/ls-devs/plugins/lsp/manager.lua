@@ -82,7 +82,6 @@ return {
 				"php-debug-adapter",
 				"codelldb",
 				"js-debug-adapter",
-				"chrome-debug-adapter",
 				"kotlin-debug-adapter",
 			},
 			auto_update = true,
