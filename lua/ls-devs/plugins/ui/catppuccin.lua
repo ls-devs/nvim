@@ -78,6 +78,13 @@ return {
 					-- Telescope
 					TelescopeNormal = { fg = colors.none },
 					TelescopeSelection = { fg = colors.peach },
+					TelescopeBorder = { fg = colors.blue },
+					TelescopePromptBorder = { fg = colors.blue },
+					TelescopeResultsBorder = { fg = colors.blue },
+					TelescopePreviewBorder = { fg = colors.blue },
+					TelescopePromptTitle = { fg = colors.blue, style = { "bold" } },
+					TelescopeResultsTitle = { fg = colors.blue, style = { "bold" } },
+					TelescopePreviewTitle = { fg = colors.blue, style = { "bold" } },
 					-- Notify
 					NotificationInfo = { bg = colors.none, fg = colors.text },
 					NotificationError = { bg = colors.none, fg = colors.red },
