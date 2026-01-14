@@ -77,7 +77,6 @@ return {
 
 				-- Debuggers
 				"debugpy",
-				"node-debug2-adapter",
 				"bash-debug-adapter",
 				"php-debug-adapter",
 				"codelldb",
@@ -316,7 +315,7 @@ return {
 				"neovim/nvim-lspconfig",
 				lazy = true,
 				config = function()
-					vim.lsp.log.set_level("OFF")
+					-- vim.lsp.log.set_level("OFF")
 					require("lspconfig.ui.windows").default_options.border = "rounded"
 					vim.diagnostic.config({
 						virtual_text = false,

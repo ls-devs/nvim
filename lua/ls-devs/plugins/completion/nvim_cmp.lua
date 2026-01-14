@@ -152,12 +152,8 @@ return {
 				select = false,
 			},
 			window = {
-				completion = cmp.config.window.bordered({
-					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-				}),
-				documentation = cmp.config.window.bordered({
-					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-				}),
+				completion = cmp.config.window.bordered({ border = "rounded" }),
+				documentation = cmp.config.window.bordered({ border = "rounded" }),
 			},
 		})
 		cmp.setup.filetype("gitcommit", {

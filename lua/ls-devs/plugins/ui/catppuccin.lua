@@ -1,6 +1,7 @@
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
+	priority = 1000,
 	event = "VeryLazy",
 	config = function()
 		require("catppuccin").setup({
@@ -39,9 +40,9 @@ return {
 					Pmenu = { bg = colors.none },
 					Normal = { bg = colors.none },
 					NormalFloat = { bg = colors.none },
-					FloatBorder = { bg = colors.none },
-					FloatShadow = { bg = colors.none },
-					FloatShadowThrough = { bg = colors.none },
+					FloatBorder = { fg = colors.blue, bg = colors.none },
+					FloatShadow = { bg = colors.surface0 },
+					FloatShadowThrough = { bg = colors.surface0 },
 					WinBar = { bg = colors.none },
 					WinBarNC = { bg = colors.none },
 					Folded = { bg = colors.none },
@@ -117,6 +118,16 @@ return {
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },
 					LazySpecial = { fg = colors.flamingo, bold = true },
+					-- Overseer
+					OverseerTaskBorder = { fg = colors.blue },
+					OverseerTask = { fg = colors.blue },
+					OverseerField = { fg = colors.green },
+					OverseerComponent = { fg = colors.yellow },
+					OverseerOutput = { fg = colors.text },
+					OverseerFAILURE = { fg = colors.red },
+					OverseerSUCCESS = { fg = colors.green },
+					OverseerRUNNING = { fg = colors.yellow },
+					OverseerCANCELED = { fg = colors.overlay1 },
 					-- Mason
 					MasonHeader = { fg = colors.base, bg = colors.peach },
 					MasonHeaderSecondary = { fg = colors.base, bg = colors.pink },
@@ -148,7 +159,6 @@ return {
 				lsp_saga = true,
 				mason = true,
 				rainbow_delimiters = true,
-				overseer = true,
 				noice = true,
 				neotree = true,
 				gitsigns = true,

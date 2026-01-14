@@ -495,6 +495,66 @@ return {
 					},
 					description = "Reset Cursor on VimLeave",
 				},
+				{
+					"WinNew",
+					function()
+						vim.defer_fn(function()
+							local wins = vim.api.nvim_list_wins()
+							for _, win in ipairs(wins) do
+								local ok, config = pcall(vim.api.nvim_win_get_config, win)
+
+								if ok and config.relative ~= "" and config.border == "none" then
+									config.border = "rounded"
+									pcall(vim.api.nvim_win_set_config, win, config)
+								end
+							end
+						end, 10)
+					end,
+					description = "Force float window borders",
+				},
+				{
+					{ "BufEnter", "BufWinEnter", "BufReadPost" },
+					function(args)
+						local bufnr = args.buf
+						local filepath = vim.api.nvim_buf_get_name(bufnr)
+
+						-- Vérifier si on est sur un montage drvfs
+						if not filepath:match("^/mnt/") then
+							return
+						end
+
+						-- Forcer la détection du filetype
+						vim.schedule(function()
+							if vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].filetype == "" then
+								vim.cmd("filetype detect")
+							end
+						end)
+
+						-- Attendre un peu puis démarrer Tree-sitter et LSP
+						vim.defer_fn(function()
+							if not vim.api.nvim_buf_is_valid(bufnr) then
+								return
+							end
+
+							local ft = vim.bo[bufnr].filetype
+
+							-- Forcer Tree-sitter si un filetype est détecté
+							if ft ~= "" then
+								pcall(vim.cmd, "TSBufEnable highlight")
+							end
+
+							-- Démarrer les LSP s'ils ne sont pas déjà actifs
+							local clients = vim.lsp.get_clients({ bufnr = bufnr })
+							if #clients == 0 then
+								pcall(vim.cmd, "LspStart")
+							end
+						end, 150)
+					end,
+					opts = {
+						pattern = "/mnt/*",
+					},
+					description = "Fix LSP and Tree-sitter on drvfs mounts (WSL)",
+				},
 			},
 			sort = {
 				most_recent_first = true,

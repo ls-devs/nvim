@@ -2,16 +2,13 @@ return {
 	"stevearc/overseer.nvim",
 	opts = {
 		form = {
-			win_opts = {
-				winblend = 0,
-			},
-		},
-		confirm = {
+			border = "rounded",
 			win_opts = {
 				winblend = 0,
 			},
 		},
 		task_win = {
+			border = "rounded",
 			win_opts = {
 				winblend = 0,
 			},

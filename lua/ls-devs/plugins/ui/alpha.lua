@@ -40,7 +40,6 @@ return {
 					end,
 				})
 			end),
-			dashboard.button("s", " " .. " Sessions", "<cmd>Telescope possession list<CR>"),
 			dashboard.button("l", "󰒲 " .. " Lazy", "<cmd>Lazy<CR>"),
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
