@@ -12,7 +12,7 @@ return {
 		"T",
 	},
 	dependencies = {
-		{ "ggandor/leap.nvim", lazy = true },
+		{ "https://codeberg.org/andyg/leap.nvim", lazy = true },
 		{ "tpope/vim-repeat", lazy = true },
 		{
 			"rasulomaroff/telepath.nvim",

@@ -282,6 +282,12 @@ return {
 					description = "MoltenReevaluateCell",
 					opts = { noremap = true, silent = true },
 				},
+				{
+					"<leader>ct",
+					":CopilotChatToggle<CR>",
+					description = "Copilot Chat Toggle",
+					opts = { noremap = true, silent = true },
+				},
 			},
 			extensions = {
 				lazy_nvim = { auto_register = true },
