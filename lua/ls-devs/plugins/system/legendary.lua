@@ -284,8 +284,8 @@ return {
 				},
 				{
 					"<leader>ct",
-					":CopilotChatToggle<CR>",
-					description = "Copilot Chat Toggle",
+					":CodeCompanionChat Toggle<CR>",
+					description = "Code Companion Toggle",
 					opts = { noremap = true, silent = true },
 				},
 			},
