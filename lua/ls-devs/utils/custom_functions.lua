@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local M = {}
 M.NeotestSetupProject = function()
 	vim.ui.select({ "neotest-jest", "neotest-playwright", "neotest-vim-test", "neotest-vitest" }, {

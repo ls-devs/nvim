@@ -1,4 +1,3 @@
--- Fonction utilitaire pour extraire les lignes sélectionnées d'un buffer
 local function get_selected_lines(context)
 	local bufnr = context.bufnr or 0
 	local start_line = (context.start_line and context.start_line - 1) or 0
@@ -6,12 +5,11 @@ local function get_selected_lines(context)
 	return vim.api.nvim_buf_get_lines(bufnr, start_line, end_line, false)
 end
 
--- Fonction utilitaire pour générer un prompt avec code formaté
 local function make_code_prompt(context, instruction)
 	local filetype = context.filetype or "text"
 	local lines = get_selected_lines(context)
 	local text = table.concat(lines, "\n")
-	-- Remplacer les séquences de trois backticks par quatre pour éviter les conflits Markdown
+
 	text = text:gsub("```", "````")
 	return string.format("%s %s :\n\n```%s\n%s\n```", instruction, filetype, filetype, text)
 end
@@ -81,7 +79,7 @@ return {
 					if git_dir then
 						return vim.fs.dirname(git_dir)
 					else
-						return vim.loop.cwd() -- Utilise le répertoire courant si .git absent
+						return vim.loop.cwd()
 					end
 				end,
 				should_attach = function(_, _)
@@ -140,12 +138,14 @@ return {
 				show_token_count = true,
 				window = {
 					layout = "float",
-					width = 0.65, -- encore plus large pour une meilleure lisibilité
+					width = 0.65,
+
 					height = 0.85,
 					relative = "editor",
 					border = "rounded",
-					title = "CodeCompanion (gpt-4.1)", -- affiche le modèle utilisé
-					wrap = true, -- active le retour à la ligne si supporté
+					title = "CodeCompanion (gpt-4.1)",
+
+					wrap = true,
 				},
 			},
 			action_palette = {
@@ -156,14 +156,17 @@ return {
 			},
 		},
 
-		language = "Français", -- langue principale définie sur le français
+		language = "Français",
+
 		log_level = "INFO",
 
 		extensions = {
 			agentskills = {
 				opts = {
 					paths = {
-						{ "~/.agents/skills/", recursive = true }, -- Recursive search
+						{ "~/.agents/skills/", recursive = true },
+
+						{ ".agents/skills/", recursive = true },
 					},
 				},
 			},
@@ -175,7 +178,7 @@ return {
 				description = "Effectuer une revue de code",
 				opts = {
 					short_name = "review",
-					auto_submit = true, -- envoi automatique sans appuyer sur Entrée
+					auto_submit = true,
 				},
 				prompts = {
 					{

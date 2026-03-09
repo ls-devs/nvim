@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -87,7 +88,24 @@ require("lazy").setup({
 		rtp = {
 			reset = true,
 			paths = {},
-			disabled_plugins = {},
+			disabled_plugins = {
+          "gzip",
+          "zip",
+          "zipPlugin",
+          "tar",
+          "tarPlugin",
+          "getscript",
+          "getscriptPlugin",
+          "vimball",
+          "vimballPlugin",
+          "2html_plugin",
+          "logipat",
+          "rrhelper",
+          "netrw",
+          "netrwPlugin",
+          "netrwSettings",
+          "netrwFileHandlers",
+        },
 		},
 	},
 	readme = {

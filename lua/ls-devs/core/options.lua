@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi AlphaHeader guifg=#cdd6f4")
 vim.cmd("hi AlphaButtons guifg=#89b4fa")

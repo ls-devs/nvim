@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 return {
 	"hrsh7th/nvim-cmp",
 	event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },

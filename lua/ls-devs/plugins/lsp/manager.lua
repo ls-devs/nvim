@@ -285,7 +285,24 @@ return {
 						},
 					})
 				end,
-				["rust_analyzer"] = function() end,
+["lua_ls"] = function(server_name)
+  vim.lsp.config(server_name).setup({
+    capabilities = vim.tbl_deep_extend(
+      "force",
+      {},
+      vim.lsp.protocol.make_client_capabilities(),
+      require("cmp_nvim_lsp").default_capabilities()
+    ),
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {"vim", "require"},
+        },
+      },
+    },
+  })
+end,
+["rust_analyzer"] = function() end,
 				["ts_ls"] = function() end,
 			},
 		},
