@@ -103,9 +103,12 @@ end
 local options = {
 	background = "dark",
 	incsearch = true,
+	updatetime = 300,
 	backup = false,
 	showtabline = 2,
 	cmdheight = 0,
+	wildmenu = true,
+	wildmode = "longest:full,full",
 	laststatus = 3,
 	completeopt = { "menuone", "popup", "noinsert" },
 	conceallevel = 3,

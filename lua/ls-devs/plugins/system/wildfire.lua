@@ -3,7 +3,6 @@ return {
 	keys = {
 		"<C-Space>",
 	},
-	dependencies = { "nvim-treesitter/nvim-treesitter" },
 	opts = {
 		surrounds = {
 			{ "(", ")" },

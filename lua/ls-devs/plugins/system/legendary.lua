@@ -23,6 +23,23 @@ return {
 	},
 	config = function()
 		require("legendary").setup({
+			extensions = {
+				lazy_nvim = { auto_register = true },
+				nvim_tree = true,
+				op_nvim = true,
+				smart_splits = {
+					directions = { "h", "j", "k", "l" },
+					mods = {
+						move = "<C>",
+						resize = "<M>",
+						swap = {
+							mod = "<C>",
+							prefix = "<leader>",
+						},
+					},
+				},
+				diffview = true,
+			},
 			keymaps = {
 				{
 					"<leader>LL",
@@ -79,11 +96,6 @@ return {
 				{
 					"{",
 					"{zz",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"}",
-					"}zz",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -203,8 +215,8 @@ return {
 							return "<C-f>"
 						end
 					end,
-					mode = { "n", "i", "s" },
-					description = "Noice Scroll Hover Doc Forward",
+					mode = { "n", "s" },
+					description = "Noice Scroll Hover Doc Forward (conditional)",
 					opts = { silent = true, expr = true },
 				},
 				{
@@ -285,28 +297,53 @@ return {
 				{
 					"<leader>ct",
 					":CodeCompanionChat Toggle<CR>",
-					description = "Code Companion Toggle",
+					description = "Code Companion Toggle (with Markview attach)",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"<leader>cr",
+					":CodeCompanionActions<CR>",
+					description = "Code Companion Actions",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"h",
+					function()
+						local h, _ = require("ls-devs.utils.custom_functions").OrigamiHLFolds()
+						h()
+					end,
+					description = "Origami: Close fold or move left",
+					opts = { noremap = true, silent = true },
+				},
+				{
+					"l",
+					function()
+						local _, l = require("ls-devs.utils.custom_functions").OrigamiHLFolds()
+						l()
+					end,
+					description = "Origami: Open fold or move right",
 					opts = { noremap = true, silent = true },
 				},
 			},
-			extensions = {
-				lazy_nvim = { auto_register = true },
-				nvim_tree = true,
-				op_nvim = true,
-				smart_splits = {
-					directions = { "h", "j", "k", "l" },
-					mods = {
-						move = "<C>",
-						resize = "<M>",
-						swap = {
-							mod = "<C>",
-							prefix = "<leader>",
-						},
-					},
-				},
-				diffview = true,
-			},
 			autocmds = {
+				-- Force Tree-sitter highlight via vim.treesitter.start (nouvelle API Neovim 0.9+)
+				{
+					"FileType",
+					function(args)
+						local bufnr = args.buf or vim.api.nvim_get_current_buf()
+						vim.defer_fn(function()
+							if not vim.api.nvim_buf_is_valid(bufnr) then
+								return
+							end
+							local ft = vim.bo[bufnr].filetype
+							if ft == "" then
+								return
+							end
+							pcall(vim.treesitter.start, bufnr, ft)
+						end, 50)
+					end,
+					description = "Force Tree-sitter highlight on FileType",
+				},
 				{
 					{ "InsertEnter", "InsertChange" },
 					'lua require("notify").dismiss({ silent = true })',
@@ -425,17 +462,6 @@ return {
 					description = "Autoresize on window resize",
 				},
 				{
-					"BufEnter",
-					function()
-						vim.cmd("set conceallevel=2")
-						vim.cmd("set concealcursor=nc")
-					end,
-					opts = {
-						pattern = "*.norg",
-					},
-					description = "Change conceal for note taking",
-				},
-				{
 					"FileType",
 					function()
 						vim.bo.bufhidden = "unload"
@@ -519,24 +545,34 @@ return {
 					description = "Force float window borders",
 				},
 				{
+					"FileType",
+					function()
+						if vim.bo.filetype == "codecompanion" then
+							vim.defer_fn(function()
+								vim.cmd("setlocal nonumber")
+								vim.cmd("setlocal norelativenumber")
+								pcall(vim.cmd, "Markview attach")
+							end, 50)
+						end
+					end,
+					description = "No number + Markview attach for codecompanion",
+				},
+				{
 					{ "BufEnter", "BufWinEnter", "BufReadPost" },
 					function(args)
 						local bufnr = args.buf
 						local filepath = vim.api.nvim_buf_get_name(bufnr)
 
-						-- Vérifier si on est sur un montage drvfs
 						if not filepath:match("^/mnt/") then
 							return
 						end
 
-						-- Forcer la détection du filetype
 						vim.schedule(function()
 							if vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].filetype == "" then
 								vim.cmd("filetype detect")
 							end
 						end)
 
-						-- Attendre un peu puis démarrer Tree-sitter et LSP
 						vim.defer_fn(function()
 							if not vim.api.nvim_buf_is_valid(bufnr) then
 								return
@@ -544,22 +580,15 @@ return {
 
 							local ft = vim.bo[bufnr].filetype
 
-							-- Forcer Tree-sitter si un filetype est détecté
 							if ft ~= "" then
-								pcall(vim.cmd, "TSBufEnable highlight")
-							end
-
-							-- Démarrer les LSP s'ils ne sont pas déjà actifs
-							local clients = vim.lsp.get_clients({ bufnr = bufnr })
-							if #clients == 0 then
-								pcall(vim.cmd, "LspStart")
+								pcall(vim.treesitter.start, bufnr, ft)
 							end
 						end, 150)
 					end,
 					opts = {
 						pattern = "/mnt/*",
 					},
-					description = "Fix LSP and Tree-sitter on drvfs mounts (WSL)",
+					description = "Fix Tree-sitter on drvfs mounts (WSL)",
 				},
 			},
 			sort = {

@@ -1,94 +1,5 @@
 ---@diagnostic disable: undefined-global
 local M = {}
-M.NeotestSetupProject = function()
-	vim.ui.select({ "neotest-jest", "neotest-playwright", "neotest-vim-test", "neotest-vitest" }, {
-		prompt = "Choose Adapter",
-	}, function(choice)
-		local neotestDefault = {
-			output = {
-				enabled = true,
-				open_on_run = true,
-			},
-			output_panel = {
-				enabled = true,
-				open = "botright split | resize 15",
-			},
-			library = { plugins = { "neotest" }, types = true },
-			discovery = {
-				enabled = false,
-			},
-		}
-
-		vim.ui.input({
-			prompt = "Working directory",
-			default = vim.fn.getcwd(),
-			completion = "dir",
-		}, function(input)
-			vim.cmd("cd " .. input)
-			if choice == "neotest-jest" then
-				local jestConf = vim.tbl_deep_extend("force", neotestDefault, {
-
-					adapters = {
-						require("neotest-jest")({
-							jestCommand = "npm test --",
-							jestConfigFile = function()
-								local file = vim.fn.expand("%:p")
-								if string.find(file, "/packages/") then
-									return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
-								end
-
-								return vim.fn.getcwd() .. "/jest.config.ts"
-							end,
-							jest_test_discovery = false,
-							env = { CI = true },
-							cwd = function()
-								local file = vim.fn.expand("%:p")
-								if string.find(file, "/packages/") then
-									return string.match(file, "(.-/[^/]+/)src")
-								end
-								return vim.fn.getcwd()
-							end,
-						}),
-					},
-				})
-				return require("neotest").setup_project(vim.fn.getcwd(), jestConf)
-			end
-			if choice == "neotest-vitest" then
-				local vitestConf = vim.tbl_deep_extend("force", neotestDefault, {
-					adapters = {
-						require("neotest-vitest"),
-					},
-				})
-				return require("neotest").setup_project(vim.fn.getcwd(), vitestConf)
-			end
-			if choice == "neotest-playwright" then
-				local playwrightConf = vim.tbl_deep_extend("force", neotestDefault, {
-					consumers = {
-						playwright = require("neotest-playwright.consumers").consumers,
-					},
-					adapters = {
-						require("neotest-playwright").adapter({
-							options = {
-								persist_project_selection = true,
-								enable_dynamic_test_discovery = true,
-							},
-						}),
-					},
-				})
-				return require("neotest").setup_project(vim.fn.getcwd(), playwrightConf)
-			end
-			if choice == "neotest-vim-test" then
-				local vimTestConf = vim.tbl_deep_extend("force", neotestDefault, {
-					adapters = {
-						require("neotest-vim-test"),
-					},
-				})
-				return require("neotest").setup_project(vim.fn.getcwd(), vimTestConf)
-			end
-		end)
-	end)
-end
-
 M.HelpGrep = function()
 	local open_help_tab = function(help_cmd, topic)
 		vim.cmd.tabe()
@@ -144,11 +55,8 @@ M.CustomHover = function()
 		return vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
 	elseif vim.tbl_contains({ "man" }, ft) then
 		return vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
-	-- elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-	-- 	return require("crates").show_popup()
 	else
 		return vim.lsp.buf.hover()
-		-- return vim.cmd(":Lspsaga hover_doc ++silent")
 	end
 end
 
@@ -177,44 +85,67 @@ M.DiffviewToggle = function()
 	end
 end
 
-M.HarpoonTelescope = function(harpoon_files)
-	local conf = require("telescope.config").values
-	local file_paths = {}
-	for _, item in ipairs(harpoon_files.items) do
-		table.insert(file_paths, item.value)
+-- h/l folds from nvim-origami as custom functions
+M.OrigamiHLFolds = function()
+	-- helper
+	local function normal(cmdStr)
+		vim.cmd.normal({ cmdStr, bang = true })
 	end
 
-	require("telescope.pickers")
-		.new({}, {
-			prompt_title = "Harpoon",
-			finder = require("telescope.finders").new_table({
-				results = file_paths,
-			}),
-			previewer = conf.file_previewer({}),
-			sorter = conf.generic_sorter({}),
-		})
-		:find()
-end
+	-- `h` closes folds when at the beginning of a line.
+	local h = function()
+		local count = vim.v.count1
+		for _ = 1, count, 1 do
+			local col = vim.api.nvim_win_get_cursor(0)[2]
+			local line = vim.api.nvim_get_current_line()
+			-- Trouve la position du premier caractère non-blanc
+			local first_char_col = line:find("%S") or 1
+			first_char_col = first_char_col - 1 -- convertit en 0-indexé
 
-M.get_python_path = function(workspace)
-	local util = require("lspconfig/util")
-
-	local path = util.path
-
-	-- Use activated virtualenv.
-	if vim.env.VIRTUAL_ENV then
-		return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+			if col <= first_char_col then
+				local foldlevel = vim.fn.foldlevel(".")
+				local foldclosed = vim.fn.foldclosed(".")
+				if foldclosed > -1 then
+					normal("h")
+				elseif foldlevel > 0 then
+					local ok = pcall(normal, "zc")
+					if not ok then
+						normal("h")
+					end
+				else
+					normal("h")
+				end
+			else
+				normal("h")
+			end
+		end
+	end -- `l` on a folded line opens the fold.
+	local l = function()
+		local count = vim.v.count1
+		for _ = 1, count, 1 do
+			local foldclosed = vim.fn.foldclosed(".")
+			if foldclosed > -1 then
+				-- Sur un fold fermé : ouvre le fold
+				pcall(normal, "zo")
+			else
+				local col = vim.api.nvim_win_get_cursor(0)[2]
+				local line = vim.api.nvim_get_current_line()
+				if col >= #line - 1 then
+					-- En fin de ligne : descend au fold enfant si existant
+					local next_foldlevel = vim.fn.foldlevel(vim.fn.line(".") + 1)
+					local cur_foldlevel = vim.fn.foldlevel(".")
+					if next_foldlevel > cur_foldlevel then
+						pcall(normal, "j")
+					else
+						pcall(normal, "l")
+					end
+				else
+					pcall(normal, "l")
+				end
+			end
+		end
 	end
-
-	-- Find and use virtualenv from pipenv in workspace directory.
-	local match = vim.fn.glob(path.join(workspace, "Pipfile"))
-	if match ~= "" then
-		local venv = vim.fn.trim(vim.fn.system("PIPENV_PIPFILE=" .. match .. " pipenv --venv"))
-		return path.join(venv, "bin", "python")
-	end
-
-	-- Fallback to system Python.
-	return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+	return h, l
 end
 
 return M

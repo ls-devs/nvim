@@ -5,10 +5,54 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-		local lspkind = require("lspkind")
+
 		local neotab = require("neotab")
 		local luasnip_vscode_loader = require("luasnip/loaders/from_vscode")
 		luasnip_vscode_loader.lazy_load()
+
+		local symbol_map = {
+			Text = "󰉿",
+			Method = "󰆧",
+			Function = "󰊕",
+			Field = "󰜢",
+			Variable = "󰀫",
+			Constructor = "󰒓",
+			Interface = "󰜰",
+			Module = "󰅩",
+			EnumMember = "󰎒",
+			Event = "󱐋",
+			Class = "󰠱",
+			Property = "󰜢",
+			Unit = "󰑭",
+			Value = "󰎠",
+			Enum = "󰖽",
+			Keyword = "󰌋",
+			Snippet = "󱄽",
+			Color = "󰏘",
+			File = "󰈙",
+			Reference = "󰈇",
+			Folder = "󰉋",
+			Constant = "󰏿",
+			Struct = "󰙅",
+			Operator = "󰆕",
+			TypeParameter = "󰬛",
+			Unknown = "󰉿",
+			Copilot = "",
+		}
+
+		local source_menu = {
+			nvim_lsp = "[LSP]",
+			luasnip = "[SNIPPET]",
+			buffer = "[BUFFER]",
+			cmdline = "[CMD]",
+			npm = "[NPM]",
+			zsh = "[ZSH]",
+			crates = "[CRATES]",
+			rg = "[RG]",
+			dotenv = "[ENV]",
+			["sass-variables"] = "[SASS]",
+			copilot = "[COPILOT]",
+		}
 
 		cmp.setup({
 			enabled = function()
@@ -76,55 +120,40 @@ return {
 			},
 			formatting = {
 				expandable_indicator = true,
-				fields = { "kind", "abbr", "menu" },
-				format = lspkind.cmp_format({
-					mode = "symbol",
-					maxwidth = 50,
-					ellipsis_char = "...",
-					symbol_map = {
-						Text = "󰉿",
-						Method = "󰆧",
-						Function = "󰊕",
-						Constructor = "",
-						Field = "󰜢",
-						Variable = "󰀫",
-						Class = "󰠱",
-						Interface = "",
-						Module = "",
-						Property = "󰜢",
-						Unit = "󰑭",
-						Value = "󰎠",
-						Enum = "",
-						Keyword = "󰌋",
-						Snippet = "",
-						Color = "󰏘",
-						File = "󰈙",
-						Reference = "󰈇",
-						Folder = "󰉋",
-						EnumMember = "",
-						Constant = "󰏿",
-						Struct = "󰙅",
-						Event = "",
-					},
-					before = function(entry, vim_item)
-						vim_item.menu = ({
-							nvim_lsp = "[LSP]",
-							luasnip = "[SNIPPET]",
-							buffer = "[BUFFER]",
-							cmdline = "[CMD]",
-							npm = "[NPM]",
-							zsh = "[ZSH]",
-							crates = "[CRATES]",
-							rg = "[RG]",
-							dotenv = "[ENV]",
-							neorg = "[NEORG]",
-							["sass-variables"] = "[SASS]",
-						})[entry.source.name]
-						return vim_item
-					end,
-				}),
+				fields = { "abbr", "menu", "kind" },
+				format = function(entry, vim_item)
+					local raw_kind = vim_item.kind
+					local kind_name = (type(raw_kind) == "number" and vim.lsp.protocol.CompletionItemKind[raw_kind])
+						or (type(raw_kind) == "string" and raw_kind ~= "" and raw_kind)
+						or nil
+
+					-- Si toujours nil/vide, essaie via entry completion_item
+					if not kind_name then
+						local ok, item_kind = pcall(function()
+							return entry:get_completion_item().kind
+						end)
+						if ok and item_kind and type(item_kind) == "number" then
+							kind_name = vim.lsp.protocol.CompletionItemKind[item_kind]
+						end
+					end
+
+					kind_name = kind_name or "Text"
+
+					local icon = symbol_map[kind_name] or symbol_map["Text"]
+
+					vim_item.kind = "  " .. icon .. "  "
+					vim_item.kind_hl_group = "CmpItemKind" .. kind_name
+
+					vim_item.abbr = " " .. vim_item.abbr .. " "
+
+					vim_item.menu = source_menu[entry.source.name] or ""
+					vim_item.menu_hl_group = "CmpItemMenu"
+
+					return vim_item
+				end,
 			},
 			sources = {
+				{ name = "copilot", group_index = 1, priority = 1000 },
 				{ name = "nvim_lsp" },
 				{
 					name = "lazydev",
@@ -153,21 +182,26 @@ return {
 				select = false,
 			},
 			window = {
-				completion = cmp.config.window.bordered({ border = "rounded" }),
-				documentation = cmp.config.window.bordered({ border = "rounded" }),
+				completion = cmp.config.window.bordered({
+					border = "rounded",
+					col_offset = -1,
+					side_padding = 1,
+					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+				}),
+				documentation = cmp.config.window.bordered({
+					border = "rounded",
+					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder",
+				}),
 			},
 		})
+
 		cmp.setup.filetype("gitcommit", {
 			sources = cmp.config.sources({
 				{ name = "git" },
 				{ name = "buffer" },
 			}),
 		})
-		cmp.setup.filetype("norg", {
-			sources = cmp.config.sources({
-				{ name = "neorg" },
-			}),
-		})
+
 		cmp.setup.cmdline({ "/", "?" }, {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {
@@ -175,10 +209,22 @@ return {
 			},
 		})
 		cmp.setup.cmdline(":", {
-			mapping = cmp.mapping.preset.cmdline(),
-			sources = cmp.config.sources({
-				{ name = "cmdline" },
+			mapping = cmp.mapping.preset.cmdline({
+				["<Tab>"] = {
+					c = function()
+						if cmp.visible() then
+							cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+							vim.api.nvim_feedkeys(" ", "n", false)
+							vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<BS>", true, false, true), "n", false)
+						else
+							cmp.complete()
+						end
+					end,
+				},
 			}),
+			sources = {
+				{ name = "cmdline" },
+			},
 		})
 		cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 
@@ -191,11 +237,21 @@ return {
 		{ "onsails/lspkind.nvim", lazy = true },
 		{ "SergioRibera/cmp-dotenv", lazy = true },
 		{
+			"zbirenbaum/copilot-cmp",
+			dependencies = { "zbirenbaum/copilot.lua" },
+			config = function()
+				require("copilot_cmp").setup({
+					formatters = {
+						insert_text = require("copilot_cmp.format").remove_existing,
+					},
+				})
+			end,
+		},
+		{
 			"L3MON4D3/LuaSnip",
 			lazy = true,
 			build = "make install_jsregexp",
 			dependencies = {
-
 				{ "rafamadriz/friendly-snippets", lazy = true },
 			},
 		},

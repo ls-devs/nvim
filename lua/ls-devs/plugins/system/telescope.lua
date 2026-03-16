@@ -157,7 +157,6 @@ return {
 					end,
 				})
 			end,
-			"<cmd>Telescope oldfiles<CR>",
 			desc = "Telescope Recent Files",
 			silent = true,
 			noremap = true,

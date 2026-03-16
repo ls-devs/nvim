@@ -34,6 +34,7 @@ return {
 			lua = { "stylua" },
 			rust = { "rustfmt" },
 			c = { "clang-format" },
+			cs = { "csharpier" },
 			cpp = { "clang-format" },
 			cmake = { "gersemi" },
 			sql = { "sql-formatter" },

@@ -16,10 +16,22 @@ end
 
 return {
 	"olimorris/codecompanion.nvim",
-	event = "VeryLazy",
+	cmd = { "CodeCompanionChat", "CodeCompanionActions" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-treesitter/nvim-treesitter",
+		"ravitemer/mcphub.nvim",
+		{
+			"HakonHarnes/img-clip.nvim",
+			opts = {
+				filetypes = {
+					codecompanion = {
+						prompt_for_file_name = false,
+						template = "[Image]($FILE_PATH)",
+						use_absolute_path = true,
+					},
+				},
+			},
+		},
 		{
 			"zbirenbaum/copilot.lua",
 			event = "LspAttach",
@@ -52,17 +64,6 @@ return {
 						prev = "<M-[>",
 						dismiss = "<C-]>",
 					},
-				},
-				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
 				},
 				logger = {
 					file = vim.fn.stdpath("log") .. "/copilot-lua.log",
@@ -105,6 +106,17 @@ return {
 	opts = {
 		interactions = {
 			chat = {
+				tools = {
+					["web_search"] = {
+						adapter = {
+							name = "tavily",
+							env = {
+								TAVILY_API_KEY = "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",
+							},
+						},
+					},
+				},
+
 				adapter = {
 					name = "copilot",
 					model = "gpt-4.1",
@@ -123,7 +135,6 @@ return {
 				},
 			},
 		},
-
 		rules = {
 			opts = {
 				chat = {
@@ -136,36 +147,70 @@ return {
 			chat = {
 				fold_context = true,
 				show_token_count = true,
+				floating_window = {
+					relative = "editor",
+					opts = {
+						wrap = true,
+						number = false,
+						relativenumber = false,
+						padding = { 0, 8, 0, 0 }, -- top, right, bottom, left
+					},
+				},
 				window = {
 					layout = "float",
 					width = 0.65,
-
+					padding = { 20, 20, 20, 20 },
 					height = 0.85,
 					relative = "editor",
 					border = "rounded",
 					title = "CodeCompanion (gpt-4.1)",
-
 					wrap = true,
 				},
 			},
 			action_palette = {
+				width = 95,
+				height = 20,
+				prompt = "Prompt ",
 				provider = "default",
+				window = {
+					layout = "float",
+					width = 0.9,
+					height = 0.4,
+					relative = "editor",
+					row = 0.3,
+					col = 0.5,
+					border = "rounded",
+					title = "CodeCompanion Actions",
+					wrap = true,
+				},
+				opts = {
+					show_preset_actions = true,
+					show_preset_prompts = true,
+					title = "CodeCompanion Actions",
+				},
 			},
 			diff = {
 				provider = "mini_diff",
 			},
 		},
 
-		language = "Français",
+		language = "English",
 
-		log_level = "INFO",
+		log_level = "DEBUG",
 
 		extensions = {
+			mcphub = {
+				callback = "mcphub.extensions.codecompanion",
+				opts = {
+					make_vars = true,
+					make_slash_commands = true,
+					show_result_in_chat = true,
+				},
+			},
 			agentskills = {
 				opts = {
 					paths = {
 						{ "~/.agents/skills/", recursive = true },
-
 						{ ".agents/skills/", recursive = true },
 					},
 				},
@@ -175,7 +220,7 @@ return {
 		prompt_library = {
 			["Code Review"] = {
 				strategy = "chat",
-				description = "Effectuer une revue de code",
+				description = "Perform a code review",
 				opts = {
 					short_name = "review",
 					auto_submit = true,
@@ -183,12 +228,11 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en revue de code. Réponds TOUJOURS en français. Analyse le code fourni et donne des retours constructifs sur : la lisibilité, les performances, la sécurité, les bugs potentiels et les bonnes pratiques.",
+						content = "You are a code review expert. ALWAYS answer in English. Analyze the provided code and give constructive feedback on: readability, performance, security, potential bugs, and best practices.",
 					},
 					{
 						role = "user",
 						content = function(context)
-							-- Utilise la sélection courante si elle existe, sinon tout le buffer
 							if
 								not context.start_line
 								or not context.end_line
@@ -197,16 +241,16 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Effectue une revue de code pour ce fichier")
+							return make_code_prompt(context, "Perform a code review for this file")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
 
-			["Optimiser"] = {
+			["Optimize"] = {
 				strategy = "chat",
-				description = "Optimiser le code sélectionné",
+				description = "Optimize the selected code",
 				opts = {
 					short_name = "optimize",
 					auto_submit = true,
@@ -214,12 +258,11 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en optimisation de code. Réponds TOUJOURS en français. Propose des améliorations de performance tout en conservant la lisibilité.",
+						content = "You are a code optimization expert. ALWAYS answer in English. Suggest performance improvements while maintaining readability.",
 					},
 					{
 						role = "user",
 						content = function(context)
-							-- Utilise la sélection courante si elle existe, sinon tout le buffer
 							if
 								not context.start_line
 								or not context.end_line
@@ -228,16 +271,16 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Optimise ce code")
+							return make_code_prompt(context, "Optimize this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
 
-			["Documenter"] = {
+			["Document"] = {
 				strategy = "inline",
-				description = "Ajouter de la documentation au code",
+				description = "Add documentation to the code",
 				opts = {
 					short_name = "doc",
 					auto_submit = true,
@@ -245,12 +288,11 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en documentation de code. Réponds TOUJOURS en français. Ajoute des commentaires clairs et des docstrings appropriés au langage utilisé. Retourne uniquement le code documenté, sans markdown.",
+						content = "You are a code documentation expert. ALWAYS answer in English. Add clear comments and appropriate docstrings for the used language. Return only the documented code, without markdown.",
 					},
 					{
 						role = "user",
 						content = function(context)
-							-- Utilise la sélection courante si elle existe, sinon tout le buffer
 							if
 								not context.start_line
 								or not context.end_line
@@ -259,15 +301,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Documente ce code")
+							return make_code_prompt(context, "Document this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Expliquer le code"] = {
+			["Explain the code"] = {
 				strategy = "chat",
-				description = "Expliquer en détail le fonctionnement du code sélectionné.",
+				description = "Explain in detail how the selected code works.",
 				opts = {
 					short_name = "explain",
 					auto_submit = true,
@@ -275,7 +317,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert pédagogue. Réponds TOUJOURS en français. Explique en détail le fonctionnement du code fourni, ligne par ligne si nécessaire, et donne le contexte général.",
+						content = "You are an expert educator. ALWAYS answer in English. Explain in detail how the provided code works, line by line if necessary, and provide the general context.",
 					},
 					{
 						role = "user",
@@ -288,15 +330,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Explique ce code")
+							return make_code_prompt(context, "Explain this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Refactoriser pour la lisibilité"] = {
+			["Refactor for readability"] = {
 				strategy = "chat",
-				description = "Refactoriser le code pour le rendre plus lisible et maintenable.",
+				description = "Refactor the code to make it more readable and maintainable.",
 				opts = {
 					short_name = "refacto",
 					auto_submit = true,
@@ -304,7 +346,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en refactorisation. Réponds TOUJOURS en français. Améliore la structure, la lisibilité et la maintenabilité du code fourni sans en changer la logique.",
+						content = "You are a refactoring expert. ALWAYS answer in English. Improve the structure, readability, and maintainability of the provided code without changing its logic.",
 					},
 					{
 						role = "user",
@@ -317,15 +359,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Refactorise ce code pour la lisibilité")
+							return make_code_prompt(context, "Refactor this code for readability")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Ajouter des exemples d’utilisation"] = {
+			["Add usage examples"] = {
 				strategy = "chat",
-				description = "Fournir des exemples d’utilisation du code sélectionné.",
+				description = "Provide usage examples for the selected code.",
 				opts = {
 					short_name = "exemple",
 					auto_submit = true,
@@ -333,7 +375,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en pédagogie logicielle. Réponds TOUJOURS en français. Propose des exemples d’utilisation pertinents et réalistes pour le code fourni.",
+						content = "You are a software pedagogy expert. ALWAYS answer in English. Provide relevant and realistic usage examples for the provided code.",
 					},
 					{
 						role = "user",
@@ -346,15 +388,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Donne des exemples d'utilisation pour ce code")
+							return make_code_prompt(context, "Give usage examples for this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Traduire le code dans un autre langage"] = {
+			["Translate the code into another language"] = {
 				strategy = "chat",
-				description = "Traduire le code sélectionné dans un autre langage (à préciser).",
+				description = "Translate the selected code into another language (to be specified).",
 				opts = {
 					short_name = "traduire",
 					auto_submit = false,
@@ -362,7 +404,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en portage de code. Réponds TOUJOURS en français. Traduis le code fourni dans le langage cible précisé par l'utilisateur.",
+						content = "You are a code porting expert. ALWAYS answer in English. Translate the provided code into the target language specified by the user.",
 					},
 					{
 						role = "user",
@@ -375,15 +417,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Traduis ce code dans le langage cible indiqué")
+							return make_code_prompt(context, "Translate this code into the indicated target language")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Sécuriser le code"] = {
+			["Secure the code"] = {
 				strategy = "chat",
-				description = "Analyser et corriger les failles de sécurité dans le code sélectionné.",
+				description = "Analyze and fix security vulnerabilities in the selected code.",
 				opts = {
 					short_name = "secure",
 					auto_submit = true,
@@ -391,7 +433,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en sécurité logicielle. Réponds TOUJOURS en français. Analyse le code fourni, identifie les failles de sécurité potentielles et propose des corrections.",
+						content = "You are a software security expert. ALWAYS answer in English. Analyze the provided code, identify potential security vulnerabilities, and suggest fixes.",
 					},
 					{
 						role = "user",
@@ -404,15 +446,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Sécurise ce code")
+							return make_code_prompt(context, "Secure this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Générer la documentation API"] = {
+			["Generate API documentation"] = {
 				strategy = "chat",
-				description = "Générer une documentation API complète pour le code sélectionné.",
+				description = "Generate complete API documentation for the selected code.",
 				opts = {
 					short_name = "apidoc",
 					auto_submit = true,
@@ -420,7 +462,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en documentation logicielle. Réponds TOUJOURS en français. Génère une documentation API complète (docstrings, commentaires structurés) pour le code fourni.",
+						content = "You are a software documentation expert. ALWAYS answer in English. Generate complete API documentation (docstrings, structured comments) for the provided code.",
 					},
 					{
 						role = "user",
@@ -433,15 +475,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Génère la documentation API pour ce code")
+							return make_code_prompt(context, "Generate API documentation for this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Ajouter des assertions ou vérifications"] = {
+			["Add assertions or checks"] = {
 				strategy = "chat",
-				description = "Ajouter des assertions ou des vérifications d’entrées au code sélectionné.",
+				description = "Add assertions or input checks to the selected code.",
 				opts = {
 					short_name = "assert",
 					auto_submit = true,
@@ -449,7 +491,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en robustesse logicielle. Réponds TOUJOURS en français. Ajoute des assertions ou des vérifications d’entrées pertinentes au code fourni.",
+						content = "You are a software robustness expert. ALWAYS answer in English. Add relevant assertions or input checks to the provided code.",
 					},
 					{
 						role = "user",
@@ -462,15 +504,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Ajoute des assertions ou vérifications à ce code")
+							return make_code_prompt(context, "Add assertions or checks to this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Résumer le code"] = {
+			["Summarize the code"] = {
 				strategy = "chat",
-				description = "Fournir un résumé du code sélectionné.",
+				description = "Provide a summary of the selected code.",
 				opts = {
 					short_name = "resume",
 					auto_submit = true,
@@ -478,7 +520,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en synthèse logicielle. Réponds TOUJOURS en français. Résume le code fourni en mettant en avant la logique principale et la structure générale.",
+						content = "You are a software synthesis expert. ALWAYS answer in English. Summarize the provided code, highlighting the main logic and general structure.",
 					},
 					{
 						role = "user",
@@ -491,15 +533,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Résume ce code")
+							return make_code_prompt(context, "Summarize this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Générer un plan de tests"] = {
+			["Generate a test plan"] = {
 				strategy = "chat",
-				description = "Proposer un plan de tests pour le code sélectionné.",
+				description = "Suggest a test plan for the selected code.",
 				opts = {
 					short_name = "plantest",
 					auto_submit = true,
@@ -507,7 +549,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en qualité logicielle. Réponds TOUJOURS en français. Propose un plan de tests (unitaires, intégration, cas limites) adapté au code fourni.",
+						content = "You are a software quality expert. ALWAYS answer in English. Suggest a test plan (unit, integration, edge cases) suitable for the provided code.",
 					},
 					{
 						role = "user",
@@ -520,15 +562,15 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Propose un plan de tests pour ce code")
+							return make_code_prompt(context, "Suggest a test plan for this code")
 						end,
 						opts = { contains_code = true },
 					},
 				},
 			},
-			["Détecter les dépendances et impacts"] = {
+			["Detect dependencies and impacts"] = {
 				strategy = "chat",
-				description = "Lister les dépendances et les impacts potentiels du code sélectionné.",
+				description = "List dependencies and potential impacts of the selected code.",
 				opts = {
 					short_name = "impact",
 					auto_submit = true,
@@ -536,7 +578,7 @@ return {
 				prompts = {
 					{
 						role = "system",
-						content = "Tu es un expert en architecture logicielle. Réponds TOUJOURS en français. Liste les dépendances du code fourni et analyse les impacts potentiels d'une modification.",
+						content = "You are a software architecture expert. ALWAYS answer in English. List the dependencies of the provided code and analyze the potential impacts of a modification.",
 					},
 					{
 						role = "user",
@@ -549,7 +591,7 @@ return {
 								context.start_line = 1
 								context.end_line = vim.api.nvim_buf_line_count(context.bufnr or 0)
 							end
-							return make_code_prompt(context, "Analyse les dépendances et impacts de ce code")
+							return make_code_prompt(context, "Analyze the dependencies and impacts of this code")
 						end,
 						opts = { contains_code = true },
 					},

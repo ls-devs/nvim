@@ -47,10 +47,10 @@ return {
 				"svelte",
 				"taplo",
 				"kotlin_language_server",
+				"omnisharp",
 
 				-- Lintters
 				"gitlint",
-				-- "stylelint",
 				"djlint",
 				"jsonlint",
 				"hadolint",
@@ -73,6 +73,7 @@ return {
 				"gersemi",
 				"black",
 				"sql-formatter",
+				"csharpier",
 				"shellharden",
 
 				-- Debuggers
@@ -95,216 +96,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_installation = false,
-			handlers = {
-				function(server_name)
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-					})
-				end,
-				["cssls"] = function(server_name)
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						settings = {
-							css = {
-								lint = {
-									unknownAtRules = "ignore",
-								},
-							},
-							scss = {
-								lint = {
-									unknownAtRules = "ignore",
-								},
-							},
-							less = {
-								lint = {
-									unknownAtRules = "ignore",
-								},
-							},
-						},
-					})
-				end,
-				["tailwindcss"] = function(server_name)
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						root_dir = require("lspconfig.util").root_pattern(
-							"tailwind.config.js",
-							"tailwind.config.cjs",
-							"tailwind.config.mjs",
-							"tailwind.config.ts"
-						),
-					})
-				end,
-				["kotlin_language_server"] = function(server_name)
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						on_attach = function(client)
-							client.server_capabilities.documentFormattingProvider = false
-							client.server_capabilities.documentRangeFormattingProvider = false
-						end,
-					})
-				end,
-				["jsonls"] = function(server_name)
-					local schemastore = require("schemastore")
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						settings = {
-							json = {
-								schemas = schemastore.json.schemas(),
-								validate = { enable = true },
-							},
-							yaml = {
-								schemaStore = {
-									enable = false,
-									url = "",
-								},
-								schemas = require("schemastore").yaml.schemas(),
-							},
-						},
-					})
-				end,
-				["pyright"] = function(server_name)
-					vim.lsp.config(server_name).setup({
-						on_init = function(client)
-							client.config.settings.python.pythonPath =
-								require("ls-devs.utils.custom_functions").get_python_path(client.config.root_dir)
-						end,
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						settings = {
-							python = {
-								analysis = {
-									autoSearchPaths = true,
-									diagnosticMode = "workspace",
-									useLibraryCodeForTypes = true,
-								},
-							},
-						},
-					})
-				end,
-				["intelephense"] = function(server_name)
-					vim.lsp.config(server_name).setup({
-						capabilities = vim.tbl_deep_extend(
-							"force",
-							{},
-							vim.lsp.protocol.make_client_capabilities(),
-							require("cmp_nvim_lsp").default_capabilities()
-						),
-						settings = {
-							intelephense = {
-								stubs = {
-									"bcmath",
-									"bz2",
-									"Core",
-									"curl",
-									"date",
-									"dom",
-									"fileinfo",
-									"filter",
-									"gd",
-									"gettext",
-									"hash",
-									"iconv",
-									"imap",
-									"intl",
-									"json",
-									"libxml",
-									"mbstring",
-									"mcrypt",
-									"mysql",
-									"mysqli",
-									"password",
-									"pcntl",
-									"pcre",
-									"PDO",
-									"pdo_mysql",
-									"Phar",
-									"readline",
-									"regex",
-									"session",
-									"SimpleXML",
-									"sockets",
-									"sodium",
-									"standard",
-									"superglobals",
-									"tokenizer",
-									"xml",
-									"xdebug",
-									"xmlreader",
-									"xmlwriter",
-									"yaml",
-									"zip",
-									"zlib",
-									"wordpress-stubs",
-									"woocommerce-stubs",
-									"acf-pro-stubs",
-									"wordpress-globals",
-									"wp-cli-stubs",
-									"genesis-stubs",
-									"polylang-stubs",
-								},
-								environment = {
-									includePaths = {
-										vim.env.HOME .. "/.config/composer/vendor/php-stubs/",
-										vim.env.HOME .. "/.config/composer/vendor/wpsyntex/",
-									},
-								},
-								clearCache = true,
-								files = {
-									maxSize = 5000000,
-								},
-							},
-						},
-					})
-				end,
-["lua_ls"] = function(server_name)
-  vim.lsp.config(server_name).setup({
-    capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      require("cmp_nvim_lsp").default_capabilities()
-    ),
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {"vim", "require"},
-        },
-      },
-    },
-  })
-end,
-["rust_analyzer"] = function() end,
-				["ts_ls"] = function() end,
-			},
+			automatic_enable = true,
 		},
 		dependencies = {
 			-- Mason Core
