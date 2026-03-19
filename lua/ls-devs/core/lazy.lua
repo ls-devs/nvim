@@ -72,8 +72,8 @@ require("lazy").setup({
 	checker = {
 		enabled = true,
 		notify = true,
-		check_pinned = true,
-		frequency = 3600,
+		check_pinned = false,
+		frequency = 86400,
 	},
 	change_detection = {
 		enabled = true,
@@ -114,7 +114,7 @@ require("lazy").setup({
 		skip_if_doc_exists = true,
 	},
 	profiling = {
-		loader = true,
-		require = true,
+		loader = false,
+		require = false,
 	},
 })

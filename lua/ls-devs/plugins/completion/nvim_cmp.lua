@@ -227,8 +227,6 @@ return {
 			},
 		})
 		cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-
-		require("luasnip.loaders.from_vscode").lazy_load()
 	end,
 	dependencies = {
 		{ "hrsh7th/cmp-buffer", lazy = true },

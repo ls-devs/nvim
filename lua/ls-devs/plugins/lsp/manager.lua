@@ -160,6 +160,7 @@ return {
 					})
 				end,
 			},
+			{ "b0o/schemastore.nvim", lazy = true },
 		},
 	},
 }

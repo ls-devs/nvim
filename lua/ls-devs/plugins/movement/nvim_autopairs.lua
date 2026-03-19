@@ -1,6 +1,6 @@
 return {
 	"windwp/nvim-autopairs",
-	event = { "InsertEnter", "BufReadPre", "CmdlineEnter" },
+	event = "InsertEnter",
 	opts = {
 		check_ts = true,
 		ts_config = {

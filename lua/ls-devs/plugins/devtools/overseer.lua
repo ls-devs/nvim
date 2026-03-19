@@ -38,6 +38,7 @@ return {
 			},
 		},
 	},
+	cmd = { "OverseerRun", "OverseerToggle", "OverseerBuild", "OverseerOpen", "OverseerInfo" },
 	keys = {
 		{
 			"<leader>or",

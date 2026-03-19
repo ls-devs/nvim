@@ -1,6 +1,6 @@
 return {
 	"OXY2DEV/markview.nvim",
-	lazy = false,
+	ft = { "markdown", "markdown_inline", "html", "norg" },
 	opts = function()
 		local function conceal_tag(icon, hl_group)
 			return {
