@@ -33,7 +33,7 @@ return {
 					replace = true,
 					render = "plain",
 					format = { "{message}" },
-					win_options = { concealcursor = "ncv", conceallevel = 3 },
+					win_options = { concealcursor = "ncv", conceallevel = 2 },
 				},
 			},
 		},

@@ -41,6 +41,7 @@ return {
 					PmenuSel = { bg = colors.overlay0, fg = colors.text, bold = true },
 					Normal = { bg = colors.none },
 					NormalFloat = { bg = colors.none },
+					FloatTitle = { fg = colors.blue, bg = colors.none, style = { "bold" } },
 					FloatBorder = { fg = colors.blue, bg = colors.none },
 					FloatShadow = { bg = colors.surface0 },
 					FloatShadowThrough = { bg = colors.surface0 },
@@ -165,7 +166,7 @@ return {
 					MasonMutedBlockBold = { bg = colors.surface0, fg = colors.overlay1, bold = true },
 					MasonError = { fg = colors.red },
 					MasonHeading = { bold = true },
-					ColorfulWinSep = { fg = colors.pink, style = { "bold" } },
+					CodeCompanionChatHeader = { fg = colors.base, bg = colors.peach, bold = true },
 					-- Alpha
 					AlphaHeader = { fg = colors.text },
 					AlphaButtons = { fg = colors.blue },

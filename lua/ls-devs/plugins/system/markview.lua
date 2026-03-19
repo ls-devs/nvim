@@ -15,13 +15,35 @@ return {
 		end
 
 		return {
-			modes = { "n", "c", "v", "i" },
-			hybrid_modes = { "i" },
+			modes = { "n", "i", "no", "c" },
+			hybrid_modes = { "i", "n" },
+			callbacks = {
+				on_enable = function(_, win)
+					vim.wo[win].conceallevel = 2
+					vim.wo[win].concealcursor = "nc"
+				end,
+			},
+
 			preview = {
-				modes = { "n", "c", "v", "i" },
+				modes = { "n", "i", "no", "c" },
 				hybrid_modes = { "i" },
-				filetypes = { "markdown", "codecompanion" },
-				ignore_buftypes = {},
+				filetypes = {
+					"md",
+					"markdown",
+					"codecompanion",
+				},
+				ignore_buftypes = { "alpha" },
+				condition = function(buffer)
+					local ft, bt = vim.bo[buffer].ft, vim.bo[buffer].bt
+
+					if bt == "nofile" and ft == "codecompanion" then
+						return true
+					elseif bt == "nofile" then
+						return false
+					else
+						return nil
+					end
+				end,
 			},
 			html = {
 				container_elements = {

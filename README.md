@@ -6,7 +6,7 @@ This Neovim configuration is modular and organized for performance, extensibilit
 
 - `core/options.lua`: Sets global editor options, keymaps, clipboard integration (Docker/WSL/Win32yank), and UI tweaks.
 - `core/lazy.lua`: Bootstraps and configures [lazy.nvim](https://github.com/folke/lazy.nvim) as the plugin manager. It imports plugin categories:
-  - completion, devtools, gittools, lsp, movement, preview, system, ui, utilities
+  - completion, devtools, gittools, lsp, movement, system, ui, utilities
 
 Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Each plugin file returns a table describing its setup, dependencies, and configuration.
 
@@ -16,12 +16,11 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **Completion:** Powered by nvim-cmp, LuaSnip, lspkind, and many sources (LSP, buffer, snippets, npm, dotenv, etc.).
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
 - **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
-- **Movement:** Enhanced navigation with flit.nvim, leap.nvim, sentiment.nvim, neotab, and others.
-- **UI:** Custom dashboard (alpha-nvim), catppuccin theme, diagflow, blinker, and more.
-- **Preview:** Markdown preview (glow.nvim, markdown-preview.nvim), file viewers.
-- **Devtools:** AsyncRun, codecompanion, overseer, live-server, typescript-tools, xmake, databases, debugging, etc.
-- **System:** Bigfile.nvim, legendary, linting, formatting, telescope, treesitter, toggleterm, wildfire, sleuth, neo-tree, etc.
-- **Utilities:** Custom functions, better quickfix, and more.
+- **Movement:** Enhanced navigation with flit.nvim, mini.surround, multiple-cursors, sentiment.nvim, neotab, nvim-spider, nvim-autopairs, and others.
+- **UI:** Custom dashboard (alpha-nvim), catppuccin theme, diagflow, blinker, noice, lualine, tabby, todo-comments, and more.
+- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, rest.nvim, databases, debugging, xmake, lazydev, etc.
+- **System:** Bigfile.nvim, legendary, linting (nvim-lint), formatting (conform.nvim), telescope, treesitter, toggleterm, wildfire, sleuth, neo-tree, markview, spectre, etc.
+- **Utilities:** Mini.comment, neocomposer, trouble, and more.
 
 ## Installation
 
@@ -83,14 +82,13 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - Shell plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, Spaceship ZSH, Oh-My-Zsh
 - Environment managers: pyenv, nvm, envman, direnv, ghcup, SDKMAN
 - Clipboard: win32yank (WSL), OSC52 (Docker)
-- Completion: nvim-cmp, LuaSnip, lspkind, cmp-buffer, cmp-cmdline, cmp-nvim-lsp, cmp-dotenv, cmp-npm, cmp-rg, cmp-under-comparator, cmp_luasnip
-- LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, etc.
+- Completion: nvim-cmp, LuaSnip, lspkind, cmp-buffer, cmp-cmdline, cmp-nvim-lsp, cmp-dotenv, cmp-npm, cmp-rg, cmp-under-comparator, cmp_luasnip, cmp-git, cmp-sass-variables, emmet
+- LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
 - Git: diffview.nvim, gitsigns.nvim, fugitive, git-worktree
-- UI: alpha-nvim, catppuccin, diagflow, blinker
-- Preview: glow.nvim, markdown-preview.nvim
-- Movement: flit.nvim, leap.nvim, sentiment.nvim, neotab
-- Devtools: AsyncRun, codecompanion, overseer, live-server, typescript-tools, xmake
-- System: bigfile.nvim, legendary, linting, formatting, telescope, treesitter, toggleterm, wildfire, sleuth, neo-tree
+- UI: alpha-nvim, catppuccin, diagflow, blinker, noice, lualine, tabby, dressing, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
+- Movement: flit.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, sentiment.nvim
+- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, rest.nvim, databases, debuggers (DAP), xmake, lazydev, img-clip
+- System: bigfile.nvim, legendary, conform.nvim (formatting), nvim-lint (linting), telescope + extensions, treesitter, toggleterm, wildfire, sleuth, neo-tree, markview, spectre, gx, early-retirement
 
 ## Updating
 - Run `:Lazy update` to update plugins.

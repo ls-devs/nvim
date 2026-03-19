@@ -10,7 +10,7 @@ return {
 			tmux = false,
 		},
 		autoresize = {
-			enable = true,
+			enable = false,
 		},
 		ui = {
 			number = false,

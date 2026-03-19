@@ -16,9 +16,8 @@ end
 
 return {
 	"olimorris/codecompanion.nvim",
-	cmd = { "CodeCompanionChat", "CodeCompanionActions" },
+	cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCLI" },
 	dependencies = {
-		"nvim-lua/plenary.nvim",
 		"ravitemer/mcphub.nvim",
 		{
 			"HakonHarnes/img-clip.nvim",
@@ -106,20 +105,19 @@ return {
 	opts = {
 		interactions = {
 			chat = {
-				tools = {
-					["web_search"] = {
-						adapter = {
-							name = "tavily",
-							env = {
-								TAVILY_API_KEY = "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",
-							},
-						},
-					},
-				},
-
 				adapter = {
 					name = "copilot",
-					model = "gpt-4.1",
+					model = "claude-sonnet-4.6",
+				},
+			},
+			cli = {
+				agent = "copilot",
+				agents = {
+					copilot = {
+						cmd = "copilot",
+						args = {},
+						description = "Claude Sonnet 4.6 CLI",
+					},
 				},
 			},
 			inline = {
@@ -144,27 +142,52 @@ return {
 		},
 
 		display = {
-			chat = {
-				fold_context = true,
-				show_token_count = true,
-				floating_window = {
+			input = {
+				title = "CodeCompanion CLI",
+			},
+			cli = {
+				window = {
+					layout = "float",
+					width = 0.85,
+					height = 0.85,
 					relative = "editor",
+					border = "rounded",
 					opts = {
-						wrap = true,
 						number = false,
 						relativenumber = false,
-						padding = { 0, 8, 0, 0 }, -- top, right, bottom, left
+						wrap = true,
+						signcolumn = "yes:1",
+						scrolloff = 1,
 					},
+				},
+			},
+			chat = {
+				fold_context = true,
+				fold_reasoning = false,
+				show_reasoning = true,
+				show_token_count = true,
+				icons = {
+					buffer_sync_all = "󰪴 ",
+					buffer_sync_diff = " ",
+					chat_context = " ",
+					chat_fold = " ",
+					tool_pending = "  ",
+					tool_in_progress = "  ",
+					tool_failure = "  ",
+					tool_success = "  ",
 				},
 				window = {
 					layout = "float",
 					width = 0.65,
-					padding = { 20, 20, 20, 20 },
 					height = 0.85,
 					relative = "editor",
 					border = "rounded",
-					title = "CodeCompanion (gpt-4.1)",
-					wrap = true,
+					title = "CodeCompanion",
+					opts = {
+						number = false,
+						relativenumber = false,
+						wrap = true,
+					},
 				},
 			},
 			action_palette = {

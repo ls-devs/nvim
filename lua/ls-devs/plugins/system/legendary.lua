@@ -262,36 +262,49 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
-					"<leader>ip",
+					"<leader>cl",
 					function()
-						local venv = os.getenv("VIRTUAL_ENV")
-						if venv ~= nil then
-							venv = string.match(venv, "/.+/(.+)")
-							vim.cmd(("MoltenInit %s"):format(venv))
+						local cli_buf = nil
+						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+							if vim.bo[buf].filetype == "codecompanion_cli" then
+								cli_buf = buf
+								break
+							end
+						end
+						if cli_buf then
+							local wins = vim.fn.win_findbuf(cli_buf)
+							if #wins > 0 then
+								vim.api.nvim_win_close(wins[1], false)
+							else
+								local columns = vim.o.columns
+								local lines = vim.o.lines
+								local width = math.floor(columns * 0.85)
+								local height = math.floor(lines * 0.85)
+								local col = math.floor((columns - width) / 2)
+								local row = math.floor((lines - height) / 2)
+								local win = vim.api.nvim_open_win(cli_buf, true, {
+									relative = "editor",
+									width = width,
+									height = height,
+									col = col,
+									row = row,
+									border = "rounded",
+									title = " CodeCompanion CLI ",
+									title_pos = "center",
+								})
+								vim.wo[win].number = false
+								vim.wo[win].relativenumber = false
+								vim.wo[win].wrap = true
+								vim.wo[win].signcolumn = "yes:1"
+								vim.wo[win].scrolloff = 1
+								vim.cmd("startinsert")
+							end
 						else
-							vim.cmd("MoltenInit python3")
+							vim.cmd("CodeCompanionCLI")
 						end
 					end,
-					description = "Start Molten",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>ml",
-					":MoltenEvaluateLine<CR>",
-					description = "MoltenEvaluateLine",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>mv",
-					":<C-u>MoltenEvaluateVisual<CR>gv",
-					mode = { "v" },
-					description = "MoltenEvaluateVisual",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>mr",
-					":MoltenReevaluateCell<CR>",
-					description = "MoltenReevaluateCell",
+					description = "Code Companion CLI Toggle",
+					mode = { "n", "i" },
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -326,6 +339,16 @@ return {
 				},
 			},
 			autocmds = {
+				-- Start CodeCompanionCLI in insert mode
+				{
+					"FileType",
+					function(args)
+						if vim.bo[args.buf].filetype == "codecompanion_cli" then
+							vim.api.nvim_command("startinsert")
+						end
+					end,
+					description = "Start CodeCompanionCLI in insert mode",
+				},
 				-- Force Tree-sitter highlight via vim.treesitter.start (nouvelle API Neovim 0.9+)
 				{
 					"FileType",
@@ -544,19 +567,19 @@ return {
 					end,
 					description = "Force float window borders",
 				},
-				{
-					"FileType",
-					function()
-						if vim.bo.filetype == "codecompanion" then
-							vim.defer_fn(function()
-								vim.cmd("setlocal nonumber")
-								vim.cmd("setlocal norelativenumber")
-								pcall(vim.cmd, "Markview attach")
-							end, 50)
-						end
-					end,
-					description = "No number + Markview attach for codecompanion",
-				},
+				-- {
+				-- 	"FileType",
+				-- 	function()
+				-- 		if vim.bo.filetype == "codecompanion" then
+				-- 			vim.defer_fn(function()
+				-- 				vim.cmd("setlocal nonumber")
+				-- 				vim.cmd("setlocal norelativenumber")
+				-- 				pcall(vim.cmd, "Markview attach")
+				-- 			end, 50)
+				-- 		end
+				-- 	end,
+				-- 	description = "No number + Markview attach for codecompanion",
+				-- },
 				{
 					{ "BufEnter", "BufWinEnter", "BufReadPost" },
 					function(args)

@@ -1,9 +1,6 @@
 return {
 	"pmizio/typescript-tools.nvim",
-	event = {
-		"BufRead *.js,*.jsx,*.mjs,*.cjs,*ts,*tsx",
-		"BufNewFile *.js,*.jsx,*.mjs,*.cjs,*ts,*tsx",
-	},
+	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 	opts = {
 		on_attach = function(client)
 			client.server_capabilities.documentFormattingProvider = false
@@ -11,7 +8,6 @@ return {
 		end,
 	},
 	dependencies = {
-		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ "neovim/nvim-lspconfig", lazy = true },
 	},
 }

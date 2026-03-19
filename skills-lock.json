@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "lazy-nvim-optimization": {
+      "source": "kriscard/kriscard-claude-plugins",
+      "sourceType": "github",
+      "computedHash": "9b8c696a0f627e824dbdd3fec47c6c59eccbb4cceb622e35a6ad0792a5f00986"
+    }
+  }
+}
