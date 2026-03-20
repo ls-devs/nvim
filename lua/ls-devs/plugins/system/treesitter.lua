@@ -39,7 +39,6 @@ return {
 			"regex",
 			"bash",
 			"cmake",
-			"http",
 			"gitcommit",
 			"gitignore",
 			"git_rebase",
@@ -47,7 +46,6 @@ return {
 			"go",
 			"make",
 			"gomod",
-			"graphql",
 			"v",
 			"norg",
 		},
@@ -117,7 +115,7 @@ return {
 					["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
 					["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
 
-					["aa"] = { query = "@arameter.outer", desc = "Select outer part of a parameter/argument" },
+					["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
 					["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
 
 					["ac"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },

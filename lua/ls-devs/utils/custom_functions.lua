@@ -46,7 +46,8 @@ M.LazyGit = function()
 end
 
 M.CustomHover = function()
-	local winid = require("ufo").peekFoldedLinesUnderCursor()
+	local ok, ufo = pcall(require, "ufo")
+	local winid = ok and ufo.peekFoldedLinesUnderCursor()
 	if winid then
 		return
 	end

@@ -1,19 +1,18 @@
 ---@diagnostic disable: undefined-global
-vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-vim.cmd("hi AlphaHeader guifg=#cdd6f4")
-vim.cmd("hi AlphaButtons guifg=#89b4fa")
-vim.cmd("hi AlphaShortcut guifg=#fab387")
-vim.cmd("hi Type guifg=#f9e2af")
-vim.cmd("set whichwrap+=<,>,[,],h,l")
-vim.cmd("set iskeyword+=-")
-vim.cmd("set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor")
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#cdd6f4" })
+vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#89b4fa" })
+vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#fab387" })
+vim.api.nvim_set_hl(0, "Type", { fg = "#f9e2af" })
+vim.opt.whichwrap:append("<,>,[,],h,l")
+vim.opt.iskeyword:append("-")
+vim.opt.guicursor = "n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor"
 
 local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-keymap("", "<Space>", "<Nop>", opts)
+vim.keymap.set("", "<Space>", "<Nop>", opts)
 local in_docker = os.getenv("container") == "docker" or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
@@ -104,6 +103,8 @@ local options = {
 	background = "dark",
 	incsearch = true,
 	updatetime = 300,
+	timeoutlen = 300,
+	ttimeoutlen = 10,
 	backup = false,
 	showtabline = 2,
 	cmdheight = 0,

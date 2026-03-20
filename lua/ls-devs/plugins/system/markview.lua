@@ -40,6 +40,8 @@ return {
 						return true
 					elseif bt == "nofile" then
 						return false
+					elseif vim.api.nvim_buf_get_name(buffer) == "" then
+						return false
 					else
 						return nil
 					end

@@ -6,7 +6,6 @@ return {
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
-				["cmp.entry.get_documentation"] = true,
 			},
 			progress = {
 				enabled = false,
@@ -51,9 +50,7 @@ return {
 			},
 		},
 		popupmenu = {
-			enabled = true,
-			backend = "nui",
-			kind_icons = {},
+			enabled = false,
 		},
 		redirect = {
 			view = "popup",
@@ -98,28 +95,6 @@ return {
 					height = "auto",
 				},
 			},
-			popupmenu = {
-				relative = "editor",
-				position = {
-					row = 8,
-					col = "50%",
-				},
-				size = {
-					width = 60,
-					height = 10,
-				},
-				border = {
-					style = "rounded",
-					padding = { 0, 1 },
-				},
-				win_options = {
-					winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-				},
-			},
-		},
-		smart_move = {
-			enabled = true, -- you can disable this behaviour here
-			excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
 		},
 	},
 	config = function(_, opts)

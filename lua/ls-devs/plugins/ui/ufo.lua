@@ -1,6 +1,6 @@
 return {
 	"kevinhwang91/nvim-ufo",
-	event = { "BufRead" },
+	event = { "BufRead", "BufNewFile" },
 	opts = {
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }

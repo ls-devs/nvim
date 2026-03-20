@@ -13,7 +13,7 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 ## Functionalities
 
 - **Plugin Management:** Uses lazy.nvim for fast startup and lazy loading.
-- **Completion:** Powered by nvim-cmp, LuaSnip, lspkind, and many sources (LSP, buffer, snippets, npm, dotenv, etc.).
+- **Completion:** Powered by blink.cmp (v2/main, Rust fuzzy matching), LuaSnip, lspkind, and sources (LSP, buffer, snippets, Copilot, dotenv, sass-variables).
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
 - **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
 - **Movement:** Enhanced navigation with flit.nvim, mini.surround, multiple-cursors, sentiment.nvim, neotab, nvim-spider, nvim-autopairs, and others.
@@ -29,7 +29,7 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **Git** (for plugin manager)
 - **Node.js** (for npm, markdown preview, LSPs)
 - **Python** (for pynvim, Jupyter integration)
-- **Cargo/Rust** (for some plugins)
+- **Cargo/Rust** (for blink.cmp fuzzy matching, rust_analyzer)
 - **Go** (for some LSPs)
 - **Java** (for JDTLS)
 - **Deno** (for deno LSP)
@@ -82,7 +82,7 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - Shell plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, Spaceship ZSH, Oh-My-Zsh
 - Environment managers: pyenv, nvm, envman, direnv, ghcup, SDKMAN
 - Clipboard: win32yank (WSL), OSC52 (Docker)
-- Completion: nvim-cmp, LuaSnip, lspkind, cmp-buffer, cmp-cmdline, cmp-nvim-lsp, cmp-dotenv, cmp-npm, cmp-rg, cmp-under-comparator, cmp_luasnip, cmp-git, cmp-sass-variables, emmet
+- Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, emmet
 - LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
 - Git: diffview.nvim, gitsigns.nvim, fugitive, git-worktree
 - UI: alpha-nvim, catppuccin, diagflow, blinker, noice, lualine, tabby, dressing, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix

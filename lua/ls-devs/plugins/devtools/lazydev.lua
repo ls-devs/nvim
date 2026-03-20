@@ -12,8 +12,7 @@ return {
 			"nvim-lspconfig",
 			"lspsaga.nvim",
 			"nvim-treesitter",
-			"nvim-cmp",
-			"cmp-nvim-lsp",
+			"blink.cmp",
 			"conform.nvim",
 			"nvim-lint",
 			"noice.nvim",
@@ -23,7 +22,6 @@ return {
 			"toggleterm.nvim",
 			"catppuccin",
 			"plenary.nvim",
-			"neodev.nvim",
 			"neotest",
 			"fidget.nvim",
 			"alpha-nvim",
@@ -39,7 +37,7 @@ return {
 		},
 		integrations = {
 			lspconfig = true,
-			cmp = true,
+			cmp = false,
 			coq = false,
 		},
 		enabled = function(root_dir)

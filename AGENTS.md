@@ -20,12 +20,12 @@ lua/ls-devs/
     options.lua                ← global vim options, keymaps, env-aware clipboard
     lazy.lua                   ← lazy.nvim bootstrap + all plugin spec imports
   plugins/
-    completion/                ← nvim-cmp, LuaSnip, lspkind, and cmp sources
-      completion_modules/      ← per-source cmp plugins (git, npm, rg, sass, emmet…)
-      nvim_cmp.lua
+    completion/                ← blink.cmp, LuaSnip, lspkind
+      completion_modules/      ← non-spec Lua helpers (dotenv_source.lua); NOT imported by lazy.nvim
+      blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
     devtools/                  ← codecompanion, copilot, debuggers, databases,
     │                            asyncrun, overseer, rest.nvim, typescript-tools,
-    │                            live-server, xmake, lazydev
+    │                            live-server, xmake, lazydev, emmet
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
     gittools/                  ← diffview, gitsigns, fugitive, git-worktree
     lsp/
@@ -141,6 +141,9 @@ When adding/removing a tool (LSP, linter, formatter, debugger):
 | Format | `lua/ls-devs/plugins/system/formatting.lua` — `formatters_by_ft` |
 | Lint | `lua/ls-devs/plugins/system/linting.lua` — `linters_by_ft` |
 
+### `completion_modules/` — not imported by lazy.nvim
+Files under `lua/ls-devs/plugins/completion/completion_modules/` are **not** plugin specs and are **not** imported by `core/lazy.lua`. The folder exists for pure-Lua helpers used by `blink_cmp.lua` (e.g. `dotenv_source.lua`). Do not place lazy.nvim specs there.
+
 ### `lsp/` directory — not auto-loaded
 Files under the top-level `lsp/` are **not** imported by `core/lazy.lua`. The active LSP configuration is fully managed through Mason and `nvim-lspconfig` via `plugins/lsp/manager.lua`. Before editing any LSP behavior, verify which file actually controls it.
 
@@ -221,6 +224,9 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 - Do **not** add plugin logic to `core/lazy.lua` — it is a composition point only
 - Do **not** assume files in `lsp/` are active — verify in `plugins/lsp/manager.lua` first
 - Do **not** change the `catppuccin` colorscheme or switch to square borders without updating all affected UI plugins
+- Do **not** place plugin specs in `completion_modules/` — that folder is not imported by lazy.nvim
+- Do **not** use `vim.loop.*` — use `vim.uv.*` (vim.loop is deprecated since Neovim 0.10)
+- Do **not** use `vim.api.nvim_set_keymap` / `vim.api.nvim_buf_set_keymap` — use `vim.keymap.set()`
 
 ---
 

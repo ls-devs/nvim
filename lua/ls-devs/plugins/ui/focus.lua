@@ -1,7 +1,6 @@
 return {
 	"nvim-focus/focus.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-	lazy = true,
 	opts = {
 		enable = true,
 		commands = true,
