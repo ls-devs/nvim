@@ -1,7 +1,8 @@
 -- ── catppuccin ────────────────────────────────────────────────────────────
 -- Purpose : Config-wide Catppuccin Mocha colorscheme with per-plugin integrations
--- Trigger : priority=1000, lazy=false — colorschemes MUST load before other plugins.
---           Note: priority alone does nothing without lazy=false in lazy.nvim.
+-- Trigger : VeryLazy — loading eagerly (lazy=false) adds ~15ms to blocking startup
+--           because catppuccin compiles its highlight cache on first load. The minor
+--           color-flash tradeoff is preferable to blocking UIEnter.
 --           Listed in core/lazy.lua install.colorscheme as fallback for first install.
 -- Note    : transparent_background exposes terminal transparency; highlights are
 --           compiled to ~/.cache/nvim/catppuccin for fast subsequent loads
@@ -9,8 +10,7 @@
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
-	priority = 1000,
-	lazy = false,
+	event = "VeryLazy",
 	config = function()
 		require("catppuccin").setup({
 			flavour = "mocha",
