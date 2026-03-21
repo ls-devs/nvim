@@ -7,8 +7,26 @@
 -- ─────────────────────────────────────────────────────────────────────────
 return {
 	"folke/flash.nvim",
-	opts = {
-		-- 52-char alphabet so up to 52 matches get a single-character label;
+	config = function(_, opts)
+		require("flash").setup(opts)
+		-- flash.setup() creates FlashLabel1-7 via HSL hue-rotation and overwrites
+		-- whatever catppuccin set at startup; re-assert catppuccin palette colours now
+		-- and re-apply whenever the colorscheme changes (e.g. flavour switch)
+		local function apply_rainbow_hl()
+			local ok, palette = pcall(require, "catppuccin.palettes")
+			if not ok then
+				return
+			end
+			local c = palette.get_palette()
+			local accents = { c.red, c.peach, c.yellow, c.green, c.teal, c.blue, c.mauve }
+			for i, bg in ipairs(accents) do
+				vim.api.nvim_set_hl(0, "FlashLabel" .. i, { fg = c.base, bg = bg, bold = true })
+			end
+		end
+		apply_rainbow_hl()
+		vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_rainbow_hl })
+	end,
+	opts = { -- 52-char alphabet so up to 52 matches get a single-character label;
 		-- beyond that flash falls back to two-character label pairs automatically
 		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
 		label = {
