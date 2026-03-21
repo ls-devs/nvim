@@ -4,7 +4,9 @@
 -- Note    : This is the primary keybinding hub — most global keymaps and
 --           autocmds live here rather than scattered across plugin specs.
 --           Requires sqlite.lua for frecency persistence.
---           nvim_tree and op_nvim extensions are omitted (plugins not installed).
+--           auto_register is OFF to avoid scanning all lazy.nvim plugin specs
+--           (that adds ~15-20ms to the VeryLazy queue). Keymaps defined in
+--           plugin specs are still discoverable via :map / which-key.
 -- ─────────────────────────────────────────────────────────────────────────
 return {
 	"mrjones2014/legendary.nvim",
@@ -331,7 +333,7 @@ return {
 				},
 			},
 			extensions = {
-				lazy_nvim = { auto_register = true },
+				lazy_nvim = { auto_register = false },
 				-- Ctrl+hjkl = move focus, Alt+hjkl = resize pane, Ctrl+<leader>+hjkl = swap pane
 				smart_splits = {
 					directions = { "h", "j", "k", "l" },
