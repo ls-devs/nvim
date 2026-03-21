@@ -12,35 +12,10 @@ return {
 		-- beyond that flash falls back to two-character label pairs automatically
 		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
 		label = {
-			-- built-in rainbow uses HSL hue-rotation which ignores the catppuccin
-			-- palette; disabled here — FlashRainbow1-7 are defined in catppuccin.lua
-			-- custom_highlights and assigned below via label.format
-			rainbow = { enabled = false },
-			-- cycle through 7 catppuccin accent colours by distance from the cursor:
-			-- warm (red/peach) = nearby, cool (blue/mauve) = far away — replicating
-			-- the built-in rainbow gradient but using actual catppuccin palette colours;
-			-- format is also called for unlabeled/cursor matches where opts.label is nil
-			format = function(opts)
-				if not opts.label then
-					return { { opts.label or "", "FlashLabel" } }
-				end
-				local hls = {
-					"FlashRainbow1", -- red    (nearest)
-					"FlashRainbow2", -- peach
-					"FlashRainbow3", -- yellow
-					"FlashRainbow4", -- green
-					"FlashRainbow5", -- teal
-					"FlashRainbow6", -- blue
-					"FlashRainbow7", -- mauve  (farthest)
-				}
-				-- normalise distance 0..win_height → index 1..7
-				local cursor = vim.api.nvim_win_get_cursor(0)
-				local distance = math.abs(opts.match.pos[1] - cursor[1])
-				local win_height = vim.api.nvim_win_get_height(0)
-				local idx = math.floor(distance / math.max(win_height, 1) * (#hls - 1)) + 1
-				idx = math.max(1, math.min(#hls, idx))
-				return { { opts.label, hls[idx] } }
-			end,
+			-- enable flash's built-in distance-based rainbow; the FlashLabel1-7
+			-- groups it creates are overridden in catppuccin.lua custom_highlights
+			-- with actual catppuccin palette colours (shade=7 → 7 distinct groups)
+			rainbow = { enabled = true, shade = 7 },
 		},
 		modes = {
 			-- char mode replaces native f/t/F/T: shows label hints for repeated
