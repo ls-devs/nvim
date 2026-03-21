@@ -3,16 +3,15 @@
 -- Trigger : VeryLazy
 -- Note    : This is the primary keybinding hub — most global keymaps and
 --           autocmds live here rather than scattered across plugin specs.
---           Requires sqlite.lua for frecency persistence.
---           auto_register is OFF to avoid scanning all lazy.nvim plugin specs
---           (that adds ~15-20ms to the VeryLazy queue). Keymaps defined in
---           plugin specs are still discoverable via :map / which-key.
+--           sqlite/frecency is DISABLED — writing every keymap to sqlite on
+--           each startup cost ~25ms. most_recent_first handles in-session
+--           recency sorting without any persistence overhead.
+--           auto_register is OFF (scanning all lazy specs added ~15ms).
 -- ─────────────────────────────────────────────────────────────────────────
 return {
 	"mrjones2014/legendary.nvim",
 	event = "VeryLazy",
 	dependencies = {
-		{ "kkharji/sqlite.lua", lazy = true },
 		{
 			"mrjones2014/smart-splits.nvim",
 			lazy = true,
@@ -581,10 +580,10 @@ return {
 				most_recent_first = true,
 				user_items_first = true,
 				item_type_bias = nil,
-				frecency = {
-					db_root = string.format("%s/legendary/", vim.fn.stdpath("data")),
-					max_timestamps = 10,
-				},
+				-- Frecency writes every registered keymap/autocmd to sqlite on each
+				-- startup — that's ~25ms per load. Disabled in favour of fast setup;
+				-- most_recent_first still bubbles up recently-used items in-session.
+				frecency = false,
 			},
 		})
 	end,
