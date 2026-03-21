@@ -11,7 +11,20 @@ return {
 		-- 52-char alphabet so up to 52 matches get a single-character label;
 		-- beyond that flash falls back to two-character label pairs automatically
 		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
+		label = {
+			-- colorize labels by distance: nearby = warm hue, far = cool hue;
+			-- shade 5 gives a visible gradient without being garish
+			rainbow = { enabled = true, shade = 5 },
+		},
 		modes = {
+			-- flash labels in / and ? search: press a label to jump directly to
+			-- that match instead of pressing n/N repeatedly after Enter
+			search = {
+				enabled = true,
+				jump = {
+					nohlsearch = true, -- clear search highlight after landing on a label
+				},
+			},
 			-- char mode replaces native f/t/F/T: shows label hints for repeated
 			-- matches so you can jump directly without pressing ; multiple times
 			char = {
