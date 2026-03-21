@@ -13,6 +13,7 @@ return {
 			-- matches so you can jump directly without pressing ; multiple times
 			char = {
 				enabled = true, -- activate f/t/F/T label hints (flit.nvim equivalent)
+				jump_labels = true, -- show labels on all matches (flit behaviour); default is false
 				keys = { "f", "F", "t", "T", ";", "," },
 				search = {
 					wrap = false, -- don't wrap around the buffer (matches flit behaviour)
@@ -28,6 +29,12 @@ return {
 		},
 	},
 	keys = {
+		-- char mode (f/t/F/T) — entries here make lazy.nvim load flash on first press;
+		-- flash's setup() then owns these keys via modes.char
+		{ "f", mode = { "n", "x", "o" }, desc = "Flash f" },
+		{ "F", mode = { "n", "x", "o" }, desc = "Flash F" },
+		{ "t", mode = { "n", "x", "o" }, desc = "Flash t" },
+		{ "T", mode = { "n", "x", "o" }, desc = "Flash T" },
 		-- Full-window jump: type a pattern and pick a label
 		{
 			"s",
