@@ -16,26 +16,30 @@ return {
 			-- palette; disabled here — FlashRainbow1-7 are defined in catppuccin.lua
 			-- custom_highlights and assigned below via label.format
 			rainbow = { enabled = false },
-			-- cycle through 7 catppuccin accent colours in label-index order so
-			-- the first ~7 labels are visually distinct and palette-consistent;
-			-- format is also called for unlabeled/cursor matches where opts.label
-			-- is nil — fall back to the base FlashLabel group in that case
+			-- cycle through 7 catppuccin accent colours by distance from the cursor:
+			-- warm (red/peach) = nearby, cool (blue/mauve) = far away — replicating
+			-- the built-in rainbow gradient but using actual catppuccin palette colours;
+			-- format is also called for unlabeled/cursor matches where opts.label is nil
 			format = function(opts)
 				if not opts.label then
 					return { { opts.label or "", "FlashLabel" } }
 				end
 				local hls = {
-					"FlashRainbow1",
-					"FlashRainbow2",
-					"FlashRainbow3",
-					"FlashRainbow4",
-					"FlashRainbow5",
-					"FlashRainbow6",
-					"FlashRainbow7",
+					"FlashRainbow1", -- red    (nearest)
+					"FlashRainbow2", -- peach
+					"FlashRainbow3", -- yellow
+					"FlashRainbow4", -- green
+					"FlashRainbow5", -- teal
+					"FlashRainbow6", -- blue
+					"FlashRainbow7", -- mauve  (farthest)
 				}
-				local labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM"
-				local idx = (string.find(labels, opts.label, 1, true) or 1)
-				return { { opts.label, hls[((idx - 1) % #hls) + 1] } }
+				-- normalise distance 0..win_height → index 1..7
+				local cursor = vim.api.nvim_win_get_cursor(0)
+				local distance = math.abs(opts.match.pos[1] - cursor[1])
+				local win_height = vim.api.nvim_win_get_height(0)
+				local idx = math.floor(distance / math.max(win_height, 1) * (#hls - 1)) + 1
+				idx = math.max(1, math.min(#hls, idx))
+				return { { opts.label, hls[idx] } }
 			end,
 		},
 		modes = {
