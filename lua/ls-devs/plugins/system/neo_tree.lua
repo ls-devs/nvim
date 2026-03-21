@@ -1,3 +1,10 @@
+-- ── neo-tree.nvim ────────────────────────────────────────────────────────
+-- Purpose : File/buffer/git-status explorer rendered as a floating window
+-- Trigger : cmd Neotree, keys <leader>e
+-- Note    : open_and_clear_filter is intentionally defined in both top-level
+--           commands and filesystem.commands — each source scope needs its own
+--           copy because top-level commands don't apply inside filesystem.
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	cmd = { "Neotree" },
@@ -12,7 +19,7 @@ return {
 	},
 	opts = {
 		close_if_last_window = true,
-		popup_border_style = "rounded",
+		popup_border_style = "rounded", -- matches the global rounded-border UI style
 		enable_git_status = true,
 		enable_diagnostics = true,
 		open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
@@ -83,6 +90,7 @@ return {
 				enabled = false,
 			},
 		},
+		-- Defined here for non-filesystem sources (buffers, git_status).
 		commands = {
 			open_and_clear_filter = function(state)
 				local node = state.tree:get_node()
@@ -242,6 +250,8 @@ return {
 				},
 			},
 
+			-- Filesystem-scoped copy; the top-level commands table above does not
+			-- apply inside the filesystem source, so it must be redefined here.
 			commands = {
 				open_and_clear_filter = function(state)
 					local node = state.tree:get_node()
@@ -321,6 +331,8 @@ return {
 		{ "plenary.nvim", lazy = true },
 		{ "nvim-tree/nvim-web-devicons", lazy = true },
 		{ "MunifTanjim/nui.nvim", lazy = true },
+		-- Powers the S/s/w split/open-with keymaps; shows a big-letter overlay
+		-- to pick the target window.
 		{
 			"s1n7ax/nvim-window-picker",
 			lazy = true,

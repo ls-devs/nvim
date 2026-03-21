@@ -1,3 +1,8 @@
+-- ── grug-far ──────────────────────────────────────────────────────────────
+-- Purpose : Search & replace UI powered by ripgrep
+-- Trigger : GrugFar cmd, <leader>sr / <leader>sw keymaps
+-- Note    : ripgrep engine with --max-depth 6 and --one-file-system flags
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"MagicDuck/grug-far.nvim",
 	cmd = "GrugFar",
@@ -27,7 +32,7 @@ return {
 		engine = "ripgrep",
 		engines = {
 			ripgrep = {
-				extraArgs = "--max-depth 6 --one-file-system",
+				extraArgs = "--max-depth 6 --one-file-system", -- limit traversal depth and avoid crossing filesystem boundaries
 			},
 		},
 		spinnerStates = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },

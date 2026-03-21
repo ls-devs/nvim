@@ -1,8 +1,18 @@
+-- ── noice.nvim ───────────────────────────────────────────────────────────────
+-- Purpose : Replaces cmdline, messages, and popupmenu with styled floating
+--           windows. Integrates with telescope (noice extension in telescope.lua).
+-- Trigger : VeryLazy
+-- Note    : <C-f>/<C-b> scroll hover docs (wired in legendary.lua).
+--           <A-x> redirects cmdline output to a popup.
+--           blink.cmp has a workaround for flashing caused by noice redraws.
+-- ─────────────────────────────────────────────────────────────────────────────
 return {
 	"folke/noice.nvim",
-	event = "VimEnter",
+	event = "VeryLazy",
 	opts = {
+		-- ── LSP integration ──────────────────────────────────────────────────────────
 		lsp = {
+			-- Let noice render markdown in hover/signature instead of the built-in handlers.
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
@@ -14,6 +24,7 @@ return {
 				enabled = true,
 				silent = true,
 			},
+			-- Auto-open disabled to avoid conflicts with blink.cmp's own signature popup.
 			signature = {
 				enabled = true,
 				auto_open = {
@@ -36,6 +47,7 @@ return {
 				},
 			},
 		},
+		-- ── Markdown rendering ────────────────────────────────────────────────────────
 		markdown = {
 			hover = {
 				["|(%S-)|"] = vim.cmd.help,
@@ -49,9 +61,12 @@ return {
 				["{%S-}"] = "@parameter",
 			},
 		},
+		-- ── Routing ───────────────────────────────────────────────────────────────────
+		-- blink.cmp supplies its own popupmenu; disable noice's to avoid duplication.
 		popupmenu = {
 			enabled = false,
 		},
+		-- <A-x> pipes the current cmdline output to a floating popup window.
 		redirect = {
 			view = "popup",
 			filter = { event = "msg_show" },
@@ -59,19 +74,22 @@ return {
 		health = {
 			checker = true,
 		},
+		-- ── Presets ───────────────────────────────────────────────────────────────────
 		presets = {
-			bottom_search = false,
-			command_palette = true,
+			bottom_search = false, -- keep / search at cursor position, not a bottom bar
+			command_palette = true, -- merge cmdline + completion into a single popup
 			long_message_to_split = true,
-			inc_rename = true,
+			inc_rename = true, -- show rename preview in a noice input widget
 			lsp_doc_border = "rounded",
 		},
+		-- ── Notify ────────────────────────────────────────────────────────────────────
 		notify = {
 			enabled = true,
 			view = "notify",
 			replace = true,
 			merge = true,
 		},
+		-- Suppress noisy "No information available" hover notifications.
 		routes = {
 			{
 				filter = {
@@ -84,6 +102,8 @@ return {
 		messages = {
 			enabled = true,
 		},
+		-- ── Views ─────────────────────────────────────────────────────────────────────
+		-- Position the command palette near the top-center of the screen.
 		views = {
 			cmdline_popup = {
 				position = {
@@ -106,14 +126,16 @@ return {
 			},
 		}))
 	end,
+	-- ── Dependencies ──────────────────────────────────────────────────────────────
 	dependencies = {
 		{ "MunifTanjim/nui.nvim", lazy = true },
+		-- nvim-notify: renders notification pop-ups via noice's notify view.
 		{
 			"rcarriga/nvim-notify",
 			lazy = true,
 			opts = {
 				background_colour = "#000000",
-				top_down = false,
+				top_down = false, -- stack notifications upward from bottom-right
 				timeout = 1000,
 				render = "wrapped-compact",
 			},

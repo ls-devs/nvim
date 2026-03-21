@@ -1,12 +1,18 @@
+-- ── lspsaga ───────────────────────────────────────────────────────────────
+-- Purpose : Enhanced LSP UI — hover, rename, diagnostics, outline, call hierarchy
+-- Trigger : LspAttach
+-- ──────────────────────────────────────────────────────────────────────────
 return {
 	"glepnir/lspsaga.nvim",
 	event = "LspAttach",
 	opts = {
 		lightbulb = {
+			-- Code-action lightbulb is disabled; use <leader>ca explicitly instead
 			enable = false,
 			enable_in_insert = false,
 		},
 		symbol_in_winbar = {
+			-- Winbar breadcrumb is off; enabled per-project if needed
 			enable = false,
 			separator = "  ",
 			ignore_patterns = {},
@@ -29,6 +35,7 @@ return {
 			quit = "<C-k>",
 			exec = "<CR>",
 			mark = "x",
+			-- Open rename prompt with cursor at end, not with text pre-selected
 			in_select = false,
 		},
 		ui = {
@@ -44,7 +51,7 @@ return {
 		},
 		beacon = {
 			enable = true,
-			frequency = 7,
+			frequency = 7, -- number of cursor flashes when jumping to a diagnostic/location
 		},
 	},
 	dependencies = {
@@ -138,6 +145,7 @@ return {
 		{
 			"[d",
 			"<cmd>Lspsaga diagnostic_jump_prev<CR>",
+			desc = "LSPSaga Diagnostic Jump Prev",
 			silent = true,
 			noremap = true,
 		},
@@ -156,6 +164,8 @@ return {
 			noremap = true,
 		},
 		{
+			-- Routes through CustomHover (handles edge cases) before falling
+			-- back to Lspsaga hover_doc
 			"K",
 			require("ls-devs.utils.custom_functions").CustomHover,
 			desc = "LSP Hover Doc",

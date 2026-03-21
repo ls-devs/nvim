@@ -1,8 +1,16 @@
+-- ── NeoComposer.nvim ──────────────────────────────────────────────────────
+-- Purpose : Enhanced macro composer with floating UI, history, and sqlite persistence
+-- Trigger : keys — @, Q, <A-q>, <leader>q, <leader>yq, <leader>sq, <leader>qn/qp
+-- Note    : `q` is remapped to <Nop> in init so it doesn't start a raw recording;
+--           Q toggles recording, @ plays, <A-q>/<leader>q open the macro menu
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"ecthelionvi/NeoComposer.nvim",
 	opts = {
 		notify = true,
+		-- Milliseconds to wait before treating keystrokes as macro input
 		delay_timer = 150,
+		-- Always queue the most recently recorded macro for playback
 		queue_most_recent = true,
 		window = {
 			border = "rounded",
@@ -22,6 +30,7 @@ return {
 	},
 	config = function(_, opts)
 		local colors = require("catppuccin.palettes.mocha")
+		-- Merge catppuccin mocha palette into NeoComposer's color table at setup time
 		require("NeoComposer").setup(vim.tbl_deep_extend("force", opts, {
 			colors = {
 				bg = colors.base,
@@ -32,9 +41,11 @@ return {
 			},
 		}))
 		require("telescope").load_extension("macros")
+		-- Style the floating preview window to match the theme
 		vim.cmd("hi Preview guibg=" .. colors.surface0 .. " guifg=" .. colors.flamingo)
 	end,
 	init = function()
+		-- Disable the built-in `q` register-record key so NeoComposer owns recording via Q
 		vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
 	end,
 	keys = {
@@ -68,9 +79,18 @@ return {
 		{
 			"<A-q>",
 			function()
+				require("NeoComposer.ui").toggle_macro_menu()
+			end,
+			desc = "NeoComposer Toggle Macro Menu",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"Q",
+			function()
 				require("NeoComposer.macro").toggle_record()
 			end,
-			desc = "NeoComposer Record Macro",
+			desc = "NeoComposer Toggle Record",
 			silent = true,
 			noremap = true,
 		},

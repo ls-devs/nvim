@@ -1,3 +1,8 @@
+-- ── overseer ─────────────────────────────────────────────────────────────
+-- Purpose : Task runner / build system overlay for Neovim
+-- Trigger : cmd = OverseerRun / OverseerToggle / OverseerBuild / OverseerOpen / OverseerInfo
+-- Note    : Task form and output windows use rounded borders (toggleterm-style)
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"stevearc/overseer.nvim",
 	opts = {
@@ -40,6 +45,7 @@ return {
 	},
 	cmd = { "OverseerRun", "OverseerToggle", "OverseerBuild", "OverseerOpen", "OverseerInfo" },
 	keys = {
+		-- <leader>or — open the task picker and run a task
 		{
 			"<leader>or",
 			"<cmd>OverseerRun<CR>",
@@ -47,6 +53,7 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		-- <leader>ot — toggle the task list panel (docked left)
 		{
 			"<leader>ot",
 			"<cmd>OverseerToggle left<CR>",

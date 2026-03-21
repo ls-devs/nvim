@@ -1,3 +1,9 @@
+-- ── multiple-cursors.nvim ─────────────────────────────────────────────────
+-- Purpose : Multi-cursor editing with directional and match-based placement
+-- Trigger : keys — <C-Up/Down>, <leader>cj/ck/ac/AC/cn/CN/lc
+-- Note    : AC adds cursors at visible viewport matches; ac at all buffer matches;
+--           CN jumps to next match without adding a cursor (navigate-only)
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"brenton-leighton/multiple-cursors.nvim",
 	opts = {},
@@ -32,7 +38,7 @@ return {
 		},
 		{
 			"<Leader>AC",
-			"<Cmd>MultipleCursorsAddMatchesV<CR>",
+			"<Cmd>MultipleCursorsAddMatchesV<CR>", -- V variant: matches in visible viewport only
 			mode = { "n", "x" },
 			desc = "MultipleCursorsAddMatchesV",
 		},
@@ -44,7 +50,7 @@ return {
 		},
 		{
 			"<Leader>CN",
-			"<Cmd>MultipleCursorsJumpNextMatch<CR>",
+			"<Cmd>MultipleCursorsJumpNextMatch<CR>", -- jump to next match without placing a cursor
 			desc = "MultipleCursorsAddJumpNextMatch",
 		},
 		{

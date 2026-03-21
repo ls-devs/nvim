@@ -1,3 +1,11 @@
+-- ── toggleterm.nvim ──────────────────────────────────────────────────────
+-- Purpose : Floating terminal toggle
+-- Trigger : keys <C-\> (built-in open_mapping), <leader>z
+-- Note    : set_terminal_keymaps() is registered as a global (_G) so the
+--           TermOpen autocmd string can reference it without a module import.
+--           LazyGit runs in a dedicated Terminal instance via toggleterm's
+--           Terminal API (see utils/custom_functions.lua).
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"akinsho/toggleterm.nvim",
 	opts = {
@@ -28,6 +36,7 @@ return {
 		},
 	},
 	config = function(_, opts)
+		-- FloatBorder is coloured with catppuccin mocha blue to match the theme.
 		local colors = require("catppuccin.palettes.mocha")
 		require("toggleterm").setup(vim.tbl_deep_extend("force", opts, {
 			highlights = {
@@ -42,6 +51,8 @@ return {
 		}))
 	end,
 	init = function()
+		-- <C-x>=force-close terminal, <Esc>=enter normal mode,
+		-- <C-hjkl>=escape terminal mode and navigate to adjacent window.
 		function _G.set_terminal_keymaps()
 			local options = { noremap = true, silent = true, buffer = 0 }
 			vim.keymap.set("t", "<C-x>", [[<Cmd>q!<CR>]], options)

@@ -1,3 +1,10 @@
+-- ── mini.surround ─────────────────────────────────────────────────────────
+-- Purpose : Add, delete, replace, and highlight surrounding text objects
+-- Trigger : keys — gz (n/v)
+-- Note    : Remapped from default sa/sd prefix to gz* to avoid conflicts;
+--           gza=add, gzd=delete, gzf=find, gzF=find-left, gzh=highlight,
+--           gzr=replace, gzn=update n_lines
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"echasnovski/mini.surround",
 	opts = {

@@ -1,3 +1,10 @@
+-- ── tabby.nvim ───────────────────────────────────────────────────────────────
+-- Purpose : Custom tab line with active/inactive tab styling, smart tab name
+--           resolution, and a window indicator list for the current tab.
+-- Trigger : BufReadPost, BufWritePost, BufNewFile
+-- Note    : <leader>tn=new tab, <leader>tr=rename, <leader>to=only,
+--           <A-f>=next tab, <A-b>=prev tab, <leader>tmp/tmn=move tab.
+-- ─────────────────────────────────────────────────────────────────────────────
 local tabName = function(tab)
 	local tabName = tab.name()
 	local winid = vim.api.nvim_tabpage_get_win(tab.id)
@@ -5,15 +12,18 @@ local tabName = function(tab)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
 	local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
 
+	-- For tool windows (Overseer, neo-tree), use the filetype as the display name.
 	if string.find(file_type, "Overseer") or string.find(file_type, "neo") then
 		tabName = file_type
 	else
+		-- Truncate long filenames, preserving the extension (e.g. "very-long-name...ts").
 		if string.len(tabTail) > 25 then
 			local fileExt = string.match(tabTail, "[^.]+$")
 			tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
 		end
 	end
 
+	-- For floating terminals: strip the toggleterm numeric suffix to get a readable name.
 	if string.find(tabTail, "Floating") then
 		if vim.bo.filetype == "" then
 			local tail = vim.fn.expand("%:t")
@@ -29,6 +39,7 @@ local tabName = function(tab)
 		end
 	end
 
+	-- Strip the `[N+]` modified-count suffix appended by Neovim to tab names.
 	if tabName == "" then
 		tabName = string.gsub(tab.name(), "%[%d+%+%]", "")
 	end
@@ -49,6 +60,7 @@ return {
 					{ "   ", hl = { fg = colors.green, bg = colors.none } },
 				},
 				line.tabs().foreach(function(tab)
+					-- Active tab uses TabLineSel highlight; inactive tabs use TabLine.
 					local hl = tab.is_current() and "TabLineSel" or "TabLine"
 					return {
 						line.sep("", { bg = colors.surface0 }, { bg = colors.none }),
@@ -61,6 +73,7 @@ return {
 					}
 				end),
 				line.spacer(),
+				-- Window indicators for the current tab: focused vs unfocused window icons.
 				line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
 					return {
 						line.sep("", "TabLine", { bg = colors.none }),

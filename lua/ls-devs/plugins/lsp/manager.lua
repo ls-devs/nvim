@@ -1,3 +1,8 @@
+-- ── manager ───────────────────────────────────────────────────────────────
+-- Purpose : Tooling hub — Mason package installer, mason-lspconfig bridge,
+--           and nvim-lspconfig global diagnostics setup
+-- Trigger : MasonTools* commands (installer); BufReadPre / BufNewFile (lspconfig)
+-- ──────────────────────────────────────────────────────────────────────────
 return {
 	-- Global Mason Installer (LSP | LINTERS | FORMATTERS | DAPS)
 	{
@@ -11,7 +16,7 @@ return {
 		},
 		opts = {
 			ensure_installed = {
-				-- LSP
+				-- ── LSP servers ───────────────────────────────────────────────────
 				"eslint",
 				"sonarlint-language-server",
 				"jdtls",
@@ -49,7 +54,7 @@ return {
 				"kotlin_language_server",
 				"omnisharp",
 
-				-- Lintters
+				-- ── Linters ───────────────────────────────────────────────────────
 				"gitlint",
 				"djlint",
 				"jsonlint",
@@ -63,7 +68,7 @@ return {
 				"ktlint",
 				"codespell",
 
-				-- Formatters
+				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",
 				"markdownlint-cli2",
 				"cmakelang",
@@ -76,7 +81,7 @@ return {
 				"csharpier",
 				"shellharden",
 
-				-- Debuggers
+				-- ── Debuggers (DAP adapters) ──────────────────────────────────────
 				"debugpy",
 				"bash-debug-adapter",
 				"php-debug-adapter",
@@ -86,7 +91,9 @@ return {
 			},
 			auto_update = true,
 			run_on_start = true,
+			-- Defer installation 3 s after startup to avoid slowing initial load
 			start_delay = 3000,
+			-- Skip the update check if one already ran within the last 5 hours
 			debounce_hours = 5,
 		},
 	},
@@ -96,7 +103,11 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_installation = false,
-			automatic_enable = true,
+			automatic_enable = {
+				-- ts_ls is managed by typescript-tools.nvim; auto-enabling it
+				-- here would create a conflicting second client on TS/JS files
+				exclude = { "ts_ls" },
+			},
 		},
 		dependencies = {
 			-- Mason Core
@@ -105,6 +116,7 @@ return {
 				cmd = "Mason",
 				lazy = true,
 				opts = {
+					-- Suppress mason.nvim's verbose log output
 					log_level = vim.log.levels.OFF,
 					pip = {
 						upgrade_pip = true,
@@ -127,7 +139,9 @@ return {
 					-- vim.lsp.log.set_level("OFF")
 					require("lspconfig.ui.windows").default_options.border = "rounded"
 					vim.diagnostic.config({
+						-- Virtual text is off; lspsaga and diagflow handle diagnostic display
 						virtual_text = false,
+						-- Avoid diagnostic flicker while typing
 						update_in_insert = false,
 						underline = true,
 						severity_sort = true,

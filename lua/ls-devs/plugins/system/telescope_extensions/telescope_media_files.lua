@@ -1,3 +1,7 @@
+-- ── telescope-media-files.nvim ───────────────────────────────────────────
+-- Purpose : Preview images and other media files inside Telescope
+-- Trigger : keys <leader>tm
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"nvim-telescope/telescope-media-files.nvim",
 	keys = {

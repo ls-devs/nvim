@@ -1,4 +1,10 @@
 ---@diagnostic disable: undefined-global
+-- ── blink.cmp ────────────────────────────────────────────────────────────
+-- Purpose : Fast async completion engine with a Rust-backed fuzzy matcher
+-- Trigger : InsertEnter, CmdlineEnter
+-- Provides: LSP / snippet / Copilot / buffer / dotenv / cmdline completions
+-- Note    : Built with `cargo build --release`; blink.lib provides Rust fuzzy
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"saghen/blink.cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
@@ -28,6 +34,8 @@ return {
 	},
 	opts = {
 		enabled = function()
+			-- Disable during macro recording/playback to avoid polluting the register
+			-- and interfering with dot-repeat behaviour.
 			if vim.fn.reg_recording() ~= "" or vim.fn.reg_executing() ~= "" then
 				return false
 			end
@@ -43,7 +51,7 @@ return {
 				end
 			end
 			-- fallback: syntax group
-			local syn = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), true), "name")
+			local syn = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1), "name")
 			if syn:lower():find("comment") then
 				return false
 			end
@@ -52,6 +60,7 @@ return {
 
 		snippets = { preset = "luasnip" },
 
+		-- ── Keymaps ───────────────────────────────────────────────────────────
 		keymap = {
 			preset = "none",
 			["<C-k>"] = { "select_prev", "fallback" },
@@ -61,6 +70,7 @@ return {
 			["<C-Space>"] = { "show", "show_documentation", "fallback" },
 			["<C-e>"] = { "cancel", "fallback" },
 			["<CR>"] = { "accept", "fallback" },
+			-- Tab chains: select_next → snippet_forward → neotab.tabout (smart bracket escape)
 			["<Tab>"] = {
 				"select_next",
 				"snippet_forward",
@@ -76,6 +86,7 @@ return {
 			},
 		},
 
+		-- ── Cmdline ───────────────────────────────────────────────────────────
 		cmdline = {
 			keymap = {
 				preset = "cmdline",
@@ -86,12 +97,20 @@ return {
 			},
 			completion = {
 				ghost_text = { enabled = true },
+				trigger = {
+					show_on_blocked_trigger_characters = {},
+					show_on_x_blocked_trigger_characters = {},
+				},
 				list = {
 					selection = { preselect = true, auto_insert = true },
+				},
+				menu = {
+					auto_show = true,
 				},
 			},
 		},
 
+		-- ── Completion ────────────────────────────────────────────────────────
 		completion = {
 			accept = {
 				auto_brackets = { enabled = true },
@@ -105,6 +124,7 @@ return {
 			menu = {
 				border = "rounded",
 				scrollbar = false,
+				auto_show_delay_ms = 100, -- increased from 0 to reduce popup aggression on every keystroke
 				winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
 				-- noice.nvim wraps the cmdline in a bordered popup; blink's default formula
 				-- (ui_cmdline_pos[1] - 1) + 1 lands exactly on noice's bottom border row.
@@ -119,6 +139,7 @@ return {
 					return { vim.o.lines - height, 0 }
 				end,
 				draw = {
+					align_to = "cursor",
 					columns = {
 						{ "label" },
 						{ "source_name" },
@@ -220,13 +241,19 @@ return {
 					winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder",
 				},
 			},
-			ghost_text = { enabled = false },
+			ghost_text = { enabled = false }, -- off: Copilot suggestions appear inside the menu instead
 		},
 
+		-- ── Sources ───────────────────────────────────────────────────────────
+		-- Priority ladder: lazydev=100 (Lua API docs) > lsp=90 > snippets=85
+		--   > copilot=80 (AI fallback) > buffer=0 (no offset, plain text)
+		-- dotenv and sass-variables use score_offset=-5 so they only surface
+		-- when contextually relevant and don't pollute general results.
 		sources = {
-			default = { "copilot", "lsp", "lazydev", "snippets", "buffer", "dotenv" },
+			default = { "lsp", "snippets", "copilot", "buffer", "dotenv" },
 			per_filetype = {
 				gitcommit = { "buffer" },
+				lua = { inherit_defaults = true, "lazydev" }, -- lazydev: Neovim API / plugin type annotations (Lua only)
 				css = { inherit_defaults = true, "sass-variables" },
 				scss = { inherit_defaults = true, "sass-variables" },
 			},
@@ -239,7 +266,7 @@ return {
 				snippets = {
 					name = "Snippets",
 					module = "blink.cmp.sources.snippets",
-					score_offset = 80,
+					score_offset = 85,
 					max_items = 5,
 				},
 				buffer = {
@@ -250,7 +277,7 @@ return {
 				copilot = {
 					name = "copilot",
 					module = "blink-cmp-copilot",
-					score_offset = 100,
+					score_offset = 80,
 					async = true,
 				},
 				lazydev = {
@@ -271,9 +298,10 @@ return {
 			},
 		},
 
+		-- Use Rust fuzzy (blink.lib) when available; falls back to Lua with a warning.
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 
-		signature = { enabled = false },
+		signature = { enabled = false }, -- signature help is invoked manually via <C-s> instead of auto-show
 	},
 	config = function(_, opts)
 		vim.g.sass_variables_file = "_variables.scss"
@@ -284,5 +312,69 @@ return {
 
 		require("luasnip.loaders.from_vscode").lazy_load()
 		require("blink.cmp").setup(opts)
+
+		-- ── Noice Flash Workaround ────────────────────────────────────────────
+		-- blink.cmp creates floating windows at a placeholder position (row=1,col=1)
+		-- then calls update_position() separately. Noice's forced redraws
+		-- (vim.cmd.redraw / nvim__redraw) flush the screen between these two calls,
+		-- causing a visible flash at the wrong size/position.
+		-- Fix: intercept nvim_open_win to create blink windows hidden from birth,
+		-- and wrap docs.update_position to always hide→reposition→unhide atomically.
+		-- Re-entrancy guard prevents WinResized callbacks from nesting.
+		local win_mod = require("blink.cmp.lib.window")
+		local menu = require("blink.cmp.completion.windows.menu")
+		local docs = require("blink.cmp.completion.windows.documentation")
+
+		local _blink_hiding_win = false
+		local orig_nvim_open_win = vim.api.nvim_open_win
+		---@diagnostic disable-next-line: duplicate-set-field
+		vim.api.nvim_open_win = function(buf, enter, cfg)
+			if _blink_hiding_win then
+				cfg = vim.tbl_extend("force", cfg, { hide = true })
+			end
+			return orig_nvim_open_win(buf, enter, cfg)
+		end
+
+		local orig_win_open = win_mod.open
+		---@diagnostic disable-next-line: duplicate-set-field
+		win_mod.open = function(self)
+			local was_open = self:is_open()
+			if not was_open and (self == menu.win or self == docs.win) then
+				_blink_hiding_win = true
+				orig_win_open(self)
+				_blink_hiding_win = false
+			else
+				orig_win_open(self)
+			end
+			if was_open or not self.id then
+				return
+			end
+			if self == menu.win then
+				if menu.context ~= nil and menu.renderer ~= nil then
+					menu.update_position()
+				end
+				vim.api.nvim_win_set_config(self.id, { hide = false })
+			end
+		end
+
+		local orig_docs_update_position = docs.update_position
+		local docs_update_in_progress = false
+		---@diagnostic disable-next-line: duplicate-set-field
+		docs.update_position = function()
+			if docs_update_in_progress then
+				orig_docs_update_position()
+				return
+			end
+			local win_id = docs.win:is_open() and docs.win.id or nil
+			if win_id then
+				vim.api.nvim_win_set_config(win_id, { hide = true })
+			end
+			docs_update_in_progress = true
+			orig_docs_update_position()
+			docs_update_in_progress = false
+			if docs.win:is_open() and docs.win.id then
+				vim.api.nvim_win_set_config(docs.win.id, { hide = false })
+			end
+		end
 	end,
 }

@@ -1,15 +1,18 @@
+-- ── lsp/pyright ───────────────────────────────────────────────────────────
+-- Server  : pyright
+-- Language: Python
+-- Config  : Workspace-wide diagnostics, library type inference enabled
+-- ──────────────────────────────────────────────────────────────────────────
 return {
-  -- on_init = function(client)
-  --   client.config.settings.python.pythonPath =
-  --     require("ls-devs.utils.custom_functions").get_python_path(client.config.root_dir)
-  -- end,
-  settings = {
-    python = {
-      analysis = {
-        autoSearchPaths = true,
-        diagnosticMode = "workspace",
-        useLibraryCodeForTypes = true,
-      },
-    },
-  },
+	settings = {
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				-- Analyze all Python files in the workspace, not just open buffers
+				diagnosticMode = "workspace",
+				-- Infer types from installed library source when .pyi stubs are absent
+				useLibraryCodeForTypes = true,
+			},
+		},
+	},
 }

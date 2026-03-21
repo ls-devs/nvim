@@ -1,3 +1,9 @@
+-- ── telescope-import.nvim ────────────────────────────────────────────────
+-- Purpose : Fuzzy-search and insert import statements via Telescope
+-- Trigger : keys <leader>fi
+-- Note    : Custom regex + TS/JS filetype config lives in telescope.lua's
+--           extensions.import table. Imports are inserted at top of file.
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"piersolenski/telescope-import.nvim",
 	keys = {

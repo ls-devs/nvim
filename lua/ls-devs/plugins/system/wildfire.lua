@@ -1,3 +1,11 @@
+-- ── wildfire.nvim ────────────────────────────────────────────────────────
+-- Purpose : Incremental selection expansion by syntax nodes / surrounds
+-- Trigger : keys <C-Space> (expand), <BS> (shrink)
+-- Note    : <C-Space> does not conflict with blink.cmp — blink activates
+--           only in insert mode while wildfire operates in normal mode.
+--           nvim-treesitter's built-in incremental_selection is disabled
+--           in treesitter.lua to avoid keybinding collision.
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"sustech-data/wildfire.nvim",
 	keys = {

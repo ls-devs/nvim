@@ -1,3 +1,9 @@
+-- ── neogit ────────────────────────────────────────────────────────────────
+-- Purpose : Magit-style interactive git interface for Neovim
+-- Trigger : cmd = "Neogit"
+-- Note    : Integrates with diffview (diffs) and telescope (pickers).
+--           Popup borders are patched to rounded via User NeogitPopupShown.
+-- ──────────────────────────────────────────────────────────────────────────
 return {
 	"NeogitOrg/neogit",
 	cmd = "Neogit",
@@ -27,14 +33,16 @@ return {
 		{ "nvim-telescope/telescope.nvim", lazy = true },
 	},
 	opts = {
-		kind = "tab",
-		graph_style = "unicode",
+		kind = "tab", -- open neogit in a new tab for a full-screen experience
+		graph_style = "unicode", -- use Unicode box-drawing characters for the commit graph
 		disable_hint = false,
 		disable_context_highlighting = false,
 		disable_signs = false,
+		-- fzf native sorter for faster fuzzy matching in telescope pickers
 		telescope_sorter = function()
 			return require("telescope").extensions.fzf.native_fzf_sorter()
 		end,
+		-- delegate diff views to diffview.nvim, pickers to telescope
 		integrations = {
 			telescope = true,
 			diffview = true,
@@ -45,18 +53,19 @@ return {
 			section = { "", "" },
 		},
 		commit_editor = {
-			kind = "auto",
+			kind = "auto", -- pick split or tab based on available screen space
 			show_staged_diff = true,
-			staged_diff_split_kind = "split",
+			staged_diff_split_kind = "split", -- show staged diff in a horizontal split below the editor
 		},
 		popup = {
-			kind = "split",
+			kind = "split", -- action popups (push, pull, etc.) open as horizontal splits
 		},
 	},
 	config = function(_, opts)
 		require("neogit").setup(opts)
 
 		local neogit_border = "rounded"
+		-- Disable transparency for all neogit windows (winblend=0 = fully opaque)
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "Neogit*",
 			callback = function()
@@ -71,7 +80,7 @@ return {
 				local wins = vim.api.nvim_list_wins()
 				for _, win in ipairs(wins) do
 					local cfg = vim.api.nvim_win_get_config(win)
-					if cfg.relative ~= "" and cfg.border then
+					if cfg.relative ~= "" and cfg.border then -- floating windows have a non-empty relative anchor
 						vim.api.nvim_win_set_config(win, vim.tbl_extend("force", cfg, { border = neogit_border }))
 					end
 				end
@@ -79,6 +88,6 @@ return {
 		})
 	end,
 	cond = function()
-		return vim.fn.isdirectory(".git") == 1
+		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,
 }

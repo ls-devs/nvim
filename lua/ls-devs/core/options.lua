@@ -1,21 +1,35 @@
 ---@diagnostic disable: undefined-global
+-- ── core/options ─────────────────────────────────────────────────────────
+-- Purpose : Global Neovim options, keymaps, and environment-aware clipboard.
+-- Trigger : Loaded at startup by core/init.lua (before plugin bootstrap)
+-- ─────────────────────────────────────────────────────────────────────────
+
+-- ── Highlight Overrides ───────────────────────────────────────────────────
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
 vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#cdd6f4" })
 vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#89b4fa" })
 vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#fab387" })
 vim.api.nvim_set_hl(0, "Type", { fg = "#f9e2af" })
-vim.opt.whichwrap:append("<,>,[,],h,l")
-vim.opt.iskeyword:append("-")
+-- ── Cursor & Word Motion ──────────────────────────────────────────────────
+vim.opt.whichwrap:append("<,>,[,],h,l") -- allow h/l and arrow keys to cross line boundaries
+vim.opt.iskeyword:append("-") -- treat hyphenated-words as a single keyword token
+-- block cursor in normal/visual/command; thin bar in insert; horizontal bar in replace
 vim.opt.guicursor = "n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor"
 
+-- ── Leader Keys ───────────────────────────────────────────────────────────
 local opts = { noremap = true, silent = true }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.keymap.set("", "<Space>", "<Nop>", opts)
+vim.keymap.set("", "<Space>", "<Nop>", opts) -- prevent Space from moving the cursor when unused
+-- ── Clipboard Detection ───────────────────────────────────────────────────
+-- Three-branch detection: Docker (OSC 52), WSL (win32yank / PowerShell fallback),
+-- and bare Linux (unnamedplus via the system provider, applied at the bottom of this file).
 local in_docker = os.getenv("container") == "docker" or vim.fn.filereadable("/.dockerenv") == 1
 local in_wsl = vim.fn.has("wsl") == 1
 
+-- Branch 1 — Docker: no host clipboard access; emit OSC 52 escape sequences
+-- directly to stdout so the terminal emulator bridges yanks to the system clipboard.
 if in_docker then
 	local function copy_osc52(lines)
 		local text = table.concat(lines, "\n")
@@ -42,6 +56,8 @@ if in_docker then
 	}
 
 	vim.notify("📋 OSC 52 clipboard activé (Docker)", vim.log.levels.INFO)
+-- Branch 2 — WSL: prefer win32yank.exe for bidirectional clipboard access.
+-- Falls back to PowerShell clip.exe / Get-Clipboard when win32yank is not found.
 elseif in_wsl then
 	local win32yank_paths = {
 		"/usr/local/bin/win32yank",
@@ -99,31 +115,32 @@ elseif in_wsl then
 	end
 end
 
+-- ── Vim Options ───────────────────────────────────────────────────────────
 local options = {
 	background = "dark",
 	incsearch = true,
-	updatetime = 300,
-	timeoutlen = 300,
-	ttimeoutlen = 10,
+	updatetime = 300, -- ms before CursorHold fires (LSP hover, gitsigns); default is 4000
+	timeoutlen = 300, -- ms to wait for a mapped key sequence (also drives which-key popup delay)
+	ttimeoutlen = 10, -- near-instant key-code timeout for fast <Esc> recognition
 	backup = false,
-	showtabline = 2,
-	cmdheight = 0,
+	showtabline = 2, -- always show the tabline (required by tabby.nvim)
+	cmdheight = 0, -- hide the command line when idle; noice.nvim floats messages instead
 	wildmenu = true,
-	wildmode = "longest:full,full",
-	laststatus = 3,
-	completeopt = { "menuone", "popup", "noinsert" },
-	conceallevel = 2,
-	colorcolumn = "",
-	concealcursor = "nc",
+	wildmode = "longest:full,full", -- tab → complete to longest match; second tab → open full wildmenu
+	laststatus = 3, -- global statusline: single bar shared across all splits (Neovim 0.7+)
+	completeopt = { "menuone", "popup", "noinsert" }, -- blink.cmp: menu for single match, extra-info popup, no auto-insert
+	conceallevel = 2, -- replace concealed text with its defined char (needed by markview / render-markdown)
+	colorcolumn = "", -- no visual column-limit ruler
+	concealcursor = "nc", -- apply concealment in normal and command modes, but not in insert
 	linebreak = true,
 	breakindent = true,
-	breakindentopt = { "shift:2", "sbr" },
+	breakindentopt = { "shift:2", "sbr" }, -- indent wrapped lines by 2 extra spaces; "sbr" prefixes them with showbreak
 	fileencoding = "utf-8",
 	hlsearch = true,
 	ignorecase = true,
 	mouse = "a",
-	pumheight = 10,
-	showmode = false,
+	pumheight = 10, -- cap completion popup at 10 visible items
+	showmode = false, -- lualine renders the mode; built-in mode indicator is redundant
 	smartcase = true,
 	smartindent = true,
 	splitbelow = true,
@@ -137,18 +154,19 @@ local options = {
 	tabstop = 2,
 	cursorline = true,
 	number = true,
-	signcolumn = "yes:1",
-	scrolloff = 8,
-	sidescrolloff = 12,
-	winblend = 0,
-	pumblend = 0,
-	startofline = true,
+	signcolumn = "yes:1", -- always reserve 1 column for signs (prevents layout shift on diagnostics)
+	scrolloff = 8, -- keep 8 lines of context above/below the cursor
+	sidescrolloff = 12, -- keep 12 columns of context when scrolling horizontally
+	winblend = 0, -- no pseudo-transparency for floating windows
+	pumblend = 0, -- no pseudo-transparency for the popup menu
+	startofline = true, -- jump commands (G, gg, <C-d>, …) land on the first non-blank char
 	wrap = false,
-	foldcolumn = "1",
+	foldcolumn = "1", -- 1-char column used by nvim-ufo to render fold open/close icons
 	foldenable = true,
-	foldlevelstart = 99,
-	foldlevel = 99,
-	foldmethod = "manual",
+	foldlevelstart = 99, -- start every buffer with all folds open
+	foldlevel = 99, -- keep all folds open; nvim-ufo manages the actual fold state
+	foldmethod = "manual", -- nvim-ufo overrides fold computation; manual avoids conflicts with its extmarks
+	-- custom fold markers and box-drawing characters for window borders
 	fillchars = {
 		eob = " ",
 		foldsep = " ",
@@ -163,6 +181,7 @@ local options = {
 		vertright = "┣",
 		verthoriz = "╋",
 	},
+	-- "terminal" is intentionally excluded to prevent toggleterm windows from being restored
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 
@@ -170,4 +189,6 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
+-- Branch 3 (default) — bare Linux: sync all yank/paste with the system clipboard.
+-- Also applied globally so vim.g.clipboard providers (set above) are used for + and * registers.
 vim.opt.clipboard = "unnamedplus"

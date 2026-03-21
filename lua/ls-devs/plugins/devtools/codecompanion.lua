@@ -1,3 +1,11 @@
+-- ── codecompanion ────────────────────────────────────────────────────────
+-- Purpose : AI coding assistant with Copilot backend (chat, inline, cmd, CLI)
+-- Trigger : cmd = CodeCompanionChat / CodeCompanionActions / CodeCompanionCLI
+-- Provides: Chat (claude-sonnet-4.6), inline/cmd (gpt-4.1-mini), MCP tools,
+--           agent skills, custom prompt library
+-- ─────────────────────────────────────────────────────────────────────────
+
+-- Shared helpers used by all prompt library entries to extract buffer text.
 local function get_selected_lines(context)
 	local bufnr = context.bufnr or 0
 	local start_line = (context.start_line and context.start_line - 1) or 0
@@ -5,6 +13,7 @@ local function get_selected_lines(context)
 	return vim.api.nvim_buf_get_lines(bufnr, start_line, end_line, false)
 end
 
+-- Wraps buffer lines in a fenced code block for a given AI instruction.
 local function make_code_prompt(context, instruction)
 	local filetype = context.filetype or "text"
 	local lines = get_selected_lines(context)
@@ -31,6 +40,7 @@ return {
 				},
 			},
 		},
+		-- ── Copilot inline suggestions ───────────────────────────────────────
 		{
 			"zbirenbaum/copilot.lua",
 			event = "LspAttach",
@@ -102,9 +112,12 @@ return {
 		},
 		"cairijun/codecompanion-agentskills.nvim",
 	},
+	-- ── CodeCompanion setup ──────────────────────────────────────────────────
 	opts = {
+		-- ── Strategies (chat / inline / cmd) ─────────────────────────────────
 		interactions = {
 			chat = {
+				-- Flagship reasoning model for deep analysis and multi-turn chat.
 				adapter = {
 					name = "copilot",
 					model = "claude-sonnet-4.6",
@@ -121,12 +134,14 @@ return {
 				},
 			},
 			inline = {
+				-- Lightweight model for low-latency in-buffer edits.
 				adapter = {
 					name = "copilot",
 					model = "gpt-4.1-mini",
 				},
 			},
 			cmd = {
+				-- Same lightweight model as inline; keeps command-mode responses snappy.
 				adapter = {
 					name = "copilot",
 					model = "gpt-4.1-mini",
@@ -141,6 +156,7 @@ return {
 			},
 		},
 
+		-- ── Display options ───────────────────────────────────────────────────
 		display = {
 			input = {
 				title = "CodeCompanion CLI",
@@ -221,26 +237,31 @@ return {
 
 		log_level = "DEBUG",
 
+		-- ── Extensions ────────────────────────────────────────────────────────
 		extensions = {
+			-- ── MCP Hub extension ───────────────────────────────────────────────
 			mcphub = {
 				callback = "mcphub.extensions.codecompanion",
 				opts = {
-					make_vars = true,
-					make_slash_commands = true,
-					show_result_in_chat = true,
+					make_vars = true, -- expose MCP results as #variables in chat
+					make_slash_commands = true, -- register each MCP server as a slash command
+					show_result_in_chat = true, -- inject MCP output directly into the chat buffer
 				},
 			},
+			-- ── Agent skills extension ──────────────────────────────────────────
 			agentskills = {
 				opts = {
 					paths = {
-						{ "~/.agents/skills/", recursive = true },
-						{ ".agents/skills/", recursive = true },
+						{ "~/.agents/skills/", recursive = true }, -- user-global skills
+						{ ".agents/skills/", recursive = true }, -- project-local skills
 					},
 				},
 			},
 		},
 
+		-- ── Prompt library ────────────────────────────────────────────────────
 		prompt_library = {
+			-- /review — review for readability, performance, security, and best practices
 			["Code Review"] = {
 				strategy = "chat",
 				description = "Perform a code review",
@@ -271,6 +292,7 @@ return {
 				},
 			},
 
+			-- /optimize — suggest performance improvements while preserving readability
 			["Optimize"] = {
 				strategy = "chat",
 				description = "Optimize the selected code",
@@ -301,6 +323,7 @@ return {
 				},
 			},
 
+			-- /doc — insert inline docs/docstrings directly into the buffer (inline strategy)
 			["Document"] = {
 				strategy = "inline",
 				description = "Add documentation to the code",
@@ -330,6 +353,7 @@ return {
 					},
 				},
 			},
+			-- /explain — detailed line-by-line walkthrough of what the code does
 			["Explain the code"] = {
 				strategy = "chat",
 				description = "Explain in detail how the selected code works.",
@@ -359,6 +383,7 @@ return {
 					},
 				},
 			},
+			-- /refacto — restructure code for clarity without changing its logic
 			["Refactor for readability"] = {
 				strategy = "chat",
 				description = "Refactor the code to make it more readable and maintainable.",
@@ -388,6 +413,7 @@ return {
 					},
 				},
 			},
+			-- /exemple — generate realistic usage examples for the selected code
 			["Add usage examples"] = {
 				strategy = "chat",
 				description = "Provide usage examples for the selected code.",
@@ -417,6 +443,7 @@ return {
 					},
 				},
 			},
+			-- /traduire — port code to another language; auto_submit=false so target lang can be specified first
 			["Translate the code into another language"] = {
 				strategy = "chat",
 				description = "Translate the selected code into another language (to be specified).",
@@ -446,6 +473,7 @@ return {
 					},
 				},
 			},
+			-- /secure — identify and fix security vulnerabilities in the code
 			["Secure the code"] = {
 				strategy = "chat",
 				description = "Analyze and fix security vulnerabilities in the selected code.",
@@ -475,6 +503,7 @@ return {
 					},
 				},
 			},
+			-- /apidoc — generate structured API docs (docstrings, typed annotations)
 			["Generate API documentation"] = {
 				strategy = "chat",
 				description = "Generate complete API documentation for the selected code.",
@@ -504,6 +533,7 @@ return {
 					},
 				},
 			},
+			-- /assert — add input validation and defensive assertions
 			["Add assertions or checks"] = {
 				strategy = "chat",
 				description = "Add assertions or input checks to the selected code.",
@@ -533,6 +563,7 @@ return {
 					},
 				},
 			},
+			-- /resume — high-level summary of the main logic and structure
 			["Summarize the code"] = {
 				strategy = "chat",
 				description = "Provide a summary of the selected code.",
@@ -562,6 +593,7 @@ return {
 					},
 				},
 			},
+			-- /plantest — suggest unit, integration, and edge-case test scenarios
 			["Generate a test plan"] = {
 				strategy = "chat",
 				description = "Suggest a test plan for the selected code.",
@@ -591,6 +623,7 @@ return {
 					},
 				},
 			},
+			-- /impact — list dependencies and analyze blast radius of modifications
 			["Detect dependencies and impacts"] = {
 				strategy = "chat",
 				description = "List dependencies and potential impacts of the selected code.",

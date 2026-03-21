@@ -1,14 +1,21 @@
+-- ── diffview.nvim ─────────────────────────────────────────────────────────
+-- Purpose : Side-by-side diff viewer and file history browser
+-- Trigger : cmd = "Diffview*"
+-- Note    : File panel and history panel open as centered floats (100×24).
+--           The view_opened hook auto-opens the panel and forces laststatus=3.
+--           Toggle via DiffviewToggle in utils/custom_functions.lua.
+-- ──────────────────────────────────────────────────────────────────────────
 return {
 	"sindrets/diffview.nvim",
 
 	opts = {
 		diff_binaries = false,
-		enhanced_diff_hl = true,
+		enhanced_diff_hl = true, -- richer diff highlights via treesitter/LSP tokens
 		git_cmd = { "git" },
 		hg_cmd = { "hg" },
 		use_icons = true,
 		show_help_hints = true,
-		watch_index = true,
+		watch_index = true, -- auto-refresh diffs when the git index changes on disk
 		icons = {
 			folder_closed = "",
 			folder_open = "",
@@ -24,8 +31,8 @@ return {
 				winbar_info = false,
 			},
 			merge_tool = {
-				layout = "diff3_mixed",
-				disable_diagnostics = true,
+				layout = "diff3_mixed", -- base in centre, ours/theirs on either side
+				disable_diagnostics = true, -- suppress LSP noise during a 3-way merge
 				winbar_info = false,
 			},
 			file_history = {
@@ -36,9 +43,10 @@ return {
 		file_panel = {
 			listing_style = "tree",
 			tree_options = {
-				flatten_dirs = true,
-				folder_statuses = "only_folded",
+				flatten_dirs = true, -- collapse single-child dirs into one node
+				folder_statuses = "only_folded", -- show status icon only on collapsed dirs
 			},
+			-- Centered float, capped at 100 columns × 24 lines
 			win_config = function()
 				local c = { type = "float", border = "rounded" }
 				local editor_width = vim.o.columns
@@ -54,10 +62,10 @@ return {
 			log_options = {
 				git = {
 					single_file = {
-						diff_merges = "combined",
+						diff_merges = "combined", -- show all parents' diffs merged in one unified view
 					},
 					multi_file = {
-						diff_merges = "first-parent",
+						diff_merges = "first-parent", -- follow only the first-parent path for cleaner multi-file history
 					},
 				},
 				hg = {
@@ -65,6 +73,7 @@ return {
 					multi_file = {},
 				},
 			},
+			-- Centered float, capped at 100 columns × 24 lines
 			win_config = function()
 				local c = { type = "float", border = "rounded" }
 				local editor_width = vim.o.columns
@@ -77,16 +86,17 @@ return {
 			end,
 		},
 		hooks = {
+			-- Auto-open the file panel and restore global statusline on every diff view open
 			view_opened = function()
 				require("diffview.actions").toggle_files()
-				vim.cmd("set laststatus=3")
+				vim.cmd("set laststatus=3") -- single statusline shared across all windows
 			end,
 		},
 	},
 	cmd = "Diffview",
 	config = function(_, opts)
 		require("diffview").setup(opts)
-		require("diffview.ui.panel").Panel.default_config_float.border = "rounded"
+		require("diffview.ui.panel").Panel.default_config_float.border = "rounded" -- patch all floating panel borders to match the UI theme
 	end,
 	keys = {
 		{
@@ -98,6 +108,6 @@ return {
 		},
 	},
 	cond = function()
-		return vim.fn.isdirectory(".git") == 1
+		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,
 }

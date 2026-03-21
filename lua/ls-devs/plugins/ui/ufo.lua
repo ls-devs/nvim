@@ -1,10 +1,22 @@
+-- ── nvim-ufo ─────────────────────────────────────────────────────────────────
+-- Purpose : Enhanced folding with treesitter/LSP providers and virtual-text
+--           summaries showing the number of hidden lines per fold.
+-- Trigger : BufRead, BufNewFile
+-- Note    : statuscol.nvim renders the fold column (▼ open / ▶ closed).
+--           CustomHover in custom_functions.lua calls UFO's peek fold feature.
+--           zR/zM keymaps are wired in legendary.lua.
+--           UFO is re-enabled on SessionLoadPost via autocmd in legendary.lua.
+-- ─────────────────────────────────────────────────────────────────────────────
 return {
 	"kevinhwang91/nvim-ufo",
 	event = { "BufRead", "BufNewFile" },
 	opts = {
+		-- Use treesitter first; fall back to indent-based folding when no parser is available.
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }
 		end,
+		-- Appends a " 󱞤 N " count badge to the virtual text of each closed fold,
+		-- where N is the number of hidden lines. Remaining first-line text is truncated to fit.
 		fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 			local newVirtText = {}
 			local suffix = (" 󱞤 %d "):format(endLnum - lnum)
@@ -55,10 +67,11 @@ return {
 			},
 			config = function(_, opts)
 				require("statuscol").setup(vim.tbl_deep_extend("force", opts, {
+					-- Three-column status column: sign → line number → fold indicator.
 					segments = {
-						{ text = { "%s" }, click = "v:lua.ScSa" },
-						{ text = { require("statuscol.builtin").lnumfunc, " " }, click = "v:lua.ScLa" },
-						{ text = { require("statuscol.builtin").foldfunc, "  " }, click = "v:lua.ScFa" },
+						{ text = { "%s" }, click = "v:lua.ScSa" }, -- signs (diagnostics, git)
+						{ text = { require("statuscol.builtin").lnumfunc, " " }, click = "v:lua.ScLa" }, -- line numbers
+						{ text = { require("statuscol.builtin").foldfunc, "  " }, click = "v:lua.ScFa" }, -- fold column (▼/▶)
 					},
 				}))
 			end,

@@ -1,3 +1,9 @@
+-- ── catppuccin ────────────────────────────────────────────────────────────
+-- Purpose : Config-wide Catppuccin Mocha colorscheme with per-plugin integrations
+-- Trigger : VeryLazy; also listed in core/lazy.lua install.colorscheme for early load
+-- Note    : transparent_background exposes terminal transparency; highlights are
+--           compiled to ~/.cache/nvim/catppuccin for fast subsequent loads
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
@@ -9,12 +15,14 @@ return {
 				light = "latte",
 				dark = "mocha",
 			},
+			-- Allow terminal/compositor transparency to show through Neovim's background
 			transparent_background = true,
 			show_end_of_buffer = false,
 			term_colors = true,
 			no_italic = false,
 			no_bold = false,
 			no_underline = false,
+			-- All empty tables: no extra bold/italic decorations on any syntax token
 			styles = {
 				comments = {},
 				conditionals = {},
@@ -67,10 +75,6 @@ return {
 					DelayText = { bg = colors.none },
 					PlayingText = { bg = colors.none },
 					RecordingText = { bg = colors.none },
-					-- Leap
-					LeapBackdrop = { fg = colors.none },
-					LeapLabelPrimary = { bg = colors.red, fg = colors.base, style = { "bold" and "underline" } },
-					LeapLabelSecondary = { bg = colors.green, fg = colors.base, style = { "bold" and "underline" } },
 					-- Blink.cmp - white icons on colored backgrounds
 					BlinkCmpKindText = { fg = "#ffffff", bg = colors.green },
 					BlinkCmpKindMethod = { fg = "#ffffff", bg = colors.blue },
@@ -172,6 +176,7 @@ return {
 					AlphaShortcut = { fg = colors.peach },
 				}
 			end,
+			-- Enable built-in catppuccin highlight patches for each supported plugin
 			integrations = {
 				blink_cmp = true,
 				diffview = true,
@@ -187,7 +192,7 @@ return {
 				gitsigns = true,
 				treesitter = true,
 				notify = true,
-				leap = false,
+				flash = true,
 				alpha = true,
 				markview = true,
 				telescope = {
@@ -197,6 +202,7 @@ return {
 					enabled = true,
 				},
 			},
+			-- Compiled highlight definitions cached here for fast startup on subsequent loads
 			compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
 		})
 		vim.cmd.colorscheme("catppuccin")

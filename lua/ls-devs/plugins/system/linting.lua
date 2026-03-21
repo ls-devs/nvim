@@ -1,3 +1,8 @@
+-- ── nvim-lint ─────────────────────────────────────────────────────────────
+-- Purpose : On-demand linter runner, dispatches per-filetype linters
+-- Trigger : BufReadPost, BufNewFile (load); BufWritePost/BufReadPost/InsertLeave (run)
+-- Note    : codespell is toggled dynamically via <leader>cs in legendary.lua
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"mfussenegger/nvim-lint",
 	event = { "BufReadPost", "BufNewFile" },
@@ -6,10 +11,6 @@ return {
 		linters_by_ft = {
 			html = { "djlint" },
 			htmldjango = { "djlint" },
-			-- css = { "stylelint" },
-			-- scss = { "stylelint" },
-			-- sass = { "stylelint" },
-			-- less = { "stylelint" },
 			json = { "jsonlint" },
 			python = { "ruff" },
 			yaml = { "yamllint" },
@@ -38,14 +39,6 @@ return {
 			end
 		end
 
-		-- nvim_lint.linters["cpplint"] = vim.tbl_deep_extend("force", nvim_lint.linters["cpplint"], {
-		-- 	-- cmd = require("mason-registry").get_package("cpplint"):get_install_path() .. "/" .. "venv/bin/cpplint",
-		-- })
-
-		-- nvim_lint.linters["gitlint"] = vim.tbl_deep_extend("force", nvim_lint.linters["gitlint"], {
-		-- 	-- cmd = require("mason-registry").get_package("gitlint"):get_install_path() .. "/" .. "venv/bin/gitlint",
-		-- })
-
 		if opts.linters_by_ft then
 			nvim_lint.linters_by_ft = opts.linters_by_ft
 		end
@@ -54,10 +47,10 @@ return {
 			local names = nvim_lint._resolve_linter_by_ft(vim.bo.filetype)
 
 			if #names == 0 then
-				vim.list_extend(names, nvim_lint.linters_by_ft["_"] or {})
+				vim.list_extend(names, nvim_lint.linters_by_ft["_"] or {}) -- fallback linters for any filetype with no explicit mapping
 			end
 
-			vim.list_extend(names, nvim_lint.linters_by_ft["*"] or {})
+			vim.list_extend(names, nvim_lint.linters_by_ft["*"] or {}) -- global linters that run on every filetype
 
 			local ctx = { filename = vim.api.nvim_buf_get_name(0) }
 			ctx.dirname = vim.fn.fnamemodify(ctx.filename, ":h")
@@ -87,7 +80,7 @@ return {
 
 		vim.api.nvim_create_autocmd(opts.events, {
 			group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
-			callback = debounce(100, lint),
+			callback = debounce(100, lint), -- 100 ms debounce prevents thrashing on rapid buffer events
 		})
 	end,
 }

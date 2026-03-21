@@ -1,3 +1,11 @@
+-- ── legendary.nvim ───────────────────────────────────────────────────────
+-- Purpose : Central keymap/autocmd registry with frecency-sorted search
+-- Trigger : VeryLazy
+-- Note    : This is the primary keybinding hub — most global keymaps and
+--           autocmds live here rather than scattered across plugin specs.
+--           Requires sqlite.lua for frecency persistence.
+--           nvim_tree and op_nvim extensions are omitted (plugins not installed).
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"mrjones2014/legendary.nvim",
 	event = "VeryLazy",
@@ -74,6 +82,8 @@ return {
 					description = "Legendary functions",
 					opts = { noremap = true, silent = true },
 				},
+				-- ── Navigation Keymaps ───────────────────────────────────────────────
+				-- Every jump is augmented with `zz` to keep the cursor vertically centered.
 				{
 					"<C-d>",
 					"<C-d>zz",
@@ -142,6 +152,7 @@ return {
 					description = "Navigate Up & Center",
 					opts = { noremap = true, silent = true },
 				},
+				-- ── Visual Mode Keymaps ──────────────────────────────────────────────
 				{
 					"<A-j>",
 					{ v = "<cmd>m .+1<CR>==", x = "<cmd>move '>+1<CR>gv-gv" },
@@ -185,6 +196,7 @@ return {
 					description = "Help Grep",
 					opts = { noremap = true, silent = true },
 				},
+				-- ── Folding Keymaps ───────────────────────────────────────────────────
 				{
 					"zR",
 					function()
@@ -201,6 +213,7 @@ return {
 					description = "UFO Close All Folds",
 					opts = { noremap = true, silent = true },
 				},
+				-- ── LSP Keymaps ───────────────────────────────────────────────────────
 				{
 					"<C-s>",
 					mode = { "i", "n" },
@@ -211,6 +224,10 @@ return {
 					description = "LSP Signature Help",
 					opts = { noremap = true, silent = true },
 				},
+				-- ── Noice Keymaps ─────────────────────────────────────────────────────
+				-- <C-f>/<C-b> scroll floating doc windows; falls back to the original
+				-- mapping when no Noice window is active (expr = true).
+				-- <A-x> redirects the current cmdline output to a Noice popup.
 				{
 					"<C-f>",
 					function()
@@ -304,49 +321,18 @@ return {
 							end
 						else
 							vim.cmd("CodeCompanionCLI")
+							vim.schedule(function()
+								vim.cmd("startinsert")
+							end)
 						end
 					end,
 					description = "Toggle CodeCompanion CLI",
 					opts = { noremap = true, silent = true },
 				},
-				{
-					"<leader>ip",
-					function()
-						local venv = os.getenv("VIRTUAL_ENV")
-						if venv ~= nil then
-							venv = string.match(venv, "/.+/(.+)")
-							vim.cmd(("MoltenInit %s"):format(venv))
-						else
-							vim.cmd("MoltenInit python3")
-						end
-					end,
-					description = "Start Molten",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>ml",
-					":MoltenEvaluateLine<CR>",
-					description = "MoltenEvaluateLine",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>mv",
-					":<C-u>MoltenEvaluateVisual<CR>gv",
-					mode = { "v" },
-					description = "MoltenEvaluateVisual",
-					opts = { noremap = true, silent = true },
-				},
-				{
-					"<leader>mr",
-					":MoltenReevaluateCell<CR>",
-					description = "MoltenReevaluateCell",
-					opts = { noremap = true, silent = true },
-				},
 			},
 			extensions = {
 				lazy_nvim = { auto_register = true },
-				nvim_tree = true,
-				op_nvim = true,
+				-- Ctrl+hjkl = move focus, Alt+hjkl = resize pane, Ctrl+<leader>+hjkl = swap pane
 				smart_splits = {
 					directions = { "h", "j", "k", "l" },
 					mods = {
@@ -360,6 +346,7 @@ return {
 				},
 				diffview = true,
 			},
+			-- ── Autocmds ─────────────────────────────────────────────────────────────
 			autocmds = {
 				{
 					{ "InsertEnter", "InsertChange" },
@@ -369,6 +356,8 @@ return {
 					},
 					description = "Notify dismiss",
 				},
+				-- Prettierd runs as a persistent background daemon; stop it on exit to
+				-- avoid orphaned processes accumulating across editing sessions.
 				{
 					"VimLeave",
 					":silent !prettierd stop",
@@ -501,26 +490,8 @@ return {
 					},
 					description = "Vertical Help",
 				},
-				{
-					"User",
-					function()
-						vim.cmd.hi("Cursor", "guibg=black guifg=white")
-					end,
-					opts = {
-						pattern = "LeapEnter",
-					},
-					description = "Fix Cursor on LeapEnter",
-				},
-				{
-					"User",
-					function()
-						vim.cmd.hi("Cursor", "guibg=white guifg=#1e1e2e blend=0")
-					end,
-					opts = {
-						pattern = "LeapLeave",
-					},
-					description = "Fix Cursor on LeapLeave",
-				},
+				-- UFO loses fold state when a session is restored; re-enabling on
+				-- SessionLoadPost ensures folds work correctly after session load.
 				{
 					"User",
 					function()
@@ -531,6 +502,8 @@ return {
 					},
 					description = "Fix UFO with Sessions",
 				},
+				-- Restore cursor to the last-visited position when reopening a buffer.
+				-- The `"` mark is set automatically by Vim on every BufLeave.
 				{
 					"BufWinEnter",
 					function()
@@ -555,6 +528,9 @@ return {
 					},
 					description = "Reset Cursor on VimLeave",
 				},
+				-- Files on /mnt/* are WSL drvfs mounts where filetype detection,
+				-- Tree-sitter highlighting, and LSP don't fire reliably on BufRead.
+				-- This autocmd forces detection and startup with a small defer.
 				{
 					{ "BufEnter", "BufWinEnter", "BufReadPost" },
 					function(args)

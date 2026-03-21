@@ -1,11 +1,16 @@
+-- ── telescope.nvim ───────────────────────────────────────────────────────
+-- Purpose : Fuzzy finder for files, LSP, git, snippets, and more
+-- Trigger : cmd Telescope; <leader>ff/ft/fb/f*/g* keymaps
+-- Note    : Extensions loaded here at the end of config: fzf, noice, luasnip.
+--           Extra extensions (cmdline, emoji, import, media-files, nerdy)
+--           each call load_extension in their own spec under telescope_extensions/.
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
-		local lst = require("telescope").extensions.luasnip
-		local luasnip = require("luasnip")
 
 		telescope.setup({
 			defaults = {
@@ -54,6 +59,7 @@ return {
 			},
 			extensions = {
 				emoji = {
+					-- Selected emoji is yanked to the system clipboard register (*).
 					action = function(emoji)
 						vim.fn.setreg("*", emoji.value)
 						print([[Press p or "*p to paste this emoji ]] .. emoji.value)
@@ -65,8 +71,12 @@ return {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
+				-- search() uses lazy requires to avoid nil access when load_extension
+				-- is called before LuaSnip has fully initialized.
 				luasnip = {
 					search = function(entry)
+						local lst = require("telescope").extensions.luasnip
+						local luasnip = require("luasnip")
 						return lst.filter_null(entry.context.trigger)
 							.. " "
 							.. lst.filter_null(entry.context.name)

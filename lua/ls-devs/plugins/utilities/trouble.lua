@@ -1,21 +1,27 @@
+-- ── trouble.nvim ──────────────────────────────────────────────────────────
+-- Purpose : Pretty diagnostics list panel (v3 API)
+-- Trigger : cmd — Trouble; keys — <leader>v
+-- Note    : Uses `Trouble diagnostics toggle` (v3 API); TroubleToggle is deprecated v2
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"folke/trouble.nvim",
 	dependencies = { { "nvim-tree/nvim-web-devicons", lazy = true } },
 	opts = {
+		-- Automatically close the panel when the diagnostics list becomes empty
 		auto_close = true,
-		auto_fold = true,
 		auto_preview = false,
 		use_diagnostic_signs = true,
-		action_keys = {
-			toggle_fold = { "zA", "za", "l" }, -- toggle fold of current filetoggle_fold = {"zA", "za"}, -- toggle fold of current file
+		keys = {
+			-- Rebind `l` (normally move-right) to fold toggle inside the trouble buffer
+			["l"] = "fold_toggle",
 		},
 	},
 	cmd = "Trouble",
 	keys = {
 		{
 			"<leader>v",
-			"<cmd>TroubleToggle<CR>",
-			desc = "TroubleToggle",
+			"<cmd>Trouble diagnostics toggle<CR>",
+			desc = "Trouble Toggle",
 			silent = true,
 			noremap = true,
 		},

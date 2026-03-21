@@ -1,7 +1,14 @@
+-- ── alpha-nvim ────────────────────────────────────────────────────────────
+-- Purpose : Dashboard / startup screen shown on VimEnter
+-- Trigger : VimEnter
+-- Note    : AlphaHeader, AlphaButtons, AlphaShortcut highlights are defined
+--           in catppuccin.lua custom_highlights
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
 	config = function()
+		-- Hide statusline and tabline while on the dashboard; restore both on buffer unload
 		vim.api.nvim_exec2(
 			[[autocmd FileType alpha set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3]],
 			{ output = false }
@@ -14,6 +21,7 @@ return {
 		local dashboard = require("alpha.themes.dashboard")
 		local version = vim.version()
 		local lazy = require("lazy")
+		-- ASCII "FACTORY" art; current Neovim semver is appended on the last line
 		local logo = [[
 		███████╗ █████╗  ██████╗████████╗ ██████╗ ██████╗ ██╗   ██╗
 		██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗ ██╔╝
@@ -23,7 +31,9 @@ return {
 		╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
 ]] .. "\n" .. [[                             ]] .. version.major .. [[.]] .. version.minor .. [[.]] .. version.patch
 
+		-- ── Header ──────────────────────────────────────────────────────────────
 		dashboard.section.header.val = vim.split(logo, "\n")
+		-- ── Buttons ─────────────────────────────────────────────────────────────
 		dashboard.section.buttons.val = {
 			dashboard.button("e", "󰙅 " .. " File System", "<cmd>Neotree float<CR>"),
 			dashboard.button(
@@ -44,17 +54,22 @@ return {
 			dashboard.button("m", "󱧕 " .. " Mason", "<cmd>Mason<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 		}
+		-- Apply highlight groups to every button; groups are defined in catppuccin.lua
 		for _, button in ipairs(dashboard.section.buttons.val) do
 			button.opts.hl = "AlphaButtons"
 			button.opts.hl_shortcut = "AlphaShortcut"
 		end
+		-- ── Highlights ───────────────────────────────────────────────────────────
 		dashboard.section.footer.opts.hl = "Type"
 		dashboard.section.header.opts.hl = "AlphaHeader"
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
+		-- Padding rows above the header art (layout[1] is the top margin group)
 		dashboard.opts.layout[1].val = 8
 
+		-- Prevent mini.indentscope from drawing scope lines on the alpha buffer
 		vim.b.miniindentscope_disable = true
 
+		-- If Lazy was open when Neovim launched, reopen it once alpha finishes rendering
 		if vim.o.filetype == "lazy" then
 			vim.cmd.close()
 			vim.api.nvim_create_autocmd("User", {
@@ -67,13 +82,19 @@ return {
 
 		require("alpha").setup(dashboard.opts)
 
+		-- Populate footer with plugin count and startup time once lazy.nvim finishes loading
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "LazyVimStarted",
 			callback = function()
 				local stats = lazy.stats()
 				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 				dashboard.section.footer.val = "⚡ Loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+				local cursor = vim.api.nvim_win_get_cursor(0)
+				local guicursor = vim.o.guicursor
+				vim.o.guicursor = "a:noCursor"
 				pcall(vim.cmd.AlphaRedraw)
+				vim.api.nvim_win_set_cursor(0, cursor)
+				vim.o.guicursor = guicursor
 			end,
 		})
 	end,

@@ -1,7 +1,10 @@
 ---@diagnostic disable: undefined-global
--- Native blink.cmp source for .env* files in the current workspace.
--- Reads all .env* files from cwd, parses KEY=VALUE pairs, and returns
--- them as completions with the value shown as documentation.
+-- ── dotenv_source ────────────────────────────────────────────────────────
+-- Purpose : Custom blink.cmp source that reads .env* files from the project root
+-- Provides: KEY=VALUE pairs as completion items; values shown as documentation
+-- Note    : NOT a lazy.nvim spec — loaded by blink_cmp.lua via
+--             `module = "ls-devs.plugins.completion.completion_modules.dotenv_source"`
+-- ─────────────────────────────────────────────────────────────────────────
 local source = {}
 
 function source.new()

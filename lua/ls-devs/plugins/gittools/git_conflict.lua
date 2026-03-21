@@ -1,3 +1,9 @@
+-- ── git-conflict.nvim ─────────────────────────────────────────────────────
+-- Purpose : Visual conflict resolution with choose-ours/theirs/both/none
+-- Trigger : event = { "BufReadPost", "BufNewFile" }
+-- Note    : default_mappings=false; all keymaps use <leader>gc* prefix and
+--           ]x/[x for next/prev conflict navigation.
+-- ──────────────────────────────────────────────────────────────────────────
 return {
 	"akinsho/git-conflict.nvim",
 	event = { "BufReadPost", "BufNewFile" },
@@ -36,16 +42,17 @@ return {
 		{ "<leader>gcl", "<cmd>GitConflictListQf<cr>", desc = "Git Conflict: List All", noremap = true, silent = true },
 	},
 	opts = {
-		default_mappings = false,
+		default_mappings = false, -- all resolution keymaps are defined manually in the keys table above
 		default_commands = true,
 		disable_diagnostics = false,
-		list_opener = "copen",
+		list_opener = "copen", -- open conflict list in the standard quickfix window
+		-- reuse built-in diff highlight groups for conflict marker highlighting
 		highlights = {
 			incoming = "DiffAdd",
 			current = "DiffText",
 		},
 	},
 	cond = function()
-		return vim.fn.isdirectory(".git") == 1
+		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,
 }

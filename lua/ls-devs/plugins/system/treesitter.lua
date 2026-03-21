@@ -1,3 +1,11 @@
+-- ── nvim-treesitter ───────────────────────────────────────────────────────
+-- Purpose : Syntax parsing, highlighting, indentation, and text objects
+-- Trigger : event BufReadPre/BufNewFile, cmd TSUpdate/TSInstall
+-- Note    : incremental_selection is disabled here; wildfire.nvim owns
+--           <C-Space> incremental selection to avoid keybinding collision.
+--           nvim-various-textobjs (dependency) extends text objects well
+--           beyond what nvim-treesitter-textobjects provides alone.
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"nvim-treesitter/nvim-treesitter",
 	cmd = { "TSUpdate", "TSInstall" },
@@ -186,6 +194,7 @@ return {
 				},
 			},
 		},
+		-- Disabled: wildfire.nvim owns <C-Space> incremental selection instead.
 		incremental_selection = {
 			enable = false,
 			keymaps = {
@@ -219,6 +228,10 @@ return {
 	},
 	dependencies = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
+		-- Provides an extensive set of extra text objects: indentation (ii/ai),
+		-- subword (iS/aS), quotes (iq/aq), brackets (io/ao), key/value (ik/ak),
+		-- URL (gx), fold (iz/az), chain member (im/am), and many language-specific
+		-- objects (markdown, Python, CSS, HTML, shell pipe, wikilinks).
 		{
 			"chrisgrieser/nvim-various-textobjs",
 			lazy = true,
@@ -434,6 +447,9 @@ return {
 						require("various-textobjs").key("outer")
 					end,
 				},
+				-- Smart URL handler: tries url() textobj on cursor first.
+				-- If a URL is visually selected it opens directly via OpenURLs().
+				-- Otherwise scans the whole buffer for URLs and prompts to pick one.
 				{
 					"gx",
 					mode = { "o", "x", "n" },
@@ -530,6 +546,13 @@ return {
 						require("various-textobjs").restOfWindow()
 					end,
 				},
+				-- ── Language-specific text objects (buffer-local) ───────────────────────
+				-- Markdown: il/al=link, ie/ae=emphasis, iC/aC=fenced-code-block
+				-- Python:   iy/ay=triple-quotes
+				-- CSS:      is/as=selector
+				-- HTML:     ix/ax=attribute
+				-- Wikilink: iD/aD=double-square-brackets
+				-- Shell:    iP/aP=pipe segment
 				{
 					"il",
 					mode = { "o", "x" },

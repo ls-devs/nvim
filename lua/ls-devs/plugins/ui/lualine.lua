@@ -1,3 +1,9 @@
+-- ── lualine ──────────────────────────────────────────────────────────────────
+-- Purpose : Custom status line; all content placed in lualine_c (left) and
+--           lualine_x (right). Sections A, B, Y, Z are intentionally empty.
+-- Trigger : VeryLazy
+-- Note    : Colors sourced from catppuccin-mocha palette at config time.
+-- ─────────────────────────────────────────────────────────────────────────────
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
@@ -8,6 +14,7 @@ return {
 		local lualine = require("lualine")
 		local colors = require("catppuccin.palettes.mocha")
 
+		-- Visibility guards used as `cond` predicates on individual components.
 		local conditions = {
 			buffer_not_empty = function()
 				return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
@@ -22,6 +29,8 @@ return {
 			end,
 		}
 
+		-- ── Theme ────────────────────────────────────────────────────────────────────
+		-- Mode-specific segment colors: section A (active pill) + B (breadcrumb band).
 		local config = {
 			options = {
 				component_separators = "",
@@ -67,6 +76,7 @@ return {
 
 				disabled_filetypes = { "alpha" },
 			},
+			-- All standard sections cleared; content injected via ins_left/ins_right helpers.
 			sections = {
 				lualine_a = {},
 				lualine_b = {},
@@ -85,6 +95,8 @@ return {
 			},
 		}
 
+		-- ── Layout helpers ────────────────────────────────────────────────────────────
+		-- Appends a component to the left (lualine_c) or right (lualine_x) side.
 		local function ins_left(component)
 			table.insert(config.sections.lualine_c, component)
 		end
@@ -93,6 +105,8 @@ return {
 			table.insert(config.sections.lualine_x, component)
 		end
 
+		-- ── Left section ─────────────────────────────────────────────────────────────
+		-- ● Mode indicator: color-coded dot, changes color per vim mode.
 		ins_left({
 			function()
 				return " "
@@ -124,6 +138,7 @@ return {
 			padding = { left = 1, right = 2 },
 		})
 
+		-- Git branch name (truncated to 25 chars to avoid overflow).
 		ins_left({
 			fmt = function(str)
 				if string.len(str) >= 25 then
@@ -144,6 +159,7 @@ return {
 			padding = { left = 0, right = 1 },
 		})
 
+		-- Git diff stats (added/modified/removed); hidden on narrow windows (<80 cols).
 		ins_left({
 			"diff",
 			symbols = { added = " ", modified = " ", removed = " " },
@@ -155,6 +171,7 @@ return {
 			cond = conditions.hide_in_width,
 		})
 
+		-- Pending plugin update count from lazy.nvim; hidden when up-to-date.
 		ins_left({
 			function()
 				return require("lazy.status").updates()
@@ -163,6 +180,8 @@ return {
 			color = { fg = colors.peach },
 		})
 
+		-- ── Right section ────────────────────────────────────────────────────────────
+		-- Active NeoComposer macro recording indicator (empty when not recording).
 		ins_right({
 			function()
 				return require("NeoComposer.ui").status_recording()
@@ -170,6 +189,8 @@ return {
 			padding = { left = 0, right = 1 },
 		})
 
+		-- Active LSP name: prefers a server whose name matches the filetype;
+		-- falls back to the last attached client. Truncated at 17 chars.
 		ins_right({
 			function()
 				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
@@ -198,6 +219,7 @@ return {
 			icon = " ",
 		})
 
+		-- Active linter name from nvim-lint for the current filetype (first entry only).
 		ins_right({
 			function()
 				local linter = require("lint").linters_by_ft[vim.bo.filetype]
@@ -228,6 +250,7 @@ return {
 			end,
 		})
 
+		-- Cursor position (line:col) and scroll percentage through the file.
 		ins_right({ "location", color = { fg = colors.text, gui = "bold" } })
 		ins_right({ "progress", color = { fg = colors.text, gui = "bold" } })
 
@@ -243,6 +266,7 @@ return {
 			color = { fg = colors.green, gui = "bold" },
 		})
 
+		-- Live clock (HH:MM:SS); hidden on narrow windows (<80 cols).
 		ins_right({
 			function()
 				return os.date("%H:%M:%S", os.time())

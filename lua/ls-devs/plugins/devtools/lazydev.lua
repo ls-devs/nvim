@@ -1,3 +1,11 @@
+-- ── lazydev.nvim ──────────────────────────────────────────────────────────
+-- Purpose : Lua type annotations and completions for Neovim config/plugin code
+-- Trigger : ft = lua
+-- Provides: LuaLS library augmentation, type hints for Neovim APIs
+-- Note    : Library list is explicitly curated to match plugins installed in
+--           this config; integrates with blink.cmp via the lazydev source
+--           (cmp = false because this config uses blink.cmp, not nvim-cmp)
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"folke/lazydev.nvim",
 	ft = "lua",
@@ -22,15 +30,12 @@ return {
 			"toggleterm.nvim",
 			"catppuccin",
 			"plenary.nvim",
-			"neotest",
 			"fidget.nvim",
 			"alpha-nvim",
 			"nvim-web-devicons",
 			"lualine.nvim",
 			"nvim-various-textobjs",
-			"obsidian.nvim",
 			"diffview.nvim",
-			"neorg",
 			"statuscol.nvim",
 			"neotab.nvim",
 			"nvim-ufo",

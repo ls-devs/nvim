@@ -1,3 +1,8 @@
+-- ── conform ───────────────────────────────────────────────────────────────
+-- Purpose : Code formatter dispatcher — delegates to per-filetype formatters
+-- Trigger : BufWritePre (load), ConformInfo cmd; manual format via <leader>fm
+-- Note    : format_on_save=false is intentional — use <leader>fm to format manually
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
@@ -15,7 +20,7 @@ return {
 	opts = {
 		log_level = vim.log.levels.ERROR,
 		notify_on_error = true,
-		format_on_save = false,
+		format_on_save = false, -- intentional: use <leader>fm to format manually
 		formatters_by_ft = {
 			html = { "prettierd" },
 			htmldjango = { "djlint" },
@@ -41,7 +46,7 @@ return {
 			sh = { "shellharden" },
 			python = { "black" },
 			prisma = { "prisma" },
-			["_"] = { "trim_whitespace" },
+			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 	},
 	config = function(_, opts)
@@ -50,9 +55,9 @@ return {
 				prisma = {
 					command = "prisma",
 					args = { "format" },
-					stdin = false,
+					stdin = false, -- prisma format reads from disk, not stdin
 					cwd = require("conform.util").root_file({ "schema.prisma" }),
-					require_cwd = true,
+					require_cwd = true, -- skip formatting if no schema.prisma is found in the project
 				},
 			},
 		}))

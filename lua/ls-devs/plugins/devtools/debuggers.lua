@@ -1,29 +1,43 @@
+-- ── nvim-dap-ui ───────────────────────────────────────────────────────────
+-- Purpose : Full DAP debugging ecosystem for Neovim
+-- Trigger : keys (<leader>bb / <leader>un / <leader>ut / <leader>uo / <leader>uc)
+-- Provides: nvim-dap (protocol client), nvim-dap-ui (visual panels),
+--           nvim-dap-virtual-text (inline variable values in source)
+-- Note    : mason-nvim-dap (configured in manager.lua) handles adapter
+--           auto-setup; JS/TS adapters use pwa-node/pwa-chrome from
+--           js-debug-adapter (installed via Mason)
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"rcarriga/nvim-dap-ui",
 	config = function()
 		require("dapui").setup()
 		local dap, dapui = require("dap"), require("dapui")
+		-- Auto-open UI and refresh virtual text when a debug session initialises
 		dap.listeners.after.event_initialized["dapui_config"] = function()
 			dapui.open()
 			require("nvim-dap-virtual-text").refresh()
 		end
 
+		-- Auto-close on explicit disconnect (e.g. detach from process)
 		dap.listeners.after.disconnect["dapui_config"] = function()
 			require("dap.repl").close()
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
 
+		-- Auto-close when the debuggee process terminates normally
 		dap.listeners.before.event_terminated["dapui_config"] = function()
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
 
+		-- Auto-close when the debuggee process exits with a code
 		dap.listeners.before.event_exited["dapui_config"] = function()
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
 		end
 
+		-- Gutter signs for breakpoint variants
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 		vim.fn.sign_define(
 			"DapBreakpointCondition",
@@ -36,6 +50,7 @@ return {
 			"mfussenegger/nvim-dap",
 			config = function()
 				local dap = require("dap")
+				-- pwa-node / pwa-chrome configs applied to all JS/TS-family filetypes
 				for _, language in ipairs({
 					"typescript",
 					"javascript",
@@ -115,7 +130,7 @@ return {
 				-- },
 				{
 					"Joakker/lua-json5",
-					build = "./install.sh",
+					build = "./install.sh", -- enables launch.json with JSON5 syntax (comments, trailing commas)
 				},
 			},
 		},
@@ -140,7 +155,7 @@ return {
 					end
 				end,
 
-				virt_text_pos = vim.fn.has("nvim-0.10") == 1 and "inline" or "eol",
+				virt_text_pos = vim.fn.has("nvim-0.10") == 1 and "inline" or "eol", -- inline requires Neovim ≥ 0.10
 
 				all_frames = false,
 				virt_lines = false,
@@ -149,6 +164,7 @@ return {
 		},
 	},
 	keys = {
+		-- UI toggle
 		{
 			"<leader>uo",
 			mode = { "n" },
@@ -166,6 +182,7 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		-- Session control
 		{
 			"<leader>un",
 			":DapContinue<CR>",
@@ -180,6 +197,7 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		-- Breakpoints
 		{
 			"<leader>bb",
 			":DapToggleBreakpoint<CR>",

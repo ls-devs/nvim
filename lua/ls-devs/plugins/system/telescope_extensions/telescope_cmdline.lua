@@ -1,3 +1,7 @@
+-- ── telescope-cmdline.nvim ───────────────────────────────────────────────
+-- Purpose : Fuzzy-search Vim commands while typing, via a Telescope picker
+-- Trigger : keys <leader>fcm
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"jonarrien/telescope-cmdline.nvim",
 	keys = {

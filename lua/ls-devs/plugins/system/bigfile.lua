@@ -1,14 +1,14 @@
+-- ── bigfile ───────────────────────────────────────────────────────────────
+-- Purpose : Disables heavy features (treesitter, LSP, indent, etc.) for large files
+-- Trigger : BufReadPre
+-- Note    : filesize is in MB; previously used a broken cond — now event-based
+-- ─────────────────────────────────────────────────────────────────────────
 return {
 	"LunarVim/bigfile.nvim",
-	cond = function()
-		local file = vim.fn.expand("%:p")
-		if file == "" then
-			return false
-		end
-		local stat = vim.uv.fs_stat(file)
-		return stat and stat.size > 6 * 1024 * 1024
-	end,
+	event = "BufReadPre",
 	config = function()
-		require("bigfile").enable()
+		require("bigfile").setup({
+			filesize = 6, -- threshold in MB; above this, heavy features like treesitter and LSP are disabled
+		})
 	end,
 }
