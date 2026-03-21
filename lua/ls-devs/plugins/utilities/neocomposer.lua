@@ -46,7 +46,7 @@ return {
 	end,
 	init = function()
 		-- Disable the built-in `q` register-record key so NeoComposer owns recording via Q
-		vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
+		vim.keymap.set("n", "q", "<Nop>", { noremap = true, silent = true })
 	end,
 	keys = {
 		{

@@ -193,6 +193,7 @@ return {
 				treesitter = true,
 				notify = true,
 				flash = true,
+				trouble = true,
 				alpha = true,
 				markview = true,
 				telescope = {

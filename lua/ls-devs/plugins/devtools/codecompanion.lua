@@ -89,7 +89,7 @@ return {
 					if git_dir then
 						return vim.fs.dirname(git_dir)
 					else
-						return vim.loop.cwd()
+						return vim.uv.cwd()
 					end
 				end,
 				should_attach = function(_, _)
