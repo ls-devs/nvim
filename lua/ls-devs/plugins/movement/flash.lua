@@ -12,10 +12,26 @@ return {
 		-- beyond that flash falls back to two-character label pairs automatically
 		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
 		label = {
-			-- rainbow hue-shifts labels by distance using catppuccin's FlashLabel
-			-- highlight as the base colour — nearby labels = warm end of the palette,
-			-- distant labels = cool end; shade 5 is a visible but not garish gradient
-			rainbow = { enabled = true, shade = 5 },
+			-- built-in rainbow uses HSL hue-rotation which ignores the catppuccin
+			-- palette; disabled here — FlashRainbow1-7 are defined in catppuccin.lua
+			-- custom_highlights and assigned below via label.format
+			rainbow = { enabled = false },
+			-- cycle through 7 catppuccin accent colours in label-index order so
+			-- the first ~7 labels are visually distinct and palette-consistent
+			format = function(opts)
+				local hls = {
+					"FlashRainbow1",
+					"FlashRainbow2",
+					"FlashRainbow3",
+					"FlashRainbow4",
+					"FlashRainbow5",
+					"FlashRainbow6",
+					"FlashRainbow7",
+				}
+				local labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM"
+				local idx = (string.find(labels, opts.label, 1, true) or 1)
+				return { { opts.label, hls[((idx - 1) % #hls) + 1] } }
+			end,
 		},
 		modes = {
 			-- char mode replaces native f/t/F/T: shows label hints for repeated

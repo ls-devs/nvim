@@ -174,6 +174,15 @@ return {
 					AlphaHeader = { fg = colors.text },
 					AlphaButtons = { fg = colors.blue },
 					AlphaShortcut = { fg = colors.peach },
+					-- Flash rainbow labels — 7 stops across the catppuccin accent palette;
+					-- assigned in order by label index via flash's label.format function
+					FlashRainbow1 = { fg = colors.base, bg = colors.red, bold = true },
+					FlashRainbow2 = { fg = colors.base, bg = colors.peach, bold = true },
+					FlashRainbow3 = { fg = colors.base, bg = colors.yellow, bold = true },
+					FlashRainbow4 = { fg = colors.base, bg = colors.green, bold = true },
+					FlashRainbow5 = { fg = colors.base, bg = colors.teal, bold = true },
+					FlashRainbow6 = { fg = colors.base, bg = colors.blue, bold = true },
+					FlashRainbow7 = { fg = colors.base, bg = colors.mauve, bold = true },
 				}
 			end,
 			-- Enable built-in catppuccin highlight patches for each supported plugin
