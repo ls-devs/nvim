@@ -174,16 +174,6 @@ return {
 					AlphaHeader = { fg = colors.text },
 					AlphaButtons = { fg = colors.blue },
 					AlphaShortcut = { fg = colors.peach },
-					-- Flash rainbow: override the FlashLabel1-7 groups that flash creates
-					-- for its distance-based gradient with catppuccin accent colours
-					-- (red=nearest → peach → yellow → green → teal → blue → mauve=farthest)
-					FlashLabel1 = { fg = colors.base, bg = colors.red, bold = true },
-					FlashLabel2 = { fg = colors.base, bg = colors.peach, bold = true },
-					FlashLabel3 = { fg = colors.base, bg = colors.yellow, bold = true },
-					FlashLabel4 = { fg = colors.base, bg = colors.green, bold = true },
-					FlashLabel5 = { fg = colors.base, bg = colors.teal, bold = true },
-					FlashLabel6 = { fg = colors.base, bg = colors.blue, bold = true },
-					FlashLabel7 = { fg = colors.base, bg = colors.mauve, bold = true },
 				}
 			end,
 			-- Enable built-in catppuccin highlight patches for each supported plugin

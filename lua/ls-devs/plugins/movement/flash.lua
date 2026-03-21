@@ -9,22 +9,44 @@ return {
 	"folke/flash.nvim",
 	config = function(_, opts)
 		require("flash").setup(opts)
-		-- flash.setup() creates FlashLabel1-7 via HSL hue-rotation and overwrites
-		-- whatever catppuccin set at startup; re-assert catppuccin palette colours now
-		-- and re-apply whenever the colorscheme changes (e.g. flavour switch)
-		local function apply_rainbow_hl()
+		-- flash.rainbow creates groups named FlashColor{color}{shade} using its own
+		-- Tailwind CSS palette. Patch that palette's entries with catppuccin hex values
+		-- AFTER setup() so flash uses our colours when it lazily creates the groups.
+		-- shade=7 → flash reads M.colors[color][700] for bg and M.colors[color][50] for fg.
+		local function patch_rainbow()
 			local ok, palette = pcall(require, "catppuccin.palettes")
 			if not ok then
 				return
 			end
 			local c = palette.get_palette()
-			local accents = { c.red, c.peach, c.yellow, c.green, c.teal, c.blue, c.mauve }
-			for i, bg in ipairs(accents) do
-				vim.api.nvim_set_hl(0, "FlashLabel" .. i, { fg = c.base, bg = bg, bold = true })
+			local base = c.base:sub(2) -- strip leading # for flash's color table
+			-- Map each slot in flash's rainbow cycle to a catppuccin accent colour
+			local map = {
+				red = c.red:sub(2),
+				amber = c.peach:sub(2),
+				lime = c.yellow:sub(2),
+				green = c.green:sub(2),
+				teal = c.teal:sub(2),
+				cyan = c.sky:sub(2),
+				blue = c.blue:sub(2),
+				violet = c.lavender:sub(2),
+				fuchsia = c.pink:sub(2),
+				rose = c.flamingo:sub(2),
+			}
+			local rainbow = require("flash.rainbow")
+			local shade = (opts.label.rainbow.shade or 5) * 100
+			-- fg_shade: flash uses [50] when shade>500, [900] when <500, [950] when ==500
+			local fg_shade = shade > 500 and 50 or shade < 500 and 900 or 950
+			for color, hex in pairs(map) do
+				rainbow.colors[color] = rainbow.colors[color] or {}
+				rainbow.colors[color][shade] = hex
+				rainbow.colors[color][fg_shade] = base
 			end
+			rainbow.hl = {} -- clear cache so groups are recreated with patched colours
 		end
-		apply_rainbow_hl()
-		vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_rainbow_hl })
+		patch_rainbow()
+		-- reapply when switching catppuccin flavour
+		vim.api.nvim_create_autocmd("ColorScheme", { callback = patch_rainbow })
 	end,
 	opts = { -- 52-char alphabet so up to 52 matches get a single-character label;
 		-- beyond that flash falls back to two-character label pairs automatically
