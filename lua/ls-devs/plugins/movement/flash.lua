@@ -17,8 +17,13 @@ return {
 			-- custom_highlights and assigned below via label.format
 			rainbow = { enabled = false },
 			-- cycle through 7 catppuccin accent colours in label-index order so
-			-- the first ~7 labels are visually distinct and palette-consistent
+			-- the first ~7 labels are visually distinct and palette-consistent;
+			-- format is also called for unlabeled/cursor matches where opts.label
+			-- is nil — fall back to the base FlashLabel group in that case
 			format = function(opts)
+				if not opts.label then
+					return { { opts.label or "", "FlashLabel" } }
+				end
 				local hls = {
 					"FlashRainbow1",
 					"FlashRainbow2",
