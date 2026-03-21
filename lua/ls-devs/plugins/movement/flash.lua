@@ -8,13 +8,16 @@
 return {
 	"folke/flash.nvim",
 	opts = {
+		-- 52-char alphabet so up to 52 matches get a single-character label;
+		-- beyond that flash falls back to two-character label pairs automatically
+		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
 		modes = {
 			-- char mode replaces native f/t/F/T: shows label hints for repeated
 			-- matches so you can jump directly without pressing ; multiple times
 			char = {
 				enabled = true, -- activate f/t/F/T label hints (flit.nvim equivalent)
 				jump_labels = true, -- show labels on all matches (flit behaviour); default is false
-				keys = { "f", "F", "t", "T", ";", "," },
+				keys = { "f", "F", "t", "T", ";", ",", " " }, -- <Space> cycles to next group of labels
 				search = {
 					wrap = false, -- don't wrap around the buffer (matches flit behaviour)
 				},
@@ -25,6 +28,14 @@ return {
 					register = false, -- don't pollute the jump register for f/t motions
 				},
 				multi_window = false, -- restrict to current window (matches flit scope)
+				-- <Space> advances to the next batch of labels when matches exceed label count
+				char_actions = function(motion)
+					return {
+						[";"] = "next",
+						[","] = "prev",
+						[" "] = "next", -- space cycles forward through label groups (flit-like)
+					}
+				end,
 			},
 		},
 	},
