@@ -52,10 +52,14 @@ return {
 		-- beyond that flash falls back to two-character label pairs automatically
 		labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
 		label = {
-			-- enable flash's built-in distance-based rainbow; the FlashLabel1-7
-			-- groups it creates are overridden in catppuccin.lua custom_highlights
-			-- with actual catppuccin palette colours (shade=7 → 7 distinct groups)
+			-- distance-based rainbow: flash creates FlashColor{name}{shade} groups
+			-- (e.g. FlashColorred700) from its Tailwind palette; the config function
+			-- above patches those entries with catppuccin hex values after setup()
 			rainbow = { enabled = true, shade = 7 },
+			current = false, -- no label on the match at the cursor (already there)
+		},
+		jump = {
+			nohlsearch = true, -- clear hlsearch immediately after any flash jump
 		},
 		modes = {
 			-- char mode replaces native f/t/F/T: shows label hints for repeated
@@ -79,7 +83,13 @@ return {
 					return {
 						[";"] = "next",
 						[","] = "prev",
-						[" "] = "next", -- space cycles forward through label groups (flit-like)
+						[" "] = "next", -- space cycles forward (flit-like)
+						-- pressing the same motion key again repeats in the same direction
+						-- (native vim feel: f→next after fe, F→prev after Fe, etc.)
+						["f"] = motion == "f" and "next" or "prev",
+						["F"] = motion == "F" and "next" or "prev",
+						["t"] = motion == "t" and "next" or "prev",
+						["T"] = motion == "T" and "next" or "prev",
 					}
 				end,
 			},
