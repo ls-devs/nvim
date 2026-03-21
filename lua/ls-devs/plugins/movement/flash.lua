@@ -7,7 +7,6 @@
 -- ─────────────────────────────────────────────────────────────────────────
 return {
 	"folke/flash.nvim",
-	event = "VeryLazy",
 	opts = {
 		modes = {
 			-- char mode replaces native f/t/F/T: shows label hints for repeated
