@@ -4,6 +4,11 @@
 -- Trigger : Loaded at startup by core/init.lua (before plugin bootstrap)
 -- ─────────────────────────────────────────────────────────────────────────
 
+-- ── Built-in plugin disabling ─────────────────────────────────────────────
+-- rplugin.vim scans the remote-plugin manifest (~3.7ms) but this config has
+-- no Python / Ruby / Perl remote plugins registered.
+vim.g.loaded_remote_plugins = 1
+
 -- ── Highlight Overrides ───────────────────────────────────────────────────
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
 vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#cdd6f4" })
