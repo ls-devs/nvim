@@ -43,21 +43,27 @@ return {
 			if vim.fn.reg_recording() ~= "" or vim.fn.reg_executing() ~= "" then
 				return false
 			end
-			-- disable in comments via treesitter
+			-- Disable in comments — but only run the (async) treesitter check when the
+			-- comment leader actually appears before the cursor. Without this guard,
+			-- deleting `--` from an auto-continued comment line leaves treesitter in a
+			-- stale "comment" state long enough to disable completion on the next keypress.
 			local col = vim.api.nvim_win_get_cursor(0)[2]
-			local ok, captures =
-				pcall(vim.treesitter.get_captures_at_pos, 0, vim.fn.line(".") - 1, math.max(col - 1, 0))
-			if ok then
-				for _, cap in ipairs(captures) do
-					if cap.capture:find("comment") then
-						return false
+			local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+			local cs_leader = vim.bo.commentstring:match("^(.-)%s*%%s")
+			if cs_leader == nil or cs_leader == "" or before_cursor:find(cs_leader, 1, true) then
+				local ok, captures =
+					pcall(vim.treesitter.get_captures_at_pos, 0, vim.fn.line(".") - 1, math.max(col - 1, 0))
+				if ok then
+					for _, cap in ipairs(captures) do
+						if cap.capture:find("comment") then
+							return false
+						end
 					end
 				end
-			end
-			-- fallback: syntax group
-			local syn = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1), "name")
-			if syn:lower():find("comment") then
-				return false
+				local syn = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1), "name")
+				if syn:lower():find("comment") then
+					return false
+				end
 			end
 			return true
 		end,
