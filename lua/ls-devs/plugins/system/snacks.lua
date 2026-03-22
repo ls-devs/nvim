@@ -13,7 +13,7 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
-	dependencies = { { "nvim-tree/nvim-web-devicons", lazy = true } },
+	dependencies = { { "echasnovski/mini.icons", lazy = false } },
 
 	-- ── init ─────────────────────────────────────────────────────────────
 	-- Runs before setup(). Wires autocmds that must fire before VimEnter.
