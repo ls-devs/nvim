@@ -54,6 +54,11 @@ return {
 			local cs = vim.bo.commentstring
 			local leader = cs ~= "" and cs:match("^(.-)%s*%%s") or nil
 			if leader and leader ~= "" and before_cursor:match("^%s*" .. vim.pesc(leader)) then
+				-- DEBUG: remove after diagnosis
+				vim.notify(
+					"[blink] enabled=false  before='" .. before_cursor .. "'  leader='" .. tostring(leader) .. "'",
+					vim.log.levels.WARN
+				)
 				return false
 			end
 			return true
@@ -78,8 +83,18 @@ return {
 			-- 3. Otherwise → neotab bracket escape (or real tab for indentation)
 			["<Tab>"] = {
 				function(cmp)
+					-- DEBUG: remove after diagnosis
+					vim.notify(
+						"[blink Tab] visible="
+							.. tostring(cmp.is_menu_visible())
+							.. "  snippet="
+							.. tostring(cmp.snippet_active()),
+						vim.log.levels.WARN
+					)
 					if cmp.is_menu_visible() then
-						return cmp.select_next()
+						local ok = cmp.select_next()
+						vim.notify("[blink Tab] select_next=" .. tostring(ok), vim.log.levels.WARN)
+						return ok
 					end
 					if cmp.snippet_active() then
 						return cmp.snippet_forward()
