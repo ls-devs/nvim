@@ -71,16 +71,20 @@ return {
 			["<C-Space>"] = { "show", "show_documentation", "fallback" },
 			["<C-e>"] = { "cancel", "fallback" },
 			["<CR>"] = { "accept", "fallback" },
-			-- Tab chains: select_next → snippet_forward → neotab.tabout (smart bracket escape)
-			-- neotab is only invoked when the menu is NOT visible to prevent act_as_tab
-			-- from inserting a literal tab character while a completion menu is open.
+			-- Tab: explicit priority chain in a single function to prevent
+			-- act_as_tab from inserting spaces when the menu is open.
+			-- 1. Menu visible → select next item (Tab consumed even if no items)
+			-- 2. Active snippet → jump to next tabstop
+			-- 3. Otherwise → neotab bracket escape (or real tab for indentation)
 			["<Tab>"] = {
-				"select_next",
-				"snippet_forward",
 				function(cmp)
-					if not cmp.is_visible() then
-						require("neotab").tabout()
+					if cmp.is_menu_visible() then
+						return cmp.select_next()
 					end
+					if cmp.snippet_active() then
+						return cmp.snippet_forward()
+					end
+					require("neotab").tabout()
 					return true
 				end,
 			},
