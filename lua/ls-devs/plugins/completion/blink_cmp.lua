@@ -242,17 +242,34 @@ return {
 
 		-- ── Sources ───────────────────────────────────────────────────────────
 		-- Priority ladder: lazydev=100 (Lua API docs) > lsp=90 > snippets=85
-		--   > copilot=80 (AI fallback) > buffer=0 (no offset, plain text)
-		-- dotenv and sass-variables use score_offset=-5 so they only surface
-		-- when contextually relevant and don't pollute general results.
+		-- Suppress completions when cursor is inside a comment by checking treesitter
+		-- captures. Putting this check in sources.default (not enabled()) keeps all
+		-- blink keymaps active — enabled()=false would also disable Tab, causing the
+		-- "insert whitespace instead of select" bug when pressing Tab in a comment.
+		-- per_filetype is handled here too so lazydev/sass-variables are also
+		-- suppressed in comments (inherit_defaults bypasses the default function).
 		sources = {
-			default = { "lsp", "path", "snippets", "copilot", "buffer", "dotenv" },
-			per_filetype = {
-				gitcommit = { "buffer" },
-				lua = { inherit_defaults = true, "lazydev" }, -- lazydev: Neovim API / plugin type annotations (Lua only)
-				css = { inherit_defaults = true, "sass-variables" },
-				scss = { inherit_defaults = true, "sass-variables" },
-			},
+			default = function()
+				local col = vim.api.nvim_win_get_cursor(0)[2]
+				local ok, captures =
+					pcall(vim.treesitter.get_captures_at_pos, 0, vim.fn.line(".") - 1, math.max(col - 1, 0))
+				if ok then
+					for _, cap in ipairs(captures) do
+						if cap.capture:find("comment") then
+							return {}
+						end
+					end
+				end
+				local ft = vim.bo.filetype
+				if ft == "lua" then
+					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "lazydev" }
+				elseif ft == "gitcommit" then
+					return { "buffer" }
+				elseif ft == "css" or ft == "scss" then
+					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "sass-variables" }
+				end
+				return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv" }
+			end,
 			providers = {
 				lsp = {
 					name = "LSP",
