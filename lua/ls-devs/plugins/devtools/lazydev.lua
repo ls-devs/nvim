@@ -13,19 +13,8 @@ return {
 		debug = false,
 		library = {
 			{ path = "${3rd}/luv/library", words = { "vim%.uv" } }, -- luv types, only when vim.uv is referenced
+			{ path = "snacks.nvim", words = { "Snacks" } }, -- snacks types, only when Snacks is referenced (avoids profiler require pollution)
 			"lazy.nvim",
-			"mason.nvim",
-			"mason-lspconfig.nvim",
-			"mason-tool-installer.nvim",
-			"nvim-lspconfig",
-			"lspsaga.nvim",
-			"nvim-treesitter",
-			"blink.cmp",
-			"conform.nvim",
-			"nvim-lint",
-			"noice.nvim",
-			"neo-tree.nvim",
-			"snacks.nvim",
 			"legendary.nvim",
 			"catppuccin",
 			"plenary.nvim",
