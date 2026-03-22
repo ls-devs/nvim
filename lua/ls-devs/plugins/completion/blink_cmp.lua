@@ -43,27 +43,18 @@ return {
 			if vim.fn.reg_recording() ~= "" or vim.fn.reg_executing() ~= "" then
 				return false
 			end
-			-- Disable in comments — but only run the (async) treesitter check when the
-			-- comment leader actually appears before the cursor. Without this guard,
-			-- deleting `--` from an auto-continued comment line leaves treesitter in a
-			-- stale "comment" state long enough to disable completion on the next keypress.
+			-- Disable when the cursor is inside a comment. Use a pure string check
+			-- (does the text before cursor start with the comment leader?) so we are
+			-- never affected by treesitter's async reparse lag. This correctly handles
+			-- the case where the user deletes `--` from an auto-continued comment line:
+			-- the before-cursor text no longer starts with `--`, so completion re-enables
+			-- immediately without waiting for treesitter to catch up.
 			local col = vim.api.nvim_win_get_cursor(0)[2]
 			local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-			local cs_leader = vim.bo.commentstring:match("^(.-)%s*%%s")
-			if cs_leader == nil or cs_leader == "" or before_cursor:find(cs_leader, 1, true) then
-				local ok, captures =
-					pcall(vim.treesitter.get_captures_at_pos, 0, vim.fn.line(".") - 1, math.max(col - 1, 0))
-				if ok then
-					for _, cap in ipairs(captures) do
-						if cap.capture:find("comment") then
-							return false
-						end
-					end
-				end
-				local syn = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1), "name")
-				if syn:lower():find("comment") then
-					return false
-				end
+			local cs = vim.bo.commentstring
+			local leader = cs ~= "" and cs:match("^(.-)%s*%%s") or nil
+			if leader and leader ~= "" and before_cursor:match("^%s*" .. vim.pesc(leader)) then
+				return false
 			end
 			return true
 		end,
@@ -81,11 +72,15 @@ return {
 			["<C-e>"] = { "cancel", "fallback" },
 			["<CR>"] = { "accept", "fallback" },
 			-- Tab chains: select_next → snippet_forward → neotab.tabout (smart bracket escape)
+			-- neotab is only invoked when the menu is NOT visible to prevent act_as_tab
+			-- from inserting a literal tab character while a completion menu is open.
 			["<Tab>"] = {
 				"select_next",
 				"snippet_forward",
-				function()
-					require("neotab").tabout()
+				function(cmp)
+					if not cmp.is_visible() then
+						require("neotab").tabout()
+					end
 					return true
 				end,
 			},
