@@ -198,7 +198,33 @@ return {
 			mappings = {
 				["<space>"] = "none",
 				["<2-LeftMouse>"] = "open",
-				["l"] = "open",
+				["l"] = function(state)
+					local node = state.tree:get_node()
+					if node.type == "message" then
+						require("neo-tree.sources.filesystem.commands").toggle_hidden(state)
+					else
+						require("neo-tree.sources.filesystem.commands").open(state)
+					end
+				end,
+				["<CR>"] = function(state)
+					local node = state.tree:get_node()
+					if node.type == "message" then
+						require("neo-tree.sources.filesystem.commands").toggle_hidden(state)
+					else
+						require("neo-tree.sources.filesystem.commands").open(state)
+					end
+				end,
+				["h"] = function(state)
+					local node = state.tree:get_node()
+					local cmds = require("neo-tree.sources.filesystem.commands")
+					if state.filtered_items and state.filtered_items.visible then
+						cmds.toggle_hidden(state)
+					elseif node.type == "directory" and node:is_expanded() then
+						cmds.close_node(state)
+					else
+						cmds.navigate_up(state)
+					end
+				end,
 				["<esc>"] = "close_window",
 				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
 				[","] = "focus_preview",

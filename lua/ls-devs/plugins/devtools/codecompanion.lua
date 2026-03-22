@@ -31,6 +31,9 @@ return {
 		{
 			"HakonHarnes/img-clip.nvim",
 			opts = {
+				default = {
+					verbose = false,
+				},
 				filetypes = {
 					codecompanion = {
 						prompt_for_file_name = false,
