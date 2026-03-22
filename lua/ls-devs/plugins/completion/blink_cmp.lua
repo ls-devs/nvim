@@ -43,24 +43,6 @@ return {
 			if vim.fn.reg_recording() ~= "" or vim.fn.reg_executing() ~= "" then
 				return false
 			end
-			-- Disable when the cursor is inside a comment. Use a pure string check
-			-- (does the text before cursor start with the comment leader?) so we are
-			-- never affected by treesitter's async reparse lag. This correctly handles
-			-- the case where the user deletes `--` from an auto-continued comment line:
-			-- the before-cursor text no longer starts with `--`, so completion re-enables
-			-- immediately without waiting for treesitter to catch up.
-			local col = vim.api.nvim_win_get_cursor(0)[2]
-			local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-			local cs = vim.bo.commentstring
-			local leader = cs ~= "" and cs:match("^(.-)%s*%%s") or nil
-			if leader and leader ~= "" and before_cursor:match("^%s*" .. vim.pesc(leader)) then
-				-- DEBUG: remove after diagnosis
-				vim.notify(
-					"[blink] enabled=false  before='" .. before_cursor .. "'  leader='" .. tostring(leader) .. "'",
-					vim.log.levels.WARN
-				)
-				return false
-			end
 			return true
 		end,
 
@@ -83,18 +65,8 @@ return {
 			-- 3. Otherwise → neotab bracket escape (or real tab for indentation)
 			["<Tab>"] = {
 				function(cmp)
-					-- DEBUG: remove after diagnosis
-					vim.notify(
-						"[blink Tab] visible="
-							.. tostring(cmp.is_menu_visible())
-							.. "  snippet="
-							.. tostring(cmp.snippet_active()),
-						vim.log.levels.WARN
-					)
 					if cmp.is_menu_visible() then
-						local ok = cmp.select_next()
-						vim.notify("[blink Tab] select_next=" .. tostring(ok), vim.log.levels.WARN)
-						return ok
+						return cmp.select_next()
 					end
 					if cmp.snippet_active() then
 						return cmp.snippet_forward()
