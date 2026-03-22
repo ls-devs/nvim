@@ -14,7 +14,14 @@ return {
 			javascript = { "string", "template_string" },
 			java = false, -- disable treesitter check for Java entirely
 		},
-		disable_filetype = { "TelescopePrompt", "spectre_panel", "guihua", "guihua_rust", "clap_input" },
+		disable_filetype = {
+			"TelescopePrompt",
+			"spectre_panel",
+			"guihua",
+			"guihua_rust",
+			"clap_input",
+			"snacks_picker_input",
+		},
 		fast_wrap = {
 			map = "<M-e>",
 			chars = { "{", "[", "(", '"', "'" },

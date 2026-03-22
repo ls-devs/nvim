@@ -13,6 +13,40 @@ return {
 		vim.cmd("hi link CursorLineFold CursorLineNr")
 		vim.cmd("hi link CursorLineSign CursorLineNr")
 	end,
+	config = function(_, opts)
+		require("reactive").setup(opts)
+		-- reactive.nvim moves the cursor left on the first keystroke in prompt buffers
+		-- (same issue that affected TelescopePrompt). Stop it for any snacks picker input
+		-- and resume it when the picker closes.
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "snacks_picker_input", "TelescopePrompt" },
+			callback = function()
+				vim.cmd("ReactiveStop")
+			end,
+		})
+		vim.api.nvim_create_autocmd("BufLeave", {
+			callback = function(ev)
+				local ft = vim.bo[ev.buf].filetype
+				if ft == "snacks_picker_input" or ft == "TelescopePrompt" then
+					vim.defer_fn(function()
+						local still_open = false
+						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+							if vim.api.nvim_buf_is_loaded(buf) then
+								local bft = vim.bo[buf].filetype
+								if bft == "snacks_picker_input" or bft == "TelescopePrompt" then
+									still_open = true
+									break
+								end
+							end
+						end
+						if not still_open then
+							vim.cmd("ReactiveStart")
+						end
+					end, 100)
+				end
+			end,
+		})
+	end,
 	opts = {
 		-- Built-in catppuccin-mocha presets for cursor shape and cursorline tint.
 		load = { "catppuccin-mocha-cursor", "catppuccin-mocha-cursorline" },

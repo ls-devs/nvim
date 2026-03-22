@@ -12,8 +12,12 @@ local tabName = function(tab)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
 	local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
 
-	-- For tool windows (Overseer, neo-tree), use the filetype as the display name.
-	if string.find(file_type, "Overseer") or string.find(file_type, "neo") then
+	-- For tool windows (Overseer, neo-tree, snacks picker), use the filetype as the display name.
+	if
+		string.find(file_type, "Overseer")
+		or string.find(file_type, "neo%-tree")
+		or string.find(file_type, "snacks_picker")
+	then
 		tabName = file_type
 	else
 		-- Truncate long filenames, preserving the extension (e.g. "very-long-name...ts").
@@ -23,7 +27,8 @@ local tabName = function(tab)
 		end
 	end
 
-	-- For floating terminals: strip the toggleterm numeric suffix to get a readable name.
+	-- For floating terminals: strip any legacy toggleterm numeric suffix from buffer name.
+	-- (toggleterm replaced by snacks.terminal; this branch is dead but harmless)
 	if string.find(tabTail, "Floating") then
 		if vim.bo.filetype == "" then
 			local tail = vim.fn.expand("%:t")

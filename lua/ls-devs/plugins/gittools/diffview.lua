@@ -63,6 +63,7 @@ return {
 				git = {
 					single_file = {
 						diff_merges = "combined", -- show all parents' diffs merged in one unified view
+						follow = true, -- follow renames in single-file history
 					},
 					multi_file = {
 						diff_merges = "first-parent", -- follow only the first-parent path for cleaner multi-file history

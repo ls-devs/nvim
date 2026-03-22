@@ -35,7 +35,6 @@ return {
 		current_line_blame_formatter = "   <author> • <author_time:%d/%m/%Y> • <summary> ", -- virtual text: nerd-font icon · author · date · summary
 		sign_priority = 6,
 		update_debounce = 100,
-		status_formatter = nil,
 		max_file_length = 40000, -- skip sign attachment on files larger than ~40k lines
 		preview_config = {
 			border = "rounded",

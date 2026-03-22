@@ -10,7 +10,6 @@ return {
 		-- Automatically close the panel when the diagnostics list becomes empty
 		auto_close = true,
 		auto_preview = false,
-		use_diagnostic_signs = true,
 		keys = {
 			-- Rebind `l` (normally move-right) to fold toggle inside the trouble buffer
 			["l"] = "fold_toggle",

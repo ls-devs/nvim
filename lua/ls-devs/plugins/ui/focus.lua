@@ -1,7 +1,7 @@
 -- ── focus.nvim ────────────────────────────────────────────────────────────
 -- Purpose : Auto-resize the focused window using golden-ratio proportions
 -- Trigger : BufReadPost, BufNewFile
--- Note    : autoresize starts disabled; per-filetype suppression (neo-tree,
+-- Note    : autoresize enabled by default; per-filetype suppression (neo-tree,
 --           DAP panels, OverseerList, etc.) is managed by autocmds in legendary.lua
 -- ─────────────────────────────────────────────────────────────────────────
 return {
@@ -16,9 +16,9 @@ return {
 			-- Don't propagate focus sizing to tmux panes
 			tmux = false,
 		},
-		-- Off by default; toggled with <leader>wr or suppressed per-filetype via legendary.lua
+		-- Enabled by default; toggle with <leader>wr
 		autoresize = {
-			enable = false,
+			enable = true,
 		},
 		-- All visual changes disabled; focus.nvim is used purely for window resizing
 		ui = {
@@ -53,8 +53,8 @@ return {
 		},
 		{
 			"<leader>wr",
-			"<cmd>FocusAutoresize<CR>",
-			desc = "Focus Autoresize Window",
+			"<cmd>FocusToggle<CR>",
+			desc = "Focus Toggle Autoresize",
 			silent = true,
 			noremap = true,
 		},

@@ -34,6 +34,10 @@ return {
 	},
 	opts = {
 		enabled = function()
+			-- Disable in snacks picker input to prevent interference with search typing.
+			if vim.bo.filetype == "snacks_picker_input" then
+				return false
+			end
 			-- Disable during macro recording/playback to avoid polluting the register
 			-- and interfering with dot-repeat behaviour.
 			if vim.fn.reg_recording() ~= "" or vim.fn.reg_executing() ~= "" then
@@ -102,7 +106,7 @@ return {
 					show_on_x_blocked_trigger_characters = {},
 				},
 				list = {
-					selection = { preselect = true, auto_insert = true },
+					selection = { preselect = false, auto_insert = true },
 				},
 				menu = {
 					auto_show = true,
@@ -250,7 +254,7 @@ return {
 		-- dotenv and sass-variables use score_offset=-5 so they only surface
 		-- when contextually relevant and don't pollute general results.
 		sources = {
-			default = { "lsp", "snippets", "copilot", "buffer", "dotenv" },
+			default = { "lsp", "path", "snippets", "copilot", "buffer", "dotenv" },
 			per_filetype = {
 				gitcommit = { "buffer" },
 				lua = { inherit_defaults = true, "lazydev" }, -- lazydev: Neovim API / plugin type annotations (Lua only)
@@ -262,6 +266,13 @@ return {
 					name = "LSP",
 					module = "blink.cmp.sources.lsp",
 					score_offset = 90,
+					fallbacks = { "buffer" },
+				},
+				path = {
+					name = "Path",
+					module = "blink.cmp.sources.path",
+					score_offset = 3,
+					fallbacks = { "buffer" },
 				},
 				snippets = {
 					name = "Snippets",

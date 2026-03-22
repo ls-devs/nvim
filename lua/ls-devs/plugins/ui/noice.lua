@@ -1,6 +1,6 @@
 -- ── noice.nvim ───────────────────────────────────────────────────────────────
 -- Purpose : Replaces cmdline, messages, and popupmenu with styled floating
---           windows. Integrates with telescope (noice extension in telescope.lua).
+--           windows. Integrates with blink.cmp, snacks.notifier, and lspsaga.
 -- Trigger : VeryLazy
 -- Note    : <C-f>/<C-b> scroll hover docs (wired in legendary.lua).
 --           <A-x> redirects cmdline output to a popup.
@@ -39,11 +39,10 @@ return {
 			documentation = {
 				view = "hover",
 				opts = {
-					lang = "markdown",
 					replace = true,
 					render = "plain",
 					format = { "{message}" },
-					win_options = { concealcursor = "ncv", conceallevel = 2 },
+					win_options = { concealcursor = "n", conceallevel = 3 },
 				},
 			},
 		},
@@ -83,22 +82,11 @@ return {
 			lsp_doc_border = "rounded",
 		},
 		-- ── Notify ────────────────────────────────────────────────────────────────────
+		-- Disabled: snacks.notifier owns vim.notify instead of noice+nvim-notify.
 		notify = {
-			enabled = true,
-			view = "notify",
-			replace = true,
-			merge = true,
+			enabled = false,
 		},
-		-- Suppress noisy "No information available" hover notifications.
-		routes = {
-			{
-				filter = {
-					event = "notify",
-					find = "No information available",
-				},
-				opts = { skip = true },
-			},
-		},
+		routes = {},
 		messages = {
 			enabled = true,
 		},
@@ -129,27 +117,6 @@ return {
 	-- ── Dependencies ──────────────────────────────────────────────────────────────
 	dependencies = {
 		{ "MunifTanjim/nui.nvim", lazy = true },
-		-- nvim-notify: renders notification pop-ups via noice's notify view.
-		{
-			"rcarriga/nvim-notify",
-			lazy = true,
-			opts = {
-				background_colour = "#000000",
-				top_down = false, -- stack notifications upward from bottom-right
-				timeout = 1000,
-				render = "wrapped-compact",
-			},
-			keys = {
-				{
-					"<leader>nd",
-					function()
-						require("notify").dismiss({ silent = true })
-					end,
-					desc = "Notify Dismiss",
-					silent = true,
-					noremap = true,
-				},
-			},
-		},
+		-- nvim-notify removed: snacks.notifier is the vim.notify backend now.
 	},
 }

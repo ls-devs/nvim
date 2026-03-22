@@ -11,7 +11,7 @@ return {
 		{
 			"<leader>fm",
 			function()
-				require("conform").format({ async = true, lsp_fallback = true, timeout_ms = 5000 })
+				require("conform").format({ async = true, lsp_format = "fallback", timeout_ms = 5000 })
 			end,
 			mode = { "n", "v" },
 			desc = "Format buffer",
@@ -28,16 +28,23 @@ return {
 			javascriptreact = { "prettierd" },
 			typescript = { "prettierd" },
 			typescriptreact = { "prettierd" },
+			astro = { "prettierd" },
+			vue = { "prettierd" },
+			svelte = { "prettierd" },
+			graphql = { "prettierd" },
+			mdx = { "prettierd" },
+			xml = { "prettierd" },
 			css = { "prettierd" },
 			scss = { "prettierd" },
 			sass = { "prettierd" },
 			less = { "prettierd" },
 			json = { "prettierd" },
+			toml = { "taplo" },
 			markdown = { "markdownlint-cli2" },
 			yaml = { "yq" },
 			kotlin = { "ktlint" },
 			lua = { "stylua" },
-			rust = { "rustfmt" },
+			rust = { "rustfmt", lsp_format = "fallback" },
 			c = { "clang-format" },
 			cs = { "csharpier" },
 			cpp = { "clang-format" },
@@ -45,6 +52,7 @@ return {
 			sql = { "sql-formatter" },
 			sh = { "shellharden" },
 			python = { "black" },
+			php = { "php-cs-fixer" },
 			prisma = { "prisma" },
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},

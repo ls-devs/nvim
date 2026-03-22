@@ -1,7 +1,7 @@
 -- ── fidget.nvim ───────────────────────────────────────────────────────────
 -- Purpose : LSP progress spinner displayed in the bottom-right corner
 -- Trigger : LspAttach
--- Note    : override_vim_notify is false — noice owns vim.notify routing;
+-- Note    : override_vim_notify is false — snacks.notifier owns vim.notify routing;
 --           fidget is scoped to LSP $progress messages only
 -- ─────────────────────────────────────────────────────────────────────────
 return {
@@ -83,17 +83,10 @@ return {
 				poll_rate = 10,
 				filter = vim.log.levels.INFO,
 				history_size = 128,
-				-- Noice owns vim.notify; fidget must not intercept it
+				-- snacks.notifier owns vim.notify; fidget must not intercept it
 				override_vim_notify = false,
 
 				configs = { default = require("fidget.notification").default_config },
-
-				-- Delegate notifications with on_open callbacks to nvim-notify (e.g. noice)
-				redirect = function(msg, level, opts)
-					if opts and opts.on_open then
-						return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
-					end
-				end,
 
 				view = {
 					-- Newest entries appear at the bottom of the notification window

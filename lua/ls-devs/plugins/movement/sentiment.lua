@@ -7,6 +7,7 @@
 return {
 	"utilyre/sentiment.nvim",
 	event = "BufReadPost",
+	opts = {}, -- must call setup() to register CursorMoved autocmds; without this, matchparen is disabled but sentiment never activates
 	init = function()
 		vim.g.loaded_matchparen = 1 -- block built-in matchparen so sentiment can own bracket highlighting
 	end,

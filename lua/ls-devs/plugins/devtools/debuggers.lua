@@ -12,16 +12,13 @@ return {
 	config = function()
 		require("dapui").setup()
 		local dap, dapui = require("dap"), require("dapui")
-		-- Auto-open UI and refresh virtual text when a debug session initialises
-		dap.listeners.after.event_initialized["dapui_config"] = function()
+		-- Auto-open UI when a debug session starts (attach or launch)
+		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
 			require("nvim-dap-virtual-text").refresh()
 		end
-
-		-- Auto-close on explicit disconnect (e.g. detach from process)
-		dap.listeners.after.disconnect["dapui_config"] = function()
-			require("dap.repl").close()
-			dapui.close()
+		dap.listeners.before.launch.dapui_config = function()
+			dapui.open()
 			require("nvim-dap-virtual-text").refresh()
 		end
 
@@ -139,7 +136,7 @@ return {
 			lazy = true,
 			opts = {
 				enabled = true,
-				enabled_commands = true,
+				enable_commands = true,
 				highlight_changed_variables = true,
 				highlight_new_as_changed = false,
 				show_stop_reason = true,

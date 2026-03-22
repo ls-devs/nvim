@@ -9,6 +9,7 @@ return {
 	event = "InsertEnter",
 	opts = {
 		tabkey = "", -- Tab is managed by blink.cmp; neotab is invoked programmatically
+		reverse_key = "", -- <S-Tab> disabled to avoid conflict with blink.cmp select_prev
 		act_as_tab = true, -- insert a real tab when the cursor is not inside a tracked pair
 		behavior = "nested", ---@type ntab.behavior
 		pairs = { ---@type ntab.pair[]

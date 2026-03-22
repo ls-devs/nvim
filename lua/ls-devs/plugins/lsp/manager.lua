@@ -67,11 +67,12 @@ return {
 				"shellcheck",
 				"ktlint",
 				"codespell",
+				"stylelint",
+				"luacheck",
 
 				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",
 				"markdownlint-cli2",
-				"cmakelang",
 				"clang-format",
 				"yq",
 				"stylua",
@@ -80,6 +81,7 @@ return {
 				"sql-formatter",
 				"csharpier",
 				"shellharden",
+				"php-cs-fixer",
 
 				-- ── Debuggers (DAP adapters) ──────────────────────────────────────
 				"debugpy",
@@ -102,7 +104,6 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
-			automatic_installation = false,
 			automatic_enable = {
 				-- ts_ls is managed by typescript-tools.nvim; auto-enabling it
 				-- here would create a conflicting second client on TS/JS files
@@ -159,18 +160,6 @@ return {
 							border = "rounded",
 							source = true,
 						},
-					})
-					vim.fn.sign_define("DiagnosticSignError", {
-						text = " ",
-					})
-					vim.fn.sign_define("DiagnosticSignWarn", {
-						text = " ",
-					})
-					vim.fn.sign_define("DiagnosticSignInfo", {
-						text = " ",
-					})
-					vim.fn.sign_define("DiagnosticSignHint", {
-						text = " ",
 					})
 				end,
 			},

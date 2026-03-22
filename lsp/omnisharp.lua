@@ -6,8 +6,6 @@
 -- Note    : Formatting handled by conform (csharpier);
 --           LoadProjectsOnDemand reduces startup overhead in large solutions
 -- ──────────────────────────────────────────────────────────────────────────
-local util = require("lspconfig.util")
-
 return {
 	on_attach = function(client)
 		-- Formatting is owned by conform (csharpier); prevent OmniSharp from

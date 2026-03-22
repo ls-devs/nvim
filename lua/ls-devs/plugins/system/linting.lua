@@ -22,12 +22,30 @@ return {
 			cmake = { "cmakelint" },
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
+			markdown = { "markdownlint-cli2" },
+			css = { "stylelint" },
+			scss = { "stylelint" },
+			sass = { "stylelint" },
+			less = { "stylelint" },
+			-- lua: lua_ls (LSP) already provides full static analysis including
+			-- undefined-global detection, type checking and more. luacheck is
+			-- redundant here and produces noisy duplicate/conflicting warnings.
+			-- lua = { "luacheck" },
+			["*"] = { "codespell" }, -- runs on every filetype; toggle off via <leader>cs
 		},
 	},
 	config = function(_, opts)
 		local M = {}
 
 		local nvim_lint = require("lint")
+
+		-- sqlfluff: inject --dialect ansi as default so it works without a .sqlfluff project config.
+		-- Projects that have a .sqlfluff file can override the dialect there.
+		local sqlfluff = nvim_lint.linters.sqlfluff
+		if sqlfluff then
+			local base_args = vim.list_extend({ "--dialect", "ansi" }, sqlfluff.args or {})
+			nvim_lint.linters.sqlfluff = vim.tbl_deep_extend("force", sqlfluff, { args = base_args })
+		end
 
 		if opts.linters then
 			for name, linter in pairs(opts.linters) do
@@ -73,7 +91,7 @@ return {
 				local argv = { ... }
 				timer:start(ms, 0, function()
 					timer:stop()
-					vim.schedule_wrap(fn)(table.unpack(argv))
+					vim.schedule(fn)
 				end)
 			end
 		end

@@ -12,7 +12,7 @@ return {
 	opts = {
 		debug = false,
 		library = {
-			"luvit-meta/library",
+			{ path = "${3rd}/luv/library", words = { "vim%.uv" } }, -- luv types, only when vim.uv is referenced
 			"lazy.nvim",
 			"mason.nvim",
 			"mason-lspconfig.nvim",
@@ -25,13 +25,11 @@ return {
 			"nvim-lint",
 			"noice.nvim",
 			"neo-tree.nvim",
-			"telescope.nvim",
+			"snacks.nvim",
 			"legendary.nvim",
-			"toggleterm.nvim",
 			"catppuccin",
 			"plenary.nvim",
 			"fidget.nvim",
-			"alpha-nvim",
 			"nvim-web-devicons",
 			"lualine.nvim",
 			"nvim-various-textobjs",
@@ -45,11 +43,6 @@ return {
 			cmp = false,
 			coq = false,
 		},
-		enabled = function(root_dir)
-			return true
-		end,
 	},
-	dependencies = {
-		{ "Bilal2453/luvit-meta", lazy = true },
-	},
+	dependencies = {},
 }

@@ -2,7 +2,7 @@
 -- Purpose : Highlights and searches TODO/FIXME/HACK/NOTE/WARN/PERF/TEST
 --           comment keywords across the project.
 -- Trigger : BufReadPost
--- Note    : <leader>T=TodoTrouble (list), <leader>TT=TodoTelescope (search).
+-- Note    : <leader>T=TodoTrouble (list), <leader>TT=Snacks.picker.todo (search).
 --           opts={} uses all built-in keyword defaults.
 -- ─────────────────────────────────────────────────────────────────────────────
 return {
@@ -20,8 +20,10 @@ return {
 		},
 		{
 			"<leader>TT",
-			"<cmd>TodoTelescope<CR>",
-			desc = "TodoTelescope",
+			function()
+				Snacks.picker.todo()
+			end,
+			desc = "Todo Picker",
 			silent = true,
 			noremap = true,
 		},

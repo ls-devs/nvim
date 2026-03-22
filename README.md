@@ -17,9 +17,9 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
 - **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
 - **Movement:** Enhanced navigation with flit.nvim, mini.surround, multiple-cursors, sentiment.nvim, neotab, nvim-spider, nvim-autopairs, and others.
-- **UI:** Custom dashboard (alpha-nvim), catppuccin theme, diagflow, blinker, noice, lualine, tabby, todo-comments, and more.
-- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, rest.nvim, databases, debugging, xmake, lazydev, etc.
-- **System:** Bigfile.nvim, legendary, linting (nvim-lint), formatting (conform.nvim), telescope, treesitter, toggleterm, wildfire, sleuth, neo-tree, markview, spectre, etc.
+- **UI:** Snacks dashboard, catppuccin theme, diagflow, blinker, noice, lualine, tabby, todo-comments, and more.
+- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging, xmake, lazydev, etc.
+- **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier), legendary, linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, etc.
 - **Utilities:** Mini.comment, neocomposer, trouble, and more.
 
 ## Installation
@@ -85,10 +85,10 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, emmet
 - LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
 - Git: diffview.nvim, gitsigns.nvim, fugitive, git-worktree
-- UI: alpha-nvim, catppuccin, diagflow, blinker, noice, lualine, tabby, dressing, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
+- UI: snacks.nvim (dashboard, input, notifier), catppuccin, diagflow, blinker, noice, lualine, tabby, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
 - Movement: flit.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, sentiment.nvim
-- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, rest.nvim, databases, debuggers (DAP), xmake, lazydev, img-clip
-- System: bigfile.nvim, legendary, conform.nvim (formatting), nvim-lint (linting), telescope + extensions, treesitter, toggleterm, wildfire, sleuth, neo-tree, markview, spectre, gx, early-retirement
+- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP), xmake, lazydev, img-clip
+- System: snacks.nvim (bigfile, terminal, scroll, indent, picker), legendary, conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement
 
 ## Updating
 - Run `:Lazy update` to update plugins.

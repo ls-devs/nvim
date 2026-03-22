@@ -16,6 +16,7 @@ return {
 		end,
 	},
 	dependencies = {
+		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ "neovim/nvim-lspconfig", lazy = true },
 	},
 }

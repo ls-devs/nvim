@@ -2,7 +2,7 @@
 -- ── utils/custom_functions ───────────────────────────────────────────────
 -- Purpose : Shared utility functions used across plugin specs and keymaps.
 -- Trigger : Required on-demand by plugin configs (not loaded at startup)
--- Provides: HelpGrep, LazyGit, CustomHover, OpenURLs, DiffviewToggle, OrigamiHLFolds
+-- Provides: HelpGrep, CustomHover, OpenURLs, DiffviewToggle, OrigamiHLFolds
 -- ─────────────────────────────────────────────────────────────────────────
 local M = {}
 --- Opens a `:helpgrep` prompt and displays matching help topics in a new tab.
@@ -25,56 +25,6 @@ M.HelpGrep = function()
 			return vim.cmd.copen()
 		end
 	end)
-end
-
---- Opens lazygit in a centred floating terminal window (150×40) via toggleterm.
---- The float is positioned using the current UI dimensions at call time.
---- `<Esc>` inside the terminal sends `:exit` to close lazygit cleanly.
-M.LazyGit = function()
-	local editor_width = vim.o.columns
-	local editor_height = vim.o.lines
-	local gwidth = vim.api.nvim_list_uis()[1].width
-	local width = 150
-	local height = 40
-	local gheight = vim.api.nvim_list_uis()[1].height
-	local Terminal = require("toggleterm.terminal").Terminal
-	local lazygit = Terminal:new({
-		cmd = "lazygit",
-		direction = "float",
-		float_opts = {
-			border = "rounded",
-			width = width,
-			height = height,
-			row = (gheight - height) * 0.5,
-			column = (gwidth - width) * 0.5,
-		},
-		on_open = function(term)
-			local keymap = vim.api.nvim_buf_set_keymap
-			keymap(term.bufnr, "t", "<esc>", "<cmd>exit<CR>", { noremap = true, silent = true })
-		end,
-	})
-	return lazygit:toggle()
-end
-
---- Smart hover dispatcher that checks context before acting:
----   1. nvim-ufo fold peek — if the cursor is on a closed fold, peek into it.
----   2. Vim/help filetype  — open the Vim help page for the word under cursor.
----   3. Man filetype       — open the man page for the word under cursor.
----   4. Default            — invoke the LSP hover handler.
-M.CustomHover = function()
-	local ok, ufo = pcall(require, "ufo")
-	local winid = ok and ufo.peekFoldedLinesUnderCursor()
-	if winid then
-		return
-	end
-	local ft = vim.bo.filetype
-	if vim.tbl_contains({ "vim", "help" }, ft) then
-		return vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
-	elseif vim.tbl_contains({ "man" }, ft) then
-		return vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
-	else
-		return vim.lsp.buf.hover()
-	end
 end
 
 --- Opens `url` in the default system browser using the platform-appropriate command:
@@ -104,6 +54,15 @@ M.DiffviewToggle = function()
 		vim.cmd(":DiffviewClose")
 	else
 		vim.cmd(":DiffviewOpen")
+	end
+end
+
+--- Peek a folded line under the cursor (UFO) or show LSP hover via Lspsaga.
+--- On a closed fold, opens a preview float; otherwise delegates to hover_doc.
+M.CustomHover = function()
+	local winid = require("ufo").peekFoldedLinesUnderCursor()
+	if not winid then
+		vim.cmd("Lspsaga hover_doc")
 	end
 end
 

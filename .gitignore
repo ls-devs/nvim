@@ -3,3 +3,5 @@ lazy-lock.json
 *.luarc.json
 .ignore.rg
 .luacheckrc
+Session.vim
+*.session

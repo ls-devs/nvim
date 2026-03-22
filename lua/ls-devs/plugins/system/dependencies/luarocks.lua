@@ -4,10 +4,7 @@
 -- ─────────────────────────────────────────────────────────────────────────
 
 -- Package required for :
--- Neorg
--- Rest.nvim
 -- Nvim-Spider
--- Molten.nvim
 
 return {
 	"vhyrro/luarocks.nvim",
@@ -15,12 +12,6 @@ return {
 	opts = {
 		rocks = {
 			"luautf8", -- Nvim-Spider
-			"lua-utils.nvim", -- Neorg
-			"lua-curl", -- Rest.nvim
-			"nvim-nio", -- Rest.nvim
-			"mimetypes", -- Rest.nvim
-			"xml2lua", -- Rest.nvim
-			"magick", -- Molten.nvim
 		},
 	},
 }

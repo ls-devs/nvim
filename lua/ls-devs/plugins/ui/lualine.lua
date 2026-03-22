@@ -33,28 +33,31 @@ return {
 		-- Mode-specific segment colors: section A (active pill) + B (breadcrumb band).
 		local config = {
 			options = {
+				globalstatus = true, -- single statusline at Neovim bottom, not per-window
 				component_separators = "",
 				section_separators = "",
 				theme = {
+					-- Colors mirror reactive.nvim catppuccin-mocha-cursor preset:
+					-- n=yellow, i=teal, v/V/^V=mauve, R=sapphire, c=blue
 					normal = {
-						a = { bg = colors.blue, fg = colors.mantle, gui = "bold" },
-						b = { bg = colors.surface0, fg = colors.blue },
+						a = { bg = colors.yellow, fg = colors.mantle, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.yellow },
 						c = { bg = nil, fg = colors.text },
 					},
 
 					insert = {
-						a = { bg = colors.green, fg = colors.base, gui = "bold" },
-						b = { bg = colors.surface0, fg = colors.green },
+						a = { bg = colors.teal, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.teal },
 					},
 
 					terminal = {
-						a = { bg = colors.green, fg = colors.base, gui = "bold" },
-						b = { bg = colors.surface0, fg = colors.green },
+						a = { bg = colors.teal, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.teal },
 					},
 
 					command = {
 						a = { bg = colors.blue, fg = colors.base, gui = "bold" },
-						b = { bg = colors.surface0, fg = colors.peach },
+						b = { bg = colors.surface0, fg = colors.blue },
 					},
 
 					visual = {
@@ -63,8 +66,8 @@ return {
 					},
 
 					replace = {
-						a = { bg = colors.red, fg = colors.base, gui = "bold" },
-						b = { bg = colors.surface0, fg = colors.red },
+						a = { bg = colors.sapphire, fg = colors.base, gui = "bold" },
+						b = { bg = colors.surface0, fg = colors.sapphire },
 					},
 
 					inactive = {
@@ -74,7 +77,10 @@ return {
 					},
 				},
 
-				disabled_filetypes = { "alpha" },
+				disabled_filetypes = {
+					statusline = { "snacks_dashboard" },
+					winbar = {},
+				},
 			},
 			-- All standard sections cleared; content injected via ins_left/ins_right helpers.
 			sections = {
@@ -112,28 +118,38 @@ return {
 				return " "
 			end,
 			color = function()
+				-- Dot mirrors reactive.nvim catppuccin-mocha-cursor colors.
+				-- Operator-pending (no) is further split by vim.v.operator so
+				-- delete/yank/change each get their reactive color.
 				local mode_color = {
-					n = colors.red,
-					i = colors.green,
-					v = colors.teal,
-					[""] = colors.blue,
-					V = colors.sapphire,
-					c = colors.flamingo,
-					no = colors.red,
-					s = colors.peach,
-					S = colors.peach,
-					ic = colors.yellow,
-					R = colors.mauve,
-					Rv = colors.mauve,
-					cv = colors.red,
-					ce = colors.red,
-					r = colors.sapphire,
-					rm = colors.sapphire,
-					["r?"] = colors.sapphire,
-					["!"] = colors.red,
-					t = colors.red,
+					n = colors.yellow, -- normal
+					i = colors.teal, -- insert
+					v = colors.mauve, -- visual char
+					["\x16"] = colors.mauve, -- visual block
+					V = colors.mauve, -- visual line
+					c = colors.blue, -- command
+					s = colors.pink, -- select
+					S = colors.pink, -- select line
+					["\x13"] = colors.pink, -- select block
+					ic = colors.teal, -- insert completion
+					R = colors.sapphire, -- replace
+					Rv = colors.sapphire, -- virtual replace
+					cv = colors.blue, -- ex mode
+					ce = colors.blue, -- normal ex
+					r = colors.sapphire, -- prompt
+					rm = colors.sapphire, -- more prompt
+					["r?"] = colors.sapphire, -- confirm
+					["!"] = colors.peach, -- shell
+					t = colors.teal, -- terminal
 				}
-				return { fg = mode_color[vim.fn.mode()] }
+				local mode = vim.fn.mode()
+				if mode == "no" then
+					-- Differentiate operators to match reactive cursor colors:
+					-- d=red, y=peach, c=blue, everything else=red
+					local op_color = { d = colors.red, y = colors.peach, c = colors.blue }
+					return { fg = op_color[vim.v.operator] or colors.red }
+				end
+				return { fg = mode_color[mode] or colors.yellow }
 			end,
 			padding = { left = 1, right = 2 },
 		})
@@ -202,7 +218,6 @@ return {
 							else
 								return lsp.name
 							end
-							return lsp.name
 						else
 							if string.len(lsps[#lsps].name) >= 17 then
 								return string.sub(lsps[#lsps].name, 0, 14) .. "..."
@@ -241,7 +256,7 @@ return {
 			diagnostics_color = {
 				error = { fg = colors.red, gui = "bold" },
 				warn = { fg = colors.yellow, gui = "bold" },
-				info = { fg = colors.saphire, gui = "bold" },
+				info = { fg = colors.sapphire, gui = "bold" },
 				hint = { fg = colors.teal, gui = "bold" },
 			},
 			colored = true,

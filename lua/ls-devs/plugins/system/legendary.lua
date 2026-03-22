@@ -84,17 +84,19 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				-- ── Navigation Keymaps ───────────────────────────────────────────────
-				-- Every jump is augmented with `zz` to keep the cursor vertically centered.
+				-- Every jump is augmented with `zz` to keep cursor centered,
+				-- EXCEPT <C-d>/<C-u>/G/gg which would trigger a double snacks.scroll
+				-- animation (one for the motion, one for the zz centering).
 				{
 					"<C-d>",
-					"<C-d>zz",
-					description = "Navigate Down & Center",
+					"<C-d>",
+					description = "Navigate Down",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"<C-u>",
-					"<C-u>zz",
-					description = "Navigate Up & Center",
+					"<C-u>",
+					description = "Navigate Up",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -128,13 +130,16 @@ return {
 					opts = { noremap = true, silent = true },
 				},
 				{
+					-- No `zz` — snacks.scroll animates the full jump and scrolloff=8
+					-- keeps context, so centering is redundant (and would trigger a second
+					-- back-to-back animation, making both invisible).
 					"G",
-					"Gzz",
+					"G",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"gg",
-					"ggzz",
+					"gg",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -267,19 +272,24 @@ return {
 				},
 				{
 					"<leader>lg",
-					require("ls-devs.utils.custom_functions").LazyGit,
+					function()
+						Snacks.lazygit()
+					end,
 					description = "LazyGit",
 					opts = { noremap = true, silent = true },
 				},
 				{
 					"<leader>cs",
 					function()
-						if require("lint").linters_by_ft["*"] == nil then
-							require("lint").linters_by_ft["*"] = { "codespell" }
+						local lint = require("lint")
+						if #(lint.linters_by_ft["*"] or {}) > 0 then
+							lint.linters_by_ft["*"] = {}
+						else
+							lint.linters_by_ft["*"] = { "codespell" }
 							vim.cmd(":edit!")
 						end
 					end,
-					description = "Start codespell linter",
+					description = "Toggle codespell linter",
 					opts = { noremap = true, silent = true },
 				},
 				{
@@ -351,7 +361,7 @@ return {
 			autocmds = {
 				{
 					{ "InsertEnter", "InsertChange" },
-					'lua require("notify").dismiss({ silent = true })',
+					"lua Snacks.notifier.hide()",
 					opts = {
 						pattern = "*",
 					},
@@ -363,23 +373,7 @@ return {
 					"VimLeave",
 					":silent !prettierd stop",
 					opts = {
-						pattern = {
-							"*.jsx",
-							"*.tsx",
-							"*.vue",
-							"*.js",
-							"*.ts",
-							"*.css",
-							"*.scss",
-							"*.less",
-							"*.html",
-							"*.json",
-							"*.jsonc",
-							"*.yaml",
-							"*.md",
-							"*.mdx",
-							"*.graphql",
-						},
+						pattern = "*",
 					},
 					description = "Stop prettierd",
 				},
@@ -469,17 +463,6 @@ return {
 					description = "Autoresize on window resize",
 				},
 				{
-					"BufEnter",
-					function()
-						vim.cmd("set conceallevel=2")
-						vim.cmd("set concealcursor=nc")
-					end,
-					opts = {
-						pattern = "*.norg",
-					},
-					description = "Change conceal for note taking",
-				},
-				{
 					"FileType",
 					function()
 						vim.bo.bufhidden = "unload"
@@ -538,19 +521,19 @@ return {
 						local bufnr = args.buf
 						local filepath = vim.api.nvim_buf_get_name(bufnr)
 
-						-- Vérifier si on est sur un montage drvfs
+						-- Check if the buffer is on a drvfs mount
 						if not filepath:match("^/mnt/") then
 							return
 						end
 
-						-- Forcer la détection du filetype
+						-- Force filetype detection if not yet set
 						vim.schedule(function()
 							if vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].filetype == "" then
 								vim.cmd("filetype detect")
 							end
 						end)
 
-						-- Attendre un peu puis démarrer Tree-sitter et LSP
+						-- Defer to start Tree-sitter and LSP after filetype detection
 						vim.defer_fn(function()
 							if not vim.api.nvim_buf_is_valid(bufnr) then
 								return
@@ -558,12 +541,12 @@ return {
 
 							local ft = vim.bo[bufnr].filetype
 
-							-- Forcer Tree-sitter si un filetype est détecté
+							-- Force Tree-sitter if a filetype was detected
 							if ft ~= "" then
 								pcall(vim.cmd, "TSBufEnable highlight")
 							end
 
-							-- Démarrer les LSP s'ils ne sont pas déjà actifs
+							-- Start LSP if no clients are attached yet
 							local clients = vim.lsp.get_clients({ bufnr = bufnr })
 							if #clients == 0 then
 								pcall(vim.cmd, "LspStart")

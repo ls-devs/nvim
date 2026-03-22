@@ -22,24 +22,24 @@ return {
 		end
 
 		return {
-			modes = { "n", "i", "no", "c" },
-			hybrid_modes = { "i", "n" },
-			callbacks = {
-				on_enable = function(_, win)
-					vim.wo[win].conceallevel = 2
-					vim.wo[win].concealcursor = "nc"
-				end,
-			},
-
 			preview = {
 				modes = { "n", "i", "no", "c" },
 				hybrid_modes = { "i" }, -- show raw markdown on the current line while in insert mode
+				callbacks = {
+					-- wins is a table of window IDs returned by vim.fn.win_findbuf()
+					on_enable = function(_, wins)
+						for _, win in ipairs(wins) do
+							vim.wo[win].conceallevel = 2
+							vim.wo[win].concealcursor = "nc"
+						end
+					end,
+				},
 				filetypes = {
 					"md",
 					"markdown",
 					"codecompanion",
 				},
-				ignore_buftypes = { "alpha" },
+				ignore_buftypes = {},
 				-- codecompanion nofile buffers get rendered; other nofile/unnamed buffers are
 				-- skipped; nil lets markview apply its own heuristics.
 				condition = function(buffer)

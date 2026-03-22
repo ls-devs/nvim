@@ -1,7 +1,7 @@
 -- ── neogit ────────────────────────────────────────────────────────────────
 -- Purpose : Magit-style interactive git interface for Neovim
 -- Trigger : cmd = "Neogit"
--- Note    : Integrates with diffview (diffs) and telescope (pickers).
+-- Note    : Integrates with diffview (diffs).
 --           Popup borders are patched to rounded via User NeogitPopupShown.
 -- ──────────────────────────────────────────────────────────────────────────
 return {
@@ -30,7 +30,6 @@ return {
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ "sindrets/diffview.nvim", lazy = true },
-		{ "nvim-telescope/telescope.nvim", lazy = true },
 	},
 	opts = {
 		kind = "tab", -- open neogit in a new tab for a full-screen experience
@@ -38,13 +37,9 @@ return {
 		disable_hint = false,
 		disable_context_highlighting = false,
 		disable_signs = false,
-		-- fzf native sorter for faster fuzzy matching in telescope pickers
-		telescope_sorter = function()
-			return require("telescope").extensions.fzf.native_fzf_sorter()
-		end,
-		-- delegate diff views to diffview.nvim, pickers to telescope
+		-- delegate diff views to diffview.nvim
 		integrations = {
-			telescope = true,
+			telescope = false,
 			diffview = true,
 		},
 		signs = {

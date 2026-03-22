@@ -29,8 +29,7 @@ return {
 		},
 	},
 	config = function(_, opts)
-		local colors = require("catppuccin.palettes.mocha")
-		-- Merge catppuccin mocha palette into NeoComposer's color table at setup time
+		local colors = require("catppuccin.palettes").get_palette() -- use active flavour, not hardcoded mocha
 		require("NeoComposer").setup(vim.tbl_deep_extend("force", opts, {
 			colors = {
 				bg = colors.base,
@@ -40,7 +39,6 @@ return {
 				green = colors.green,
 			},
 		}))
-		require("telescope").load_extension("macros")
 		-- Style the floating preview window to match the theme
 		vim.cmd("hi Preview guibg=" .. colors.surface0 .. " guifg=" .. colors.flamingo)
 	end,

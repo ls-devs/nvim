@@ -64,7 +64,7 @@ return {
 					enabled = true,
 					auto_trigger = true,
 					hide_during_completion = true,
-					debounce = 75,
+					debounce = 15,
 					keymap = {
 						accept = "<M-l>",
 						accept_word = false,
@@ -185,7 +185,6 @@ return {
 				icons = {
 					buffer_sync_all = "󰪴 ",
 					buffer_sync_diff = " ",
-					chat_context = " ",
 					chat_fold = " ",
 					tool_pending = "  ",
 					tool_in_progress = "  ",

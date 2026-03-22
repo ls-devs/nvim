@@ -11,9 +11,6 @@ vim.g.loaded_remote_plugins = 1
 
 -- ── Highlight Overrides ───────────────────────────────────────────────────
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
-vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#cdd6f4" })
-vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#89b4fa" })
-vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#fab387" })
 vim.api.nvim_set_hl(0, "Type", { fg = "#f9e2af" })
 -- ── Cursor & Word Motion ──────────────────────────────────────────────────
 vim.opt.whichwrap:append("<,>,[,],h,l") -- allow h/l and arrow keys to cross line boundaries
@@ -125,7 +122,7 @@ local options = {
 	background = "dark",
 	incsearch = true,
 	updatetime = 300, -- ms before CursorHold fires (LSP hover, gitsigns); default is 4000
-	timeoutlen = 300, -- ms to wait for a mapped key sequence (also drives which-key popup delay)
+	timeoutlen = 500, -- ms to wait for a mapped key sequence
 	ttimeoutlen = 10, -- near-instant key-code timeout for fast <Esc> recognition
 	backup = false,
 	showtabline = 2, -- always show the tabline (required by tabby.nvim)

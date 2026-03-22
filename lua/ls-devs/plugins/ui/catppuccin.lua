@@ -20,7 +20,7 @@ return {
 			},
 			-- Allow terminal/compositor transparency to show through Neovim's background
 			transparent_background = true,
-			show_end_of_buffer = false,
+			show_end_of_buffer = true,
 			term_colors = true,
 			no_italic = false,
 			no_bold = false,
@@ -62,7 +62,7 @@ return {
 					IncSearch = { fg = colors.base, bg = colors.peach, style = { "bold" } },
 					Search = { fg = colors.base, bg = colors.peach, style = { "bold" } },
 					CurSearch = { fg = colors.base, bg = colors.red, style = { "bold" } },
-					WinSeparator = { fg = colors.overlay0, style = { "bold" } },
+					WinSeparator = { fg = colors.blue, style = { "bold" } },
 					CursorLineSign = { bg = colors.none },
 					Cursor = { bg = "#ffffff" },
 					-- GitSigns
@@ -105,16 +105,28 @@ return {
 					BlinkCmpKindOperator = { fg = "#ffffff", bg = colors.sky },
 					BlinkCmpKindTypeParameter = { fg = "#ffffff", bg = colors.teal },
 					BlinkCmpKindCopilot = { fg = "#ffffff", bg = colors.green },
-					-- Telescope
-					TelescopeNormal = { fg = colors.none },
-					TelescopeSelection = { fg = colors.peach },
-					TelescopeBorder = { fg = colors.blue },
-					TelescopePromptBorder = { fg = colors.blue },
-					TelescopeResultsBorder = { fg = colors.blue },
-					TelescopePreviewBorder = { fg = colors.blue },
-					TelescopePromptTitle = { fg = colors.blue, style = { "bold" } },
-					TelescopeResultsTitle = { fg = colors.blue, style = { "bold" } },
-					TelescopePreviewTitle = { fg = colors.blue, style = { "bold" } },
+					-- Neo-tree
+					NeoTreeWinSeparator = { fg = colors.blue, bg = colors.none },
+					SnacksPickerBorder = { fg = colors.blue },
+					SnacksPickerTitle = { fg = colors.blue, style = { "bold" } },
+					SnacksPickerMatch = { fg = colors.peach, style = { "bold" } },
+					SnacksPickerListBorder = { fg = colors.blue },
+					SnacksPickerPreviewBorder = { fg = colors.blue },
+					SnacksPickerInputBorder = { fg = colors.blue },
+					SnacksPickerInputTitle = { fg = colors.blue, style = { "bold" } },
+					SnacksPickerPreviewTitle = { fg = colors.blue, style = { "bold" } },
+					SnacksPickerListTitle = { fg = colors.blue, style = { "bold" } },
+					SnacksPickerPrompt = { fg = colors.green, style = { "bold" } },
+					-- File/dir split: path prefix (e.g. "lsp/") is always muted; filename
+					-- fg is transparent (colors.none) so it inherits from line context:
+					-- white on regular rows, peach on the cursor/selected row (via
+					-- SnacksPickerListCursorLine fg = peach).
+					SnacksPickerFile = { fg = colors.none },
+					SnacksPickerDir = { fg = colors.overlay0 },
+					SnacksPickerDirectory = { fg = colors.blue },
+					-- Selected item highlight (winhighlight maps CursorLine →
+					-- SnacksPickerListCursorLine when the list window is focused).
+					SnacksPickerListCursorLine = { fg = colors.peach, bg = colors.surface0 },
 					-- Notify
 					NotificationInfo = { bg = colors.none, fg = colors.text },
 					NotificationError = { bg = colors.none, fg = colors.red },
@@ -135,10 +147,6 @@ return {
 					DiagnosticVirtualTextWarn = { style = { "bold" } },
 					DiagnosticVirtualTextError = { style = { "bold" } },
 					DiagnosticVirtualTextHint = { style = { "bold" } },
-					LspDiagnosticsVirtualTextInformation = { style = { "bold" } },
-					LspDiagnosticsVirtualTextWarning = { style = { "bold" } },
-					LspDiagnosticsVirtualTextError = { style = { "bold" } },
-					LspDiagnosticsVirtualTextHint = { style = { "bold" } },
 					-- Noice
 					NoiceVirtualText = { fg = colors.sky, style = { "bold" } },
 					NoiceCmdlineIcon = { fg = colors.teal, style = { "bold" } },
@@ -173,14 +181,19 @@ return {
 					MasonError = { fg = colors.red },
 					MasonHeading = { bold = true },
 					CodeCompanionChatHeader = { fg = colors.base, bg = colors.peach, bold = true },
-					-- Alpha
-					AlphaHeader = { fg = colors.text },
-					AlphaButtons = { fg = colors.blue },
-					AlphaShortcut = { fg = colors.peach },
+					-- Snacks dashboard (replaces Alpha highlights — same color mapping)
+					SnacksDashboardHeader = { fg = colors.text },
+					SnacksDashboardDesc = { fg = colors.blue },
+					SnacksDashboardKey = { fg = colors.peach },
+					SnacksDashboardIcon = { fg = colors.blue },
+					SnacksDashboardFooter = { fg = colors.yellow },
+					SnacksDashboardTitle = { fg = colors.blue, style = { "bold" } },
+					SnacksDashboardSpecial = { fg = colors.peach },
 				}
 			end,
 			-- Enable built-in catppuccin highlight patches for each supported plugin
 			integrations = {
+				snacks = true,
 				blink_cmp = true,
 				diffview = true,
 				dap = true,
@@ -194,14 +207,9 @@ return {
 				neotree = true,
 				gitsigns = true,
 				treesitter = true,
-				notify = true,
+			notify = false,
 				flash = true,
 				trouble = true,
-				alpha = true,
-				markview = true,
-				telescope = {
-					enabled = true,
-				},
 				mini = {
 					enabled = true,
 				},

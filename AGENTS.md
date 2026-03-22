@@ -24,14 +24,13 @@ lua/ls-devs/
       completion_modules/      ← non-spec Lua helpers (dotenv_source.lua); NOT imported by lazy.nvim
       blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
     devtools/                  ← codecompanion, copilot, debuggers, databases,
-    │                            asyncrun, overseer, rest.nvim, typescript-tools,
+    │                            asyncrun, overseer, kulala.nvim, typescript-tools,
     │                            live-server, xmake, lazydev, emmet
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
     gittools/                  ← diffview, gitsigns, fugitive, git-worktree
     lsp/
       manager.lua              ← Mason package list (LSPs, linters, formatters, DAPs)
       lspsaga.lua
-      schemastore.lua
     movement/                  ← flit, mini.surround, multiple-cursors, neotab,
     │                            nvim-autopairs, nvim-spider, sentiment
     system/
@@ -42,7 +41,7 @@ lua/ls-devs/
       treesitter.lua
       toggleterm.lua
       legendary.lua
-      bigfile.lua, sleuth.lua, wildfire.lua, markview.lua, spectre.lua, gx.lua,
+      bigfile.lua, sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua,
       early_retirement.lua
       dependencies/            ← plenary, luarocks
       telescope_extensions/    ← cmdline, emoji, import, media-files, nerdy
@@ -52,7 +51,7 @@ lua/ls-devs/
     │                            stickybuf, tabby, todo-comments, ufo, better-qf
     utilities/                 ← mini.comment, neocomposer, scrolleof, trouble
   utils/
-    custom_functions.lua       ← HelpGrep, LazyGit, CustomHover, OpenURLs,
+    custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs,
                                   DiffviewToggle, OrigamiHLFolds
 lsp/                           ← standalone server config fragments (NOT auto-loaded)
 .agents/skills/                ← local CodeCompanion agent skills
@@ -243,5 +242,5 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 | Java (JDK) | jdtls |
 | Deno | deno LSP |
 | win32yank | WSL clipboard |
-| lazygit | `utils/custom_functions.lua` LazyGit float |
+| lazygit | snacks.lazygit float |
 | wslview | URL opener in WSL (`gx.lua`, lazy.nvim UI browser) |

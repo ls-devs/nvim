@@ -16,7 +16,7 @@ return {
 		max_height = 10,
 		severity_colors = {
 			error = "DiagnosticFloatingError",
-			warning = "DiagnosticFloatingWarn",
+			warn = "DiagnosticFloatingWarn",
 			info = "DiagnosticFloatingInfo",
 			hint = "DiagnosticFloatingHint",
 		},

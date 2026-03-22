@@ -15,6 +15,8 @@ return {
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }
 		end,
+		-- Snappier visual feedback when opening a fold (ms the highlight persists).
+		open_fold_hl_timeout = 200,
 		-- Appends a " 󱞤 N " count badge to the virtual text of each closed fold,
 		-- where N is the number of hidden lines. Remaining first-line text is truncated to fit.
 		fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)

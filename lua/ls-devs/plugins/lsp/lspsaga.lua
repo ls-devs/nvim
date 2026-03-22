@@ -3,7 +3,7 @@
 -- Trigger : LspAttach
 -- ──────────────────────────────────────────────────────────────────────────
 return {
-	"glepnir/lspsaga.nvim",
+	"nvimdev/lspsaga.nvim",
 	event = "LspAttach",
 	opts = {
 		lightbulb = {
@@ -32,11 +32,13 @@ return {
 			border_follow = false,
 		},
 		rename = {
-			quit = "<C-k>",
-			exec = "<CR>",
-			mark = "x",
 			-- Open rename prompt with cursor at end, not with text pre-selected
 			in_select = false,
+			keys = {
+				quit = "<C-k>",
+				exec = "<CR>",
+				select = "x",
+			},
 		},
 		ui = {
 			title = true,

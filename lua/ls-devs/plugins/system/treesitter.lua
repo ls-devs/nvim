@@ -64,55 +64,6 @@ return {
 			additional_vim_regex_highlighting = false,
 		},
 		indent = { enable = true },
-		rainbow = {
-			enable = true,
-			extended_mode = true,
-		},
-		autotag = {
-			enable = true,
-			enable_rename = true,
-			enable_close = true,
-			enable_close_on_slash = true,
-			filetypes = {
-				"html",
-				"javascript",
-				"typescript",
-				"javascriptreact",
-				"typescriptreact",
-				"svelte",
-				"vue",
-				"tsx",
-				"jsx",
-				"rescript",
-				"xml",
-				"php",
-				"markdown",
-				"astro",
-				"glimmer",
-				"handlebars",
-				"hbs",
-			},
-			skip_tags = {
-				"area",
-				"base",
-				"br",
-				"col",
-				"command",
-				"embed",
-				"hr",
-				"img",
-				"slot",
-				"input",
-				"keygen",
-				"link",
-				"meta",
-				"param",
-				"source",
-				"track",
-				"wbr",
-				"menuitem",
-			},
-		},
 		textobjects = {
 			select = {
 				enable = true,
@@ -282,16 +233,12 @@ return {
 				{
 					"ag",
 					mode = { "o", "x" },
-					function()
-						require("various-textobjs").greedyOuterIndentation("inner")
-					end,
+					"<cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>",
 				},
 				{
 					"ig",
 					mode = { "o", "x" },
-					function()
-						require("various-textobjs").greedyOuterIndentation("outer")
-					end,
+					"<cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>",
 				},
 				{
 					"iS",
