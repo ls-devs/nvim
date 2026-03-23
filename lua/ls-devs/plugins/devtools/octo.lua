@@ -48,6 +48,8 @@ return {
 			use_signcolumn = true,
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("octo").setup(opts)
 	end,

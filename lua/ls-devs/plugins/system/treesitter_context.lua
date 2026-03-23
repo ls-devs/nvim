@@ -22,6 +22,8 @@ return {
 		zindex = 20,
 		on_attach = nil,
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("treesitter-context").setup(opts)
 

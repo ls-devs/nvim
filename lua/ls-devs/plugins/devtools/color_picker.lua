@@ -60,6 +60,8 @@ return {
 			},
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("ccc").setup(opts)
 	end,

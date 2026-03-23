@@ -13,13 +13,13 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 ## Functionalities
 
 - **Plugin Management:** Uses lazy.nvim for fast startup and lazy loading.
-- **Completion:** Powered by blink.cmp (v2/main, Rust fuzzy matching), LuaSnip, lspkind, and sources (LSP, buffer, snippets, Copilot, dotenv, sass-variables).
+- **Completion:** Powered by blink.cmp (v2/main, Rust fuzzy matching), LuaSnip, lspkind, and sources (LSP, buffer, snippets, Copilot, dotenv, sass-variables, git).
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
 - **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
 - **Movement:** Enhanced navigation with flash.nvim, mini.surround, multiple-cursors, neotab, nvim-spider, nvim-autopairs, smart-splits, treesj, vim-matchup, and others.
 - **UI:** Snacks dashboard, catppuccin theme, diagflow, mini.icons, noice, lualine, tabby, todo-comments, and more.
-- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging, lazydev, etc.
-- **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier, dashboard), linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, etc.
+- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging (DAP + multi-language launch configs), lazydev, neotest (jest/vitest/pytest/cargo/phpunit), rustaceanvim (enhanced Rust LSP + DAP), octo.nvim (GitHub PR/issue management), iron.nvim (interactive REPL), nvim-coverage (test coverage gutter), ccc.nvim (inline color picker/highlighter).
+- **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier, dashboard), linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, treesitter-context (sticky scope header), etc.
 - **Utilities:** Mini.comment, trouble, and more.
 
 ## Installation
@@ -80,13 +80,13 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - Shell plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, Spaceship ZSH, Oh-My-Zsh
 - Environment managers: pyenv, nvm, envman, direnv, ghcup, SDKMAN
 - Clipboard: win32yank (WSL), OSC52 (Docker)
-- Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, emmet
+- Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, blink-cmp-git, emmet
 - LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
 - Git: diffview.nvim, gitsigns.nvim, fugitive, git-conflict, git-worktree
 - UI: snacks.nvim (dashboard, input, notifier), catppuccin, diagflow, mini.icons, noice, lualine, tabby, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
 - Movement: flash.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, smart-splits, treesj, vim-matchup
-- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot + img-clip dep), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP), lazydev
-- System: snacks.nvim (bigfile, terminal, scroll, indent, picker, dashboard), conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement
+- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot + img-clip dep), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP + multi-language configs), lazydev, neotest (jest/vitest/pytest/cargo/phpunit), rustaceanvim, octo.nvim, iron.nvim (REPL), nvim-coverage, ccc.nvim (color picker)
+- System: snacks.nvim (bigfile, terminal, scroll, indent, picker, dashboard), conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement, nvim-treesitter-context
 
 ## Updating
 - Run `:Lazy update` to update plugins.

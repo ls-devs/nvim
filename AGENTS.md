@@ -25,7 +25,9 @@ lua/ls-devs/
       blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
     devtools/                  ← codecompanion (+ copilot dep + img-clip dep), debuggers, databases,
     │                            asyncrun, overseer, kulala.nvim, typescript-tools,
-    │                            live-server, lazydev, emmet
+    │                            live-server, lazydev, emmet,
+    │                            neotest (+ adapters), rustaceanvim, octo.nvim,
+    │                            iron.nvim (REPL), nvim-coverage, ccc.nvim (color picker)
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
     gittools/                  ← diffview, gitsigns, fugitive, git-conflict, git-worktree
     lsp/
@@ -40,7 +42,8 @@ lua/ls-devs/
       snacks/                  ← dashboard.lua, keys.lua, picker.lua (loaded via require in snacks.lua)
       neo_tree.lua
       treesitter.lua
-      sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua, early_retirement.lua
+      sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua, early_retirement.lua,
+      treesitter_context.lua
       dependencies/            ← plenary, luarocks
       treesitter_modules/      ← nvim-ts-autotag
     ui/                        ← catppuccin, diagflow, fidget, focus, lualine, mini_icons,
@@ -49,7 +52,9 @@ lua/ls-devs/
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs,
                                   DiffviewToggle, OrigamiHLFolds
-lsp/                           ← standalone server config fragments (NOT auto-loaded)
+lsp/                           ← standalone server config fragments (NOT auto-loaded by default)
+                                 eslint.lua: loaded by manager.lua; suppresses publishDiagnostics
+                                   so the eslint LSP only provides code actions (not diagnostics)
 .agents/skills/                ← local CodeCompanion agent skills
 .github/copilot-instructions.md ← Copilot-specific subset of this file
 skills-lock.json               ← installed agent skills lockfile
