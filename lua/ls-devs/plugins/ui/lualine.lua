@@ -1,12 +1,14 @@
 -- ── lualine ──────────────────────────────────────────────────────────────────
 -- Purpose : Custom status line; all content placed in lualine_c (left) and
 --           lualine_x (right). Sections A, B, Y, Z are intentionally empty.
--- Trigger : VeryLazy
+-- Trigger : BufReadPost / BufNewFile (direct file open) or
+--           User SnacksDashboardClosed (after dashboard exits).
 -- Note    : Colors sourced from catppuccin-mocha palette at config time.
 -- ─────────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"nvim-lualine/lualine.nvim",
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile", "User SnacksDashboardClosed" },
 	dependencies = {
 		{ "nvim-tree/nvim-web-devicons", lazy = true },
 	},
@@ -16,12 +18,15 @@ return {
 
 		-- Visibility guards used as `cond` predicates on individual components.
 		local conditions = {
+			---@return boolean
 			buffer_not_empty = function()
 				return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
 			end,
+			---@return boolean
 			hide_in_width = function()
 				return vim.fn.winwidth(0) > 80
 			end,
+			---@return boolean
 			check_git_workspace = function()
 				local filepath = vim.fn.expand("%:p:h")
 				local gitdir = vim.fn.finddir(".git", filepath .. ";")
@@ -103,10 +108,12 @@ return {
 
 		-- ── Layout helpers ────────────────────────────────────────────────────────────
 		-- Appends a component to the left (lualine_c) or right (lualine_x) side.
+		---@param component table
 		local function ins_left(component)
 			table.insert(config.sections.lualine_c, component)
 		end
 
+		---@param component table
 		local function ins_right(component)
 			table.insert(config.sections.lualine_x, component)
 		end
@@ -114,9 +121,11 @@ return {
 		-- ── Left section ─────────────────────────────────────────────────────────────
 		-- ● Mode indicator: color-coded dot, changes color per vim mode.
 		ins_left({
+			---@return string
 			function()
 				return " "
 			end,
+			---@return {fg: string}
 			color = function()
 				-- Dot mirrors reactive.nvim catppuccin-mocha-cursor colors.
 				-- Operator-pending (no) is further split by vim.v.operator so
@@ -156,6 +165,8 @@ return {
 
 		-- Git branch name (truncated to 25 chars to avoid overflow).
 		ins_left({
+			---@param str string
+			---@return string
 			fmt = function(str)
 				if string.len(str) >= 25 then
 					return string.sub(str, 0, 22) .. "..."
@@ -189,6 +200,7 @@ return {
 
 		-- Pending plugin update count from lazy.nvim; hidden when up-to-date.
 		ins_left({
+			---@return string
 			function()
 				return require("lazy.status").updates()
 			end,
@@ -199,6 +211,7 @@ return {
 		-- ── Right section ────────────────────────────────────────────────────────────
 		-- Active NeoComposer macro recording indicator (empty when not recording).
 		ins_right({
+			---@return string
 			function()
 				return require("NeoComposer.ui").status_recording()
 			end,
@@ -208,6 +221,7 @@ return {
 		-- Active LSP name: prefers a server whose name matches the filetype;
 		-- falls back to the last attached client. Truncated at 17 chars.
 		ins_right({
+			---@return string
 			function()
 				local lsps = vim.lsp.get_clients({ bufnr = vim.fn.bufnr() })
 				if lsps and #lsps > 0 then
@@ -236,6 +250,7 @@ return {
 
 		-- Active linter name from nvim-lint for the current filetype (first entry only).
 		ins_right({
+			---@return string
 			function()
 				local linter = require("lint").linters_by_ft[vim.bo.filetype]
 				if linter then
@@ -260,9 +275,26 @@ return {
 				hint = { fg = colors.teal, gui = "bold" },
 			},
 			colored = true,
+			---@return boolean
 			cond = function()
 				return vim.bo.filetype ~= "lazy"
 			end,
+		})
+
+		-- Noice search count (X/Y); always visible in statusline so smooth scroll
+		-- doesn't cause it to disappear when the cursor scrolls off-screen.
+		ins_right({
+			---@return string
+			function()
+				return require("noice").api.status.search.get()
+			end,
+			---@return boolean
+			cond = function()
+				local ok, noice = pcall(require, "noice")
+				return ok and noice.api.status.search.has()
+			end,
+			color = { fg = colors.yellow, gui = "bold" },
+			icon = " ",
 		})
 
 		-- Cursor position (line:col) and scroll percentage through the file.
@@ -283,6 +315,7 @@ return {
 
 		-- Live clock (HH:MM:SS); hidden on narrow windows (<80 cols).
 		ins_right({
+			---@return string
 			function()
 				return os.date("%H:%M:%S", os.time())
 			end,

@@ -4,6 +4,7 @@
 -- Note    : default_mappings=false; all keymaps use <leader>gc* prefix and
 --           ]x/[x for next/prev conflict navigation.
 -- ──────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"akinsho/git-conflict.nvim",
 	event = { "BufReadPost", "BufNewFile" },
@@ -52,6 +53,7 @@ return {
 			current = "DiffText",
 		},
 	},
+	---@return boolean
 	cond = function()
 		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,

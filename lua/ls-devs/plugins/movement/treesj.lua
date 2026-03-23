@@ -4,6 +4,7 @@
 -- Note    : gJ intentionally overrides Vim's native gJ (join without spaces);
 --           dot_repeat=true enables repeating the last join/split with .
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"Wansmer/treesj",
 	keys = {

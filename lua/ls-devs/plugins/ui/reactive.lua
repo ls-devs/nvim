@@ -5,6 +5,7 @@
 -- Note    : init links CursorLineFold and CursorLineSign to CursorLineNr so
 --           the gutter looks visually uniform across all status columns.
 -- ─────────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"rasulomaroff/reactive.nvim",
 	event = { "BufReadPost", "BufNewFile" },
@@ -13,6 +14,8 @@ return {
 		vim.cmd("hi link CursorLineFold CursorLineNr")
 		vim.cmd("hi link CursorLineSign CursorLineNr")
 	end,
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("reactive").setup(opts)
 		-- reactive.nvim moves the cursor left on the first keystroke in prompt buffers
@@ -25,6 +28,7 @@ return {
 			end,
 		})
 		vim.api.nvim_create_autocmd("BufLeave", {
+			---@param ev vim.api.keyset.create_autocmd.callback_args
 			callback = function(ev)
 				local ft = vim.bo[ev.buf].filetype
 				if ft == "snacks_picker_input" or ft == "TelescopePrompt" then

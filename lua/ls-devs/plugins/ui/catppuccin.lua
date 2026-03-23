@@ -7,6 +7,7 @@
 -- Note    : transparent_background exposes terminal transparency; highlights are
 --           compiled to ~/.cache/nvim/catppuccin for fast subsequent loads
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
@@ -42,6 +43,8 @@ return {
 				miscs = {},
 			},
 			color_overrides = {},
+			---@param colors table
+			---@return table
 			custom_highlights = function(colors)
 				return {
 					-- Base NEOVIM
@@ -207,7 +210,7 @@ return {
 				neotree = true,
 				gitsigns = true,
 				treesitter = true,
-			notify = false,
+				notify = false,
 				flash = true,
 				trouble = true,
 				mini = {

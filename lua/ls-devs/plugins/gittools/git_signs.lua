@@ -2,6 +2,7 @@
 -- Purpose : Git decorations in the sign column + inline EOL blame
 -- Trigger : event = { "BufReadPost", "BufNewFile" }
 -- ──────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPost", "BufNewFile" },
@@ -44,6 +45,7 @@ return {
 			col = 1,
 		},
 	},
+	---@return boolean
 	cond = function()
 		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,

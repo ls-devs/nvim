@@ -5,10 +5,12 @@
 --           ts_ls stays in Mason ensure_installed so tsserver is locatable,
 --           but ts_ls auto-enable is excluded in mason-lspconfig.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"pmizio/typescript-tools.nvim",
 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 	opts = {
+		---@param client vim.lsp.Client
 		on_attach = function(client)
 			-- Disable tsserver's built-in formatting; prettierd handles it via conform.nvim.
 			client.server_capabilities.documentFormattingProvider = false

@@ -4,6 +4,7 @@
 -- Note    : ts_context_commentstring is called manually via custom_commentstring;
 --           enable_autocmd=false prevents double-invocation
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"echasnovski/mini.comment",
 	config = function()
@@ -12,6 +13,7 @@ return {
 			options = {
 				-- Delegate comment-string resolution to Treesitter context
 				-- so embedded languages (e.g. JSX inside TSX) get the right syntax
+				---@return string
 				custom_commentstring = function()
 					return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
 				end,

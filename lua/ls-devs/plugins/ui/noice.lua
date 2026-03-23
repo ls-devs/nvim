@@ -2,10 +2,11 @@
 -- Purpose : Replaces cmdline, messages, and popupmenu with styled floating
 --           windows. Integrates with blink.cmp, snacks.notifier, and lspsaga.
 -- Trigger : VeryLazy
--- Note    : <C-f>/<C-b> scroll hover docs (wired in legendary.lua).
+-- Note    : <C-f>/<C-b> scroll hover docs (wired in core/keymaps.lua).
 --           <A-x> redirects cmdline output to a popup.
 --           blink.cmp has a workaround for flashing caused by noice redraws.
 -- ─────────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
@@ -89,6 +90,7 @@ return {
 		routes = {},
 		messages = {
 			enabled = true,
+			view_search = false, -- shown in lualine instead
 		},
 		-- ── Views ─────────────────────────────────────────────────────────────────────
 		-- Position the command palette near the top-center of the screen.
@@ -105,6 +107,8 @@ return {
 			},
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("noice").setup(vim.tbl_deep_extend("force", opts, {
 			markdown = {

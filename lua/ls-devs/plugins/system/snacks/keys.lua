@@ -3,6 +3,7 @@
 -- All lazy.nvim `keys` specs for snacks.nvim.
 -- Sections: Terminal, Picker (files/text/git/LSP), Gitbrowse, Bufdelete, Words.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type table[]
 return {
 	-- ── Terminal ─────────────────────────────────────────────────────────
 	-- <C-\> and <leader>z both toggle the float (mirrors old toggleterm mapping)

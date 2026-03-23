@@ -4,6 +4,7 @@
 -- Note    : AC adds cursors at visible viewport matches; ac at all buffer matches;
 --           CN jumps to next match without adding a cursor (navigate-only)
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"brenton-leighton/multiple-cursors.nvim",
 	opts = {},

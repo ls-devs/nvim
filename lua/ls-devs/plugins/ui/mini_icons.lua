@@ -5,6 +5,7 @@
 --           calls transparently — all plugins (neo-tree, lualine, tabby,
 --           trouble, lspsaga) continue working without any config changes
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"echasnovski/mini.icons",
 	lazy = false,
@@ -13,6 +14,7 @@ return {
 	init = function()
 		-- Redirect any require("nvim-web-devicons") call to mini.icons before
 		-- the module is loaded so plugins get the faster implementation
+		---@return table
 		package.preload["nvim-web-devicons"] = function()
 			require("mini.icons").mock_nvim_web_devicons()
 			return package.loaded["nvim-web-devicons"]

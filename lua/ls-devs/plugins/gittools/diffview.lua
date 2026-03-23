@@ -5,6 +5,7 @@
 --           The view_opened hook auto-opens the panel and forces laststatus=3.
 --           Toggle via DiffviewToggle in utils/custom_functions.lua.
 -- ──────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"sindrets/diffview.nvim",
 
@@ -47,6 +48,7 @@ return {
 				folder_statuses = "only_folded", -- show status icon only on collapsed dirs
 			},
 			-- Centered float, capped at 100 columns × 24 lines
+			---@return table
 			win_config = function()
 				local c = { type = "float", border = "rounded" }
 				local editor_width = vim.o.columns
@@ -75,6 +77,7 @@ return {
 				},
 			},
 			-- Centered float, capped at 100 columns × 24 lines
+			---@return table
 			win_config = function()
 				local c = { type = "float", border = "rounded" }
 				local editor_width = vim.o.columns
@@ -95,6 +98,8 @@ return {
 		},
 	},
 	cmd = "Diffview",
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("diffview").setup(opts)
 		require("diffview.ui.panel").Panel.default_config_float.border = "rounded" -- patch all floating panel borders to match the UI theme
@@ -108,6 +113,7 @@ return {
 			silent = true,
 		},
 	},
+	---@return boolean
 	cond = function()
 		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
 	end,

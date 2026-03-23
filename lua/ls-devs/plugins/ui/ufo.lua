@@ -4,14 +4,19 @@
 -- Trigger : BufRead, BufNewFile
 -- Note    : statuscol.nvim renders the fold column (▼ open / ▶ closed).
 --           CustomHover in custom_functions.lua calls UFO's peek fold feature.
---           zR/zM keymaps are wired in legendary.lua.
---           UFO is re-enabled on SessionLoadPost via autocmd in legendary.lua.
+--           zR/zM keymaps are wired in core/keymaps.lua.
+--           UFO is re-enabled on SessionLoadPost via autocmd in core/autocmds.lua.
 -- ─────────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"kevinhwang91/nvim-ufo",
 	event = { "BufRead", "BufNewFile" },
 	opts = {
 		-- Use treesitter first; fall back to indent-based folding when no parser is available.
+		---@param bufnr integer
+		---@param filetype string
+		---@param buftype string
+		---@return table
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }
 		end,
@@ -19,6 +24,12 @@ return {
 		open_fold_hl_timeout = 200,
 		-- Appends a " 󱞤 N " count badge to the virtual text of each closed fold,
 		-- where N is the number of hidden lines. Remaining first-line text is truncated to fit.
+		---@param virtText table
+		---@param lnum integer
+		---@param endLnum integer
+		---@param width integer
+		---@param truncate fun(str: string, width: integer): string
+		---@return table
 		fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 			local newVirtText = {}
 			local suffix = (" 󱞤 %d "):format(endLnum - lnum)
@@ -51,10 +62,16 @@ return {
 				winblend = 0,
 			},
 			mappings = {
-				scrollU = "<C-u>",
-				scrollD = "<C-d>",
+				scrollU = "<C-u>", -- half-page up
+				scrollD = "<C-d>", -- half-page down
+				scrollE = "<C-e>", -- one line up
+				scrollY = "<C-y>", -- one line down
+				scrollB = "<C-b>", -- full-page up
+				scrollF = "<C-f>", -- full-page down
 				jumpTop = "[",
 				jumpBot = "]",
+				switch = "<Tab>", -- focus the peek float for free navigation
+				close = "q",
 			},
 		},
 	},
@@ -67,6 +84,8 @@ return {
 				relculright = true,
 				setopt = true,
 			},
+			---@param _ LazyPlugin
+			---@param opts table
 			config = function(_, opts)
 				require("statuscol").setup(vim.tbl_deep_extend("force", opts, {
 					-- Three-column status column: sign → line number → fold indicator.

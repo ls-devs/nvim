@@ -6,6 +6,7 @@
 --           nvim-treesitter's built-in incremental_selection is disabled
 --           in treesitter.lua to avoid keybinding collision.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"sustech-data/wildfire.nvim",
 	keys = {

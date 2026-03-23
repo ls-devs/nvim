@@ -6,6 +6,7 @@
 -- Neovim version string is current.
 -- Icons and key layout match the original alpha.lua dashboard buttons.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type table
 return {
 	preset = {
 		-- Header is set at runtime in snacks.lua config() with the live version.

@@ -5,8 +5,11 @@
 -- Trigger : keys — f, F, t, T, s, S, r, R, <C-s>
 -- Note    : Catppuccin integration is enabled via catppuccin.lua integrations
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"folke/flash.nvim",
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("flash").setup(opts)
 		-- flash.rainbow creates groups named FlashColor{color}{shade} using its own
@@ -79,6 +82,8 @@ return {
 				},
 				multi_window = false, -- restrict to current window (matches flit scope)
 				-- <Space> advances to the next batch of labels when matches exceed label count
+				---@param motion string
+				---@return table<string, string>
 				char_actions = function(motion)
 					return {
 						[";"] = "next",

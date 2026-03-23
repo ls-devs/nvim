@@ -22,6 +22,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- ── Plugin Spec Imports ───────────────────────────────────────────────────
+---@type LazyConfig
 require("lazy").setup({
 	spec = {
 		{ import = "ls-devs.plugins.completion" },

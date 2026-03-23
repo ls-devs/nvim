@@ -2,6 +2,7 @@
 -- Purpose : Enhanced LSP UI — hover, rename, diagnostics, outline, call hierarchy
 -- Trigger : LspAttach
 -- ──────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"nvimdev/lspsaga.nvim",
 	event = "LspAttach",

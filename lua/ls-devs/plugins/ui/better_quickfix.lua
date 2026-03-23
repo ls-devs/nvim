@@ -4,6 +4,7 @@
 -- Note    : Requires junegunn/fzf for fuzzy filtering; preview skips files
 --           larger than 100 KB and fugitive:// virtual buffers
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"kevinhwang91/nvim-bqf",
 	ft = "qf",
@@ -24,6 +25,9 @@ return {
 			border = "rounded",
 			show_title = true,
 			-- Skip preview for large files (> 100 KB) and fugitive virtual buffers
+			---@param bufnr integer
+			---@param qwinid integer
+			---@return boolean
 			should_preview_cb = function(bufnr, qwinid)
 				local ret = true
 				local bufname = vim.api.nvim_buf_get_name(bufnr)

@@ -3,6 +3,7 @@
 -- Trigger : cmd = OverseerRun / OverseerToggle / OverseerBuild / OverseerOpen / OverseerInfo
 -- Note    : Task form and output windows use rounded borders (toggleterm-style)
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"stevearc/overseer.nvim",
 	opts = {
@@ -29,7 +30,11 @@ return {
 				["<C-v>"] = { "keymap.open", opts = { dir = "vsplit" }, desc = "Open task output in vsplit" },
 				["<C-s>"] = { "keymap.open", opts = { dir = "split" }, desc = "Open task output in split" },
 				["<C-f>"] = { "keymap.open", opts = { dir = "float" }, desc = "Open task output in float" },
-				["<C-q>"] = { "keymap.run_action", opts = { action = "open output in quickfix" }, desc = "Open quickfix" },
+				["<C-q>"] = {
+					"keymap.run_action",
+					opts = { action = "open output in quickfix" },
+					desc = "Open quickfix",
+				},
 				["p"] = "keymap.toggle_preview",
 				["{"] = "keymap.prev_task",
 				["}"] = "keymap.next_task",

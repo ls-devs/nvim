@@ -6,6 +6,7 @@
 -- Package required for :
 -- Nvim-Spider
 
+---@type LazySpec
 return {
 	"vhyrro/luarocks.nvim",
 	priority = 1000,

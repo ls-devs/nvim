@@ -5,6 +5,7 @@
 -- Note    : vim-dadbod is the backend driver; vim-dadbod-completion adds
 --           SQL autocomplete restricted to sql/mysql/plsql filetypes only
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"kristijanhusak/vim-dadbod-ui",
 	dependencies = {

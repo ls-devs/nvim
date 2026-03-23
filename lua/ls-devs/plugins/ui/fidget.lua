@@ -4,6 +4,7 @@
 -- Note    : override_vim_notify is false — snacks.notifier owns vim.notify routing;
 --           fidget is scoped to LSP $progress messages only
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"j-hui/fidget.nvim",
 	event = { "LspAttach" },
@@ -19,12 +20,16 @@ return {
 				ignore_empty_message = true,
 
 				-- Returns the client name so the group title persists after the client disconnects
+				---@param client_id integer
+				---@return string?
 				clear_on_detach = function(client_id)
 					local client = vim.lsp.get_client_by_id(client_id)
 					return client and client.name or nil
 				end,
 
 				-- Group all progress messages from the same LSP client together
+				---@param msg table
+				---@return string
 				notification_group = function(msg)
 					return msg.lsp_client.name
 				end,
@@ -48,6 +53,8 @@ return {
 					-- Don't add LSP progress events to the notification history list
 					skip_history = true,
 
+					---@param msg table
+					---@return string
 					format_message = function(msg)
 						local message = msg.message
 						if not message then
@@ -59,6 +66,8 @@ return {
 						return message
 					end,
 
+					---@param msg table
+					---@return string
 					format_annote = function(msg)
 						if msg.title then
 							return msg.title .. " "
@@ -67,6 +76,8 @@ return {
 						end
 					end,
 
+					---@param group any
+					---@return string
 					format_group_name = function(group)
 						return tostring(group)
 					end,
@@ -94,6 +105,9 @@ return {
 					icon_separator = " ",
 					group_separator = "", -- no divider line between notification groups
 					group_separator_hl = "Comment",
+					---@param msg string
+					---@param cnt integer
+					---@return string
 					render_message = function(msg, cnt)
 						return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
 					end,

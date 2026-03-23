@@ -3,6 +3,7 @@
 -- Trigger : BufWritePre (load), ConformInfo cmd; manual format via <leader>fm
 -- Note    : format_on_save=false is intentional — use <leader>fm to format manually
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
@@ -57,6 +58,8 @@ return {
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("conform").setup(vim.tbl_deep_extend("force", opts, {
 			formatters = {

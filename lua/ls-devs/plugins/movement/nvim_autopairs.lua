@@ -4,6 +4,7 @@
 -- Note    : check_ts uses treesitter to suppress pairing inside strings and
 --           comments; <M-e> (fast_wrap) wraps the next token in a bracket pair
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"windwp/nvim-autopairs",
 	event = "InsertEnter",

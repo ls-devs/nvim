@@ -5,12 +5,17 @@
 -- Note    : NOT a lazy.nvim spec — loaded by blink_cmp.lua via
 --             `module = "ls-devs.plugins.completion.completion_modules.dotenv_source"`
 -- ─────────────────────────────────────────────────────────────────────────
+---@class DotenvSource
 local source = {}
 
+---@return DotenvSource
 function source.new()
 	return setmetatable({}, { __index = source })
 end
 
+---@param self DotenvSource
+---@param _ table
+---@param callback function
 function source:get_completions(_, callback)
 	local items = {}
 	local seen = {}

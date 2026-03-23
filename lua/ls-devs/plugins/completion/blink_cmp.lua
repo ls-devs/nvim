@@ -5,6 +5,7 @@
 -- Provides: LSP / snippet / Copilot / buffer / dotenv / cmdline completions
 -- Note    : Built with `cargo build --release`; blink.lib provides Rust fuzzy
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"saghen/blink.cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
@@ -33,6 +34,7 @@ return {
 		{ "pontusk/cmp-sass-variables", lazy = true },
 	},
 	opts = {
+		---@return boolean
 		enabled = function()
 			-- Disable in snacks picker input to prevent interference with search typing.
 			if vim.bo.filetype == "snacks_picker_input" then
@@ -64,6 +66,8 @@ return {
 			-- 2. Active snippet → jump to next tabstop
 			-- 3. Otherwise → neotab bracket escape (or real tab for indentation)
 			["<Tab>"] = {
+				---@param cmp table
+				---@return boolean
 				function(cmp)
 					if cmp.is_menu_visible() then
 						return cmp.select_next()
@@ -126,6 +130,7 @@ return {
 				-- (ui_cmdline_pos[1] - 1) + 1 lands exactly on noice's bottom border row.
 				-- Using pos[1] directly (without -1) shifts the menu one row lower so it
 				-- appears immediately BELOW noice's bottom border instead of overlapping it.
+				---@return integer[]
 				cmdline_position = function()
 					if vim.g.ui_cmdline_pos ~= nil then
 						local pos = vim.g.ui_cmdline_pos
@@ -144,9 +149,13 @@ return {
 					components = {
 						label = {
 							width = { fill = true, max = 60 },
+							---@param ctx table
+							---@return string
 							text = function(ctx)
 								return " " .. ctx.label .. (ctx.label_detail or "") .. " "
 							end,
+							---@param ctx table
+							---@return table[]
 							highlight = function(ctx)
 								local label_len = #ctx.label + (ctx.label_detail and #ctx.label_detail or 0)
 								local highlights = {
@@ -171,6 +180,8 @@ return {
 						},
 						source_name = {
 							width = { max = 12 },
+							---@param ctx table
+							---@return string
 							text = function(ctx)
 								local labels = {
 									LSP = "[LSP]",
@@ -188,6 +199,8 @@ return {
 						},
 						kind_icon = {
 							ellipsis = false,
+							---@param ctx table
+							---@return string
 							text = function(ctx)
 								local symbol_map = {
 									Text = "󰉿",
@@ -221,6 +234,8 @@ return {
 								local icon = symbol_map[ctx.kind] or symbol_map["Unknown"]
 								return "  " .. icon .. "  "
 							end,
+							---@param ctx table
+							---@return string
 							highlight = function(ctx)
 								return "CmpItemKind" .. ctx.kind
 							end,
@@ -249,6 +264,7 @@ return {
 		-- per_filetype is handled here too so lazydev/sass-variables are also
 		-- suppressed in comments (inherit_defaults bypasses the default function).
 		sources = {
+			---@return string[]
 			default = function()
 				local col = vim.api.nvim_win_get_cursor(0)[2]
 				local ok, captures =
@@ -323,6 +339,8 @@ return {
 
 		signature = { enabled = false }, -- signature help is invoked manually via <C-s> instead of auto-show
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		vim.g.sass_variables_file = "_variables.scss"
 		-- Register blink capabilities with all LSP servers (nvim 0.11 lsp/ dir)
@@ -347,6 +365,10 @@ return {
 
 		local _blink_hiding_win = false
 		local orig_nvim_open_win = vim.api.nvim_open_win
+		---@param buf integer
+		---@param enter boolean
+		---@param cfg vim.api.keyset.win_config
+		---@return integer
 		---@diagnostic disable-next-line: duplicate-set-field
 		vim.api.nvim_open_win = function(buf, enter, cfg)
 			if _blink_hiding_win then
@@ -356,6 +378,7 @@ return {
 		end
 
 		local orig_win_open = win_mod.open
+		---@param self table
 		---@diagnostic disable-next-line: duplicate-set-field
 		win_mod.open = function(self)
 			local was_open = self:is_open()

@@ -6,6 +6,8 @@
 -- ─────────────────────────────────────────────────────────────────────────
 
 -- Shared helpers used by all prompt library entries to extract buffer text.
+---@param context table
+---@return string[]
 local function get_selected_lines(context)
 	local bufnr = context.bufnr or 0
 	local start_line = (context.start_line and context.start_line - 1) or 0
@@ -14,6 +16,9 @@ local function get_selected_lines(context)
 end
 
 -- Wraps buffer lines in a fenced code block for a given AI instruction.
+---@param context table
+---@param instruction string
+---@return string
 local function make_code_prompt(context, instruction)
 	local filetype = context.filetype or "text"
 	local lines = get_selected_lines(context)
@@ -23,6 +28,7 @@ local function make_code_prompt(context, instruction)
 	return string.format("%s %s :\n\n```%s\n%s\n```", instruction, filetype, filetype, text)
 end
 
+---@type LazySpec
 return {
 	"olimorris/codecompanion.nvim",
 	cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCLI" },
@@ -87,6 +93,7 @@ return {
 				},
 				copilot_node_command = "node",
 				workspace_folders = {},
+				---@return string?
 				root_dir = function()
 					local git_dir = vim.fs.find(".git", { upward = true })[1]
 					if git_dir then
@@ -95,6 +102,7 @@ return {
 						return vim.uv.cwd()
 					end
 				end,
+				---@return boolean
 				should_attach = function(_, _)
 					if not vim.bo.buflisted then
 						return false
@@ -278,6 +286,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -309,6 +319,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -340,6 +352,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -370,6 +384,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -400,6 +416,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -430,6 +448,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -460,6 +480,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -490,6 +512,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -520,6 +544,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -550,6 +576,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -580,6 +608,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -610,6 +640,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line
@@ -640,6 +672,8 @@ return {
 					},
 					{
 						role = "user",
+						---@param context table
+						---@return string
 						content = function(context)
 							if
 								not context.start_line

@@ -5,6 +5,7 @@
 --           gza=add, gzd=delete, gzf=find, gzF=find-left, gzh=highlight,
 --           gzr=replace, gzn=update n_lines
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"echasnovski/mini.surround",
 	opts = {

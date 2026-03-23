@@ -7,6 +7,7 @@
 --           auto-setup; JS/TS adapters use pwa-node/pwa-chrome from
 --           js-debug-adapter (installed via Mason)
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"rcarriga/nvim-dap-ui",
 	config = function()
@@ -76,12 +77,14 @@ return {
 							type = "pwa-chrome",
 							request = "launch",
 							name = "Launch & Debug Chrome",
+							---@return thread
 							url = function()
 								local co = coroutine.running()
 								return coroutine.create(function()
 									vim.ui.input({
 										prompt = "Enter URL: ",
 										default = "http://localhost:3000",
+										---@param url string?
 									}, function(url)
 										if url == nil or url == "" then
 											return
@@ -144,6 +147,12 @@ return {
 				only_first_definition = true,
 				all_references = false,
 				clear_on_continue = false,
+				---@param variable table
+				---@param buf integer
+				---@param stackframe table
+				---@param node table
+				---@param options table
+				---@return string
 				display_callback = function(variable, buf, stackframe, node, options)
 					if options.virt_text_pos == "inline" then
 						return " = " .. variable.value

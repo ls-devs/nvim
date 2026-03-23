@@ -2,8 +2,9 @@
 -- Purpose : Auto-resize the focused window using golden-ratio proportions
 -- Trigger : BufReadPost, BufNewFile
 -- Note    : autoresize enabled by default; per-filetype suppression (neo-tree,
---           DAP panels, OverseerList, etc.) is managed by autocmds in legendary.lua
+--           DAP panels, OverseerList, etc.) is managed by autocmds in core/autocmds.lua
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"nvim-focus/focus.nvim",
 	event = { "BufReadPost", "BufNewFile" },

@@ -9,6 +9,7 @@
 --   snacks/picker.lua     — picker layout + keymaps
 --   snacks/keys.lua       — all lazy keys specs
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -44,6 +45,7 @@ return {
 				local dash_buf = vim.api.nvim_get_current_buf()
 				local aug = vim.api.nvim_create_augroup("DashboardStatusGuard_" .. dash_buf, { clear = true })
 
+				---@return boolean
 				local function dash_visible()
 					for _, win in ipairs(vim.api.nvim_list_wins()) do
 						if vim.api.nvim_win_get_buf(win) == dash_buf then
@@ -116,6 +118,7 @@ return {
 		-- relativenumber is already off globally; this also clears number for .md files.
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "markdown",
+			---@param ev vim.api.keyset.create_autocmd.callback_args
 			callback = function(ev)
 				for _, win in ipairs(vim.fn.win_findbuf(ev.buf)) do
 					if vim.w[win].snacks_picker_preview then
@@ -172,6 +175,8 @@ return {
 				duration = { step = 15, total = 250 },
 				easing = "outQuad",
 			},
+			---@param buf integer
+			---@return boolean
 			filter = function(buf)
 				if vim.g.snacks_scroll == false or vim.b[buf].snacks_scroll == false then
 					return false
@@ -197,6 +202,8 @@ return {
 			enabled = true,
 			indent = { char = "│" },
 			scope = { enabled = true },
+			---@param buf integer
+			---@return boolean
 			filter = function(buf)
 				return vim.g.snacks_indent ~= false
 					and vim.b[buf].snacks_indent ~= false
@@ -238,8 +245,9 @@ return {
 			timeout = 3000,
 			style = "compact",
 			top_down = false, -- stack upward from bottom-right (matches old nvim-notify)
-			width = { min = 20, max = 0.4 },
+			width = { min = 20, max = 0.6 },
 			height = { min = 1, max = 0.6 },
+			wrap = true, -- wrap long lines so the full message is always visible
 			margin = { top = 0, right = 1, bottom = 1 },
 			icons = {
 				error = " ",
@@ -249,6 +257,8 @@ return {
 				trace = "✎ ",
 			},
 			-- Suppress noisy hover "no info" messages (previously in noice routes).
+			---@param notif table
+			---@return boolean
 			filter = function(notif)
 				return not (notif.msg and notif.msg:find("No information available"))
 			end,
@@ -267,6 +277,8 @@ return {
 	-- ── config ───────────────────────────────────────────────────────────
 	-- Injects runtime Neovim version into dashboard header, calls setup,
 	-- then wires toggle keymaps via Snacks.toggle.*:map().
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		local version = vim.version()
 		opts.dashboard.preset.header = table.concat({

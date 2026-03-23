@@ -9,6 +9,7 @@
 --           copy because top-level commands don't apply inside filesystem.
 -- ─────────────────────────────────────────────────────────────────────────
 
+---@type LazySpec
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	cmd = { "Neotree" },
@@ -33,12 +34,16 @@ return {
 			noremap = true,
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("neo-tree").setup(opts)
 		-- Snap cursor to the first character of the filename on every move.
 		-- Neo-tree renders lines as: [indent spaces][icon][space][name]
 		-- Strategy: scan left-to-right for the last [multi-byte char][space] pair
 		-- (that's always the icon + space); the char after the space is the filename.
+		---@param line string
+		---@return integer
 		local function name_col(line)
 			local b = 1
 			while b <= #line do
@@ -71,6 +76,7 @@ return {
 
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "neo-tree",
+			---@param ev vim.api.keyset.create_autocmd.callback_args
 			callback = function(ev)
 				local group = vim.api.nvim_create_augroup("neotree_cursor_snap_" .. ev.buf, { clear = true })
 				local lock = false
@@ -172,6 +178,7 @@ return {
 			},
 		},
 		commands = {
+			---@param state neotree.State
 			open_and_clear_filter = function(state)
 				local node = state.tree:get_node()
 				if node and node.type == "file" then
@@ -184,7 +191,8 @@ return {
 		},
 		window = {
 			-- Default position; overridden per-call in the <leader>e keymap.
-			position = "float",
+			-- "left" prevents the flash-then-move glitch when toggling the sidebar.
+			position = "left",
 			-- Width used when opened as a left sidebar.
 			width = 40,
 			popup = {
@@ -198,6 +206,7 @@ return {
 			mappings = {
 				["<space>"] = "none",
 				["<2-LeftMouse>"] = "open",
+				---@param state neotree.State
 				["l"] = function(state)
 					local node = state.tree:get_node()
 					if node.type == "message" then
@@ -206,6 +215,7 @@ return {
 						require("neo-tree.sources.filesystem.commands").open(state)
 					end
 				end,
+				---@param state neotree.State
 				["<CR>"] = function(state)
 					local node = state.tree:get_node()
 					if node.type == "message" then
@@ -214,6 +224,7 @@ return {
 						require("neo-tree.sources.filesystem.commands").open(state)
 					end
 				end,
+				---@param state neotree.State
 				["h"] = function(state)
 					local node = state.tree:get_node()
 					local cmds = require("neo-tree.sources.filesystem.commands")
@@ -226,7 +237,7 @@ return {
 					end
 				end,
 				["<esc>"] = "close_window",
-				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = false } },
 				[","] = "focus_preview",
 				["S"] = "split_with_window_picker",
 				["s"] = "vsplit_with_window_picker",
@@ -340,6 +351,7 @@ return {
 				},
 			},
 			commands = {
+				---@param state neotree.State
 				open_and_clear_filter = function(state)
 					local node = state.tree:get_node()
 					if node and node.type == "file" then
@@ -354,8 +366,7 @@ return {
 		event_handlers = {
 			{
 				event = "file_opened",
-				-- Always close the tree when a file is opened, regardless of mode
-				-- (float, sidebar, split, tab, etc.).
+				-- Always close the tree when a file is opened.
 				handler = function()
 					require("neo-tree.command").execute({ action = "close" })
 				end,
@@ -364,6 +375,23 @@ return {
 				event = "neo_tree_popup_input_ready",
 				handler = function()
 					vim.cmd("stopinsert")
+				end,
+			},
+			{
+				-- Disable focus.nvim before the window is created so it cannot
+				-- golden-ratio-resize the neo-tree split before its filetype is set.
+				-- Without this, focus.nvim's WinEnter fires while the NUI buffer is
+				-- not yet attached, bypassing the FileType-based focus_disable guard
+				-- and causing a brief right-side flash.
+				event = "neo_tree_window_before_open",
+				handler = function()
+					vim.g.focus_disable = true
+				end,
+			},
+			{
+				event = "neo_tree_window_after_open",
+				handler = function()
+					vim.g.focus_disable = false
 				end,
 			},
 		},

@@ -16,11 +16,11 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **Completion:** Powered by blink.cmp (v2/main, Rust fuzzy matching), LuaSnip, lspkind, and sources (LSP, buffer, snippets, Copilot, dotenv, sass-variables).
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
 - **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
-- **Movement:** Enhanced navigation with flit.nvim, mini.surround, multiple-cursors, sentiment.nvim, neotab, nvim-spider, nvim-autopairs, and others.
-- **UI:** Snacks dashboard, catppuccin theme, diagflow, blinker, noice, lualine, tabby, todo-comments, and more.
-- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging, xmake, lazydev, etc.
-- **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier), legendary, linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, etc.
-- **Utilities:** Mini.comment, neocomposer, trouble, and more.
+- **Movement:** Enhanced navigation with flash.nvim, mini.surround, multiple-cursors, neotab, nvim-spider, nvim-autopairs, smart-splits, treesj, vim-matchup, and others.
+- **UI:** Snacks dashboard, catppuccin theme, diagflow, mini.icons, noice, lualine, tabby, todo-comments, and more.
+- **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging, lazydev, etc.
+- **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier, dashboard), linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, etc.
+- **Utilities:** Mini.comment, trouble, and more.
 
 ## Installation
 
@@ -38,7 +38,6 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **Win32yank** (for clipboard integration on WSL)
 - **direnv** (for environment management)
 - **ghcup** (for Haskell tools)
-- **xmake** (optional, for build tools)
 - **Spaceship ZSH** (for prompt, if using zsh)
 - **Oh-My-Zsh** (for shell plugins)
 
@@ -62,7 +61,6 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
    - Win32yank (WSL clipboard)
    - direnv
    - ghcup
-   - xmake
    - Spaceship ZSH, Oh-My-Zsh
 
 5. **Install plugin dependencies:**
@@ -84,11 +82,11 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - Clipboard: win32yank (WSL), OSC52 (Docker)
 - Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, emmet
 - LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
-- Git: diffview.nvim, gitsigns.nvim, fugitive, git-worktree
-- UI: snacks.nvim (dashboard, input, notifier), catppuccin, diagflow, blinker, noice, lualine, tabby, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
-- Movement: flit.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, sentiment.nvim
-- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP), xmake, lazydev, img-clip
-- System: snacks.nvim (bigfile, terminal, scroll, indent, picker), legendary, conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement
+- Git: diffview.nvim, gitsigns.nvim, fugitive, git-conflict, git-worktree
+- UI: snacks.nvim (dashboard, input, notifier), catppuccin, diagflow, mini.icons, noice, lualine, tabby, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
+- Movement: flash.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, smart-splits, treesj, vim-matchup
+- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot + img-clip dep), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP), lazydev
+- System: snacks.nvim (bigfile, terminal, scroll, indent, picker, dashboard), conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement
 
 ## Updating
 - Run `:Lazy update` to update plugins.

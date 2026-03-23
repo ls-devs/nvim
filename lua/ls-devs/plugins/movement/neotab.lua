@@ -4,6 +4,7 @@
 -- Note    : tabkey="" because blink.cmp owns <Tab> and calls neotab.tabout()
 --           as the final fallback in its Tab keymap chain
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"kawre/neotab.nvim",
 	event = "InsertEnter",

@@ -4,11 +4,15 @@
 -- Trigger : Required on-demand by plugin configs (not loaded at startup)
 -- Provides: HelpGrep, CustomHover, OpenURLs, DiffviewToggle, OrigamiHLFolds
 -- ─────────────────────────────────────────────────────────────────────────
+---@class LsDevsUtils
 local M = {}
 --- Opens a `:helpgrep` prompt and displays matching help topics in a new tab.
 --- The quickfix list is opened automatically when results are found.
 --- Returns silently if the user cancels or provides an empty input.
+---@return nil
 M.HelpGrep = function()
+	---@param help_cmd string
+	---@param topic string
 	local open_help_tab = function(help_cmd, topic)
 		vim.cmd.tabe()
 		local winnr = vim.api.nvim_get_current_win()
@@ -47,6 +51,7 @@ end
 
 --- Toggles diffview.nvim: opens a Diffview if none is currently active,
 --- or closes the current one. Uses diffview's internal library to detect an open view.
+---@return nil
 M.DiffviewToggle = function()
 	local lib = require("diffview.lib")
 	local view = lib.get_current_view()
@@ -59,6 +64,7 @@ end
 
 --- Peek a folded line under the cursor (UFO) or show LSP hover via Lspsaga.
 --- On a closed fold, opens a preview float; otherwise delegates to hover_doc.
+---@return nil
 M.CustomHover = function()
 	local winid = require("ufo").peekFoldedLinesUnderCursor()
 	if not winid then
@@ -80,16 +86,18 @@ end
 ---   - otherwise                         : normal `l`
 ---
 --- Both honour `vim.v.count1` so count-prefixed motions (e.g. `3h`, `5l`) work correctly.
----@return function h, function l
+---@return fun() h
+---@return fun() l
 -- h/l folds from nvim-origami as custom functions
 M.OrigamiHLFolds = function()
 	-- helper
+	---@param cmdStr string
 	local function normal(cmdStr)
 		vim.cmd.normal({ cmdStr, bang = true })
 	end
 
-	-- `h` closes folds when at the beginning of a line.
-	-- When inside a fold and already at col 0, jumps to first non-blank of the line above.
+	-- `h` closes folds when at or before the first non-blank character of a line.
+	-- Pressing h anywhere before the first char triggers fold-close, not cursor movement.
 	local h = function()
 		local count = vim.v.count1
 		for _ = 1, count, 1 do
@@ -97,25 +105,22 @@ M.OrigamiHLFolds = function()
 			local line = vim.api.nvim_get_current_line()
 			local first_char_col = (line:find("%S") or 1) - 1 -- 0-indexed
 
-			if col == 0 then
-				local foldlevel = vim.fn.foldlevel(".")
-				if foldlevel > 0 then
-					normal("k^")
-				else
-					normal("h")
-				end
-			elseif col <= first_char_col then
-				local foldlevel = vim.fn.foldlevel(".")
+			if col <= first_char_col then
 				local foldclosed = vim.fn.foldclosed(".")
 				if foldclosed > -1 then
+					-- cursor on a closed fold: normal h
 					normal("h")
-				elseif foldlevel > 0 then
-					local ok = pcall(normal, "zc")
-					if not ok then
+				else
+					local foldlevel = vim.fn.foldlevel(".")
+					if foldlevel > 0 then
+						-- inside an open fold at/before first char: close it
+						local ok = pcall(normal, "zc")
+						if not ok then
+							normal("h")
+						end
+					else
 						normal("h")
 					end
-				else
-					normal("h")
 				end
 			else
 				normal("h")

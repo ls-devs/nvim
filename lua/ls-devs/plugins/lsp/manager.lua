@@ -3,6 +3,7 @@
 --           and nvim-lspconfig global diagnostics setup
 -- Trigger : MasonTools* commands (installer); BufReadPre / BufNewFile (lspconfig)
 -- ──────────────────────────────────────────────────────────────────────────
+---@type LazySpec[]
 return {
 	-- Global Mason Installer (LSP | LINTERS | FORMATTERS | DAPS)
 	{

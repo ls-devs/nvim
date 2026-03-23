@@ -4,6 +4,7 @@
 -- Note    : cw uses c+spider-e so it changes to end of the current subword,
 --           matching Vim's intended cw semantics with subword granularity
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"chrisgrieser/nvim-spider",
 	opts = {

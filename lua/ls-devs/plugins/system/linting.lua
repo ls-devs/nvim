@@ -1,8 +1,9 @@
 -- ── nvim-lint ─────────────────────────────────────────────────────────────
 -- Purpose : On-demand linter runner, dispatches per-filetype linters
 -- Trigger : BufReadPost, BufNewFile (load); BufWritePost/BufReadPost/InsertLeave (run)
--- Note    : codespell is toggled dynamically via <leader>cs in legendary.lua
+-- Note    : codespell is toggled dynamically via <leader>cs in core/keymaps.lua
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"mfussenegger/nvim-lint",
 	event = { "BufReadPost", "BufNewFile" },
@@ -34,6 +35,8 @@ return {
 			["*"] = { "codespell" }, -- runs on every filetype; toggle off via <leader>cs
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		local M = {}
 
@@ -85,6 +88,9 @@ return {
 			end
 		end
 
+		---@param ms integer
+		---@param fn fun()
+		---@return fun(...)
 		local function debounce(ms, fn)
 			local timer = vim.uv.new_timer()
 			return function(...)

@@ -2,6 +2,7 @@
 -- Purpose : Allow scrolling past the end of the file while respecting scrolloff
 -- Trigger : event — BufReadPost, BufNewFile
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"Aasim-A/scrollEOF.nvim",
 	event = { "BufReadPost", "BufNewFile" },

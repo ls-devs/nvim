@@ -3,6 +3,7 @@
 -- Trigger : cmd — Trouble; keys — <leader>v
 -- Note    : Uses `Trouble diagnostics toggle` (v3 API); TroubleToggle is deprecated v2
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"folke/trouble.nvim",
 	dependencies = { { "echasnovski/mini.icons", lazy = false } },

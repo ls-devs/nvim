@@ -3,6 +3,7 @@
 -- Trigger : BufReadPost, BufNewFile
 -- Note    : minimumBufferNum=1 ensures at least one buffer always stays open
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"chrisgrieser/nvim-early-retirement",
 	event = { "BufReadPost", "BufNewFile" },

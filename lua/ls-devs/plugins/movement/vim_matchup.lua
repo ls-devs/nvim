@@ -6,6 +6,7 @@
 --           loaded_matchparen. Treesitter integration is enabled via
 --           matchup = { enable = true } in treesitter.lua opts.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"andymass/vim-matchup",
 	event = "BufReadPost",

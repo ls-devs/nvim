@@ -4,6 +4,7 @@
 -- Note    : Configured via its own opts (new API); the deprecated autotag block
 --           in treesitter.lua has been removed.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"windwp/nvim-ts-autotag",
 	ft = {

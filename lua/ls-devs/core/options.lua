@@ -33,6 +33,7 @@ local in_wsl = vim.fn.has("wsl") == 1
 -- Branch 1 — Docker: no host clipboard access; emit OSC 52 escape sequences
 -- directly to stdout so the terminal emulator bridges yanks to the system clipboard.
 if in_docker then
+	---@param lines string[]
 	local function copy_osc52(lines)
 		local text = table.concat(lines, "\n")
 		local base64 = vim.base64.encode(text)
@@ -48,9 +49,11 @@ if in_docker then
 			["*"] = copy_osc52,
 		},
 		paste = {
+			---@return string[]
 			["+"] = function()
 				return vim.split(vim.fn.getreg("+"), "\n")
 			end,
+			---@return string[]
 			["*"] = function()
 				return vim.split(vim.fn.getreg("*"), "\n")
 			end,
@@ -118,6 +121,7 @@ elseif in_wsl then
 end
 
 -- ── Vim Options ───────────────────────────────────────────────────────────
+---@type table<string, any>
 local options = {
 	background = "dark",
 	incsearch = true,
@@ -183,7 +187,7 @@ local options = {
 		vertright = "┣",
 		verthoriz = "╋",
 	},
-	-- "terminal" is intentionally excluded to prevent toggleterm windows from being restored
+	-- "terminal" is intentionally excluded to prevent snacks.terminal windows from being restored
 	sessionoptions = "buffers,curdir,help,resize,folds,tabpages,winpos,winsize",
 }
 

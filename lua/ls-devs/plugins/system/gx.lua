@@ -3,6 +3,7 @@
 -- Trigger : Browse cmd (the gx keymap is wired in treesitter.lua)
 -- Note    : vim.g.netrw_nogx=1 disables netrw's built-in gx so this plugin owns it
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"chrishrb/gx.nvim",
 	cmd = { "Browse" },
@@ -18,9 +19,12 @@ return {
 			search_engine = "google",
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
-		local browser = function()
-			if vim.fn.has("wsl") then
+		---@return string
+		local function browser()
+			if vim.fn.has("wsl") == 1 then
 				return "wslview"
 			else
 				return "os_specific"

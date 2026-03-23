@@ -3,6 +3,7 @@
 -- Trigger : ft = http
 -- Replaces: rest.nvim (removed luarocks deps: lua-curl, nvim-nio, mimetypes, xml2lua)
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"mistweaverco/kulala.nvim",
 	ft = "http",

@@ -6,6 +6,7 @@
 --           nvim-various-textobjs (dependency) extends text objects well
 --           beyond what nvim-treesitter-textobjects provides alone.
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"nvim-treesitter/nvim-treesitter",
 	cmd = { "TSUpdate", "TSInstall" },
@@ -157,6 +158,8 @@ return {
 			},
 		},
 	},
+	---@param _ LazyPlugin
+	---@param opts table
 	config = function(_, opts)
 		require("nvim-treesitter.configs").setup(opts)
 	end,

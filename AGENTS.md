@@ -23,33 +23,29 @@ lua/ls-devs/
     completion/                ← blink.cmp, LuaSnip, lspkind
       completion_modules/      ← non-spec Lua helpers (dotenv_source.lua); NOT imported by lazy.nvim
       blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
-    devtools/                  ← codecompanion, copilot, debuggers, databases,
+    devtools/                  ← codecompanion (+ copilot dep + img-clip dep), debuggers, databases,
     │                            asyncrun, overseer, kulala.nvim, typescript-tools,
-    │                            live-server, xmake, lazydev, emmet
+    │                            live-server, lazydev, emmet
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
-    gittools/                  ← diffview, gitsigns, fugitive, git-worktree
+    gittools/                  ← diffview, gitsigns, fugitive, git-conflict, git-worktree
     lsp/
       manager.lua              ← Mason package list (LSPs, linters, formatters, DAPs)
       lspsaga.lua
-    movement/                  ← flit, mini.surround, multiple-cursors, neotab,
-    │                            nvim-autopairs, nvim-spider, sentiment
+    movement/                  ← flash, mini.surround, multiple-cursors, neotab,
+    │                            nvim-autopairs, nvim-spider, smart-splits, treesj, vim-matchup
     system/
       formatting.lua           ← conform.nvim formatter mappings (format_on_save=false)
       linting.lua              ← nvim-lint linter mappings + autocmd wiring
-      telescope.lua
+      snacks.lua               ← replaces bigfile, alpha, telescope, toggleterm, dressing-input
+      snacks/                  ← dashboard.lua, keys.lua, picker.lua (loaded via require in snacks.lua)
       neo_tree.lua
       treesitter.lua
-      toggleterm.lua
-      legendary.lua
-      bigfile.lua, sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua,
-      early_retirement.lua
+      sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua, early_retirement.lua
       dependencies/            ← plenary, luarocks
-      telescope_extensions/    ← cmdline, emoji, import, media-files, nerdy
       treesitter_modules/      ← nvim-ts-autotag
-    ui/                        ← alpha, catppuccin, diagflow, blinker, dressing,
-    │                            fidget, focus, lualine, noice, reactive,
-    │                            stickybuf, tabby, todo-comments, ufo, better-qf
-    utilities/                 ← mini.comment, neocomposer, scrolleof, trouble
+    ui/                        ← catppuccin, diagflow, fidget, focus, lualine, mini_icons,
+    │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, better-qf
+    utilities/                 ← mini.comment, scrolleof, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs,
                                   DiffviewToggle, OrigamiHLFolds
@@ -211,7 +207,7 @@ To add a skill, update `skills-lock.json` and place the skill file under `.agent
 2. `linting.lua` → add `filetype = { "toolname" }` entry in `linters_by_ft`
 
 ### Change a keybinding
-Find the plugin spec file for the relevant feature and update the `keys` table entry. Check `lua/ls-devs/plugins/system/legendary.lua` if the binding is registered there too.
+Find the plugin spec file for the relevant feature and update the `keys` table entry.
 
 ---
 

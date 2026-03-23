@@ -4,11 +4,13 @@
 -- Note    : virtual_text is disabled in nvim-lspconfig; diagflow takes full
 --           ownership of diagnostic rendering
 -- ─────────────────────────────────────────────────────────────────────────
+---@type LazySpec
 return {
 	"dgagn/diagflow.nvim",
 	event = "LspAttach",
 	opts = {
 		-- Disable on the lazy.nvim UI to prevent rendering artifacts in that buffer
+		---@return boolean
 		enable = function()
 			return vim.bo.filetype ~= "lazy"
 		end,
@@ -20,6 +22,8 @@ return {
 			info = "DiagnosticFloatingInfo",
 			hint = "DiagnosticFloatingHint",
 		},
+		---@param diagnostic table
+		---@return string
 		format = function(diagnostic)
 			return diagnostic.message
 		end,

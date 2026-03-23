@@ -5,6 +5,8 @@
 -- Note    : <leader>tn=new tab, <leader>tr=rename, <leader>to=only,
 --           <A-f>=next tab, <A-b>=prev tab, <leader>tmp/tmn=move tab.
 -- ─────────────────────────────────────────────────────────────────────────────
+---@param tab table
+---@return string
 local tabName = function(tab)
 	local tabName = tab.name()
 	local winid = vim.api.nvim_tabpage_get_win(tab.id)
@@ -27,15 +29,10 @@ local tabName = function(tab)
 		end
 	end
 
-	-- For floating terminals: strip any legacy toggleterm numeric suffix from buffer name.
-	-- (toggleterm replaced by snacks.terminal; this branch is dead but harmless)
+	-- For floating terminals: use filetype as tab name, or fall back to buffer tail.
 	if string.find(tabTail, "Floating") then
 		if vim.bo.filetype == "" then
 			local tail = vim.fn.expand("%:t")
-			if string.find(tail, "toggleterm") then
-				local pID = string.gsub(tail, "%d+:", "")
-				tabName = string.gsub(pID, ";#toggleterm#%d+", "")
-			end
 			if string.find(tail, "npm") then
 				tabName = string.gsub(tail, "%d+:", "")
 			end
@@ -52,6 +49,7 @@ local tabName = function(tab)
 	return string.gsub(tabName, "%[%d+%+%]", "")
 end
 
+---@type LazySpec
 return {
 	"nanozuki/tabby.nvim",
 	event = { "BufReadPost", "BufWritePost", "BufNewFile" },
