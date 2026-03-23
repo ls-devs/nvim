@@ -78,11 +78,9 @@ return {
 		---@diagnostic disable-next-line: missing-fields
 		require("neotest").setup(opts)
 
-		-- neotest publishes failures into its own "neotest" diagnostic namespace.
-		-- The global diagnostic config has virtual_text=false (for LSP noise), but
-		-- we want failure messages to appear inline for tests specifically.
-		-- priority=200 ensures neotest diagnostic text renders to the LEFT of
-		-- gitsigns blame (priority=1). In Neovim, higher priority = leftmost.
+		-- Virtual-text render order (higher priority = leftmost):
+		--   search count (300) → neotest errors (200) → gitsigns blame (1).
+		-- priority=200 keeps failure messages to the left of blame.
 		vim.diagnostic.config({
 			virtual_text = {
 				prefix = "󰅖 ",
