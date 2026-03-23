@@ -124,8 +124,8 @@ return {
 		-- is anchored to the buffer line and tracked by Neovim through scroll
 		-- animations automatically — no WinScrolled workaround needed.
 		-- Virtual-text render order — Neovim draws highest priority LAST (rightmost).
-		-- Desired order: search count | neotest errors | gitsigns blame
-		--   search(10) → neotest(100) → blame(300)
+		-- neotest's status consumer uses nvim_buf_set_extmark with no priority → default 10.
+		-- Desired order: search(5) → neotest-icon(10, hardcoded) → blame(300)
 		local search_ns = vim.api.nvim_create_namespace("ls_inline_search")
 		local MARK_ID = 1
 
@@ -154,7 +154,7 @@ return {
 				id = MARK_ID,
 				virt_text = { { text, "DiagnosticWarn" } },
 				virt_text_pos = "eol",
-				priority = 10,
+				priority = 5,
 			})
 		end
 

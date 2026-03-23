@@ -79,16 +79,17 @@ return {
 		require("neotest").setup(opts)
 
 		-- Virtual-text render order — Neovim draws highest priority LAST (rightmost).
-		-- Desired order: search count | neotest errors | gitsigns blame
-		--   search(10) → neotest(100) → blame(300).
-		-- priority=100 keeps failure messages between search count and blame.
+		-- neotest's status consumer sets pass/fail icons via nvim_buf_set_extmark
+		-- directly with no priority field → defaults to 10 (Neovim's DECOR_PRIORITY_BASE).
+		-- We cannot override that from vim.diagnostic.config.
+		-- Desired order: search(5) → neotest-icon(10, hardcoded) → blame(300).
+		-- Priority here only affects the diagnostic error text shown alongside the icon.
 		vim.diagnostic.config({
 			virtual_text = {
 				prefix = "󰅖 ",
 				format = function(d)
 					return d.message
 				end,
-				priority = 100,
 			},
 		}, vim.api.nvim_create_namespace("neotest"))
 
