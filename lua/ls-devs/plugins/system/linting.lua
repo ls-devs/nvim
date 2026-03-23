@@ -10,6 +10,9 @@ return {
 	opts = {
 		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 		linters_by_ft = {
+			-- eslint_d: fast daemon designed for linting/diagnostics.
+			-- The eslint LSP is configured to suppress publishDiagnostics so it
+			-- only provides code actions (Fix all, inline fixes) without duplication.
 			javascript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescript = { "eslint_d" },

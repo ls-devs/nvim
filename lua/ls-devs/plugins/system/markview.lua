@@ -31,55 +31,25 @@ return {
 				modes = { "n", "i", "no", "c" },
 				hybrid_modes = { "i" }, -- show raw markdown on the current line while in insert mode
 				callbacks = {
-					-- Fires before render() — detaching here prevents any rendering entirely.
-					-- Needed because lspsaga sets filetype="markdown" *before* buftype="nofile",
-					-- so the timing window lets markview attach to the hover buffer before
-					-- ignore_buftypes can catch it.
+					-- Strict guard: detach from anything that is not a real markdown
+					-- file on disk or a codecompanion buffer.
+					-- Runs before render(); returning early here is enough to block
+					-- rendering on buffers that slipped past the condition check due
+					-- to option-set timing races (lspsaga sets filetype='markdown'
+					-- after buftype='nofile', briefly bypassing ignore_buftypes).
 					---@param buffer integer
-					---@param wins integer[]
-					on_attach = function(buffer, wins)
+					on_attach = function(buffer)
 						local ft = vim.api.nvim_get_option_value("filetype", { buf = buffer })
 						local bt = vim.api.nvim_get_option_value("buftype", { buf = buffer })
 						local name = vim.api.nvim_buf_get_name(buffer)
 
-						-- Fast-path 1: buftype already set to nofile at attach time.
-						-- (happens when buftype is set before filetype)
-						if bt == "nofile" and ft ~= "codecompanion" then
+						local allowed = ft == "codecompanion"
+							or (bt == "" and name ~= "" and vim.fn.filereadable(name) == 1)
+
+						if not allowed then
 							pcall(require("markview.actions").detach, buffer)
 							pcall(require("markview.state").detach, buffer, true)
-							return
 						end
-
-						-- Fast-path 2: anonymous buffer (no file path).
-						-- LSP hover buffers are created with nvim_create_buf(false, true) and
-						-- never given a name; real markdown files always have a path.
-						-- BufAdd fires before the window is opened, so wins may be empty here;
-						-- this check fires even in that race window.
-						if name == "" and ft ~= "codecompanion" then
-							pcall(require("markview.actions").detach, buffer)
-							pcall(require("markview.state").detach, buffer, true)
-							return
-						end
-
-						-- Slow-path: named buffer in floating windows only
-						-- (covers edge cases like help:// URIs that do have names)
-						if #wins == 0 then
-							return -- no windows yet → not a float we need to block
-						end
-						for _, win in ipairs(wins) do
-							if vim.api.nvim_win_get_config(win).relative == "" then
-								return -- at least one normal window → keep attached
-							end
-						end
-						-- Every window is floating (LSP hover, etc.) → prevent rendering.
-						-- actions.detach() calls state.detach(buf, false) which clears
-						-- attached_buffers but KEEPS buffer_states{enable=true}. Back in
-						-- actions.attach() line 536, get_buffer_state(buf,false) still
-						-- returns that state and render() fires. We also call
-						-- state.detach(buf, true) to wipe buffer_states so
-						-- get_buffer_state returns nil → render is never reached.
-						pcall(require("markview.actions").detach, buffer)
-						pcall(require("markview.state").detach, buffer, true)
 					end,
 					-- wins is a table of window IDs returned by vim.fn.win_findbuf()
 					---@param _ integer
@@ -96,43 +66,40 @@ return {
 					"markdown",
 					"codecompanion",
 				},
-				-- "nofile" must be here: markview's spec.get() converts false→nil via
-				-- `ok and res or nil`, so condition returning false becomes nil and
-				-- markview falls back to these lists. codecompanion is safe because
-				-- its condition returns true, which bypasses ignore_buftypes entirely.
-				ignore_buftypes = { "help", "nofile" },
-				-- codecompanion nofile buffers get rendered; other nofile/unnamed buffers are
-				-- skipped; buffers shown only in floating windows (LSP hover, signature, etc.)
-				-- are skipped; nil lets markview apply its own heuristics.
+				ignore_buftypes = { "help", "nofile", "terminal", "prompt", "quickfix" },
+				-- Never return nil — always give markview a definitive yes/no so
+				-- the filetypes list is never consulted as a fallback. This prevents
+				-- diagnostic / hover floats from matching "markdown" in the list.
 				---@param buffer integer
-				---@return boolean?
+				---@return boolean
 				condition = function(buffer)
-					local ft, bt = vim.bo[buffer].ft, vim.bo[buffer].bt
+					local ft = vim.bo[buffer].filetype
+					local bt = vim.bo[buffer].buftype
 
-					if bt == "nofile" and ft == "codecompanion" then
+					if ft == "codecompanion" then
 						return true
-					elseif bt == "nofile" then
-						return false
-					elseif vim.api.nvim_buf_get_name(buffer) == "" then
-						return false
-					else
-						-- Exclude buffers that only appear in floating windows
-						-- (covers lspsaga hover_doc, LSP signature help, etc.)
-						local wins = vim.fn.win_findbuf(buffer)
-						if #wins > 0 then
-							local all_floating = true
-							for _, win in ipairs(wins) do
-								if vim.api.nvim_win_get_config(win).relative == "" then
-									all_floating = false
-									break
-								end
-							end
-							if all_floating then
-								return false
-							end
-						end
-						return nil
 					end
+
+					if bt ~= "" then
+						return false
+					end
+
+					-- Reject any markdown buffer that lives inside a floating window.
+					-- This catches all lspsaga/LSP hover/diagnostic floats regardless
+					-- of what buftype or name they end up with.
+					for _, win in ipairs(vim.fn.win_findbuf(buffer)) do
+						if vim.api.nvim_win_get_config(win).relative ~= "" then
+							return false
+						end
+					end
+
+					local name = vim.api.nvim_buf_get_name(buffer)
+					if name == "" or vim.fn.filereadable(name) == 0 then
+						return false
+					end
+
+					-- Only real markdown files on disk
+					return ft == "markdown" or ft == "md"
 				end,
 			},
 			html = {
@@ -151,5 +118,53 @@ return {
 				},
 			},
 		}
+	end,
+	-- lazy.nvim passes the evaluated opts table here; we call setup() manually
+	-- so we can also register the float guard autocmd.
+	---@param _ LazyPlugin
+	---@param opts table
+	config = function(_, opts)
+		require("markview").setup(opts)
+
+		-- Guard: runs after FileType=markdown fires on ANY buffer.
+		-- vim.schedule defers to after lspsaga's bufopt() has finished setting
+		-- ALL options (filetype + buftype + winopt conceallevel=2), so every
+		-- check below sees the final, stable state.
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "markdown",
+			group = vim.api.nvim_create_augroup("markview_float_guard", { clear = true }),
+			callback = function(ev)
+				vim.schedule(function()
+					if not vim.api.nvim_buf_is_valid(ev.buf) then
+						return
+					end
+
+					local ft = vim.bo[ev.buf].filetype
+					if ft == "codecompanion" then
+						return
+					end
+
+					local name = vim.api.nvim_buf_get_name(ev.buf)
+					local is_real_file = name ~= "" and vim.fn.filereadable(name) == 1
+
+					-- Reject non-file buffers and buffers inside floating windows.
+					-- lspsaga sets conceallevel=2 on its floats intentionally;
+					-- reset it to 0 so the float content doesn't look like markview.
+					for _, win in ipairs(vim.fn.win_findbuf(ev.buf)) do
+						if vim.api.nvim_win_get_config(win).relative ~= "" then
+							pcall(require("markview.actions").detach, ev.buf)
+							pcall(require("markview.state").detach, ev.buf, true)
+							vim.wo[win].conceallevel = 0
+							return
+						end
+					end
+
+					if not is_real_file then
+						pcall(require("markview.actions").detach, ev.buf)
+						pcall(require("markview.state").detach, ev.buf, true)
+					end
+				end)
+			end,
+		})
 	end,
 }

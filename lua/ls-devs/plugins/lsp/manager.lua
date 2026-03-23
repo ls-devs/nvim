@@ -56,6 +56,10 @@ return {
 				"omnisharp",
 
 				-- ── Linters ───────────────────────────────────────────────────────
+				-- eslint_d: fast daemon for ESLint diagnostics (nvim-lint).
+				-- The eslint LSP is kept but its publishDiagnostics is suppressed
+				-- so it only contributes code actions (Fix all, inline fixes).
+				"eslint_d",
 				"gitlint",
 				"djlint",
 				"jsonlint",
@@ -91,6 +95,10 @@ return {
 				"codelldb",
 				"js-debug-adapter",
 				"kotlin-debug-adapter",
+
+				-- ── Swift (requires Swift toolchain installed separately) ──────
+				"sourcekit-lsp",
+				"swift-format",
 			},
 			auto_update = true,
 			run_on_start = true,
@@ -107,8 +115,10 @@ return {
 		opts = {
 			automatic_enable = {
 				-- ts_ls is managed by typescript-tools.nvim; auto-enabling it
-				-- here would create a conflicting second client on TS/JS files
-				exclude = { "ts_ls" },
+				-- here would create a conflicting second client on TS/JS files.
+				-- rust_analyzer is managed by rustaceanvim; auto-enabling it
+				-- here would create a conflicting second client on Rust files.
+				exclude = { "ts_ls", "rust_analyzer" },
 			},
 		},
 		dependencies = {
@@ -148,7 +158,9 @@ return {
 						underline = true,
 						severity_sort = true,
 						signs = {
-							priority = 1,
+							-- Higher than gitsigns (sign_priority=1) so diagnostic
+							-- signs always win when both appear on the same line.
+							priority = 20,
 							text = {
 								[vim.diagnostic.severity.ERROR] = "",
 								[vim.diagnostic.severity.WARN] = "",
@@ -165,6 +177,17 @@ return {
 				end,
 			},
 			{ "b0o/schemastore.nvim", lazy = true },
+			-- mason-nvim-dap bridges Mason-installed adapters with nvim-dap,
+			-- auto-registering dap.adapters entries for all installed DAP packages.
+			{
+				"jay-babu/mason-nvim-dap.nvim",
+				lazy = true,
+				opts = {
+					-- Auto-install adapters that are in Mason ensure_installed but
+					-- not yet installed as DAP adapters.
+					automatic_installation = true,
+				},
+			},
 		},
 	},
 }

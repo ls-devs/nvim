@@ -32,6 +32,7 @@ return {
 			opts = {},
 		},
 		{ "pontusk/cmp-sass-variables", lazy = true },
+		{ "Kaiser-Yang/blink-cmp-git", lazy = true },
 	},
 	opts = {
 		---@return boolean
@@ -189,6 +190,7 @@ return {
 									Buffer = "[BUFFER]",
 									copilot = "[COPILOT]",
 									LazyDev = "[LAZY]",
+									Git = "[GIT]",
 									["sass-variables"] = "[SASS]",
 									dotenv = "[ENV]",
 									Cmdline = "[CMD]",
@@ -280,7 +282,7 @@ return {
 				if ft == "lua" then
 					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "lazydev" }
 				elseif ft == "gitcommit" then
-					return { "buffer" }
+					return { "git", "buffer" }
 				elseif ft == "css" or ft == "scss" then
 					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "sass-variables" }
 				end
@@ -330,6 +332,12 @@ return {
 					name = "sass-variables",
 					module = "blink.compat.source",
 					score_offset = -5,
+				},
+				git = {
+					name = "Git",
+					module = "blink-cmp-git",
+					score_offset = 80,
+					opts = {},
 				},
 			},
 		},

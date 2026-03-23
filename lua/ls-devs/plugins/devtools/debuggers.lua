@@ -106,6 +106,165 @@ return {
 						},
 					}
 				end
+
+				-- ── Python (debugpy) ──────────────────────────────────────────
+				dap.configurations.python = {
+					{
+						type = "python",
+						request = "launch",
+						name = "Launch file",
+						program = "${file}",
+						---@return string
+						pythonPath = function()
+							local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+							if venv then
+								return venv .. "/bin/python"
+							end
+							return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+						end,
+					},
+					{
+						type = "python",
+						request = "launch",
+						name = "Launch file with arguments",
+						program = "${file}",
+						args = function()
+							local args_str = vim.fn.input("Arguments: ")
+							return vim.split(args_str, " ", { trimempty = true })
+						end,
+						---@return string
+						pythonPath = function()
+							local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+							if venv then
+								return venv .. "/bin/python"
+							end
+							return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+						end,
+					},
+					{
+						type = "python",
+						request = "attach",
+						name = "Attach remote (debugpy)",
+						connect = function()
+							local host = vim.fn.input("Host [127.0.0.1]: ")
+							host = host ~= "" and host or "127.0.0.1"
+							local port = tonumber(vim.fn.input("Port [5678]: ")) or 5678
+							return { host = host, port = port }
+						end,
+					},
+					{
+						name = "----- ↓ launch.json configs ↓ -----",
+						type = "",
+						request = "launch",
+					},
+				}
+
+				-- ── Rust / C / C++ (codelldb) ──────────────────────────────────
+				for _, language in ipairs({ "rust", "c", "cpp" }) do
+					dap.configurations[language] = {
+						{
+							name = "Launch executable",
+							type = "codelldb",
+							request = "launch",
+							program = function()
+								return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+							end,
+							cwd = "${workspaceFolder}",
+							stopOnEntry = false,
+							args = {},
+						},
+						{
+							name = "Launch executable (with args)",
+							type = "codelldb",
+							request = "launch",
+							program = function()
+								return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+							end,
+							args = function()
+								local args_str = vim.fn.input("Arguments: ")
+								return vim.split(args_str, " ", { trimempty = true })
+							end,
+							cwd = "${workspaceFolder}",
+							stopOnEntry = false,
+						},
+						{
+							name = "Attach to process",
+							type = "codelldb",
+							request = "attach",
+							pid = require("dap.utils").pick_process,
+							cwd = "${workspaceFolder}",
+						},
+						{
+							name = "----- ↓ launch.json configs ↓ -----",
+							type = "",
+							request = "launch",
+						},
+					}
+				end
+
+				-- ── Bash (bash-debug-adapter) ──────────────────────────────────
+				local mason_path = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension"
+				dap.configurations.sh = {
+					{
+						name = "Launch Bash file",
+						type = "bashdb",
+						request = "launch",
+						showDebugOutput = true,
+						pathBashdb = mason_path .. "/bashdb_dir/bashdb",
+						pathBashdbLib = mason_path .. "/bashdb_dir",
+						trace = true,
+						file = "${file}",
+						program = "${file}",
+						cwd = "${workspaceFolder}",
+						pathCat = "cat",
+						pathBash = "/bin/bash",
+						pathMkfifo = "mkfifo",
+						pathPkill = "pkill",
+						args = {},
+						env = {},
+						terminalKind = "integrated",
+					},
+				}
+
+				-- ── PHP (php-debug-adapter / Xdebug) ──────────────────────────
+				dap.configurations.php = {
+					{
+						name = "Listen for Xdebug (port 9003)",
+						type = "php",
+						request = "launch",
+						port = 9003,
+						stopOnEntry = false,
+						pathMappings = {
+							["/var/www/html"] = "${workspaceFolder}",
+						},
+					},
+					{
+						name = "Launch currently open script",
+						type = "php",
+						request = "launch",
+						program = "${file}",
+						cwd = "${fileDirname}",
+						port = 0,
+						runtimeArgs = { "-dxdebug.start_with_request=yes" },
+						env = {
+							XDEBUG_MODE = "debug,develop",
+							XDEBUG_CONFIG = "client_port=${port}",
+						},
+					},
+				}
+
+				-- ── Kotlin (kotlin-debug-adapter) ──────────────────────────────
+				dap.configurations.kotlin = {
+					{
+						type = "kotlin",
+						request = "launch",
+						name = "Launch Kotlin project",
+						projectRoot = "${workspaceFolder}",
+						mainClass = function()
+							return vim.fn.input("Main class (e.g. com.example.MainKt): ", "MainKt")
+						end,
+					},
+				}
 			end,
 			dependencies = {
 				-- {

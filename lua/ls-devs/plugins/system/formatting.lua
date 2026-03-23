@@ -55,6 +55,7 @@ return {
 			python = { "black" },
 			php = { "php-cs-fixer" },
 			prisma = { "prisma" },
+			swift = { "swift-format" },
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 	},
