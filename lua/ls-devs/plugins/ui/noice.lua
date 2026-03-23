@@ -123,9 +123,9 @@ return {
 		-- Unlike noice's own rendering (which uses screen coordinates), an extmark
 		-- is anchored to the buffer line and tracked by Neovim through scroll
 		-- animations automatically — no WinScrolled workaround needed.
-		-- ID 1 is reused on every update to avoid ever getting a new global extmark ID.
-		-- Virtual-text render order (higher priority = leftmost):
-		--   search count (300) → neotest errors (200) → gitsigns blame (1)
+		-- Virtual-text render order — Neovim draws highest priority LAST (rightmost).
+		-- Desired order: search count | neotest errors | gitsigns blame
+		--   search(10) → neotest(100) → blame(300)
 		local search_ns = vim.api.nvim_create_namespace("ls_inline_search")
 		local MARK_ID = 1
 
@@ -154,7 +154,7 @@ return {
 				id = MARK_ID,
 				virt_text = { { text, "DiagnosticWarn" } },
 				virt_text_pos = "eol",
-				priority = 300,
+				priority = 10,
 			})
 		end
 

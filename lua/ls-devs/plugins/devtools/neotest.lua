@@ -78,16 +78,17 @@ return {
 		---@diagnostic disable-next-line: missing-fields
 		require("neotest").setup(opts)
 
-		-- Virtual-text render order (higher priority = leftmost):
-		--   search count (300) → neotest errors (200) → gitsigns blame (1).
-		-- priority=200 keeps failure messages to the left of blame.
+		-- Virtual-text render order — Neovim draws highest priority LAST (rightmost).
+		-- Desired order: search count | neotest errors | gitsigns blame
+		--   search(10) → neotest(100) → blame(300).
+		-- priority=100 keeps failure messages between search count and blame.
 		vim.diagnostic.config({
 			virtual_text = {
 				prefix = "󰅖 ",
 				format = function(d)
 					return d.message
 				end,
-				priority = 200,
+				priority = 100,
 			},
 		}, vim.api.nvim_create_namespace("neotest"))
 

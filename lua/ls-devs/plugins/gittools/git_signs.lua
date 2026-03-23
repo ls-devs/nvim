@@ -30,9 +30,10 @@ return {
 			virt_text_pos = "eol",
 			delay = 1000,
 			ignore_whitespace = false,
-			-- priority=1 keeps blame rightmost — neotest diagnostic uses priority=200
-			-- so failures always render to the left of the blame text.
-			virt_text_priority = 1,
+			-- priority=300 keeps blame rightmost — drawn last per Neovim's
+			-- virt_text rule (highest priority = drawn last = rightmost).
+			-- order: search(10) → neotest(100) → blame(300)
+			virt_text_priority = 300,
 			use_focus = true,
 		},
 		current_line_blame_formatter = "   <author> • <author_time:%d/%m/%Y> • <summary> ", -- virtual text: nerd-font icon · author · date · summary
