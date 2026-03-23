@@ -186,6 +186,21 @@ return {
 		nowait = true,
 	},
 
+	{
+		"<leader>sd",
+		function()
+			Snacks.picker.diagnostics()
+		end,
+		desc = "Diagnostics (Workspace)",
+	},
+	{
+		"<leader>sD",
+		function()
+			Snacks.picker.diagnostics_buffer()
+		end,
+		desc = "Diagnostics (Buffer)",
+	},
+
 	-- ── Bufdelete ────────────────────────────────────────────────────────
 	{
 		"<leader>bd",
