@@ -100,15 +100,9 @@ vim.keymap.set(
 	{ silent = true, expr = true, desc = "Noice Scroll Doc Backward" }
 )
 
-vim.keymap.set(
-	"c",
-	"<A-x>",
-	---@return string
-	function()
-		return require("noice").redirect(vim.fn.getcmdline())
-	end,
-	{ desc = "Noice Redirect Cmdline" }
-)
+vim.keymap.set("c", "<A-x>", function()
+	return require("noice").redirect(vim.fn.getcmdline())
+end, { desc = "Noice Redirect Cmdline" })
 
 -- ── Utilities ─────────────────────────────────────────────────────────────
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })

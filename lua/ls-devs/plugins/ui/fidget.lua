@@ -44,7 +44,7 @@ return {
 					-- Never expire in-progress tasks; they clear only when the LSP reports done
 					progress_ttl = math.huge,
 					-- Animated clock spinner cycling every 0.7 s
-					progress_icon = { pattern = "clock", period = 0.7 },
+					progress_icon = { pattern = "meter", period = 0.7 },
 
 					progress_style = "WarningMsg",
 					group_style = "Title",
