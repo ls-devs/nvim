@@ -281,22 +281,6 @@ return {
 			end,
 		})
 
-		-- Noice search count (X/Y); always visible in statusline so smooth scroll
-		-- doesn't cause it to disappear when the cursor scrolls off-screen.
-		ins_right({
-			---@return string
-			function()
-				return require("noice").api.status.search.get()
-			end,
-			---@return boolean
-			cond = function()
-				local ok, noice = pcall(require, "noice")
-				return ok and noice.api.status.search.has()
-			end,
-			color = { fg = colors.yellow, gui = "bold" },
-			icon = " ",
-		})
-
 		-- Cursor position (line:col) and scroll percentage through the file.
 		ins_right({ "location", color = { fg = colors.text, gui = "bold" } })
 		ins_right({ "progress", color = { fg = colors.text, gui = "bold" } })

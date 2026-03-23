@@ -90,7 +90,7 @@ return {
 		routes = {},
 		messages = {
 			enabled = true,
-			view_search = false, -- shown in lualine instead
+			view_search = false, -- shown as inline extmark instead (see config below)
 		},
 		-- ── Views ─────────────────────────────────────────────────────────────────────
 		-- Position the command palette near the top-center of the screen.
@@ -117,6 +117,60 @@ return {
 				},
 			},
 		}))
+
+		-- ── Inline search count (smooth-scroll-compatible) ────────────────────────────
+		-- noice view_search is disabled; we draw our own extmark at EOL instead.
+		-- Unlike noice's own rendering (which uses screen coordinates), an extmark
+		-- is anchored to the buffer line and tracked by Neovim through scroll
+		-- animations automatically — no WinScrolled workaround needed.
+		-- ID 1 is reused on every update to avoid ever getting a new global extmark
+		-- ID, which keeps us left of gitsigns blame (priority 10 < gitsigns' 100).
+		local search_ns = vim.api.nvim_create_namespace("ls_inline_search")
+		local MARK_ID = 1
+
+		local function search_clear()
+			pcall(vim.api.nvim_buf_del_extmark, 0, search_ns, MARK_ID)
+		end
+
+		local function search_update()
+			if vim.v.hlsearch == 0 then
+				search_clear()
+				return
+			end
+			local ok, res = pcall(vim.fn.searchcount, { maxcount = 999 })
+			if not ok or not res or (res.total or 0) == 0 then
+				search_clear()
+				return
+			end
+			local text
+			if res.incomplete == 2 then
+				text = string.format("  [>%d/%d]", res.current, res.maxcount)
+			else
+				text = string.format("  [%d/%d]", res.current, res.total)
+			end
+			local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+			pcall(vim.api.nvim_buf_set_extmark, 0, search_ns, row, 0, {
+				id = MARK_ID,
+				virt_text = { { text, "DiagnosticWarn" } },
+				virt_text_pos = "eol",
+				priority = 10,
+			})
+		end
+
+		vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+			desc = "Update inline search count on cursor movement",
+			callback = search_update,
+		})
+
+		-- Catch hlsearch being cleared without cursor movement (e.g. <Esc>).
+		vim.api.nvim_create_autocmd("CursorHold", {
+			desc = "Clear inline search count when hlsearch is off",
+			callback = function()
+				if vim.v.hlsearch == 0 then
+					search_clear()
+				end
+			end,
+		})
 	end,
 	-- ── Dependencies ──────────────────────────────────────────────────────────────
 	dependencies = {
