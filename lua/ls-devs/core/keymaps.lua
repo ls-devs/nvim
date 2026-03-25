@@ -3,7 +3,7 @@
 -- Purpose : All global keymaps defined with native vim.keymap.set.
 --           Previously managed by legendary.nvim.
 -- Trigger : Loaded at startup by core/init.lua
--- Note    : Keymaps are browsable via <leader>fk (Snacks.picker.keymaps)
+-- Note    : Keymaps are browsable via <leader>fk (KeymapsList in custom_functions.lua)
 -- ─────────────────────────────────────────────────────────────────────────
 
 ---@type { noremap: boolean, silent: boolean }
@@ -110,6 +110,11 @@ vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<CR>", { noremap = true, silent = tr
 vim.keymap.set("n", "<leader>lg", function()
 	Snacks.lazygit()
 end, { noremap = true, silent = true, desc = "LazyGit" })
+
+-- ── GitHub Auth ───────────────────────────────────────────────────────────
+vim.keymap.set("n", "<leader>ga", function()
+	require("ls-devs.utils.custom_functions").GhSwitch()
+end, { noremap = true, silent = true, desc = "GitHub Auth Switch" })
 
 -- Toggle codespell linter on/off for the current session
 vim.keymap.set("n", "<leader>cs", function()

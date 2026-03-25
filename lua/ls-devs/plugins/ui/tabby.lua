@@ -77,7 +77,13 @@ return {
 				end),
 				line.spacer(),
 				-- Window indicators for the current tab: focused vs unfocused window icons.
+				-- DapUI opens many panes — skip them so they don't flood the indicator list.
 				line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+					local bufid = vim.api.nvim_win_get_buf(win.id)
+					local ft = vim.api.nvim_get_option_value("filetype", { buf = bufid })
+					if ft:match("^dapui") or ft == "dap-repl" then
+						return {}
+					end
 					return {
 						line.sep("", "TabLine", { bg = colors.none }),
 						win.is_current() and "  " or "  ",

@@ -20,8 +20,6 @@ return {
 				-- ── LSP servers ───────────────────────────────────────────────────
 				"eslint",
 				"sonarlint-language-server",
-				"jdtls",
-				"astro",
 				"vim-language-server",
 				"ts_ls",
 				"html",
@@ -32,27 +30,18 @@ return {
 				"css-variables-language-server",
 				"somesass_ls",
 				"emmet_language_server",
-				"vue_ls",
 				"tailwindcss",
-				"prismals",
 				"jsonls",
-				"intelephense",
 				"sqlls",
 				"yamlls",
 				"dockerls",
 				"docker_compose_language_service",
 				"marksman",
-				"rust_analyzer",
 				"pyright",
-				"cmake",
 				"lua_ls",
-				"clangd",
 				"bashls",
 				"vimls",
-				"graphql",
-				"svelte",
 				"taplo",
-				"kotlin_language_server",
 				"omnisharp",
 
 				-- ── Linters ───────────────────────────────────────────────────────
@@ -64,13 +53,10 @@ return {
 				"djlint",
 				"jsonlint",
 				"hadolint",
-				"cmakelint",
 				"yamllint",
-				"cpplint",
 				"sqlfluff",
 				"ruff",
 				"shellcheck",
-				"ktlint",
 				"codespell",
 				"stylelint",
 				"luacheck",
@@ -78,23 +64,17 @@ return {
 				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",
 				"markdownlint-cli2",
-				"clang-format",
 				"yq",
 				"stylua",
-				"gersemi",
 				"black",
 				"sql-formatter",
 				"csharpier",
 				"shellharden",
-				"php-cs-fixer",
 
 				-- ── Debuggers (DAP adapters) ──────────────────────────────────────
 				"debugpy",
 				"bash-debug-adapter",
-				"php-debug-adapter",
-				"codelldb",
 				"js-debug-adapter",
-				"kotlin-debug-adapter",
 
 				-- ── Swift (requires Swift toolchain installed separately) ──────
 				"sourcekit-lsp",
@@ -116,9 +96,7 @@ return {
 			automatic_enable = {
 				-- ts_ls is managed by typescript-tools.nvim; auto-enabling it
 				-- here would create a conflicting second client on TS/JS files.
-				-- rust_analyzer is managed by rustaceanvim; auto-enabling it
-				-- here would create a conflicting second client on Rust files.
-				exclude = { "ts_ls", "rust_analyzer" },
+				exclude = { "ts_ls" },
 			},
 		},
 		dependencies = {

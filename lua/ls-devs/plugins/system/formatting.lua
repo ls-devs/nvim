@@ -24,15 +24,10 @@ return {
 		format_on_save = false, -- intentional: use <leader>fm to format manually
 		formatters_by_ft = {
 			html = { "prettierd" },
-			htmldjango = { "djlint" },
 			javascript = { "prettierd" },
 			javascriptreact = { "prettierd" },
 			typescript = { "prettierd" },
 			typescriptreact = { "prettierd" },
-			astro = { "prettierd" },
-			vue = { "prettierd" },
-			svelte = { "prettierd" },
-			graphql = { "prettierd" },
 			mdx = { "prettierd" },
 			xml = { "prettierd" },
 			css = { "prettierd" },
@@ -43,35 +38,16 @@ return {
 			toml = { "taplo" },
 			markdown = { "markdownlint-cli2" },
 			yaml = { "yq" },
-			kotlin = { "ktlint" },
 			lua = { "stylua" },
-			rust = { "rustfmt", lsp_format = "fallback" },
-			c = { "clang-format" },
 			cs = { "csharpier" },
-			cpp = { "clang-format" },
-			cmake = { "gersemi" },
 			sql = { "sql-formatter" },
 			sh = { "shellharden" },
 			python = { "black" },
-			php = { "php-cs-fixer" },
-			prisma = { "prisma" },
 			swift = { "swift-format" },
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 	},
-	---@param _ LazyPlugin
-	---@param opts table
 	config = function(_, opts)
-		require("conform").setup(vim.tbl_deep_extend("force", opts, {
-			formatters = {
-				prisma = {
-					command = "prisma",
-					args = { "format" },
-					stdin = false, -- prisma format reads from disk, not stdin
-					cwd = require("conform.util").root_file({ "schema.prisma" }),
-					require_cwd = true, -- skip formatting if no schema.prisma is found in the project
-				},
-			},
-		}))
+		require("conform").setup(opts)
 	end,
 }

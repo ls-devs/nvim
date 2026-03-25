@@ -19,8 +19,6 @@ return {
 		{ "nvim-neotest/neotest-jest", lazy = true },
 		{ "marilari88/neotest-vitest", lazy = true },
 		{ "nvim-neotest/neotest-python", lazy = true },
-		{ "rouge8/neotest-rust", lazy = true },
-		{ "olimorris/neotest-phpunit", lazy = true },
 	},
 	---@param _ LazyPlugin
 	---@param opts table
@@ -33,8 +31,6 @@ return {
 			require("neotest-jest")({
 				jestCommand = "npx jest --no-coverage",
 				jestConfigFile = function(file)
-					-- vim.fn.* must not be called in a fast (libuv) event context.
-					-- Use vim.fs / vim.uv equivalents instead.
 					local dir = vim.fs.dirname(vim.fs.normalize(file))
 					local found = vim.fs.find(
 						{ "jest.config.ts", "jest.config.js", "jest.config.mjs" },
@@ -43,15 +39,33 @@ return {
 					if found and found[1] then
 						return found[1]
 					end
-					return (vim.uv.cwd() or ".") .. "/jest.config.ts"
+					return nil
 				end,
 				env = { CI = true },
-				cwd = function()
-					return vim.uv.cwd()
-				end,
 			}),
 			-- ── Vitest (JS/TS/JSX/TSX/Node) ───────────────────────────────
-			require("neotest-vitest"),
+			require("neotest-vitest")({
+				-- Guard: only claim test files when vitest is installed in the project.
+				-- Without this, neotest-vitest tries to run jest projects through its
+				-- ESM loader and fails with ERR_UNKNOWN_FILE_EXTENSION ".ts".
+				is_test_file = function(file_path)
+					local pkg = vim.fs.find("package.json", {
+						path = vim.fs.dirname(file_path),
+						upward = true,
+						type = "file",
+						limit = 1,
+					})
+					if not pkg or not pkg[1] then
+						return false
+					end
+					local bin = vim.fs.dirname(pkg[1]) .. "/node_modules/.bin/vitest"
+					if vim.fn.filereadable(bin) == 0 then
+						return false
+					end
+					return file_path:match("%.[jt]sx?$") ~= nil
+						and (file_path:match("%.test%.[jt]sx?$") ~= nil or file_path:match("%.spec%.[jt]sx?$") ~= nil)
+				end,
+			}),
 			-- ── Python (pytest / unittest) ─────────────────────────────────
 			require("neotest-python")({
 				dap = { justMyCode = false },
@@ -64,16 +78,6 @@ return {
 					return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 				end,
 			}),
-			-- ── Rust (cargo test) ─────────────────────────────────────────
-			require("neotest-rust")({
-				args = { "--no-capture" },
-				dap_adapter = "codelldb",
-			}),
-			-- ── PHP (phpunit) — only when phpunit binary is present ───────
-			-- Skipped in non-PHP projects to avoid "not executable" errors.
-			(vim.fn.executable("phpunit") == 1 or vim.fn.executable("vendor/bin/phpunit") == 1) and require(
-				"neotest-phpunit"
-			) or nil,
 		}
 		---@diagnostic disable-next-line: missing-fields
 		require("neotest").setup(opts)
@@ -307,7 +311,8 @@ return {
 			"<leader>Td",
 			function()
 				require("neotest").summary.open()
-				require("neotest").run.run({ strategy = "dap" })
+        -- Generalized DAP debug: works for any adapter that supports DAP
+        require("neotest").run.run({ strategy = "dap" })
 			end,
 			desc = "Neotest Debug Nearest",
 			noremap = true,

@@ -1,6 +1,18 @@
 -- ── nvim-dap-ui ───────────────────────────────────────────────────────────
 -- Purpose : Full DAP debugging ecosystem for Neovim
--- Trigger : keys (<leader>bb / <leader>un / <leader>ut / <leader>uo / <leader>uc)
+--
+-- Standardized DAP Keymaps (project-agnostic, reusable):
+--
+--   <leader>uo   Toggle DAP UI panel (dapui.toggle)
+--   <leader>uc   Close DAP UI panel (dapui.close)
+--   <leader>un   Continue/start debug session (dap.continue)
+--   <leader>ut   Terminate debug session (dap.terminate)
+--   <leader>bb   Toggle breakpoint (dap.toggle_breakpoint)
+--   <leader>dC   Attach Chrome/Arc debugger (custom, WSL-aware)
+--   <leader>dN   Attach Node.js/TS debugger (custom, auto ts-node)
+--
+-- All keymaps are documented with 'desc' and are safe for reuse in other Neovim configs.
+--
 -- Provides: nvim-dap (protocol client), nvim-dap-ui (visual panels),
 --           nvim-dap-virtual-text (inline variable values in source)
 -- Note    : mason-nvim-dap (configured in manager.lua) handles adapter
@@ -30,9 +42,15 @@ return {
 		end
 
 		-- Auto-close when the debuggee process exits with a code
-		dap.listeners.before.event_exited["dapui_config"] = function()
+		dap.listeners.before.event_exited["dapui_config"] = function(_, body)
 			dapui.close()
 			require("nvim-dap-virtual-text").refresh()
+			local code = body and body.exitCode or "?"
+			if code == 0 then
+				vim.notify("[DAP] Process exited (code 0)", vim.log.levels.INFO)
+			else
+				vim.notify("[DAP] Process exited with code " .. tostring(code), vim.log.levels.WARN)
+			end
 		end
 
 		-- Gutter signs for breakpoint variants
@@ -48,61 +66,152 @@ return {
 			"mfussenegger/nvim-dap",
 			config = function()
 				local dap = require("dap")
+
+				-- ── JS/TS adapters (js-debug-adapter via Mason) ───────────────
+				-- mason-nvim-dap automatic_installation only installs the binary;
+				-- pwa-node / pwa-chrome must be registered manually.
+				local js_debug = vim.fn.stdpath("data")
+					.. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
+				dap.adapters["pwa-node"] = {
+					type = "server",
+					host = "localhost",
+					port = "${port}",
+					executable = { command = "node", args = { js_debug, "${port}" } },
+				}
+				dap.adapters["pwa-chrome"] = dap.adapters["pwa-node"]
+
+				-- js-debug connecting through the WSL relay needs more time than the
+				-- default 4s timeout before it responds to the initialize handshake.
+				dap.defaults["pwa-chrome"].initialize_timeout_sec = 20
+				dap.defaults["pwa-node"].initialize_timeout_sec = 20
+
+				-- ── Lua adapter (one-small-step-for-vimkind / osv) ───────────
+				dap.adapters.nlua = function(callback, config)
+					callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+				end
+				dap.configurations.lua = {
+					{
+						type = "nlua",
+						request = "attach",
+						name = "Attach to running Neovim (osv)",
+						host = "127.0.0.1",
+						port = 8086,
+					},
+				}
+
 				-- pwa-node / pwa-chrome configs applied to all JS/TS-family filetypes
 				for _, language in ipairs({
 					"typescript",
 					"javascript",
 					"typescriptreact",
 					"javascriptreact",
-					"vue",
 				}) do
 					dap.configurations[language] = {
 						{
 							type = "pwa-node",
 							request = "launch",
 							name = "Launch file",
-							program = "${file}",
-							cwd = vim.fn.getcwd(),
+							-- Auto-detects file type:
+							--   test files  → jest --runInBand (provides describe/it/expect globals)
+							--   .ts/.tsx    → node -r ts-node/register
+							--   .js/.jsx    → plain node
+							-- stopOnEntry=true pauses at the first line so you can see DAP attach
+							-- even for fast scripts — remove it if you want to run freely to breakpoints.
+							stopOnEntry = true,
+							program = function()
+								local file = vim.fn.expand("%:p")
+								if vim.fn.filereadable(file) == 0 then
+									vim.notify("[DAP] Open a JS/TS file first", vim.log.levels.WARN)
+									return require("dap").ABORT
+								end
+								if file:match("%.test%.[jt]sx?$") or file:match("%.spec%.[jt]sx?$") then
+									local local_jest = vim.fn.getcwd() .. "/node_modules/.bin/jest"
+									if vim.fn.filereadable(local_jest) == 1 then
+										return local_jest
+									end
+								end
+								return file
+							end,
+							args = function()
+								local file = vim.fn.expand("%:p")
+								if file:match("%.test%.[jt]sx?$") or file:match("%.spec%.[jt]sx?$") then
+									return { file, "--no-coverage", "--runInBand" }
+								end
+								return {}
+							end,
+							runtimeArgs = function()
+								local file = vim.fn.expand("%:p")
+								local is_test = file:match("%.test%.[jt]sx?$") or file:match("%.spec%.[jt]sx?$")
+								if not is_test and file:match("%.tsx?$") then
+									return { "--nolazy", "-r", "ts-node/register" }
+								end
+								return {}
+							end,
+							-- Must be a function — evaluated at launch time, not at plugin-load time.
+							cwd = function()
+								return vim.fn.getcwd()
+							end,
 							sourceMaps = true,
+							resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+							skipFiles = { "<node_internals>/**", "**/node_modules/**" },
 						},
 						{
 							type = "pwa-node",
 							request = "attach",
-							name = "Attach",
+							name = "Attach (pick process)",
 							processId = require("dap.utils").pick_process,
+							cwd = function()
+								return vim.fn.getcwd()
+							end,
+							sourceMaps = true,
+							skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+							resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+						},
+						{
+							type = "pwa-node",
+							request = "attach",
+							name = "Attach to Node.js (port 9229)",
+							port = function()
+								local r = vim.fn.system(
+									"bash -c '>/dev/tcp/127.0.0.1/9229' 2>/dev/null && echo ok || echo fail"
+								)
+								if not r:match("ok") then
+									vim.notify(
+										"[DAP] Nothing on port 9229.\nStart your app with:\n  node --inspect -r ts-node/register src/main.ts",
+										vim.log.levels.WARN
+									)
+									return require("dap").ABORT
+								end
+								return 9229
+							end,
 							cwd = vim.fn.getcwd(),
 							sourceMaps = true,
+							skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+							resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
 						},
 						{
 							type = "pwa-chrome",
-							request = "launch",
-							name = "Launch & Debug Chrome",
-							---@return thread
-							url = function()
-								local co = coroutine.running()
-								return coroutine.create(function()
-									vim.ui.input({
-										prompt = "Enter URL: ",
-										default = "http://localhost:3000",
-										---@param url string?
-									}, function(url)
-										if url == nil or url == "" then
-											return
-										else
-											coroutine.resume(co, url)
-										end
-									end)
-								end)
+							request = "attach",
+							name = "Attach to Chrome (port 9222)",
+							-- Use <leader>dC for automatic WSL Chrome launch.
+							-- This config is for when Chrome is already running with --remote-debugging-port=9222.
+							port = function()
+								local r = vim.fn.system(
+									"bash -c '>/dev/tcp/127.0.0.1/9222' 2>/dev/null && echo ok || echo fail"
+								)
+								if not r:match("ok") then
+									vim.notify(
+										"[DAP] Chrome CDP port 9222 not open.\nUse <leader>dC to auto-launch Windows Chrome,\nor start Chrome with: --remote-debugging-port=9222",
+										vim.log.levels.WARN
+									)
+									return require("dap").ABORT
+								end
+								return 9222
 							end,
 							webRoot = vim.fn.getcwd(),
-							protocol = "inspector",
 							sourceMaps = true,
-							userDataDir = false,
-						},
-						{
-							name = "----- ↓ launch.json configs ↓ -----",
-							type = "",
-							request = "launch",
+							protocol = "inspector",
+							urlFilter = "http://localhost:*",
 						},
 					}
 				end
@@ -152,55 +261,7 @@ return {
 							return { host = host, port = port }
 						end,
 					},
-					{
-						name = "----- ↓ launch.json configs ↓ -----",
-						type = "",
-						request = "launch",
-					},
 				}
-
-				-- ── Rust / C / C++ (codelldb) ──────────────────────────────────
-				for _, language in ipairs({ "rust", "c", "cpp" }) do
-					dap.configurations[language] = {
-						{
-							name = "Launch executable",
-							type = "codelldb",
-							request = "launch",
-							program = function()
-								return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-							end,
-							cwd = "${workspaceFolder}",
-							stopOnEntry = false,
-							args = {},
-						},
-						{
-							name = "Launch executable (with args)",
-							type = "codelldb",
-							request = "launch",
-							program = function()
-								return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-							end,
-							args = function()
-								local args_str = vim.fn.input("Arguments: ")
-								return vim.split(args_str, " ", { trimempty = true })
-							end,
-							cwd = "${workspaceFolder}",
-							stopOnEntry = false,
-						},
-						{
-							name = "Attach to process",
-							type = "codelldb",
-							request = "attach",
-							pid = require("dap.utils").pick_process,
-							cwd = "${workspaceFolder}",
-						},
-						{
-							name = "----- ↓ launch.json configs ↓ -----",
-							type = "",
-							request = "launch",
-						},
-					}
-				end
 
 				-- ── Bash (bash-debug-adapter) ──────────────────────────────────
 				local mason_path = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension"
@@ -225,71 +286,25 @@ return {
 						terminalKind = "integrated",
 					},
 				}
-
-				-- ── PHP (php-debug-adapter / Xdebug) ──────────────────────────
-				dap.configurations.php = {
-					{
-						name = "Listen for Xdebug (port 9003)",
-						type = "php",
-						request = "launch",
-						port = 9003,
-						stopOnEntry = false,
-						pathMappings = {
-							["/var/www/html"] = "${workspaceFolder}",
-						},
-					},
-					{
-						name = "Launch currently open script",
-						type = "php",
-						request = "launch",
-						program = "${file}",
-						cwd = "${fileDirname}",
-						port = 0,
-						runtimeArgs = { "-dxdebug.start_with_request=yes" },
-						env = {
-							XDEBUG_MODE = "debug,develop",
-							XDEBUG_CONFIG = "client_port=${port}",
-						},
-					},
-				}
-
-				-- ── Kotlin (kotlin-debug-adapter) ──────────────────────────────
-				dap.configurations.kotlin = {
-					{
-						type = "kotlin",
-						request = "launch",
-						name = "Launch Kotlin project",
-						projectRoot = "${workspaceFolder}",
-						mainClass = function()
-							return vim.fn.input("Main class (e.g. com.example.MainKt): ", "MainKt")
-						end,
-					},
-				}
 			end,
 			dependencies = {
-				-- {
-				-- 	"microsoft/vscode-js-debug",
-				-- 	build = "npm install --legacy-peer-deps --no-save && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
-				-- },
-				-- {
-				-- 	"mxsdev/nvim-dap-vscode-js",
-				-- 	config = function()
-				-- 		require("dap-vscode-js").setup({
-				-- 			debugger_path = vim.fn.resolve(vim.fn.stdpath("data") .. "/lazy/vscode-js-debug"),
-				-- 			adapters = {
-				-- 				"chrome",
-				-- 				"pwa-node",
-				-- 				"pwa-chrome",
-				-- 				"pwa-msedge",
-				-- 				"pwa-extensionHost",
-				-- 				"node-terminal",
-				-- 			},
-				-- 		})
-				-- 	end,
-				-- },
+				{
+					"jbyuki/one-small-step-for-vimkind",
+					-- <leader>bL starts the Lua DAP server in the current Neovim instance,
+					-- then use <leader>bb to attach via the nlua adapter.
+					keys = {
+						{
+							"<leader>bL",
+							function()
+								require("osv").launch({ port = 8086 })
+							end,
+							desc = "DAP Launch Lua server (osv)",
+						},
+					},
+				},
 				{
 					"Joakker/lua-json5",
-					build = "./install.sh", -- enables launch.json with JSON5 syntax (comments, trailing commas)
+					build = "./install.sh",
 				},
 			},
 		},
@@ -367,6 +382,26 @@ return {
 			"<leader>bb",
 			":DapToggleBreakpoint<CR>",
 			desc = "DapToggleBreakpoint",
+			noremap = true,
+			silent = true,
+		},
+		-- WSL Chrome debugger (auto-launch Arc + attach)
+		{
+			"<leader>dC",
+			function()
+				require("ls-devs.utils.custom_functions").DapChromeDebug()
+			end,
+			desc = "DAP Arc/Chrome Debug (WSL auto)",
+			noremap = true,
+			silent = true,
+		},
+		-- Node.js/TypeScript debugger (auto-detect entry from package.json)
+		{
+			"<leader>dN",
+			function()
+				require("ls-devs.utils.custom_functions").DapNodeDebug()
+			end,
+			desc = "DAP Node Debug (auto ts-node)",
 			noremap = true,
 			silent = true,
 		},

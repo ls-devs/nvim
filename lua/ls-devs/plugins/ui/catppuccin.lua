@@ -199,6 +199,7 @@ return {
 				snacks = true,
 				blink_cmp = true,
 				diffview = true,
+				dap_ui = true,
 				dap = true,
 				fidget = true,
 				window_picker = true,

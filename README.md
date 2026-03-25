@@ -22,82 +22,88 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier, dashboard), linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, treesitter-context (sticky scope header), etc.
 - **Utilities:** Mini.comment, trouble, and more.
 
-## Installation
+## Getting Started
 
-### Prerequisites
-- **Neovim >= 0.12.0**
-- **Git** (for plugin manager)
-- **Node.js** (for npm, markdown preview, LSPs)
-- **Python** (for pynvim, Jupyter integration)
-- **Cargo/Rust** (for blink.cmp fuzzy matching, rust_analyzer)
-- **Go** (for some LSPs)
-- **Java** (for JDTLS)
-- **Deno** (for deno LSP)
-- **Bun** (optional, for bun completions)
-- **SDKMAN** (for JVM tools)
-- **Win32yank** (for clipboard integration on WSL)
-- **direnv** (for environment management)
-- **ghcup** (for Haskell tools)
-- **Spaceship ZSH** (for prompt, if using zsh)
-- **Oh-My-Zsh** (for shell plugins)
+There are two ways to use this configuration. Both are fully automated — just clone and run one script.
 
-### Steps
-1. **Clone this repo:**
-   ```bash
-   git clone <repo-url> ~/.config/nvim
-   ```
-2. **Install Neovim >= 0.12.0**
-3. **Install [lazy.nvim](https://github.com/folke/lazy.nvim):**
-   The config bootstraps lazy.nvim automatically, but ensure git is installed.
-4. **Install required system tools:**
-   - Node.js, npm, pnpm, yarn
-   - Python, pip, pynvim
-   - Cargo, Rust
-   - Go
-   - Java (for JDTLS)
-   - Deno
-   - Bun
-   - SDKMAN
-   - Win32yank (WSL clipboard)
-   - direnv
-   - ghcup
-   - Spaceship ZSH, Oh-My-Zsh
+### Option A — Native install (your machine)
 
-5. **Install plugin dependencies:**
-   - Open Neovim and run:
-     ```
-     :Lazy install
-     :Mason install <lsp/tools>
-     ```
-   - For LuaSnip: `make install_jsregexp` if prompted.
+> Supports: Ubuntu/Debian · Fedora/RHEL · Arch · openSUSE · Alpine · macOS (Homebrew) · WSL
 
-6. **Optional:**
-   - Configure your shell (`~/.zshrc`) for PATH and plugin completions.
-   - Set up environment managers (pyenv, nvm, envman, etc.)
+```bash
+git clone <repo-url> ~/.config/nvim
+cd ~/.config/nvim/setup
 
-### Third-party Tools & Plugins
-- See `lazy-lock.json` for all plugin sources and versions.
-- Shell plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, Spaceship ZSH, Oh-My-Zsh
-- Environment managers: pyenv, nvm, envman, direnv, ghcup, SDKMAN
-- Clipboard: win32yank (WSL), OSC52 (Docker)
-- Completion: blink.cmp (v2/main), LuaSnip, lspkind, blink.compat, cmp-sass-variables, blink-cmp-git, emmet
-- LSP: mason.nvim, nvim-lspconfig, lspsaga.nvim, mason-lspconfig, mason-tool-installer, schemastore
-- Git: diffview.nvim, gitsigns.nvim, fugitive, git-conflict, git-worktree
-- UI: snacks.nvim (dashboard, input, notifier), catppuccin, diagflow, mini.icons, noice, lualine, tabby, fidget, focus, reactive, stickybuf, todo-comments, nvim-ufo, better-quickfix
-- Movement: flash.nvim, mini.surround, multiple-cursors, neotab, nvim-autopairs, nvim-spider, smart-splits, treesj, vim-matchup
-- Devtools: AsyncRun, codecompanion (AI/MCP/Copilot + img-clip dep), overseer, live-server, typescript-tools, kulala.nvim, databases, debuggers (DAP + multi-language configs), lazydev, neotest (jest/vitest/pytest/cargo/phpunit), rustaceanvim, octo.nvim, iron.nvim (REPL), nvim-coverage, ccc.nvim (color picker)
-- System: snacks.nvim (bigfile, terminal, scroll, indent, picker, dashboard), conform.nvim (formatting), nvim-lint (linting), treesitter, neo-tree, grug-far, markview, wildfire, sleuth, gx, early-retirement, nvim-treesitter-context
+# Linux / macOS / WSL
+chmod +x install.sh && ./install.sh
+
+# Windows (PowerShell — run as Administrator)
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+.\install.ps1
+```
+
+The script will:
+1. Install all system packages (build tools, runtimes, CLI tools)
+2. Install Neovim, Rust, Node.js, Go, Java, lazygit, pnpm, pynvim, gh CLI, FiraCode Nerd Font
+3. Run `:Lazy install` — installs all plugins (includes blink.cmp Rust build)
+4. Run `:MasonToolsInstallSync` — installs all LSPs, formatters, linters, and debuggers
+5. Run `:TSUpdate` — installs treesitter parsers
+6. Prompt for `gh auth login` (GitHub browser OAuth — needed for Copilot + octo.nvim)
+7. Install the `gh copilot` CLI extension
+
+### Option B — Docker (any OS, zero host dependencies)
+
+> Requires: Docker Desktop or Docker Engine
+
+```bash
+git clone <repo-url> ~/.config/nvim
+
+# Linux / macOS / WSL
+./setup/docker-run.sh
+
+# Windows (PowerShell)
+.\setup\docker-run.ps1
+```
+
+- Builds the full environment image on first run (~15–25 min)
+- Subsequent runs start instantly
+- Your files are accessible at `/mnt/host` (Linux/macOS) or `/mnt/c` (Windows)
+- GitHub CLI auth (`~/.config/gh`) is forwarded automatically from your host
+- SSH keys and `.gitconfig` are forwarded read-only
+
+> **First-time Docker users:** run `gh auth login` on your host machine once before starting the container, so the auth is forwarded automatically.
+
+## setup/ folder
+
+| File | Purpose |
+|---|---|
+| `install.sh` | Fully automated native installer for Linux, macOS, WSL |
+| `install.ps1` | Fully automated native installer for Windows |
+| `Dockerfile` | Docker image with all tools + pre-baked plugins |
+| `.dockerignore` | Build exclusions |
+| `docker-run.sh` | Build + launch container (Linux/macOS/WSL) |
+| `docker-run.ps1` | Build + launch container (Windows PowerShell) |
 
 ## Updating
-- Run `:Lazy update` to update plugins.
-- Run `:Mason update` for LSP/tool updates.
+
+```vim
+:Lazy update        " update plugins
+:Mason update       " update LSP/tool versions
+```
 
 ## Troubleshooting
-- Check `:checkhealth` for missing dependencies.
-- Review `~/.zshrc` for PATH and environment setup.
+
+- Run `:checkhealth` inside Neovim — covers all runtimes, clipboard, and providers
+- **Font icons not showing:** ensure your terminal uses **FiraCode Nerd Font**
+- **Copilot not working:** run `gh auth login` then `gh extension install github/gh-copilot`
+- **Mason tools failing:** ensure Node.js, Python, Go, and Rust are on your PATH; re-run `:MasonToolsInstall`
+- **blink.cmp errors:** Rust/Cargo must be installed before `:Lazy install`
 
 ## Credits
-- Plugin authors, Neovim community, ls-devs
+
+Plugin authors, Neovim community, ls-devs
 
 ---
-For detailed plugin list and versions, see `lazy-lock.json`.
+
+For a full plugin list and pinned versions, see [`lazy-lock.json`](lazy-lock.json).
+

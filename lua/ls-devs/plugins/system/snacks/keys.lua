@@ -61,28 +61,28 @@ return {
 	{
 		"<leader>fa",
 		function()
-			Snacks.picker.autocmds()
+			require("ls-devs.utils.custom_functions").AutocmdsList()
 		end,
 		desc = "Autocommands",
 	},
 	{
 		"<leader>fc",
 		function()
-			Snacks.picker.commands()
+			require("ls-devs.utils.custom_functions").CommandsList()
 		end,
 		desc = "Commands",
 	},
 	{
 		"<leader>fk",
 		function()
-			Snacks.picker.keymaps()
+			require("ls-devs.utils.custom_functions").KeymapsList()
 		end,
 		desc = "Keymaps",
 	},
 	{
 		"<leader>fH",
 		function()
-			Snacks.picker.highlights()
+			require("ls-devs.utils.custom_functions").HighlightsList()
 		end,
 		desc = "Highlights",
 	},
@@ -119,7 +119,7 @@ return {
 	{
 		"<leader>fcm",
 		function()
-			Snacks.picker.commands()
+			require("ls-devs.utils.custom_functions").CommandsList()
 		end,
 		desc = "Commands (fuzzy)",
 	},

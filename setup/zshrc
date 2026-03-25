@@ -1,0 +1,244 @@
+# ── oh-my-zsh ─────────────────────────────────────────────────────────────────
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_COMPDUMP="$ZSH/cache/.zcompdump-$HOST"
+
+ZSH_THEME="spaceship"
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+
+# ── Spaceship prompt ──────────────────────────────────────────────────────────
+SPACESHIP_PROMPT_ORDER=(
+  time
+  user
+  host
+  char
+  dir
+  git
+  node
+  ruby
+  xcode
+  swift
+  golang
+  docker
+  venv
+)
+
+SPACESHIP_CHAR_SYMBOL=" "
+SPACESHIP_CHAR_SYMBOL_SUCCESS=" "
+SPACESHIP_CHAR_SYMBOL_FAILURE=" "
+SPACESHIP_CHAR_SYMBOL_ROOT=" "
+SPACESHIP_CHAR_SYMBOL_SECONDARY=" "
+SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_CHAR_PREFIX=" "
+
+SPACESHIP_CONDA_SHOW=true
+
+SPACESHIP_USER_PREFIX=""
+SPACESHIP_USER_SUFFIX="  "
+SPACESHIP_USER_SHOW="always"
+SPACESHIP_USER_COLOR="white"
+SPACESHIP_USER_COLOR_ROOT="red"
+
+SPACESHIP_VENV_PREFIX="· "
+SPACESHIP_VENV_SUFFIX=" 🐍 "
+
+SPACESHIP_HOST_PREFIX="@"
+SPACESHIP_HOST_SUFFIX=""
+
+SPACESHIP_GIT_STATUS_SHOW=true
+SPACESHIP_GIT_SHOW=true
+SPACESHIP_GIT_PREFIX="· "
+
+SPACESHIP_DIR_PREFIX=""
+SPACESHIP_DIR_TRUNC="1"
+
+source "$ZSH/oh-my-zsh.sh"
+
+# ── History ───────────────────────────────────────────────────────────────────
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# ── Completion ────────────────────────────────────────────────────────────────
+autoload -Uz compinit
+compinit
+
+# ── Colours ───────────────────────────────────────────────────────────────────
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# ── Aliases ───────────────────────────────────────────────────────────────────
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias nv='nvim'
+alias branchclean='git branch --merged >/tmp/merged-branches && \
+  nvim /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
+
+# ── Editor ────────────────────────────────────────────────────────────────────
+export EDITOR='nvim'
+
+# ── Terminal ──────────────────────────────────────────────────────────────────
+export BAT_THEME="Catppuccin-mocha"
+export TERM=xterm-256color
+export COLORTERM=truecolor
+
+# ── Functions ─────────────────────────────────────────────────────────────────
+killPort() {
+  sudo kill -9 "$(sudo lsof -t -i:"$1")"
+}
+
+mkvenv() {
+  local name=${1:-$(basename "$PWD")}
+  local path="$PWD/${name}-venv"
+  local PYTHON_BIN
+  PYTHON_BIN="$(command -v python3)" || { echo "❌ python3 not found"; return 1; }
+  if [ ! -d "$path" ]; then
+    echo "👉 Creating environment: ${name}-venv with $($PYTHON_BIN --version)"
+    "$PYTHON_BIN" -m venv "$path" || { echo "❌ venv creation failed"; return 1; }
+  fi
+  echo "✅ Activating ${name}-venv"
+  source "$path/bin/activate"
+}
+
+init_jupyter() {
+  local venv
+  venv="$(basename "${VIRTUAL_ENV:-}")"
+  pip install pynvim jupyter_client cairosvg plotly kaleido pnglatex pyperclip ipykernel jupytext
+  python -m ipykernel install --user --name "$venv"
+}
+
+# ── PATH ──────────────────────────────────────────────────────────────────────
+[ -d "$HOME/.local/bin" ]  && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.cargo/bin" ]  && export PATH="$HOME/.cargo/bin:$PATH"
+[ -d "/usr/local/go/bin" ] && export PATH="/usr/local/go/bin:$PATH"
+[ -d "$HOME/.go/bin" ]     && export GOPATH="$HOME/.go" && export PATH="$GOPATH/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="${HOME}/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# npm global packages
+NPM_PACKAGES="${HOME}/.npm-packages"
+[ -d "$NPM_PACKAGES/bin" ]     && export PATH="$PATH:$NPM_PACKAGES/bin"
+[ -d "$HOME/.npm-global/bin" ] && export PATH="$HOME/.npm-global/bin:$PATH"
+export MANPATH="${MANPATH-$(manpath 2>/dev/null)}:${NPM_PACKAGES}/share/man"
+
+# Local node_modules/.bin
+[ -d "$PWD/node_modules/.bin" ] && PATH="$PWD/node_modules/.bin:$PATH"
+
+# Neovim Mason binaries
+[ -d "$HOME/.local/share/nvim/mason/bin" ] && \
+  export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+
+# Swift (optional)
+[ -d "/usr/share/swift/usr/bin" ] && export PATH="/usr/share/swift/usr/bin:$PATH"
+
+# zfunctions
+[ -d "$HOME/.zfunctions" ] && fpath=($fpath "$HOME/.zfunctions")
+
+# ── NVM (conditional) ────────────────────────────────────────────────────────
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+  autoload -U add-zsh-hook
+  load-nvmrc() {
+    local nvmrc_path
+    nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "$nvmrc_path" ]; then
+      local nvmrc_node_version
+      nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+      if [ "$nvmrc_node_version" = "N/A" ]; then
+        nvm install
+      elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+        nvm use
+      fi
+    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && \
+         [ "$(nvm version)" != "$(nvm version default)" ]; then
+      echo "Reverting to nvm default version"
+      nvm use default
+    fi
+  }
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
+
+# ── pyenv (conditional) ──────────────────────────────────────────────────────
+if [ -d "$HOME/.pyenv" ]; then
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  command -v pyenv-virtualenv-init &>/dev/null && eval "$(pyenv virtualenv-init -)"
+fi
+
+# ── bun (conditional) ────────────────────────────────────────────────────────
+if [ -d "$HOME/.bun" ]; then
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+fi
+
+# ── deno (conditional) ───────────────────────────────────────────────────────
+if [ -d "$HOME/.deno" ]; then
+  export DENO_INSTALL="$HOME/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"
+fi
+
+# ── direnv (conditional) ─────────────────────────────────────────────────────
+command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
+
+# ── SDKMAN (conditional) ─────────────────────────────────────────────────────
+if [ -d "$HOME/.sdkman" ]; then
+  export SDKMAN_DIR="$HOME/.sdkman"
+  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
+# ── ghcup (conditional) ──────────────────────────────────────────────────────
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
+
+# ── envman (conditional) ─────────────────────────────────────────────────────
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# ── tabtab (conditional) ─────────────────────────────────────────────────────
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && \
+  . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# ── JDTLS lombok (conditional) ───────────────────────────────────────────────
+[ -f "$HOME/.local/share/java/lombok.jar" ] && \
+  export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/java/lombok.jar"
+
+# ── WSL (conditional) ────────────────────────────────────────────────────────
+if grep -qi microsoft /proc/version 2>/dev/null || [ -n "${WSL_DISTRO_NAME:-}" ]; then
+  export DISPLAY=:0
+  export BROWSER=wslview
+fi
+
+# ── npm completion ────────────────────────────────────────────────────────────
+if type compdef &>/dev/null; then
+  _npm_completion() {
+    local si=$IFS
+    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
+                 COMP_LINE=$BUFFER \
+                 COMP_POINT=0 \
+                 npm completion -- "${words[@]}" \
+               2>/dev/null)
+    IFS=$si
+  }
+  compdef _npm_completion npm
+fi
