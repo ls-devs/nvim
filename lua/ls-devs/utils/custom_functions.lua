@@ -324,10 +324,10 @@ M.KeymapsList = function()
 			return {
 				{ a(lhs, 22), "SnacksPickerKeymapLhs" },
 				{ "  " },
-				{ a(item._desc, 45), "Normal" },
-				{ "  " },
 				{ item._mode, mode_hl[item._mode] or "SnacksPickerKeymapMode" },
-				{ item._local and "  buf" or "", item._local and "SnacksPickerBufNr" or nil },
+				{ item._local and " buf" or "    ", item._local and "SnacksPickerBufNr" or nil },
+				{ "  " },
+				{ item._desc, "Normal" },
 			}
 		end,
 		confirm = function(picker, item)
@@ -578,9 +578,10 @@ end
 --   4. If Arc not running → launch fresh debug instance
 --   5. Poll port 9222 up to 20s, then attach pwa-chrome DAP
 -- ─────────────────────────────────────────────────────────────────────────
----@param preset_url? string  When provided, skip the URL input prompt (used by DapNodeDebug)
+---@param preset_url? string       When provided, skip the URL input prompt (used by DapNodeDebug)
+---@param web_root_override? string  Explicit webRoot for the Chrome DAP session; falls back to nearest package.json root
 ---@return nil
-M.DapChromeDebug = function(preset_url)
+M.DapChromeDebug = function(preset_url, web_root_override)
 	local dap = require("dap")
 	local cdp_port = 9222
 	local relay_port = 9223
@@ -648,7 +649,13 @@ M.DapChromeDebug = function(preset_url)
 
 	---@param url string
 	local function attach(url)
-		local _, web_root = find_pkg_root(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"))
+		local web_root
+		if web_root_override then
+			web_root = web_root_override
+		else
+			local _, wr = find_pkg_root(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"))
+			web_root = wr
+		end
 		dap.run({
 			type = "pwa-chrome",
 			request = "attach",
@@ -830,20 +837,150 @@ Start-Process "$env:TEMP\arc-debug.lnk"
 end
 
 -- ── DAP Node Debug (WSL / Linux) ─────────────────────────────────────────
--- Project-aware debug launcher. Walks up from the current buffer to find the
--- nearest package.json and handles both backend and frontend projects:
+-- Monorepo-aware debug launcher. Discovers the nearest package.json and all
+-- sibling workspace packages (npm/yarn workspaces, lerna, pnpm, or a generic
+-- shallow scan of the git root's children).  Supports:
 --
---   Backend (ts-node scripts):
---     node --inspect-brk=9229 -r ts-node/register <file> → pwa-node attach
+--   Backend:   ts-node / tsx / ts-node-esm scripts  → pwa-node attach
+--   Frontend:  vite / next / react-scripts / nuxt   → pwa-chrome attach
+--   Full Stack: launch backend + attach frontend in one action,
+--               including cross-package (e.g. backend in `source`,
+--               frontend in `admin-ui`)
 --
---   Frontend (vite / next / react-scripts / nuxt):
---     npm run <script> in background → wait for HTTP port → pwa-chrome attach
---     Port auto-detected from vite.config or framework defaults.
---
+-- Package-manager aware: auto-detects npm / yarn / pnpm / bun.
 -- Usage: <leader>dN
 -- ─────────────────────────────────────────────────────────────────────────
 
+--- Find the workspace/monorepo root above a package root.
+--- Stops at the first dir containing: lerna.json, pnpm-workspace.yaml,
+--- turbo.json, a package.json with "workspaces", or a .git directory.
+---@param pkg_root string  directory containing the nearest package.json
+---@return string  workspace root (equals pkg_root for single-package repos)
+local function find_workspace_root(pkg_root)
+	local dir = vim.fn.fnamemodify(pkg_root, ":h")
+	local prev = nil
+	while dir ~= prev do
+		if
+			vim.fn.filereadable(dir .. "/lerna.json") == 1
+			or vim.fn.filereadable(dir .. "/pnpm-workspace.yaml") == 1
+			or vim.fn.filereadable(dir .. "/turbo.json") == 1
+		then
+			return dir
+		end
+		local p = dir .. "/package.json"
+		if vim.fn.filereadable(p) == 1 then
+			local ok, decoded = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(p), "\n"))
+			if ok and decoded and decoded.workspaces then
+				return dir
+			end
+		end
+		if vim.fn.isdirectory(dir .. "/.git") == 1 then
+			return dir
+		end
+		prev = dir
+		dir = vim.fn.fnamemodify(dir, ":h")
+	end
+	return pkg_root
+end
+
+--- Collect all package roots found within a workspace root.
+--- Handles: npm/yarn workspaces field, lerna.json, pnpm-workspace.yaml, and
+--- a generic shallow scan of direct children for non-standard monorepos.
+---@param workspace_root string
+---@param current_pkg_root string  always included even if not in workspace globs
+---@return string[]
+local function workspace_packages(workspace_root, current_pkg_root)
+	local result = {}
+	local seen = {}
+
+	local function add(dir)
+		dir = vim.fn.resolve(dir)
+		if seen[dir] or vim.fn.isdirectory(dir) ~= 1 or vim.fn.filereadable(dir .. "/package.json") ~= 1 then
+			return
+		end
+		seen[dir] = true
+		table.insert(result, dir)
+	end
+
+	local function expand(patterns)
+		for _, pat in ipairs(patterns) do
+			for _, d in ipairs(vim.fn.glob(workspace_root .. "/" .. pat, 0, 1)) do
+				add(d)
+			end
+		end
+	end
+
+	-- npm / yarn workspaces field
+	local root_pkg = workspace_root .. "/package.json"
+	if vim.fn.filereadable(root_pkg) == 1 then
+		local ok, p = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(root_pkg), "\n"))
+		if ok and p and p.workspaces then
+			local ws = (type(p.workspaces) == "table" and not p.workspaces[1]) and (p.workspaces.packages or {})
+				or p.workspaces
+			expand(ws)
+		end
+	end
+
+	-- lerna.json
+	local lerna_path = workspace_root .. "/lerna.json"
+	if vim.fn.filereadable(lerna_path) == 1 then
+		local ok, lj = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(lerna_path), "\n"))
+		if ok and lj then
+			expand(lj.packages or { "packages/*" })
+		end
+	end
+
+	-- pnpm-workspace.yaml (minimal parse — extract patterns after "- ")
+	local pnpm_path = workspace_root .. "/pnpm-workspace.yaml"
+	if vim.fn.filereadable(pnpm_path) == 1 then
+		local pats = {}
+		for _, line in ipairs(vim.fn.readfile(pnpm_path)) do
+			local pat = line:match("^%s*%-+%s*['\"]?([^'\"#%s]+)['\"]?")
+			if pat then
+				table.insert(pats, pat)
+			end
+		end
+		expand(pats)
+	end
+
+	-- Generic shallow scan: direct children of workspace root with package.json.
+	-- Covers non-standard monorepos where packages live directly at the repo root.
+	if workspace_root ~= current_pkg_root then
+		for _, d in ipairs(vim.fn.glob(workspace_root .. "/*", 0, 1)) do
+			if
+				vim.fn.isdirectory(d) == 1
+				and not d:match("[/\\]node_modules$")
+				and not d:match("[/\\]%.git$")
+				and not d:match("[/\\]%.")
+			then
+				add(d)
+			end
+		end
+	end
+
+	-- Always include the buffer's own package root
+	add(current_pkg_root)
+	return result
+end
+
+--- Detect the package manager in use for a project directory.
+---@param dir string
+---@return string  "npm" | "yarn" | "pnpm" | "bun"
+local function detect_pkg_manager(dir)
+	if vim.fn.filereadable(dir .. "/pnpm-lock.yaml") == 1 then
+		return "pnpm"
+	end
+	if vim.fn.filereadable(dir .. "/yarn.lock") == 1 then
+		return "yarn"
+	end
+	if vim.fn.filereadable(dir .. "/bun.lockb") == 1 or vim.fn.filereadable(dir .. "/bun.lock") == 1 then
+		return "bun"
+	end
+	return "npm"
+end
+
 -- { pattern, default_port } — matched against the script command string
+-- { cmd_pattern, default_port } — matched against the script command string
 local FRONTEND_PATTERNS = {
 	{ "vite", 5173 },
 	{ "next dev", 3000 },
@@ -851,6 +988,37 @@ local FRONTEND_PATTERNS = {
 	{ "nuxt dev", 3000 },
 	{ "webpack.*serve", 3000 },
 	{ "astro dev", 4321 },
+	{ "ng serve", 4200 }, -- Angular CLI
+	{ "svelte%-kit dev", 5173 }, -- SvelteKit
+	{ "kit dev", 5173 }, -- SvelteKit (newer package name)
+	{ "remix dev", 3000 }, -- Remix
+	{ "gatsby develop", 8000 }, -- Gatsby
+	{ "parcel", 1234 }, -- Parcel bundler
+	{ "storybook dev", 6006 }, -- Storybook (new CLI)
+	{ "start%-storybook", 6006 }, -- Storybook (old CLI)
+	{ "expo start", 8081 }, -- Expo / React Native
+	{ "solid%-start dev", 3000 }, -- SolidStart
+	{ "qwik dev", 5173 }, -- Qwik
+	{ "http%-server", 8080 }, -- generic http-server
+	{ "serve", 3000 }, -- serve package
+}
+
+-- Script names treated as "server" processes when no cmd pattern matches.
+-- These are run as plain background jobs (no --inspect-brk) so they still
+-- appear in the picker and can act as the backend half of Full Stack.
+local SERVER_NAMES = {
+	"^start$",
+	"^serve$",
+	"^server$",
+	"^api$",
+	"^backend$",
+	"^watch$",
+	"dev:server",
+	"dev:api",
+	"dev:back",
+	"dev:be",
+	"start:server",
+	"start:api",
 }
 
 ---@param project_root string
@@ -867,6 +1035,59 @@ local function vite_config_port(project_root)
 	end
 end
 
+--- Build debuggable entries for a single package.json.
+---@param pkg_path string  absolute path to package.json
+---@param pkg_root string  directory containing package.json
+---@return table[]
+local function entries_for_package(pkg_path, pkg_root)
+	local ok, pkg = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(pkg_path), "\n"))
+	if not ok or not pkg then
+		return {}
+	end
+	local pkg_name = (pkg.name and pkg.name ~= "") and pkg.name or vim.fn.fnamemodify(pkg_root, ":t")
+	local pkg_manager = detect_pkg_manager(pkg_root)
+	local entries = {}
+	for name, cmd in pairs(pkg.scripts or {}) do
+		-- Backend: ts-node / tsx / ts-node-esm
+		local file = cmd:match("ts%-node%s+([%w%./%-%_]+%.ts)")
+			or cmd:match("tsx%s+([%w%./%-%_]+%.ts)")
+			or cmd:match("ts%-node%-esm%s+([%w%./%-%_]+%.ts)")
+		if file then
+			table.insert(entries, {
+				name = name,
+				kind = "backend",
+				file = file,
+				cwd = pkg_root,
+				pkg_name = pkg_name,
+				pkg_manager = pkg_manager,
+			})
+		else
+			-- Frontend: vite / next / react-scripts / nuxt / etc.
+			for _, pat in ipairs(FRONTEND_PATTERNS) do
+				if cmd:match(pat[1]) then
+					local port = (pat[1] == "vite" and vite_config_port(pkg_root)) or pat[2]
+					table.insert(entries, {
+						name = name,
+						kind = "frontend",
+						script = name,
+						port = port,
+						cwd = pkg_root,
+						pkg_name = pkg_name,
+						pkg_manager = pkg_manager,
+					})
+					break
+				end
+			end
+		end
+	end
+	return entries
+end
+
+---@alias NodeEntry
+---| { name:string, kind:"backend",   file:string,   cwd:string, pkg_name:string, pkg_manager:string }
+---| { name:string, kind:"frontend",  script:string, port:integer, cwd:string, pkg_name:string, pkg_manager:string }
+---| { name:string, kind:"fullstack", backend:table, frontend:table }
+
 ---@return nil
 M.DapNodeDebug = function()
 	local dap = require("dap")
@@ -874,67 +1095,36 @@ M.DapNodeDebug = function()
 
 	local buf_dir = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h")
 	local pkg_path, project_root = find_pkg_root(buf_dir)
-	local project_name = vim.fn.fnamemodify(project_root, ":t")
 
 	if vim.fn.filereadable(pkg_path) == 0 then
 		vim.notify("[DAP] No package.json found (searched from " .. buf_dir .. ")", vim.log.levels.WARN)
 		return
 	end
-	local ok, pkg = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(pkg_path), "\n"))
-	if not ok or not pkg then
-		vim.notify("[DAP] Failed to parse " .. pkg_path, vim.log.levels.WARN)
-		return
-	end
 
-	---@alias NodeEntry
-	---| { name:string, kind:"backend", file:string }
-	---| { name:string, kind:"frontend", script:string, port:integer }
-	---| { name:string, kind:"fullstack", backend:table, frontend:table }
+	-- Discover all sibling packages in the workspace / monorepo
+	local workspace_root = find_workspace_root(project_root)
+	local pkg_roots = workspace_packages(workspace_root, project_root)
+
 	---@type NodeEntry[]
-	local entries = {}
-	for name, cmd in pairs(pkg.scripts or {}) do
-		local file = cmd:match("ts%-node%s+([%w%./%-%_]+%.ts)")
-		if file then
-			table.insert(entries, { name = name, kind = "backend", file = file })
-		else
-			local matched = false
-			for _, pat in ipairs(FRONTEND_PATTERNS) do
-				if cmd:match(pat[1]) then
-					local port = (pat[1] == "vite" and vite_config_port(project_root)) or pat[2]
-					table.insert(entries, { name = name, kind = "frontend", script = name, port = port })
-					matched = true
-					break
-				end
-			end
-			-- Compound: "cd <subdir> && npm run <script>" — resolve into subdir's package.json
-			if not matched then
-				local subdir, sub_script = cmd:match("cd%s+([%w%./%-%_]+)%s*&&%s*npm%s+run%s+([%w%-%_:]+)")
-				if subdir and sub_script then
-					local subdir_root = project_root .. "/" .. subdir
-					local sub_pkg_path = subdir_root .. "/package.json"
-					if vim.fn.filereadable(sub_pkg_path) == 1 then
-						local ok2, sub_pkg =
-							pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(sub_pkg_path), "\n"))
-						if ok2 and sub_pkg and sub_pkg.scripts then
-							local sub_cmd = sub_pkg.scripts[sub_script] or ""
-							for _, pat in ipairs(FRONTEND_PATTERNS) do
-								if sub_cmd:match(pat[1]) then
-									local port = (pat[1] == "vite" and vite_config_port(subdir_root)) or pat[2]
-									table.insert(
-										entries,
-										{ name = name, kind = "frontend", script = name, port = port }
-									)
-									break
-								end
-							end
-						end
-					end
+	local all_entries = {}
+	local all_backends = {}
+	local all_frontends = {}
+
+	for _, root in ipairs(pkg_roots) do
+		local p = root .. "/package.json"
+		if vim.fn.filereadable(p) == 1 then
+			for _, e in ipairs(entries_for_package(p, root)) do
+				table.insert(all_entries, e)
+				if e.kind == "backend" then
+					table.insert(all_backends, e)
+				elseif e.kind == "frontend" then
+					table.insert(all_frontends, e)
 				end
 			end
 		end
 	end
 
-	table.sort(entries, function(a, b)
+	table.sort(all_entries, function(a, b)
 		local function rank(e)
 			local n, k = e.name, (e.kind == "backend" and 0 or 1)
 			if n:match("^start") then
@@ -948,28 +1138,22 @@ M.DapNodeDebug = function()
 		return rank(a) < rank(b)
 	end)
 
-	-- When both kinds exist, offer a single-keypress full-stack option
-	local backends = vim.tbl_filter(function(e)
-		return e.kind == "backend"
-	end, entries)
-	local frontends = vim.tbl_filter(function(e)
-		return e.kind == "frontend"
-	end, entries)
-	if #backends > 0 and #frontends > 0 then
-		table.insert(entries, 1, {
+	-- Offer cross-package full-stack when both backend and frontend exist
+	if #all_backends > 0 and #all_frontends > 0 then
+		table.insert(all_entries, 1, {
 			name = "⚡ Full Stack",
 			kind = "fullstack",
-			backend = backends[1],
-			frontend = frontends[1],
+			backend = all_backends[1],
+			frontend = all_frontends[1],
 		})
 	end
 
-	if #entries == 0 then
+	if #all_entries == 0 then
 		vim.notify(
-			"[DAP] No debuggable scripts found in "
-				.. project_name
-				.. "/package.json\n"
-				.. "(ts-node backend scripts or vite/next/react-scripts dev servers)",
+			"[DAP] No debuggable scripts found in workspace\n"
+				.. "(ts-node/tsx backend scripts or vite/next/react-scripts dev servers)\n"
+				.. "Workspace root: "
+				.. workspace_root,
 			vim.log.levels.WARN
 		)
 		return
@@ -979,11 +1163,9 @@ M.DapNodeDebug = function()
 	local function start_debug(entry)
 		-- ── Full Stack: backend as bg job + frontend DAP ─────────────────
 		if entry.kind == "fullstack" then
-			vim.fn.jobstart({ "npm", "run", entry.backend.name }, { cwd = project_root })
-			vim.notify(
-				"[DAP] " .. project_name .. ": starting backend '" .. entry.backend.name .. "'…",
-				vim.log.levels.INFO
-			)
+			local be = entry.backend
+			vim.fn.jobstart({ be.pkg_manager, "run", be.name }, { cwd = be.cwd })
+			vim.notify("[DAP] " .. be.pkg_name .. ": starting backend '" .. be.name .. "'…", vim.log.levels.INFO)
 			start_debug(entry.frontend)
 			return
 		end
@@ -1001,18 +1183,18 @@ M.DapNodeDebug = function()
 
 			if http_ready() then
 				vim.notify(
-					"[DAP] " .. project_name .. ": dev server already on :" .. dev_port .. ", opening Arc…",
+					"[DAP] " .. entry.pkg_name .. ": dev server already on :" .. dev_port .. ", opening Arc…",
 					vim.log.levels.INFO
 				)
-				M.DapChromeDebug(url)
+				M.DapChromeDebug(url, entry.cwd)
 				return
 			end
 
-			vim.fn.jobstart({ "npm", "run", entry.script }, { cwd = project_root })
+			vim.fn.jobstart({ entry.pkg_manager, "run", entry.script }, { cwd = entry.cwd })
 			vim.notify(
 				string.format(
 					"[DAP] %s: starting '%s' (→ :%d), attaching Arc when ready…",
-					project_name,
+					entry.pkg_name,
 					entry.script,
 					dev_port
 				),
@@ -1022,8 +1204,8 @@ M.DapNodeDebug = function()
 			local elapsed, interval = 0, 500
 			local function poll()
 				if http_ready() then
-					vim.notify("[DAP] " .. project_name .. ": dev server ready on :" .. dev_port, vim.log.levels.INFO)
-					M.DapChromeDebug(url)
+					vim.notify("[DAP] " .. entry.pkg_name .. ": dev server ready on :" .. dev_port, vim.log.levels.INFO)
+					M.DapChromeDebug(url, entry.cwd)
 				elseif elapsed >= 30000 then
 					vim.notify("[DAP] Dev server not ready after 30s", vim.log.levels.ERROR)
 				else
@@ -1035,7 +1217,7 @@ M.DapNodeDebug = function()
 			return
 		end
 
-		-- ── Backend: ts-node with --inspect-brk → pwa-node attach ────────
+		-- ── Backend: ts-node/tsx with --inspect-brk → pwa-node attach ────
 		local function port_open()
 			return vim.fn
 				.system(string.format("bash -c '>/dev/tcp/127.0.0.1/%d' 2>/dev/null && echo ok || echo fail", inspect_port))
@@ -1046,9 +1228,9 @@ M.DapNodeDebug = function()
 			dap.run({
 				type = "pwa-node",
 				request = "attach",
-				name = "Node.js [" .. project_name .. "]",
+				name = "Node.js [" .. entry.pkg_name .. "]",
 				port = inspect_port,
-				cwd = project_root,
+				cwd = entry.cwd,
 				sourceMaps = true,
 				skipFiles = { "<node_internals>/**", "**/node_modules/**" },
 				resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
@@ -1063,10 +1245,10 @@ M.DapNodeDebug = function()
 
 		vim.fn.jobstart(
 			{ "node", "--inspect-brk=" .. inspect_port, "-r", "ts-node/register", entry.file },
-			{ cwd = project_root }
+			{ cwd = entry.cwd }
 		)
 		vim.notify(
-			string.format("[DAP] %s: starting '%s' (%s) with --inspect-brk…", project_name, entry.name, entry.file),
+			string.format("[DAP] %s: starting '%s' (%s) with --inspect-brk…", entry.pkg_name, entry.name, entry.file),
 			vim.log.levels.INFO
 		)
 
@@ -1084,27 +1266,28 @@ M.DapNodeDebug = function()
 		vim.defer_fn(poll, interval)
 	end
 
-	if #entries == 1 then
-		start_debug(entries[1])
+	if #all_entries == 1 then
+		start_debug(all_entries[1])
 	else
 		local labels = vim.tbl_map(function(e)
 			if e.kind == "fullstack" then
 				return string.format(
-					"[%s] ⚡ Full Stack  (%s + %s → :%d)",
-					project_name,
+					"⚡ Full Stack  [%s::%s + %s::%s → :%d]",
+					e.backend.pkg_name,
 					e.backend.name,
+					e.frontend.pkg_name,
 					e.frontend.name,
 					e.frontend.port
 				)
 			elseif e.kind == "backend" then
-				return string.format("[%s] %s  →  %s  (backend)", project_name, e.name, e.file)
+				return string.format("[%s] %s  →  %s  (backend)", e.pkg_name, e.name, e.file)
 			else
-				return string.format("[%s] %s  →  :%d  (frontend)", project_name, e.name, e.port)
+				return string.format("[%s] %s  →  :%d  (frontend)", e.pkg_name, e.name, e.port)
 			end
-		end, entries)
+		end, all_entries)
 		vim.ui.select(labels, { prompt = "Select entry point:" }, function(_, idx)
 			if idx then
-				start_debug(entries[idx])
+				start_debug(all_entries[idx])
 			end
 		end)
 	end

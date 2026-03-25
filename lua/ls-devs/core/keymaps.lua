@@ -127,47 +127,24 @@ vim.keymap.set("n", "<leader>cs", function()
 	end
 end, { noremap = true, silent = true, desc = "Toggle Codespell Linter" })
 
--- Toggle CodeCompanion CLI float (reuse existing buffer if already open)
 vim.keymap.set("n", "<leader>cl", function()
-	local cli_buf = nil
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.bo[buf].filetype == "codecompanion_cli" then
-			cli_buf = buf
-			break
-		end
-	end
-	if cli_buf then
-		local wins = vim.fn.win_findbuf(cli_buf)
-		if #wins > 0 then
-			vim.api.nvim_win_close(wins[1], false)
-		else
-			local columns = vim.o.columns
-			local lines = vim.o.lines
-			local width = math.floor(columns * 0.85)
-			local height = math.floor(lines * 0.85)
-			local col = math.floor((columns - width) / 2)
-			local row = math.floor((lines - height) / 2)
-			local win = vim.api.nvim_open_win(cli_buf, true, {
-				relative = "editor",
-				width = width,
-				height = height,
-				col = col,
-				row = row,
-				border = "rounded",
-				title = " CodeCompanion CLI ",
-				title_pos = "center",
-			})
-			vim.wo[win].number = false
-			vim.wo[win].relativenumber = false
-			vim.wo[win].wrap = true
-			vim.wo[win].signcolumn = "yes:1"
-			vim.wo[win].scrolloff = 1
-			vim.cmd("startinsert")
-		end
+	if vim.bo.filetype == "snacks_dashboard" then
+		local cc_cfg = require("codecompanion.config")
+		local orig_layout = cc_cfg.display.cli.window.layout
+		local orig_width = cc_cfg.display.cli.window.width
+		local orig_height = cc_cfg.display.cli.window.height
+		cc_cfg.display.cli.window.layout = "float"
+		cc_cfg.display.cli.window.width = 0.85
+		cc_cfg.display.cli.window.height = 0.7
+		require("codecompanion").toggle_cli()
+		cc_cfg.display.cli.window.layout = orig_layout
+		cc_cfg.display.cli.window.width = orig_width
+		cc_cfg.display.cli.window.height = orig_height
 	else
-		vim.cmd("CodeCompanionCLI")
-		vim.schedule(function()
-			vim.cmd("startinsert")
-		end)
+		require("codecompanion").toggle_cli()
 	end
 end, { noremap = true, silent = true, desc = "Toggle CodeCompanion CLI" })
+
+vim.keymap.set({ "n", "v" }, "<leader>ca", function()
+	vim.cmd("CodeCompanionCLI Ask")
+end, { noremap = true, silent = true, desc = "CodeCompanion CLI Ask" })

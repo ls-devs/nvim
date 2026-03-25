@@ -285,6 +285,10 @@ return {
 					return { "git", "buffer" }
 				elseif ft == "css" or ft == "scss" then
 					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "sass-variables" }
+				elseif ft == "codecompanion" or ft == "codecompanion_input" then
+					-- Variables like #buffer/#diagnostic come from LSP; skip snippets so they
+					-- don't appear above context variables in the completion menu.
+					return { "lsp", "path", "buffer" }
 				end
 				return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv" }
 			end,

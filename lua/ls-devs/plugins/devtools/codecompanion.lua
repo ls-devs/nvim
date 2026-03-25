@@ -143,6 +143,19 @@ return {
 						description = "Claude Sonnet 4.6 CLI",
 					},
 				},
+				opts = {
+					auto_insert = true,
+				},
+				keymaps = {
+					next_chat = {
+						modes = { n = "}" },
+						description = "Next CLI interaction",
+					},
+					previous_chat = {
+						modes = { n = "{" },
+						description = "Previous CLI interaction",
+					},
+				},
 			},
 			inline = {
 				-- Lightweight model for low-latency in-buffer edits.
@@ -174,17 +187,16 @@ return {
 			},
 			cli = {
 				window = {
-					layout = "float",
-					width = 0.85,
-					height = 0.85,
-					relative = "editor",
-					border = "rounded",
+					layout = "vertical",
+					width = 0.35,
 					opts = {
 						number = false,
 						relativenumber = false,
-						wrap = true,
-						signcolumn = "yes:1",
+						wrap = false,
+						signcolumn = "no",
 						scrolloff = 1,
+						list = false,
+						winfixwidth = false,
 					},
 				},
 			},
@@ -691,4 +703,7 @@ return {
 			},
 		},
 	},
+	config = function(_, opts)
+		require("codecompanion").setup(opts)
+	end,
 }

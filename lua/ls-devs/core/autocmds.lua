@@ -76,10 +76,106 @@ vim.api.nvim_create_autocmd("FileType", {
 			"dbui",
 			"dbout",
 			"lazy",
+			"codecompanion_cli",
 		}
 		vim.b.focus_disable = vim.tbl_contains(ignore_filetypes, vim.bo.filetype)
 	end,
 	desc = "Disable focus autoresize for UI FileType",
+})
+
+-- Fully disable focus.nvim autoresize while the CLI panel is visible.
+-- focus.nvim's save/restore mechanism triggers two nvim_win_set_width calls on
+-- the CLI window (shrink → restore), each generating SIGWINCH → TUI re-renders
+-- twice ("prints the same thing multiple times"). Disabling globally via
+-- vim.g.focus_disable before focus.nvim's own WinEnter handler runs prevents
+-- any resize from happening when the CLI is open.
+vim.api.nvim_create_autocmd("WinEnter", {
+	group = augroup,
+	pattern = "*",
+	callback = function()
+		local has_cli = false
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+			local buf = vim.api.nvim_win_get_buf(win)
+			if vim.bo[buf].filetype == "codecompanion_cli" then
+				has_cli = true
+				break
+			end
+		end
+		vim.g.focus_disable = has_cli
+	end,
+	desc = "Disable focus autoresize globally when CodeCompanion CLI is visible",
+})
+
+-- Re-enable focus.nvim when the CLI window is explicitly closed (WinEnter won't
+-- fire in time if the last remaining window was the CLI).
+vim.api.nvim_create_autocmd("WinClosed", {
+	group = augroup,
+	pattern = "*",
+	callback = function(args)
+		local buf = vim.api.nvim_win_get_buf(tonumber(args.match))
+		if vim.bo[buf].filetype == "codecompanion_cli" then
+			vim.g.focus_disable = false
+		end
+	end,
+	desc = "Re-enable focus autoresize when CodeCompanion CLI closes",
+})
+
+-- Buffer-local keymaps for the CLI terminal buffer.
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "codecompanion_cli",
+	callback = function(args)
+		-- <C-q> hides the CLI panel from terminal mode without killing the process
+		vim.keymap.set("t", "<C-q>", function()
+			require("codecompanion").toggle_cli()
+		end, { buffer = args.buf, silent = true, desc = "Hide CodeCompanion CLI" })
+	end,
+	desc = "CodeCompanion CLI buffer-local keymaps",
+})
+
+-- Fix: upstream cli/input.lua skips both focus and submit when bang=true.
+-- Our handler focuses the CLI and explicitly sends \r via chansend (bypassing
+-- the flaky consumer timer) so :w! both submits and lands you in the CLI.
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "codecompanion_input",
+	callback = function(args)
+		vim.api.nvim_create_autocmd("BufWriteCmd", {
+			group = augroup,
+			buffer = args.buf,
+			callback = function()
+				if vim.v.cmdbang == 1 then
+					vim.schedule(function()
+						local cli_module = require("codecompanion.interactions.cli")
+						local instance = cli_module.last_cli()
+						if not instance then
+							return
+						end
+						instance:focus()
+						-- Poll until the terminal provider is ready (handles both the
+						-- "already open" case and the "just started" case where the pty
+						-- needs up to ~500ms to stabilise before it can accept input).
+						local attempts = 0
+						local function try_submit()
+							attempts = attempts + 1
+							if attempts > 40 then
+								return
+							end
+							local provider = instance.provider
+							if provider and provider.ready and provider.chan then
+								vim.fn.chansend(provider.chan, "\r")
+							else
+								vim.defer_fn(try_submit, 100)
+							end
+						end
+						try_submit()
+					end)
+				end
+			end,
+			desc = "Focus + submit CLI after :w!",
+		})
+	end,
+	desc = "CodeCompanion ask input :w! focus fix",
 })
 
 -- Brief highlight of yanked region
