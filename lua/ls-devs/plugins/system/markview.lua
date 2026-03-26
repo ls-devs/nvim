@@ -156,21 +156,27 @@ return {
 					local name = vim.api.nvim_buf_get_name(ev.buf)
 					local is_real_file = name ~= "" and vim.fn.filereadable(name) == 1
 
-					-- Reject non-file buffers and buffers inside floating windows.
-					-- lspsaga sets conceallevel=2 on its floats intentionally;
-					-- reset it to 0 so the float content doesn't look like markview.
+					-- Float windows (e.g. lspsaga hover, code actions):
+					-- markview.actions.detach() unconditionally fires on_detach which
+					-- resets conceallevel=0 on every window — even if markview was never
+					-- attached. Bypass actions.detach entirely: use state.detach directly
+					-- (no callbacks) + actions.clear (only removes decorations, no winopt
+					-- changes), then explicitly set conceallevel=2 so lspsaga's treesitter
+					-- markdown conceal queries (hiding ``` fences) still work.
 					for _, win in ipairs(vim.fn.win_findbuf(ev.buf)) do
 						if vim.api.nvim_win_get_config(win).relative ~= "" then
-							pcall(require("markview.actions").detach, ev.buf)
 							pcall(require("markview.state").detach, ev.buf, true)
-							vim.wo[win].conceallevel = 0
+							pcall(require("markview.actions").clear, ev.buf)
+							pcall(function()
+								vim.wo[win].conceallevel = 2
+							end)
 							return
 						end
 					end
 
 					if not is_real_file then
-						pcall(require("markview.actions").detach, ev.buf)
 						pcall(require("markview.state").detach, ev.buf, true)
+						pcall(require("markview.actions").clear, ev.buf)
 					end
 				end)
 			end,

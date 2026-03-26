@@ -20,23 +20,26 @@ return {
 		mode = "cursor", -- context tracks the cursor position
 		separator = "─", -- thin divider below context (U+2500)
 		zindex = 20,
-		on_attach = nil,
+		-- Block attachment to floating windows and special buffers.
+		-- Hover docs, notifications, and nofile buffers can carry injected
+		-- language trees (e.g. vim-lang inside markdown code fences) that
+		-- trigger a broken vim query in Neovim 0.12-dev causing errors.
+		on_attach = function(buf)
+			if vim.bo[buf].buftype ~= "" then
+				return false
+			end
+			for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+				if vim.api.nvim_win_get_config(win).relative ~= "" then
+					return false
+				end
+			end
+			return true
+		end,
 	},
 	---@param _ LazyPlugin
 	---@param opts table
 	config = function(_, opts)
 		require("treesitter-context").setup(opts)
-
-		-- When a floating window closes (notifications, hover, etc.) Neovim
-		-- does not always repaint the context header area until the next real
-		-- cursor event. Fire CursorMoved synthetically so treesitter-context's
-		-- own au_update path re-renders the header immediately.
-		vim.api.nvim_create_autocmd("WinClosed", {
-			group = vim.api.nvim_create_augroup("ts_context_win_refresh", { clear = true }),
-			callback = vim.schedule_wrap(function()
-				vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0, modeline = false })
-			end),
-		})
 	end,
 	keys = {
 		{

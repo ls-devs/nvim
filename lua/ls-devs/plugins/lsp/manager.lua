@@ -22,6 +22,7 @@ return {
 				"sonarlint-language-server",
 				"vim-language-server",
 				"vtsls",
+				"vue-language-server",
 				"html",
 				"lemminx",
 				"mdx_analyzer",
@@ -61,7 +62,6 @@ return {
 				"codespell",
 				"stylelint",
 				"luacheck",
-				"psscriptanalyzer",
 
 				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",

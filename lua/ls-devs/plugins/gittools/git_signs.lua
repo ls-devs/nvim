@@ -18,7 +18,7 @@ return {
 		signcolumn = true,
 		numhl = false,
 		linehl = false,
-		word_diff = true, -- intra-line word-level diff highlights changed words, not just lines
+		word_diff = false,
 		watch_gitdir = {
 			follow_files = true,
 		},

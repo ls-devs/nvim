@@ -4,7 +4,8 @@
 -- Trigger : event — BufReadPost
 -- Note    : matchup replaces matchparen automatically; no need to set
 --           loaded_matchparen. Treesitter integration is enabled via
---           matchup = { enable = true } in treesitter.lua opts.
+--           vim.g.matchup_treesitter_enabled (nvim-treesitter main branch no
+--           longer uses configs.setup opts for this).
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
@@ -18,5 +19,7 @@ return {
 		vim.g.matchup_surround_enabled = 1
 		-- Deferred highlighting keeps cursor snappy on large files
 		vim.g.matchup_matchparen_deferred = 1
+		-- Enable treesitter integration (replaces matchup={enable=true} in old treesitter opts)
+		vim.g.matchup_treesitter_enabled = 1
 	end,
 }

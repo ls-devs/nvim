@@ -22,26 +22,43 @@ return {
 		local map = function(key, fn, desc)
 			vim.keymap.set("n", key, fn, { buffer = bufnr, noremap = true, silent = true, desc = desc })
 		end
-		local file = vim.api.nvim_buf_get_name(bufnr)
+
+		-- vtsls sends _typescript.didOrganizeImports as a server→client command
+		-- callback after organize imports completes. Register a no-op handler
+		-- once to silence the "command not supported" error.
+		vim.lsp.commands["_typescript.didOrganizeImports"] = vim.lsp.commands["_typescript.didOrganizeImports"]
+			or function() end
+
+		-- vtsls exposes import management as source code actions, not as
+		-- workspace/executeCommand entries. Using code_action with apply=true
+		-- auto-applies the single matching action without showing a picker.
+		local function ts_action(kinds, label)
+			vim.lsp.buf.code_action({
+				context = { only = kinds, diagnostics = {} },
+				apply = true,
+				filter = function(action)
+					-- Accept any action whose kind starts with one of our kinds
+					for _, k in ipairs(kinds) do
+						if (action.kind or ""):find(k, 1, true) == 1 then
+							return true
+						end
+					end
+					return false
+				end,
+			})
+			vim.notify(label, vim.log.levels.INFO, { title = "vtsls" })
+		end
 
 		map("<leader>cO", function()
-			client:exec_cmd({ title = "Organize Imports", command = "typescript.organizeImports", arguments = { file } })
+			ts_action({ "source.organizeImports" }, "Imports organized")
 		end, "TS Organize Imports")
 
 		map("<leader>cI", function()
-			client:exec_cmd({
-				title = "Add Missing Imports",
-				command = "typescript.addMissingImports",
-				arguments = { file },
-			})
+			ts_action({ "source.addMissingImports" }, "Missing imports added")
 		end, "TS Add Missing Imports")
 
 		map("<leader>cU", function()
-			client:exec_cmd({
-				title = "Remove Unused Imports",
-				command = "typescript.removeUnusedImports",
-				arguments = { file },
-			})
+			ts_action({ "source.removeUnused" }, "Unused imports removed")
 		end, "TS Remove Unused Imports")
 
 		map("<leader>ch", function()

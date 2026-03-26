@@ -1,18 +1,24 @@
 -- ── nvim-treesitter ───────────────────────────────────────────────────────
 -- Purpose : Syntax parsing, highlighting, indentation, and text objects
--- Trigger : event BufReadPre/BufNewFile, cmd TSUpdate/TSInstall
--- Note    : incremental_selection is disabled here; wildfire.nvim owns
---           <C-Space> incremental selection to avoid keybinding collision.
---           nvim-various-textobjs (dependency) extends text objects well
---           beyond what nvim-treesitter-textobjects provides alone.
+-- Note    : Uses the main branch (full rewrite for Neovim 0.12+).
+--           The master branch is archived and incompatible with Neovim 0.12.
+--           Loaded on BufReadPre/BufNewFile (fires before FileType — safe).
+--           Highlighting is native Neovim (queries on rtp via install_dir).
+--           Indentation uses nvim-treesitter's indentexpr per FileType.
+--           wildfire.nvim owns <C-Space> incremental selection.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
 	"nvim-treesitter/nvim-treesitter",
-	cmd = { "TSUpdate", "TSInstall" },
+	branch = "main",
 	event = { "BufReadPre", "BufNewFile" },
-	opts = {
-		ensure_installed = {
+	build = ":TSUpdate",
+	config = function()
+		require("nvim-treesitter").setup({
+			install_dir = vim.fn.stdpath("data") .. "/site",
+		})
+
+		require("nvim-treesitter").install({
 			"swift",
 			"vimdoc",
 			"lua",
@@ -38,138 +44,152 @@ return {
 			"gitignore",
 			"git_rebase",
 			"gitattributes",
-			-- Additional parsers for completeness:
-			"sql", -- SQL files and embedded SQL (complements sqlls LSP)
-			"graphql", -- GraphQL schemas and queries
-			"c_sharp", -- C# files (complements omnisharp LSP)
-			"comment", -- TODO/FIXME/HACK/NOTE tokens (synergy with todo-comments.nvim)
-			"jsdoc", -- JSDoc @param/@returns annotations in JS/TS
-		},
-		sync_install = false,
-		auto_install = true,
-		highlight = {
-			enable = true,
-			additional_vim_regex_highlighting = false,
-		},
-		indent = { enable = true },
-		matchup = { enable = true },
-		textobjects = {
-			select = {
-				enable = true,
-				lookahead = true,
-				keymaps = {
-					["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
-					["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
-					["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
-					["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
+			"sql",
+			"graphql",
+			"c_sharp",
+			"comment",
+			"jsdoc",
+		})
 
-					["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
-					["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
-
-					["ac"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
-					["ic"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
-
-					["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
-					["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
-
-					["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
-					["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
-
-					["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
-					["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
-
-					["at"] = { query = "@class.outer", desc = "Select outer part of a class" },
-					["it"] = { query = "@class.inner", desc = "Select inner part of a class" },
-				},
+		-- Enable nvim-treesitter indentexpr for supported filetypes.
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"javascript",
+				"javascriptreact",
+				"typescript",
+				"typescriptreact",
+				"vue",
+				"html",
+				"css",
+				"scss",
+				"json",
+				"yaml",
+				"toml",
+				"lua",
+				"python",
+				"bash",
+				"dockerfile",
+				"graphql",
+				"sql",
 			},
-			swap = {
-				enable = true,
-				swap_next = {
-					["<leader>na"] = "@parameter.inner",
-					["<leader>n:"] = "@property.outer",
-					["<leader>nm"] = "@function.outer",
-				},
-				swap_previous = {
-					["<leader>pa"] = "@parameter.inner",
-					["<leader>p:"] = "@property.outer",
-					["<leader>pm"] = "@function.outer",
-				},
-			},
-			move = {
-				enable = true,
-				set_jumps = true,
-				goto_next_start = {
-					["]f"] = { query = "@call.outer", desc = "Next function call start" },
-					["]m"] = { query = "@function.outer", desc = "Next method/function def start" },
-					["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
-					["]l"] = { query = "@loop.outer", desc = "Next loop start" },
-					["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope start" },
-					["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold start" },
-				},
-				goto_next_end = {
-					["]F"] = { query = "@call.outer", desc = "Next function call end" },
-					["]M"] = { query = "@function.outer", desc = "Next method/function def end" },
-					["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
-					["]L"] = { query = "@loop.outer", desc = "Next loop end" },
-					["]S"] = { query = "@scope", query_group = "locals", desc = "Next scope end" },
-					["]Z"] = { query = "@fold", query_group = "folds", desc = "Next fold end" },
-				},
-				goto_previous_start = {
-					["[f"] = { query = "@call.outer", desc = "Prev function call start" },
-					["[m"] = { query = "@function.outer", desc = "Prev method/function def start" },
-					["[c"] = { query = "@class.outer", desc = "Prev class start" },
-					["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
-					["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
-					["[s"] = { query = "@scope", query_group = "locals", desc = "Prev scope start" },
-					["[z"] = { query = "@fold", query_group = "folds", desc = "Prev fold start" },
-				},
-				goto_previous_end = {
-					["[F"] = { query = "@call.outer", desc = "Prev function call end" },
-					["[M"] = { query = "@function.outer", desc = "Prev method/function def end" },
-					["[C"] = { query = "@class.outer", desc = "Prev class end" },
-					["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
-					["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
-					["[s"] = { query = "@scope", query_group = "locals", desc = "Prev scope end" },
-					["[z"] = { query = "@fold", query_group = "folds", desc = "Prev fold end" },
-				},
-			},
-		},
-		-- Disabled: wildfire.nvim owns <C-Space> incremental selection instead.
-		incremental_selection = {
-			enable = false,
-			keymaps = {
-				init_selection = "<C-Space>",
-				node_incremental = "<C-Space>",
-				scope_incremental = false,
-				node_decremental = "<BS>",
-			},
-		},
-	},
-	---@param _ LazyPlugin
-	---@param opts table
-	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
+			group = vim.api.nvim_create_augroup("treesitter_indent", { clear = true }),
+			callback = function()
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
 	end,
-	keys = {
-		{
-			";",
-			mode = { "n", "x", "o" },
-			function()
-				require("nvim-treesitter.textobjects.repeatable_move").repeat_last_move()
-			end,
-			desc = "TS Repeat Last Move",
-		},
-		{
-			",",
-			mode = { "n", "x", "o" },
-			function()
-				require("nvim-treesitter.textobjects.repeatable_move").repeat_last_move_opposite()
-			end,
-			desc = "TS Repeat Last Move Backward",
-		},
-	},
 	dependencies = {
-		{ "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
+		{
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			branch = "main",
+			config = function()
+				require("nvim-treesitter-textobjects").setup({
+					select = { lookahead = true },
+					move = { set_jumps = true },
+				})
+
+				local sel = require("nvim-treesitter-textobjects.select")
+				local swap = require("nvim-treesitter-textobjects.swap")
+				local move = require("nvim-treesitter-textobjects.move")
+				local rep = require("nvim-treesitter-textobjects.repeatable_move")
+
+				-- ── Select ───────────────────────────────────────────────────────────
+				local select_maps = {
+					{ "a=", "@assignment.outer", "Select outer part of an assignment" },
+					{ "i=", "@assignment.inner", "Select inner part of an assignment" },
+					{ "l=", "@assignment.lhs", "Select left hand side of an assignment" },
+					{ "r=", "@assignment.rhs", "Select right hand side of an assignment" },
+					{ "aa", "@parameter.outer", "Select outer part of a parameter/argument" },
+					{ "ia", "@parameter.inner", "Select inner part of a parameter/argument" },
+					{ "ac", "@conditional.outer", "Select outer part of a conditional" },
+					{ "ic", "@conditional.inner", "Select inner part of a conditional" },
+					{ "al", "@loop.outer", "Select outer part of a loop" },
+					{ "il", "@loop.inner", "Select inner part of a loop" },
+					{ "af", "@call.outer", "Select outer part of a function call" },
+					{ "if", "@call.inner", "Select inner part of a function call" },
+					{ "am", "@function.outer", "Select outer part of a method/function def" },
+					{ "im", "@function.inner", "Select inner part of a method/function def" },
+					{ "at", "@class.outer", "Select outer part of a class" },
+					{ "it", "@class.inner", "Select inner part of a class" },
+				}
+				for _, m in ipairs(select_maps) do
+					vim.keymap.set({ "o", "x" }, m[1], function()
+						sel.select_textobject(m[2], "textobjects")
+					end, { desc = m[3] })
+				end
+
+				-- ── Swap ─────────────────────────────────────────────────────────────
+				vim.keymap.set("n", "<leader>na", function()
+					swap.swap_next("@parameter.inner")
+				end, { desc = "Swap next parameter" })
+				vim.keymap.set("n", "<leader>n:", function()
+					swap.swap_next("@property.outer")
+				end, { desc = "Swap next property" })
+				vim.keymap.set("n", "<leader>nm", function()
+					swap.swap_next("@function.outer")
+				end, { desc = "Swap next function" })
+				vim.keymap.set("n", "<leader>pa", function()
+					swap.swap_previous("@parameter.inner")
+				end, { desc = "Swap previous parameter" })
+				vim.keymap.set("n", "<leader>p:", function()
+					swap.swap_previous("@property.outer")
+				end, { desc = "Swap previous property" })
+				vim.keymap.set("n", "<leader>pm", function()
+					swap.swap_previous("@function.outer")
+				end, { desc = "Swap previous function" })
+
+				-- ── Move (all repeatable via ; and ,) ────────────────────────────────
+				local move_maps = {
+					{ "]f", "next_start", "@call.outer", "textobjects", "Next function call start" },
+					{ "]m", "next_start", "@function.outer", "textobjects", "Next method/function def start" },
+					{ "]i", "next_start", "@conditional.outer", "textobjects", "Next conditional start" },
+					{ "]l", "next_start", "@loop.outer", "textobjects", "Next loop start" },
+					{ "]s", "next_start", "@scope", "locals", "Next scope start" },
+					{ "]z", "next_start", "@fold", "folds", "Next fold start" },
+					{ "]F", "next_end", "@call.outer", "textobjects", "Next function call end" },
+					{ "]M", "next_end", "@function.outer", "textobjects", "Next method/function def end" },
+					{ "]I", "next_end", "@conditional.outer", "textobjects", "Next conditional end" },
+					{ "]L", "next_end", "@loop.outer", "textobjects", "Next loop end" },
+					{ "]S", "next_end", "@scope", "locals", "Next scope end" },
+					{ "]Z", "next_end", "@fold", "folds", "Next fold end" },
+					{ "[f", "previous_start", "@call.outer", "textobjects", "Prev function call start" },
+					{ "[m", "previous_start", "@function.outer", "textobjects", "Prev method/function def start" },
+					{ "[c", "previous_start", "@class.outer", "textobjects", "Prev class start" },
+					{ "[i", "previous_start", "@conditional.outer", "textobjects", "Prev conditional start" },
+					{ "[l", "previous_start", "@loop.outer", "textobjects", "Prev loop start" },
+					{ "[s", "previous_start", "@scope", "locals", "Prev scope start" },
+					{ "[z", "previous_start", "@fold", "folds", "Prev fold start" },
+					{ "[F", "previous_end", "@call.outer", "textobjects", "Prev function call end" },
+					{ "[M", "previous_end", "@function.outer", "textobjects", "Prev method/function def end" },
+					{ "[C", "previous_end", "@class.outer", "textobjects", "Prev class end" },
+					{ "[I", "previous_end", "@conditional.outer", "textobjects", "Prev conditional end" },
+					{ "[L", "previous_end", "@loop.outer", "textobjects", "Prev loop end" },
+					{ "[S", "previous_end", "@scope", "locals", "Prev scope end" },
+					{ "[Z", "previous_end", "@fold", "folds", "Prev fold end" },
+				}
+				local move_fns = {
+					next_start = move.goto_next_start,
+					next_end = move.goto_next_end,
+					previous_start = move.goto_previous_start,
+					previous_end = move.goto_previous_end,
+				}
+				for _, m in ipairs(move_maps) do
+					local fn = move_fns[m[2]]
+					vim.keymap.set({ "n", "x", "o" }, m[1], function()
+						fn(m[3], m[4])
+					end, { desc = m[5] })
+				end
+
+				-- ── Repeatable ; and , ───────────────────────────────────────────────
+				vim.keymap.set({ "n", "x", "o" }, ";", rep.repeat_last_move, { desc = "TS Repeat Last Move" })
+				vim.keymap.set(
+					{ "n", "x", "o" },
+					",",
+					rep.repeat_last_move_opposite,
+					{ desc = "TS Repeat Last Move Backward" }
+				)
+			end,
+		},
 		-- Provides an extensive set of extra text objects: indentation (ii/ai),
 		-- subword (iS/aS), quotes (iq/aq), brackets (io/ao), key/value (ik/ak),
 		-- URL (gx), fold (iz/az), chain member (im/am), and many language-specific
@@ -385,42 +405,6 @@ return {
 						require("various-textobjs").key("outer")
 					end,
 				},
-				-- Smart URL handler: tries url() textobj on cursor first.
-				-- If a URL is visually selected it opens directly via OpenURLs().
-				-- Otherwise scans the whole buffer for URLs and prompts to pick one.
-				{
-					"gx",
-					mode = { "o", "x", "n" },
-					function()
-						require("various-textobjs").url()
-						local foundURL = vim.fn.mode():find("v")
-						if foundURL then
-							vim.cmd.normal('"zy')
-							local url = vim.fn.getreg("z")
-							require("ls-devs.utils.custom_functions").OpenURLs(url)
-						else
-							local urlPattern = "%l%l%l-://[^%s)]+"
-							local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-							local urls = {}
-							for url in bufText:gmatch(urlPattern) do
-								table.insert(urls, url)
-							end
-							if #urls == 0 then
-								if vim.fn.exists("Browse") then
-									vim.cmd("Browse")
-									return
-								else
-									return
-								end
-							end
-							vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
-								if choice then
-									require("ls-devs.utils.custom_functions").OpenURLs(choice)
-								end
-							end)
-						end
-					end,
-				},
 				{
 					"in",
 					mode = { "o", "x" },
@@ -484,13 +468,39 @@ return {
 						require("various-textobjs").restOfWindow()
 					end,
 				},
-				-- ── Language-specific text objects (buffer-local) ───────────────────────
-				-- Markdown: il/al=link, ie/ae=emphasis, iC/aC=fenced-code-block
-				-- Python:   iy/ay=triple-quotes
-				-- CSS:      is/as=selector
-				-- HTML:     ix/ax=attribute
-				-- Wikilink: iD/aD=double-square-brackets
-				-- Shell:    iP/aP=pipe segment
+				-- Smart URL handler
+				{
+					"gx",
+					mode = { "o", "x", "n" },
+					function()
+						require("various-textobjs").url()
+						local foundURL = vim.fn.mode():find("v")
+						if foundURL then
+							vim.cmd.normal('"zy')
+							local url = vim.fn.getreg("z")
+							require("ls-devs.utils.custom_functions").OpenURLs(url)
+						else
+							local urlPattern = "%l%l%l-://[^%s)]+"
+							local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+							local urls = {}
+							for url in bufText:gmatch(urlPattern) do
+								table.insert(urls, url)
+							end
+							if #urls == 0 then
+								if vim.fn.exists("Browse") then
+									vim.cmd("Browse")
+								end
+								return
+							end
+							vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
+								if choice then
+									require("ls-devs.utils.custom_functions").OpenURLs(choice)
+								end
+							end)
+						end
+					end,
+				},
+				-- Language-specific (buffer-local)
 				{
 					"il",
 					mode = { "o", "x" },
@@ -648,5 +658,4 @@ return {
 			end,
 		},
 	},
-	build = ":TSUpdate",
 }

@@ -135,6 +135,11 @@ return {
 		end
 
 		local function lint()
+			-- Skip non-normal buffers (hover floats, quickfix, terminal, etc.)
+			-- to prevent linters like markdownlint firing on lspsaga hover docs.
+			if vim.bo.buftype ~= "" then
+				return
+			end
 			local names = nvim_lint._resolve_linter_by_ft(vim.bo.filetype)
 
 			if #names == 0 then
