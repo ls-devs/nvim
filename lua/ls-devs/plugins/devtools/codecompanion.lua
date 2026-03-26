@@ -196,7 +196,7 @@ return {
 						signcolumn = "no",
 						scrolloff = 1,
 						list = false,
-						winfixwidth = false,
+						winfixwidth = true,
 					},
 				},
 			},
