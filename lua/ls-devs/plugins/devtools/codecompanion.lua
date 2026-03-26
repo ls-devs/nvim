@@ -197,6 +197,7 @@ return {
 						scrolloff = 1,
 						list = false,
 						winfixwidth = true,
+						winfixbuf = true,
 					},
 				},
 			},
