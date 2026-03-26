@@ -7,6 +7,15 @@
 return {
 	"OXY2DEV/markview.nvim",
 	ft = { "markdown", "markdown_inline", "html", "norg" },
+	keys = {
+		{
+			"<leader>mv",
+			"<cmd>Markview Toggle<CR>",
+			desc = "Markview Toggle",
+			noremap = true,
+			silent = true,
+		},
+	},
 	---@return table
 	opts = function()
 		-- Builds a markview conceal spec for an HTML container element:

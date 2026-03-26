@@ -42,8 +42,13 @@ return {
 			cs = { "csharpier" },
 			sql = { "sql-formatter" },
 			sh = { "shellharden" },
+			-- dockerfile-language-server provides formatting via LSP fallback
+			dockerfile = {},
 			python = { "black" },
 			swift = { "swift-format" },
+			ps1 = { "psscriptanalyzer" },
+			psm1 = { "psscriptanalyzer" },
+			psd1 = { "psscriptanalyzer" },
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 	},

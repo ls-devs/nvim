@@ -219,6 +219,7 @@ return {
 				octo = true,
 				markview = true,
 				grug_far = true,
+				which_key = true,
 				mini = {
 					enabled = true,
 				},

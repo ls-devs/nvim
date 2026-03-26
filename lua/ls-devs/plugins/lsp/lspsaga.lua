@@ -77,10 +77,11 @@ return {
 		},
 		{
 			"<leader>rn",
-			"<cmd>Lspsaga rename<CR>",
-			desc = "LSPSaga Rename",
-			silent = true,
-			noremap = true,
+			function()
+				return ":IncRename " .. vim.fn.expand("<cword>")
+			end,
+			expr = true,
+			desc = "Rename (Live Preview)",
 		},
 		{
 			"<leader>rnw",
@@ -193,6 +194,13 @@ return {
 			"<leader>co",
 			"<cmd>Lspsaga outgoing_calls<CR>",
 			desc = "LSPSaga Outgoing Calls",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"gi",
+			"<cmd>Lspsaga finder imp<CR>",
+			desc = "LSPSaga Go To Implementation",
 			silent = true,
 			noremap = true,
 		},

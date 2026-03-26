@@ -385,6 +385,43 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		-- Step controls
+		{
+			"<leader>us",
+			function()
+				require("dap").step_over()
+			end,
+			desc = "DAP Step Over",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>ui",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "DAP Step Into",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>uu",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "DAP Step Out",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>ur",
+			function()
+				require("dap").run_to_cursor()
+			end,
+			desc = "DAP Run To Cursor",
+			noremap = true,
+			silent = true,
+		},
 		-- WSL Chrome debugger (auto-launch Arc + attach)
 		{
 			"<leader>dC",

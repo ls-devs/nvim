@@ -51,6 +51,28 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		{
+			"<leader>sf",
+			function()
+				local buf = vim.api.nvim_create_buf(false, true)
+				vim.api.nvim_open_win(buf, true, {
+					relative = "editor",
+					width = math.floor(vim.o.columns * 0.85),
+					height = math.floor(vim.o.lines * 0.85),
+					col = math.floor(vim.o.columns * 0.075),
+					row = math.floor(vim.o.lines * 0.075),
+					style = "minimal",
+					border = "rounded",
+				})
+				require("grug-far").open({
+					windowCreationCommand = "enew",
+					prefills = { paths = vim.fn.expand("%") },
+				})
+			end,
+			desc = "GrugFar Search Current File",
+			noremap = true,
+			silent = true,
+		},
 	},
 	opts = {
 		headerMaxWidth = 80,

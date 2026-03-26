@@ -264,10 +264,20 @@ return {
 			end,
 		},
 
-		-- ── explorer / image — disabled (neo-tree owns the explorer; image
-		--   requires kitty/wezterm/ghostty for the kitty graphics protocol) ──
+		-- ── statuscolumn ──────────────────────────────────────────────────
+		-- Structured sign column: fold chevrons (⌄/›) from nvim-ufo, ordered
+		-- git signs, and relative line numbers — all in one consistent layout.
+		statuscolumn = { enabled = true },
+
+		-- ── explorer / image ──────────────────────────────────────────────
+		-- neo-tree owns the explorer. image is enabled only when the terminal
+		-- supports the Kitty graphics protocol (kitty, WezTerm, Ghostty).
 		explorer = { enabled = false },
-		image = { enabled = false },
+		image = {
+			enabled = vim.env.TERM == "xterm-kitty"
+				or vim.env.TERM_PROGRAM == "WezTerm"
+				or vim.env.TERM_PROGRAM == "ghostty",
+		},
 
 		-- ── toggle ────────────────────────────────────────────────────────
 		-- Keymaps are wired in config() via :map() for which-key integration.

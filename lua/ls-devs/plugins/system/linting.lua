@@ -8,7 +8,7 @@ return {
 	"mfussenegger/nvim-lint",
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
-		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+		events = { "BufWritePost", "BufReadPost", "InsertLeave", "BufEnter" },
 		linters_by_ft = {
 			-- eslint_d: fast daemon designed for linting/diagnostics.
 			-- The eslint LSP is configured to suppress publishDiagnostics so it
@@ -25,6 +25,9 @@ return {
 			gitcommit = { "gitlint" },
 			sql = { "sqlfluff" },
 			sh = { "shellcheck" },
+			ps1 = { "psscriptanalyzer" },
+			psm1 = { "psscriptanalyzer" },
+			psd1 = { "psscriptanalyzer" },
 			markdown = { "markdownlint-cli2" },
 			css = { "stylelint" },
 			scss = { "stylelint" },
@@ -64,6 +67,71 @@ return {
 
 		if opts.linters_by_ft then
 			nvim_lint.linters_by_ft = opts.linters_by_ft
+		end
+
+		-- psscriptanalyzer: nvim-lint has no built-in definition, so we define one here.
+		-- The PSScriptAnalyzer module is bundled inside the powershell-editor-services
+		-- Mason package, so no separate install is needed.
+		-- -ExecutionPolicy Bypass is required on WSL where pwsh.exe sees the Linux
+		-- filesystem as a UNC path (\\wsl.localhost\...) and the Windows policy blocks it.
+		local ps_cmd = vim.fn.executable("pwsh") == 1 and "pwsh"
+			or vim.fn.executable("pwsh.exe") == 1 and "pwsh.exe"
+			or vim.fn.executable("powershell.exe") == 1 and "powershell.exe"
+			or nil
+		local pssa_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services/PSScriptAnalyzer"
+		if ps_cmd and vim.uv.fs_stat(pssa_path) then
+			nvim_lint.linters.psscriptanalyzer = {
+				name = "psscriptanalyzer",
+				cmd = ps_cmd,
+				stdin = false,
+				append_fname = false,
+				args = {
+					"-NoLogo",
+					"-NonInteractive",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-Command",
+					function()
+						local fname = vim.api.nvim_buf_get_name(0):gsub("'", "''")
+						local mod = pssa_path:gsub("'", "''")
+						return string.format(
+							"Import-Module '%s';"
+								.. " Invoke-ScriptAnalyzer -Path '%s'"
+								.. " -Severity @('Error','Warning','Information')"
+								.. " | ForEach-Object {"
+								.. " Write-Output ('{0}:{1}:{2}:{3}:{4}'"
+								.. " -f $_.Severity,$_.Line,$_.Column,$_.RuleName,$_.Message) }",
+							mod,
+							fname
+						)
+					end,
+				},
+				stream = "stdout",
+				ignore_exitcode = true,
+				parser = function(output, _bufnr)
+					local diagnostics = {}
+					local sev_map = {
+						Error = vim.diagnostic.severity.ERROR,
+						Warning = vim.diagnostic.severity.WARN,
+						Information = vim.diagnostic.severity.INFO,
+						ParseError = vim.diagnostic.severity.ERROR,
+					}
+					for line in output:gmatch("[^\r\n]+") do
+						local sev, lnum, col, rule, msg = line:match("^(%w+):(%d+):(%d+):([^:]+):(.+)$")
+						if sev and lnum then
+							table.insert(diagnostics, {
+								lnum = tonumber(lnum) - 1,
+								col = tonumber(col) - 1,
+								message = msg,
+								source = "psscriptanalyzer",
+								code = rule,
+								severity = sev_map[sev] or vim.diagnostic.severity.WARN,
+							})
+						end
+					end
+					return diagnostics
+				end,
+			}
 		end
 
 		local function lint()

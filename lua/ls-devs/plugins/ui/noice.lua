@@ -177,5 +177,17 @@ return {
 	dependencies = {
 		{ "MunifTanjim/nui.nvim", lazy = true },
 		-- nvim-notify removed: snacks.notifier is the vim.notify backend now.
+		-- inc-rename: activates the inc_rename = true preset above — provides
+		-- live-preview rename where every occurrence updates as you type.
+		{ "smjonas/inc-rename.nvim", lazy = true, opts = {} },
+	},
+	keys = {
+		{
+			"<leader>nd",
+			"<cmd>NoiceDismiss<CR>",
+			desc = "Noice Dismiss Messages",
+			noremap = true,
+			silent = true,
+		},
 	},
 }

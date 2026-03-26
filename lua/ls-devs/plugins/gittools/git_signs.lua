@@ -18,7 +18,7 @@ return {
 		signcolumn = true,
 		numhl = false,
 		linehl = false,
-		word_diff = false, -- intra-line word-level diff; enable for finer change granularity
+		word_diff = true, -- intra-line word-level diff highlights changed words, not just lines
 		watch_gitdir = {
 			follow_files = true,
 		},
@@ -28,7 +28,7 @@ return {
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = "eol",
-			delay = 1000,
+			delay = 500,
 			ignore_whitespace = false,
 			-- priority=300 keeps blame rightmost — drawn last per Neovim's
 			-- virt_text rule (highest priority = drawn last = rightmost).
@@ -48,6 +48,26 @@ return {
 			relative = "cursor",
 			row = 0,
 			col = 1,
+		},
+	},
+	keys = {
+		{
+			"<leader>gb",
+			function()
+				require("gitsigns").toggle_current_line_blame()
+			end,
+			desc = "Gitsigns Toggle Blame",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>gwd",
+			function()
+				require("gitsigns").toggle_word_diff()
+			end,
+			desc = "Gitsigns Toggle Word Diff",
+			noremap = true,
+			silent = true,
 		},
 	},
 	---@return boolean

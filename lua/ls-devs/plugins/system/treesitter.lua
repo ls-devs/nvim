@@ -38,6 +38,12 @@ return {
 			"gitignore",
 			"git_rebase",
 			"gitattributes",
+			-- Additional parsers for completeness:
+			"sql", -- SQL files and embedded SQL (complements sqlls LSP)
+			"graphql", -- GraphQL schemas and queries
+			"c_sharp", -- C# files (complements omnisharp LSP)
+			"comment", -- TODO/FIXME/HACK/NOTE tokens (synergy with todo-comments.nvim)
+			"jsdoc", -- JSDoc @param/@returns annotations in JS/TS
 		},
 		sync_install = false,
 		auto_install = true,

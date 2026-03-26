@@ -21,7 +21,7 @@ return {
 				"eslint",
 				"sonarlint-language-server",
 				"vim-language-server",
-				"ts_ls",
+				"vtsls",
 				"html",
 				"lemminx",
 				"mdx_analyzer",
@@ -43,6 +43,7 @@ return {
 				"vimls",
 				"taplo",
 				"omnisharp",
+				"powershell_es",
 
 				-- ── Linters ───────────────────────────────────────────────────────
 				-- eslint_d: fast daemon for ESLint diagnostics (nvim-lint).
@@ -60,6 +61,7 @@ return {
 				"codespell",
 				"stylelint",
 				"luacheck",
+				"psscriptanalyzer",
 
 				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",
@@ -94,8 +96,8 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_enable = {
-				-- ts_ls is managed by typescript-tools.nvim; auto-enabling it
-				-- here would create a conflicting second client on TS/JS files.
+				-- ts_ls is excluded to prevent a conflicting second TS client
+				-- if the user already has it installed from before the vtsls migration.
 				exclude = { "ts_ls" },
 			},
 		},

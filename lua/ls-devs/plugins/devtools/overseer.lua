@@ -19,6 +19,12 @@ return {
 				winblend = 0,
 			},
 		},
+		preview = {
+			border = "rounded",
+			win_opts = {
+				winblend = 0,
+			},
+		},
 		task_list = {
 			keymaps = {
 				["?"] = "keymap.show_help",

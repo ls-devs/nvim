@@ -7,7 +7,7 @@
 --           LoadProjectsOnDemand reduces startup overhead in large solutions
 -- ──────────────────────────────────────────────────────────────────────────
 return {
-	on_attach = function(client)
+	on_attach = function(client, _bufnr)
 		-- Formatting is owned by conform (csharpier); prevent OmniSharp from
 		-- registering its own formatter so there is no conflict
 		client.server_capabilities.documentFormattingProvider = false
