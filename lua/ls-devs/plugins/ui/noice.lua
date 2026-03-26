@@ -138,6 +138,10 @@ return {
 				search_clear()
 				return
 			end
+			-- Skip on large buffers — searchcount() scans the whole buffer
+			if vim.api.nvim_buf_line_count(0) > 10000 then
+				return
+			end
 			local ok, res = pcall(vim.fn.searchcount, { maxcount = 999 })
 			if not ok or not res or (res.total or 0) == 0 then
 				search_clear()

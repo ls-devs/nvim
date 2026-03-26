@@ -52,7 +52,7 @@ end
 ---@type LazySpec
 return {
 	"nanozuki/tabby.nvim",
-	event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		require("tabby").setup()
 		local colors = require("catppuccin.palettes.mocha")

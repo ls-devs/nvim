@@ -25,5 +25,19 @@ return {
 			silent = true,
 			noremap = true,
 		},
+		{
+			"<leader>vs",
+			"<cmd>Trouble symbols toggle<CR>",
+			desc = "Trouble Symbols",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"<leader>vl",
+			"<cmd>Trouble lsp toggle<CR>",
+			desc = "Trouble LSP",
+			silent = true,
+			noremap = true,
+		},
 	},
 }

@@ -112,6 +112,20 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		{
+			"<leader>dvf",
+			"<cmd>DiffviewFileHistory %<CR>",
+			desc = "Diffview File History",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>dvF",
+			"<cmd>DiffviewFileHistory<CR>",
+			desc = "Diffview Repo History",
+			noremap = true,
+			silent = true,
+		},
 	},
 	---@return boolean
 	cond = function()

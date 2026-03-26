@@ -269,13 +269,10 @@ return {
 			---@return string[]
 			default = function()
 				local col = vim.api.nvim_win_get_cursor(0)[2]
-				local ok, captures =
-					pcall(vim.treesitter.get_captures_at_pos, 0, vim.fn.line(".") - 1, math.max(col - 1, 0))
-				if ok then
-					for _, cap in ipairs(captures) do
-						if cap.capture:find("comment") then
-							return {}
-						end
+				local captures = vim.treesitter.get_captures_at_pos(0, vim.fn.line(".") - 1, math.max(col - 1, 0))
+				for _, cap in ipairs(captures) do
+					if cap.capture:find("comment") then
+						return {}
 					end
 				end
 				local ft = vim.bo.filetype

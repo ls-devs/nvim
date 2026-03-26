@@ -85,8 +85,8 @@ return {
 
 		-- Mouse: Ctrl+Click to add/remove individual cursors.
 		vim.keymap.set("n", "<C-LeftMouse>", mc.handleMouse, { desc = "MC Mouse Add/Remove" })
-		vim.keymap.set("n", "<C-LeftDrag>", mc.handleMouseDrag)
-		vim.keymap.set("n", "<C-LeftRelease>", mc.handleMouseRelease)
+		vim.keymap.set("n", "<C-LeftDrag>", mc.handleMouseDrag, { desc = "MC Mouse Drag" })
+		vim.keymap.set("n", "<C-LeftRelease>", mc.handleMouseRelease, { desc = "MC Mouse Release" })
 
 		-- ── Keymap layer — only active when multiple cursors exist ─────────
 		-- These mappings only activate while cursors are live, so they can

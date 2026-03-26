@@ -1,6 +1,9 @@
 -- ── gitsigns.nvim ─────────────────────────────────────────────────────────
 -- Purpose : Git decorations in the sign column + inline EOL blame
 -- Trigger : event = { "BufReadPost", "BufNewFile" }
+-- Keymaps : <leader>gs  stage hunk   <leader>gu  reset (unstage) hunk
+--           <leader>gp  preview hunk  <leader>gB  full blame popup
+--           ih / ah     hunk text object (o/x mode)
 -- ──────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
@@ -69,6 +72,45 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		{
+			"<leader>gs",
+			function()
+				require("gitsigns").stage_hunk()
+			end,
+			desc = "Gitsigns Stage Hunk",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>gu",
+			function()
+				require("gitsigns").reset_hunk()
+			end,
+			desc = "Gitsigns Reset Hunk",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>gp",
+			function()
+				require("gitsigns").preview_hunk()
+			end,
+			desc = "Gitsigns Preview Hunk",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>gB",
+			function()
+				require("gitsigns").blame_line({ full = true })
+			end,
+			desc = "Gitsigns Blame Full",
+			noremap = true,
+			silent = true,
+		},
+		-- Hunk text object: dih deletes a hunk, cih changes it, yih yanks it
+		{ "ih", ":<C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "Gitsigns Inner Hunk", silent = true },
+		{ "ah", ":<C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "Gitsigns Around Hunk", silent = true },
 	},
 	---@return boolean
 	cond = function()
