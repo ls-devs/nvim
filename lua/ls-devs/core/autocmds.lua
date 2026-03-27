@@ -328,12 +328,13 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Trigger checktime so autoread reloads files changed outside Neovim.
--- Guarded by getcmdwintype() to skip when the command-line window is open.
+-- Guarded by vim_did_enter so it never fires during the startup sequence,
+-- and by getcmdwintype() to skip when the command-line window is open.
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
 	group = augroup,
 	pattern = "*",
 	callback = function()
-		if vim.fn.getcmdwintype() == "" then
+		if vim.v.vim_did_enter == 1 and vim.fn.getcmdwintype() == "" then
 			vim.cmd("checktime")
 		end
 	end,

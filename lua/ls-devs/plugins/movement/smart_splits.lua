@@ -56,18 +56,50 @@ return {
 		{
 			"<M-j>",
 			function()
-				require("smart-splits").resize_down()
+				-- Resize only when windows are stacked horizontally (different row positions).
+				-- Pure side-by-side layouts have identical rows → fall through to move-line.
+				local wins = vim.tbl_filter(function(w)
+					return vim.api.nvim_win_get_config(w).relative == ""
+				end, vim.api.nvim_tabpage_list_wins(0))
+				local first_row = #wins > 0 and vim.api.nvim_win_get_position(wins[1])[1] or 0
+				local has_hori = vim.iter(wins):any(function(w)
+					return vim.api.nvim_win_get_position(w)[1] ~= first_row
+				end)
+				if has_hori then
+					require("smart-splits").resize_down()
+				elseif vim.api.nvim_get_mode().mode == "n" then
+					local row = vim.api.nvim_win_get_cursor(0)[1]
+					if row < vim.api.nvim_buf_line_count(0) then
+						vim.cmd("m .+1")
+						vim.cmd("normal! ==")
+					end
+				end
 			end,
 			mode = { "n", "t" },
-			desc = "Resize split down",
+			desc = "Resize split down / Move line down",
 		},
 		{
 			"<M-k>",
 			function()
-				require("smart-splits").resize_up()
+				local wins = vim.tbl_filter(function(w)
+					return vim.api.nvim_win_get_config(w).relative == ""
+				end, vim.api.nvim_tabpage_list_wins(0))
+				local first_row = #wins > 0 and vim.api.nvim_win_get_position(wins[1])[1] or 0
+				local has_hori = vim.iter(wins):any(function(w)
+					return vim.api.nvim_win_get_position(w)[1] ~= first_row
+				end)
+				if has_hori then
+					require("smart-splits").resize_up()
+				elseif vim.api.nvim_get_mode().mode == "n" then
+					local row = vim.api.nvim_win_get_cursor(0)[1]
+					if row > 1 then
+						vim.cmd("m .-2")
+						vim.cmd("normal! ==")
+					end
+				end
 			end,
 			mode = { "n", "t" },
-			desc = "Resize split up",
+			desc = "Resize split up / Move line up",
 		},
 		{
 			"<M-l>",

@@ -149,11 +149,6 @@ vim.keymap.set({ "n", "v" }, "<leader>cq", function()
 	vim.cmd("CodeCompanionCLI Ask")
 end, { noremap = true, silent = true, desc = "CodeCompanion CLI Ask" })
 
--- ── Move lines (normal mode) ──────────────────────────────────────────────
--- Visual/x modes are above; these complete the trio for normal mode.
-vim.keymap.set("n", "<A-j>", "<cmd>m .+1<CR>==", { noremap = true, silent = true, desc = "Move Line Down" })
-vim.keymap.set("n", "<A-k>", "<cmd>m .-2<CR>==", { noremap = true, silent = true, desc = "Move Line Up" })
-
 -- ── Session / Window ─────────────────────────────────────────────────────
 vim.keymap.set("n", "<leader>qq", "<cmd>qa<CR>", { noremap = true, silent = true, desc = "Quit All" })
 

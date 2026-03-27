@@ -12,7 +12,13 @@ local tabName = function(tab)
 	local winid = vim.api.nvim_tabpage_get_win(tab.id)
 	local bufid = vim.api.nvim_win_get_buf(winid)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufid })
-	local tabTail = vim.fn.fnamemodify(tab.name(), "%:t")
+	local bufpath = vim.api.nvim_buf_get_name(bufid)
+	local tabTail = vim.fn.fnamemodify(bufpath, ":t")
+	local tabParent = vim.fn.fnamemodify(bufpath, ":h:t")
+	-- Include the immediate parent folder (e.g. "lsp/lspsaga.lua") unless the
+	-- file is at the project root (parent is "." or "/") or has no real path.
+	local tabDisplay = (tabParent ~= "" and tabParent ~= "." and tabParent ~= "/") and (tabParent .. "/" .. tabTail)
+		or tabTail
 
 	-- For tool windows (Overseer, neo-tree, snacks picker), use the filetype as the display name.
 	if
@@ -22,10 +28,12 @@ local tabName = function(tab)
 	then
 		tabName = file_type
 	else
-		-- Truncate long filenames, preserving the extension (e.g. "very-long-name...ts").
-		if string.len(tabTail) > 25 then
-			local fileExt = string.match(tabTail, "[^.]+$")
-			tabName = string.sub(tabTail, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+		-- Truncate long display names, preserving the extension (e.g. "very-long...ts").
+		if string.len(tabDisplay) > 25 then
+			local fileExt = string.match(tabTail, "[^.]+$") or ""
+			tabName = string.sub(tabDisplay, 0, 22 - string.len(fileExt)) .. "..." .. fileExt
+		else
+			tabName = tabDisplay
 		end
 	end
 
