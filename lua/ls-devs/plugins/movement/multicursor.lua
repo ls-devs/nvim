@@ -25,7 +25,7 @@ return {
 		{ "<leader>mS", mode = { "n", "x" }, desc = "MC Skip Prev Match" },
 		{ "<leader>ma", mode = { "n", "x" }, desc = "MC Add Cursors All Matches" },
 		{ "<leader>m/", mode = "n", desc = "MC Add Cursors All Search Results" },
-		{ "<leader>m?n", mode = "n", desc = "MC Add Cursor + Next Search Result" },
+		{ "<leader>m?", mode = "n", desc = "MC Add Cursor + Next Search Result" },
 		{ "ga", mode = { "n", "x" }, desc = "MC Cursor Operator" },
 		{ "<C-LeftMouse>", mode = "n", desc = "MC Mouse Add/Remove" },
 	},
@@ -75,7 +75,7 @@ return {
 		vim.keymap.set("n", "<leader>m/", function()
 			mc.searchAllAddCursors()
 		end, { desc = "MC Add Cursors All Search Results" })
-		vim.keymap.set("n", "<leader>m?n", function()
+		vim.keymap.set("n", "<leader>m?", function()
 			mc.searchAddCursor(1)
 		end, { desc = "MC Add Cursor + Next Search Result" })
 

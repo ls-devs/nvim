@@ -112,6 +112,25 @@ return {
 		-- Hunk text object: dih deletes a hunk, cih changes it, yih yanks it
 		{ "ih", ":<C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "Gitsigns Inner Hunk", silent = true },
 		{ "ah", ":<C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "Gitsigns Around Hunk", silent = true },
+		-- Hunk navigation
+		{
+			"]h",
+			function()
+				require("gitsigns").next_hunk()
+			end,
+			desc = "Next Hunk",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"[h",
+			function()
+				require("gitsigns").prev_hunk()
+			end,
+			desc = "Prev Hunk",
+			noremap = true,
+			silent = true,
+		},
 	},
 	---@return boolean
 	cond = function()

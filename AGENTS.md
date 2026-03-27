@@ -16,8 +16,10 @@ A modular, performance-first Neovim configuration written in Lua. It is **not** 
 init.lua                       ← single entry point: require("ls-devs.core")
 lua/ls-devs/
   core/
-    init.lua                   ← loads options.lua then lazy.lua
-    options.lua                ← global vim options, keymaps, env-aware clipboard
+    init.lua                   ← loads options.lua, keymaps.lua, autocmds.lua, then lazy.lua
+    options.lua                ← global vim options, env-aware clipboard
+    keymaps.lua                ← global keymaps
+    autocmds.lua               ← global autocommands
     lazy.lua                   ← lazy.nvim bootstrap + all plugin spec imports
   plugins/
     completion/                ← blink.cmp, LuaSnip, lspkind
@@ -29,7 +31,7 @@ lua/ls-devs/
     │                            neotest (+ adapters), rustaceanvim, octo.nvim,
     │                            iron.nvim (REPL), nvim-coverage, ccc.nvim (color picker)
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
-    gittools/                  ← diffview, gitsigns, fugitive, git-conflict, git-worktree
+    gittools/                  ← codediff.nvim (diff viewer + conflict resolution), gitsigns, git-worktree
     lsp/
       manager.lua              ← Mason package list (LSPs, linters, formatters, DAPs)
       lspsaga.lua
@@ -46,12 +48,13 @@ lua/ls-devs/
       treesitter_context.lua
       dependencies/            ← plenary, luarocks
       treesitter_modules/      ← nvim-ts-autotag
-    ui/                        ← catppuccin, diagflow, fidget, focus, lualine, mini_icons,
+    ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, focus, lualine, mini_icons,
     │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, better-qf
     utilities/                 ← mini.comment, scrolleof, trouble
   utils/
-    custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs,
-                                  DiffviewToggle, OrigamiHLFolds
+    custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch,
+                                  OrigamiHLFolds, KeymapsList, AutocmdsList, CommandsList,
+                                  HighlightsList, DapChromeDebug, DapNodeDebug
 lsp/                           ← standalone server config fragments (NOT auto-loaded by default)
                                  eslint.lua: loaded by manager.lua; suppresses publishDiagnostics
                                    so the eslint LSP only provides code actions (not diagnostics)
@@ -68,7 +71,9 @@ lazy-lock.json                 ← plugin version lockfile (do not edit manually
 ```
 init.lua
   └─ require("ls-devs.core")
-       ├─ core/options.lua   (vim options, keymaps, clipboard detection)
+       ├─ core/options.lua   (vim options, clipboard detection)
+       ├─ core/keymaps.lua   (global keymaps)
+       ├─ core/autocmds.lua  (global autocommands)
        └─ core/lazy.lua      (lazy.nvim bootstrap → all plugin imports)
 ```
 
@@ -235,7 +240,7 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 | Requirement | Used by |
 |---|---|
 | Neovim ≥ 0.12.0 | everything |
-| git | lazy.nvim bootstrap, gitsigns, diffview |
+| git | lazy.nvim bootstrap, gitsigns, codediff.nvim |
 | Node.js + npm/pnpm | ts_ls, eslint, markdown-preview, copilot.lua |
 | Python + pynvim | debugpy, pyright |
 | Cargo/Rust | rust_analyzer, some plugins |

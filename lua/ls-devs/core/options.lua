@@ -125,6 +125,7 @@ end
 local options = {
 	background = "dark",
 	incsearch = true,
+	inccommand = "split", -- live preview of :s/foo/bar replacements + affected lines in a split
 	updatetime = 300, -- ms before CursorHold fires (LSP hover, gitsigns); default is 4000
 	timeoutlen = 500, -- ms to wait for a mapped key sequence
 	ttimeoutlen = 10, -- near-instant key-code timeout for fast <Esc> recognition
@@ -141,6 +142,7 @@ local options = {
 	linebreak = true,
 	breakindent = true,
 	breakindentopt = { "shift:2", "sbr" }, -- indent wrapped lines by 2 extra spaces; "sbr" prefixes them with showbreak
+	showbreak = "↪ ", -- prefix drawn at the start of each continuation line when linebreak wraps
 	fileencoding = "utf-8",
 	hlsearch = true,
 	ignorecase = true,
@@ -151,13 +153,19 @@ local options = {
 	smartindent = true,
 	splitbelow = true,
 	splitright = true,
+	splitkeep = "cursor", -- keep cursor at same screen line when opening/closing splits (Neovim 0.9+)
 	equalalways = false, -- don't auto-equalize window sizes on split/close (codediff manages its own layout)
 	swapfile = false,
 	termguicolors = true,
 	undofile = true,
 	writebackup = false,
+	autoread = true, -- auto-reload files changed outside Neovim; pair with BufEnter checktime autocmd
+	confirm = true, -- prompt instead of aborting on unsaved changes
+	grepprg = "rg --vimgrep", -- use ripgrep for :grep / :lgrep
+	grepformat = "%f:%l:%c:%m", -- format string matching rg --vimgrep output
 	expandtab = true,
 	shiftwidth = 2,
+	shiftround = true, -- round indentation to nearest shiftwidth multiple
 	tabstop = 2,
 	cursorline = true,
 	number = true,
@@ -167,6 +175,7 @@ local options = {
 	winblend = 0, -- no pseudo-transparency for floating windows
 	pumblend = 0, -- no pseudo-transparency for the popup menu
 	startofline = true, -- jump commands (G, gg, <C-d>, …) land on the first non-blank char
+	jumpoptions = "view", -- preserve viewport in jump list so <C-i>/<C-o> restores exact scroll (Neovim 0.10+)
 	wrap = false,
 	foldcolumn = "1", -- 1-char column used by nvim-ufo to render fold open/close icons
 	foldenable = true,
@@ -199,3 +208,7 @@ end
 -- Branch 3 (default) — bare Linux: sync all yank/paste with the system clipboard.
 -- Also applied globally so vim.g.clipboard providers (set above) are used for + and * registers.
 vim.opt.clipboard = "unnamedplus"
+
+-- Options requiring :append() (modifying existing option sets rather than replacing them)
+vim.opt.diffopt:append("linematch:60") -- align similar lines across hunks in diffs (Neovim 0.9+)
+vim.opt.shortmess:append("WIcC") -- suppress: W=written, I=intro splash, c=completion counts, C=scanning

@@ -112,6 +112,8 @@ require("lazy").setup({
 				"netrwPlugin",
 				"netrwSettings",
 				"netrwFileHandlers",
+				"matchit", -- vim-matchup fully replaces matchit (and matchparen)
+				"spellfile_plugin", -- not using spell-file downloads; avoids silent network call on z=
 			},
 		},
 	},

@@ -93,6 +93,20 @@ return {
 				filter = { find = "No information available" },
 				opts = { skip = true },
 			},
+			-- Suppress failed search message (our inline extmark already shows this)
+			{
+				filter = { event = "msg_show", find = "Pattern not found" },
+				opts = { skip = true },
+			},
+			-- Suppress search wrap-around messages (noisy; inline count is sufficient)
+			{
+				filter = { event = "msg_show", find = "search hit BOTTOM" },
+				opts = { skip = true },
+			},
+			{
+				filter = { event = "msg_show", find = "search hit TOP" },
+				opts = { skip = true },
+			},
 		},
 		messages = {
 			enabled = true,

@@ -124,6 +124,36 @@ return {
 		desc = "Commands (fuzzy)",
 	},
 
+	-- ── Picker — extra pickers ───────────────────────────────────────────
+	{
+		"<leader>fN",
+		function()
+			Snacks.picker.notifications()
+		end,
+		desc = "Notification History",
+	},
+	{
+		"<leader>fj",
+		function()
+			Snacks.picker.jumps()
+		end,
+		desc = "Jump List",
+	},
+	{
+		"<leader>fR",
+		function()
+			Snacks.picker.registers()
+		end,
+		desc = "Registers",
+	},
+	{
+		"<leader>fu",
+		function()
+			Snacks.picker.undo()
+		end,
+		desc = "Undo History",
+	},
+
 	-- ── Picker — git ─────────────────────────────────────────────────────
 	{
 		"<leader>gs",

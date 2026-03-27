@@ -29,15 +29,29 @@ return {
 		opts.adapters = {
 			-- ── Jest (JS/TS/JSX/TSX/Node) ─────────────────────────────────
 			require("neotest-jest")({
-				jestCommand = "npx jest --no-coverage",
+				jestCommand = "npx jest --no-coverage --passWithNoTests",
 				jestConfigFile = function(file)
 					local dir = vim.fs.dirname(vim.fs.normalize(file))
+					-- Look for a dedicated jest config file first
 					local found = vim.fs.find(
-						{ "jest.config.ts", "jest.config.js", "jest.config.mjs" },
+						{ "jest.config.ts", "jest.config.js", "jest.config.cjs", "jest.config.mjs" },
 						{ path = dir, upward = true, type = "file", limit = 1 }
 					)
 					if found and found[1] then
 						return found[1]
+					end
+					-- Fall back to package.json if it contains a "jest" key
+					local pkg = vim.fs.find("package.json", {
+						path = dir,
+						upward = true,
+						type = "file",
+						limit = 1,
+					})
+					if pkg and pkg[1] then
+						local ok, content = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(pkg[1]), "\n"))
+						if ok and content and content.jest then
+							return pkg[1]
+						end
 					end
 					return nil
 				end,
@@ -81,6 +95,17 @@ return {
 		}
 		---@diagnostic disable-next-line: missing-fields
 		require("neotest").setup(opts)
+
+		-- Ensure treesitter parser is active on JS/TS test files before neotest
+		-- calls discover_positions (which calls get_node_text → parser:start()).
+		-- Without this, the parser object exists but hasn't been started on the
+		-- buffer yet, causing "attempt to call method 'start' (a nil value)".
+		vim.api.nvim_create_autocmd("BufReadPost", {
+			pattern = { "*.test.ts", "*.spec.ts", "*.test.js", "*.spec.js", "*.test.tsx", "*.spec.tsx" },
+			callback = function(ev)
+				pcall(vim.treesitter.start, ev.buf)
+			end,
+		})
 
 		-- Virtual-text render order — Neovim draws highest priority LAST (rightmost).
 		-- neotest's status consumer sets pass/fail icons via nvim_buf_set_extmark
@@ -311,8 +336,8 @@ return {
 			"<leader>Td",
 			function()
 				require("neotest").summary.open()
-        -- Generalized DAP debug: works for any adapter that supports DAP
-        require("neotest").run.run({ strategy = "dap" })
+				-- Generalized DAP debug: works for any adapter that supports DAP
+				require("neotest").run.run({ strategy = "dap" })
 			end,
 			desc = "Neotest Debug Nearest",
 			noremap = true,

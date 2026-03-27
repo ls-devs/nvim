@@ -314,3 +314,58 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPost" }, {
 	end,
 	desc = "Fix LSP and Tree-sitter on drvfs mounts (WSL)",
 })
+
+-- Remove auto-inserted comment leaders (c/r/o from formatoptions).
+-- Many filetype plugins re-add c/r/o after FileType fires; using a late priority
+-- ensures this runs after them and wins.
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+	end,
+	desc = "Remove auto-comment-leader formatoptions (c/r/o)",
+})
+
+-- Trigger checktime so autoread reloads files changed outside Neovim.
+-- Guarded by getcmdwintype() to skip when the command-line window is open.
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
+	group = augroup,
+	pattern = "*",
+	callback = function()
+		if vim.fn.getcmdwintype() == "" then
+			vim.cmd("checktime")
+		end
+	end,
+	desc = "Checktime on BufEnter/FocusGained (pairs with autoread=true)",
+})
+
+-- Close quickfix and location-list windows with q
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "qf",
+	callback = function(args)
+		vim.keymap.set("n", "q", function()
+			vim.cmd("cclose")
+			pcall(vim.cmd, "lclose")
+		end, { buffer = args.buf, silent = true, desc = "Close quickfix/loclist" })
+	end,
+	desc = "Close quickfix window with q",
+})
+
+-- Auto-create parent directories when saving a new file whose path doesn't exist yet
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = augroup,
+	pattern = "*",
+	callback = function(args)
+		-- Skip remote/special buffers (e.g. fugitive://, oil://)
+		if args.match:match("^%w+://") then
+			return
+		end
+		local dir = vim.fn.fnamemodify(args.match, ":p:h")
+		if vim.fn.isdirectory(dir) == 0 then
+			vim.fn.mkdir(dir, "p")
+		end
+	end,
+	desc = "Auto-create parent directories on save",
+})

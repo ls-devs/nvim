@@ -4,7 +4,9 @@
 
 This Neovim configuration is modular and organized for performance, extensibility, and IDE-like features. The entrypoint is `init.lua`, which loads the core modules:
 
-- `core/options.lua`: Sets global editor options, keymaps, clipboard integration (Docker/WSL/Win32yank), and UI tweaks.
+- `core/options.lua`: Sets global editor options and clipboard integration (Docker/WSL/Win32yank).
+- `core/keymaps.lua`: Global keymaps.
+- `core/autocmds.lua`: Global autocommands.
 - `core/lazy.lua`: Bootstraps and configures [lazy.nvim](https://github.com/folke/lazy.nvim) as the plugin manager. It imports plugin categories:
   - completion, devtools, gittools, lsp, movement, system, ui, utilities
 
@@ -15,9 +17,9 @@ Plugins are organized by functionality in `lua/ls-devs/plugins/<category>/`. Eac
 - **Plugin Management:** Uses lazy.nvim for fast startup and lazy loading.
 - **Completion:** Powered by blink.cmp (v2/main, Rust fuzzy matching), LuaSnip, lspkind, and sources (LSP, buffer, snippets, Copilot, dotenv, sass-variables, git).
 - **LSP & Diagnostics:** Integrated with lspsaga.nvim, nvim-lspconfig, mason.nvim, and related tools for language server management and UI enhancements.
-- **Git Integration:** Includes diffview.nvim, gitsigns.nvim, fugitive, git-worktree, and more for advanced git workflows.
+- **Git Integration:** Includes codediff.nvim (diff viewer + conflict resolution), gitsigns.nvim, git-worktree, and more for advanced git workflows.
 - **Movement:** Enhanced navigation with flash.nvim, mini.surround, multiple-cursors, neotab, nvim-spider, nvim-autopairs, smart-splits, treesj, vim-matchup, and others.
-- **UI:** Snacks dashboard, catppuccin theme, diagflow, mini.icons, noice, lualine, tabby, todo-comments, and more.
+- **UI:** Snacks dashboard, catppuccin theme, tiny-inline-diagnostic.nvim, mini.icons, noice, lualine, tabby, todo-comments, and more.
 - **Devtools:** AsyncRun, codecompanion (AI/MCP/Copilot), overseer, live-server, typescript-tools, kulala.nvim, databases, debugging (DAP + multi-language launch configs), lazydev, neotest (jest/vitest/pytest/cargo/phpunit), rustaceanvim (enhanced Rust LSP + DAP), octo.nvim (GitHub PR/issue management), iron.nvim (interactive REPL), nvim-coverage (test coverage gutter), ccc.nvim (inline color picker/highlighter).
 - **System:** Snacks (bigfile, terminal, input, scroll, indent, picker, notifier, dashboard), linting (nvim-lint), formatting (conform.nvim), treesitter, neo-tree, grug-far, markview, sleuth, wildfire, treesitter-context (sticky scope header), etc.
 - **Utilities:** Mini.comment, trouble, and more.

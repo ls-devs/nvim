@@ -39,6 +39,9 @@ return {
 				{ pattern = "help tags", icon = "󰋖", color = "azure" },
 				{ pattern = "help grep", icon = "󰋖", color = "azure" },
 				{ pattern = "todo", icon = "󰄵", color = "yellow" },
+				{ pattern = "notification", icon = "󰂱", color = "yellow" },
+				{ pattern = "jump list", icon = "󰌑", color = "azure" },
+				{ pattern = "undo", icon = "󰕌", color = "azure" },
 				-- ── Git ────────────────────────────────────────────────────
 				{ pattern = "git status", icon = "󰊢", color = "orange" },
 				{ pattern = "git log", icon = "󰜘", color = "orange" },
@@ -159,11 +162,12 @@ return {
 				{ pattern = "^swap ", icon = "󰓡", color = "cyan" },
 				{ pattern = "select ", icon = "󰒉", color = "cyan" },
 				{ pattern = "ts repeat", icon = "󰑖", color = "blue" },
+				{ pattern = "executable", icon = "󰒃", color = "green" },
+				{ pattern = "quit all", icon = "󰗼", color = "red" },
 				-- ── Misc ───────────────────────────────────────────────────
 				{ pattern = "lazy$", icon = "󰒲", color = "purple" },
 				{ pattern = "octo", icon = "󰊤", color = "grey" },
 				{ pattern = "grug", icon = "󰍫", color = "blue" },
-				{ pattern = "coverage", icon = "󰅲", color = "green" },
 				{ pattern = "dap ui", icon = "󰃤", color = "purple" },
 				-- ── Broad catch-alls (must stay last) ─────────────────────
 				{ pattern = "^next ", icon = "󰜴", color = "green" },
@@ -203,7 +207,9 @@ return {
 			{ "<leader>v", group = "Trouble", icon = { icon = "󰒡", color = "red" } },
 			{ "<leader>o", group = "Overseer", icon = { icon = "󰑮", color = "yellow" } },
 			{ "<leader>t", group = "Tabs", icon = { icon = "󰓩", color = "azure" } },
+			{ "<leader>tm", group = "Tab Move", icon = { icon = "󰒺", color = "azure" } },
 			{ "<leader>O", group = "Octo", icon = { icon = "󰊤", color = "grey" } },
+			{ "<leader>x", group = "Utils/Execute", icon = { icon = "󰒃", color = "green" } },
 			-- ── Navigation prefixes ───────────────────────────────────────
 			{ "]", group = "Next", icon = { icon = "󰜴", color = "green" } },
 			{ "[", group = "Prev", icon = { icon = "󰜲", color = "red" } },

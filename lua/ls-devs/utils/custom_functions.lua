@@ -427,9 +427,7 @@ M.CommandsList = function()
 					_name = name,
 					_nargs = cmd.nargs or "0",
 					_desc = desc,
-					_def = (cmd.definition and cmd.definition ~= "" and cmd.definition ~= "completion")
-							and cmd.definition
-						or "",
+					_def = (cmd.definition and cmd.definition ~= "" and cmd.definition ~= "completion") and cmd.definition or "",
 					_local = is_local,
 				})
 			end
@@ -600,9 +598,8 @@ M.DapChromeDebug = function(preset_url, web_root_override)
 		-- Arc CDP binds to Windows 127.0.0.1:cdp_port (unreachable from WSL2 directly).
 		-- The relay forwards 0.0.0.0:relay_port → 127.0.0.1:cdp_port on Windows,
 		-- making it reachable as windows_host:relay_port from WSL.
-		local r = vim.fn.system(
-			string.format("curl -sf --max-time 1 http://%s:%d/json/version 2>/dev/null", windows_host, relay_port)
-		)
+		local r =
+			vim.fn.system(string.format("curl -sf --max-time 1 http://%s:%d/json/version 2>/dev/null", windows_host, relay_port))
 		return r ~= "" and r:match("Browser") ~= nil
 	end
 
@@ -771,10 +768,7 @@ Start-Process "$env:TEMP\arc-debug.lnk"
 		end
 
 		if vim.fn.filereadable(arc_wsl) == 0 then
-			vim.notify(
-				"[DAP] Arc not found.\nResolved path: " .. arc_wsl .. "\nCheck Arc installation.",
-				vim.log.levels.ERROR
-			)
+			vim.notify("[DAP] Arc not found.\nResolved path: " .. arc_wsl .. "\nCheck Arc installation.", vim.log.levels.ERROR)
 			return
 		end
 
@@ -902,8 +896,7 @@ local function workspace_packages(workspace_root, current_pkg_root)
 	if vim.fn.filereadable(root_pkg) == 1 then
 		local ok, p = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(root_pkg), "\n"))
 		if ok and p and p.workspaces then
-			local ws = (type(p.workspaces) == "table" and not p.workspaces[1]) and (p.workspaces.packages or {})
-				or p.workspaces
+			local ws = (type(p.workspaces) == "table" and not p.workspaces[1]) and (p.workspaces.packages or {}) or p.workspaces
 			expand(ws)
 		end
 	end

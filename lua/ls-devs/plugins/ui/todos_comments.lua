@@ -2,7 +2,7 @@
 -- Purpose : Highlights and searches TODO/FIXME/HACK/NOTE/WARN/PERF/TEST
 --           comment keywords across the project.
 -- Trigger : BufReadPost
--- Note    : <leader>T=TodoTrouble (list), <leader>TT=Snacks.picker.todo_comments (search).
+-- Note    : <leader>vT=TodoTrouble (list), <leader>TT=Snacks.picker.todo_comments (search).
 --           search="" suppresses the raw-regex badge; --regexp passes the exact pattern.
 -- ─────────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
@@ -13,7 +13,7 @@ return {
 	dependencies = { "plenary.nvim", lazy = true },
 	keys = {
 		{
-			"<leader>T",
+			"<leader>vT",
 			"<cmd>TodoTrouble<CR>",
 			desc = "TodoTrouble",
 			silent = true,

@@ -25,6 +25,7 @@ return {
 			callback = function()
 				local o = { noremap = true, silent = true, buffer = 0 }
 				vim.keymap.set("t", "<C-x>", [[<Cmd>q!<CR>]], o)
+				vim.keymap.set("t", "<C-q>", [[<Cmd>hide<CR>]], o)
 				vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], o)
 				vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], o)
 				vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]], o)

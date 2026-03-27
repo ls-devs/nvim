@@ -1,11 +1,32 @@
 -- ── overseer ─────────────────────────────────────────────────────────────
 -- Purpose : Task runner / build system overlay for Neovim
 -- Trigger : cmd = OverseerRun / OverseerToggle / OverseerBuild / OverseerOpen / OverseerInfo
--- Note    : Task form and output windows use rounded borders (toggleterm-style)
+-- Note    : Task form, output and help windows all use rounded borders.
+--           The help popup (?) has no border config option so show_help is
+--           monkey-patched to inject border = "rounded" into nvim_open_win.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
 	"stevearc/overseer.nvim",
+	config = function(_, opts)
+		require("overseer").setup(opts)
+
+		-- Patch the help popup — hardcoded in keymap_util with no border option
+		local keymap_util = require("overseer.keymap_util")
+		local orig = keymap_util.show_help
+		keymap_util.show_help = function(maps)
+			local orig_open = vim.api.nvim_open_win
+			---@diagnostic disable-next-line: duplicate-set-field
+			vim.api.nvim_open_win = function(buf, enter, cfg)
+				if cfg.relative == "editor" and cfg.style == "minimal" then
+					cfg.border = "rounded"
+				end
+				return orig_open(buf, enter, cfg)
+			end
+			orig(maps)
+			vim.api.nvim_open_win = orig_open
+		end
+	end,
 	opts = {
 		form = {
 			border = "rounded",
