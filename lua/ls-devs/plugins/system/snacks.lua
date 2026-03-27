@@ -304,13 +304,13 @@ return {
 		require("snacks").setup(opts)
 
 		-- Toggle keymaps — :map() wires which-key icon/color integration.
-		-- <leader>u prefix; avoids uo/uc/un/ut (taken by debuggers).
+		-- <leader>u prefix; avoids uo/uc/un/ut/ui/us (taken by debuggers).
 		Snacks.toggle.diagnostics():map("<leader>ud")
 		Snacks.toggle.line_number():map("<leader>ul")
-		Snacks.toggle.inlay_hints():map("<leader>ui")
+		Snacks.toggle.inlay_hints():map("<leader>uI")
 		Snacks.toggle.treesitter():map("<leader>uT")
 		Snacks.toggle.words():map("<leader>uw")
-		Snacks.toggle.scroll():map("<leader>us")
+		Snacks.toggle.scroll():map("<leader>uS")
 		Snacks.toggle.indent():map("<leader>ug")
 	end,
 

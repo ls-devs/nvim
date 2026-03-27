@@ -15,8 +15,11 @@ return {
 				poll_rate = 0,
 				-- Hide spinners while typing to avoid distracting visual noise
 				suppress_on_insert = true,
-				-- Skip tasks that completed before fidget attached to the LSP client
-				ignore_done_already = true,
+				-- Allow showing brief tasks that completed before fidget first
+				-- polled them. vtsls sends begin+end in quick bursts; with
+				-- ignore_done_already=true those "already done" end messages
+				-- are silently dropped.
+				ignore_done_already = false,
 				ignore_empty_message = true,
 
 				-- Returns the client name so the group title persists after the client disconnects
@@ -85,7 +88,9 @@ return {
 				},
 
 				lsp = {
-					progress_ringbuf_size = 0, -- unlimited ring buffer for LSP progress messages
+					-- 512-entry ring buffer — vtsls sends progress in bursts;
+					-- the default size risks dropping messages before poll_once() reads them.
+					progress_ringbuf_size = 512,
 					log_handler = false,
 				},
 			},

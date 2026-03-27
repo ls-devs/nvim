@@ -11,6 +11,7 @@ return {
 		{
 			"gJ",
 			function()
+				pcall(vim.treesitter.start)
 				require("treesj").join()
 			end,
 			desc = "TreeSJ Join",
@@ -20,6 +21,7 @@ return {
 		{
 			"gS",
 			function()
+				pcall(vim.treesitter.start)
 				require("treesj").split()
 			end,
 			desc = "TreeSJ Split",
@@ -29,6 +31,7 @@ return {
 		{
 			"gM",
 			function()
+				pcall(vim.treesitter.start)
 				require("treesj").toggle()
 			end,
 			desc = "TreeSJ Toggle",

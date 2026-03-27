@@ -351,14 +351,14 @@ return {
 			function()
 				require("dapui").toggle()
 			end,
-			desc = "DapUI Toggle",
+			desc = "DAP UI Toggle",
 			noremap = true,
 			silent = true,
 		},
 		{
 			"<leader>uc",
 			"<cmd>lua require('dapui').close()<CR>",
-			desc = "DapUI Close",
+			desc = "DAP UI Close",
 			noremap = true,
 			silent = true,
 		},
@@ -366,14 +366,14 @@ return {
 		{
 			"<leader>un",
 			":DapContinue<CR>",
-			desc = "DapContinue",
+			desc = "DAP Continue",
 			noremap = true,
 			silent = true,
 		},
 		{
 			"<leader>ut",
 			":DapTerminate<CR>",
-			desc = "DapTerminate",
+			desc = "DAP Terminate",
 			noremap = true,
 			silent = true,
 		},
@@ -381,7 +381,7 @@ return {
 		{
 			"<leader>bb",
 			":DapToggleBreakpoint<CR>",
-			desc = "DapToggleBreakpoint",
+			desc = "DAP Toggle Breakpoint",
 			noremap = true,
 			silent = true,
 		},

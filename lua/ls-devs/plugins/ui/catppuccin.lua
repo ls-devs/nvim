@@ -108,6 +108,12 @@ return {
 					BlinkCmpKindOperator = { fg = "#ffffff", bg = colors.sky },
 					BlinkCmpKindTypeParameter = { fg = "#ffffff", bg = colors.teal },
 					BlinkCmpKindCopilot = { fg = "#ffffff", bg = colors.green },
+					-- CodeDiff (no official catppuccin integration — manual port of diffview style)
+					-- Line-level groups are wired to DiffAdd/DiffDelete (handled by catppuccin base).
+					-- Only the three self-owned groups need explicit overrides.
+					CodeDiffFiller = { fg = colors.overlay0 }, -- ╱╱╱ alignment filler
+					CodeDiffLineMove = { bg = colors.surface1 }, -- moved-block background
+					CodeDiffMoveTo = { fg = colors.sky }, -- move destination sign
 					-- Neo-tree
 					NeoTreeWinSeparator = { fg = colors.blue, bg = colors.none },
 					SnacksPickerBorder = { fg = colors.blue },
@@ -158,16 +164,9 @@ return {
 					LazyH1 = { bold = true, fg = colors.base, bg = colors.peach },
 					LazyH2 = { fg = colors.blue, bold = true },
 					LazySpecial = { fg = colors.flamingo, bold = true },
-					-- Overseer
-					OverseerTaskBorder = { fg = colors.blue },
-					OverseerTask = { fg = colors.blue },
-					OverseerField = { fg = colors.green },
-					OverseerComponent = { fg = colors.yellow },
-					OverseerOutput = { fg = colors.text },
-					OverseerFAILURE = { fg = colors.red },
-					OverseerSUCCESS = { fg = colors.green },
-					OverseerRUNNING = { fg = colors.yellow },
-					OverseerCANCELED = { fg = colors.overlay1 },
+					-- Overseer (integration handles most groups; only override what differs)
+					OverseerTaskBorder = { fg = colors.blue }, -- integration uses sky
+					OverseerCANCELED = { fg = colors.overlay1 }, -- integration uses overlay2
 					-- Mason
 					MasonHeader = { fg = colors.base, bg = colors.peach },
 					MasonHeaderSecondary = { fg = colors.base, bg = colors.pink },
@@ -198,7 +197,6 @@ return {
 			integrations = {
 				snacks = true,
 				blink_cmp = true,
-				diffview = true,
 				dap_ui = true,
 				dap = true,
 				fidget = true,
@@ -220,6 +218,10 @@ return {
 				markview = true,
 				grug_far = true,
 				which_key = true,
+				ufo = true,
+				overseer = true,
+				copilot_vim = true,
+				dadbod_ui = true,
 				mini = {
 					enabled = true,
 				},

@@ -8,9 +8,10 @@ return {
 	event = "LspAttach",
 	opts = {
 		lightbulb = {
-			-- Code-action lightbulb is disabled; use <leader>ca explicitly instead
-			enable = false,
+			enable = true,
 			enable_in_insert = false,
+			sign = false,
+			virtual_text = true,
 		},
 		symbol_in_winbar = {
 			-- Winbar breadcrumb is off; enabled per-project if needed

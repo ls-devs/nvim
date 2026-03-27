@@ -36,9 +36,9 @@ return {
 			noremap = true,
 			silent = true,
 		},
-		-- <leader>rn — jump to next request in file
+		-- <leader>rj — jump to next request in file
 		{
-			"<leader>rn",
+			"<leader>rj",
 			function()
 				require("kulala").jump_next()
 			end,

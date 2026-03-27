@@ -151,6 +151,7 @@ local options = {
 	smartindent = true,
 	splitbelow = true,
 	splitright = true,
+	equalalways = false, -- don't auto-equalize window sizes on split/close (codediff manages its own layout)
 	swapfile = false,
 	termguicolors = true,
 	undofile = true,

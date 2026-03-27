@@ -71,7 +71,6 @@ return {
 			"nvim-web-devicons",
 			"lualine.nvim",
 			"nvim-various-textobjs",
-			"diffview.nvim",
 			"statuscol.nvim",
 			"neotab.nvim",
 			"nvim-ufo",

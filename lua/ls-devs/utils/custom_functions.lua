@@ -2,7 +2,7 @@
 -- ── utils/custom_functions ───────────────────────────────────────────────
 -- Purpose : Shared utility functions used across plugin specs and keymaps.
 -- Trigger : Required on-demand by plugin configs (not loaded at startup)
--- Provides: HelpGrep, CustomHover, OpenURLs, DiffviewToggle, OrigamiHLFolds,
+-- Provides: HelpGrep, CustomHover, OpenURLs, OrigamiHLFolds,
 --           GhSwitch, KeymapsList, AutocmdsList, CommandsList, HighlightsList,
 --           DapChromeDebug
 -- ─────────────────────────────────────────────────────────────────────────
@@ -49,19 +49,6 @@ M.OpenURLs = function(url)
 	end
 	local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, url)
 	vim.fn.system(openCommand)
-end
-
---- Toggles diffview.nvim: opens a Diffview if none is currently active,
---- or closes the current one. Uses diffview's internal library to detect an open view.
----@return nil
-M.DiffviewToggle = function()
-	local lib = require("diffview.lib")
-	local view = lib.get_current_view()
-	if view then
-		vim.cmd(":DiffviewClose")
-	else
-		vim.cmd(":DiffviewOpen")
-	end
 end
 
 --- Peek a folded line under the cursor (UFO) or show LSP hover via Lspsaga.

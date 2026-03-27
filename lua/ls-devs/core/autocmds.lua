@@ -77,6 +77,9 @@ vim.api.nvim_create_autocmd("FileType", {
 			"dbout",
 			"lazy",
 			"codecompanion_cli",
+			"codediff-explorer",
+			"codediff-history",
+			"codediff-help",
 		}
 		vim.b.focus_disable = vim.tbl_contains(ignore_filetypes, vim.bo.filetype)
 	end,
@@ -89,21 +92,29 @@ vim.api.nvim_create_autocmd("FileType", {
 -- twice ("prints the same thing multiple times"). Disabling globally via
 -- vim.g.focus_disable before focus.nvim's own WinEnter handler runs prevents
 -- any resize from happening when the CLI is open.
+-- Also disables when CodeDiff is open so both diff panes stay equal width.
+-- codediff.nvim marks its diff windows with vim.w[win].codediff_restore;
+-- checking this on every WinEnter is immune to CodeDiffOpen/Close timing races
+-- (CodeDiffClose fires during file switches too, not just on full close).
 vim.api.nvim_create_autocmd("WinEnter", {
 	group = augroup,
 	pattern = "*",
 	callback = function()
 		local has_cli = false
+		local has_codediff = false
 		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
 			local buf = vim.api.nvim_win_get_buf(win)
 			if vim.bo[buf].filetype == "codecompanion_cli" then
 				has_cli = true
 				break
 			end
+			if vim.w[win].codediff_restore ~= nil then
+				has_codediff = true
+			end
 		end
-		vim.g.focus_disable = has_cli
+		vim.g.focus_disable = has_cli or has_codediff
 	end,
-	desc = "Disable focus autoresize globally when CodeCompanion CLI is visible",
+	desc = "Disable focus autoresize when CodeCompanion CLI or CodeDiff is visible",
 })
 
 -- Re-enable focus.nvim when the CLI window is explicitly closed (WinEnter won't
@@ -118,6 +129,26 @@ vim.api.nvim_create_autocmd("WinClosed", {
 		end
 	end,
 	desc = "Re-enable focus autoresize when CodeCompanion CLI closes",
+})
+
+-- Fully disable focus.nvim while codediff is open so diff panes stay equal.
+-- CodeDiffClose also fires on file switches, so re-enable only when no other
+-- disable source (codecompanion_cli) is also active.
+vim.api.nvim_create_autocmd("User", {
+	group = augroup,
+	pattern = "CodeDiffClose",
+	callback = function()
+		local has_cli = false
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+			local buf = vim.api.nvim_win_get_buf(win)
+			if vim.bo[buf].filetype == "codecompanion_cli" then
+				has_cli = true
+				break
+			end
+		end
+		vim.g.focus_disable = has_cli
+	end,
+	desc = "Re-enable focus autoresize when CodeDiff fully closes",
 })
 
 -- Buffer-local keymaps for the CLI terminal buffer.
@@ -220,14 +251,19 @@ vim.api.nvim_create_autocmd("User", {
 	desc = "Re-enable UFO after session restore",
 })
 
--- Restore cursor to the last-visited position when reopening a buffer.
--- The `"` mark is set automatically by Vim on every BufLeave.
-vim.api.nvim_create_autocmd("BufWinEnter", {
+-- Restore cursor to the last-visited position when a buffer is first read.
+-- BufReadPost fires once when file content is loaded from disk, so it won't
+-- jump the cursor every time the window is entered or a buffer is switched.
+vim.api.nvim_create_autocmd("BufReadPost", {
 	group = augroup,
-	pattern = "*",
-	callback = function()
-		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local lcount = vim.api.nvim_buf_line_count(0)
+	callback = function(ev)
+		-- Skip special/non-file buffers where restoring makes no sense
+		local bt = vim.bo[ev.buf].buftype
+		if bt ~= "" then
+			return
+		end
+		local mark = vim.api.nvim_buf_get_mark(ev.buf, '"')
+		local lcount = vim.api.nvim_buf_line_count(ev.buf)
 		if mark[1] > 0 and mark[1] <= lcount then
 			pcall(vim.api.nvim_win_set_cursor, 0, mark)
 		end

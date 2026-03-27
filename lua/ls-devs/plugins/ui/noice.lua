@@ -87,7 +87,13 @@ return {
 		notify = {
 			enabled = false,
 		},
-		routes = {},
+		routes = {
+			-- Suppress LSP "No information available" noise from hover/signature
+			{
+				filter = { find = "No information available" },
+				opts = { skip = true },
+			},
+		},
 		messages = {
 			enabled = true,
 			view_search = false, -- shown as inline extmark instead (see config below)
@@ -185,13 +191,5 @@ return {
 		-- live-preview rename where every occurrence updates as you type.
 		{ "smjonas/inc-rename.nvim", lazy = true, opts = {} },
 	},
-	keys = {
-		{
-			"<leader>nd",
-			"<cmd>NoiceDismiss<CR>",
-			desc = "Noice Dismiss Messages",
-			noremap = true,
-			silent = true,
-		},
-	},
+	keys = {},
 }

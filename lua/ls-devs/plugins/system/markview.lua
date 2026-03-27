@@ -9,7 +9,7 @@ return {
 	ft = { "markdown", "markdown_inline", "html", "norg" },
 	keys = {
 		{
-			"<leader>mv",
+			"<leader>um",
 			"<cmd>Markview Toggle<CR>",
 			desc = "Markview Toggle",
 			noremap = true,

@@ -21,7 +21,7 @@ return {
 				"eslint",
 				"sonarlint-language-server",
 				"vim-language-server",
-				"vtsls",
+				"typescript-language-server",
 				"vue-language-server",
 				"html",
 				"lemminx",
@@ -96,9 +96,9 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_enable = {
-				-- ts_ls is excluded to prevent a conflicting second TS client
-				-- if the user already has it installed from before the vtsls migration.
-				exclude = { "ts_ls" },
+				-- typescript-tools manages its own LSP client directly via tsserver;
+				-- neither ts_ls nor vtsls should attach alongside it.
+				exclude = { "ts_ls", "vtsls" },
 			},
 		},
 		dependencies = {
@@ -131,7 +131,7 @@ return {
 					-- vim.lsp.log.set_level("OFF")
 					require("lspconfig.ui.windows").default_options.border = "rounded"
 					vim.diagnostic.config({
-						-- Virtual text is off; lspsaga and diagflow handle diagnostic display
+						-- Virtual text is off; lspsaga and tiny-inline-diagnostic handle diagnostic display
 						virtual_text = false,
 						-- Avoid diagnostic flicker while typing
 						update_in_insert = false,

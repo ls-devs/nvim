@@ -20,6 +20,27 @@ return {
 	-- Magnifying glass (loupe) icon shown left of the search input.
 	prompt = "  ",
 	actions = {
+		-- Override built-in hscroll (uses zh/zl = 1 col) with 15-col jump
+		---@param picker snacks.Picker
+		preview_scroll_right = function(picker)
+			local win = picker.preview.win
+			if not win:valid() then
+				return
+			end
+			vim.api.nvim_win_call(win.win, function()
+				vim.cmd("normal! 15zl")
+			end)
+		end,
+		---@param picker snacks.Picker
+		preview_scroll_left = function(picker)
+			local win = picker.preview.win
+			if not win:valid() then
+				return
+			end
+			vim.api.nvim_win_call(win.win, function()
+				vim.cmd("normal! 15zh")
+			end)
+		end,
 		---@param picker snacks.Picker
 		preview_scroll_down_hpreserve = function(picker)
 			local win = picker.preview.win

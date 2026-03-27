@@ -145,6 +145,6 @@ vim.keymap.set("n", "<leader>cl", function()
 	end
 end, { noremap = true, silent = true, desc = "Toggle CodeCompanion CLI" })
 
-vim.keymap.set({ "n", "v" }, "<leader>ca", function()
+vim.keymap.set({ "n", "v" }, "<leader>cq", function()
 	vim.cmd("CodeCompanionCLI Ask")
 end, { noremap = true, silent = true, desc = "CodeCompanion CLI Ask" })

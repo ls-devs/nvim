@@ -1,8 +1,9 @@
 -- ── gitsigns.nvim ─────────────────────────────────────────────────────────
 -- Purpose : Git decorations in the sign column + inline EOL blame
 -- Trigger : event = { "BufReadPost", "BufNewFile" }
--- Keymaps : <leader>gs  stage hunk   <leader>gu  reset (unstage) hunk
---           <leader>gp  preview hunk  <leader>gB  full blame popup
+-- Keymaps : <leader>gws  stage hunk   <leader>gwu  reset (unstage) hunk
+--           <leader>gwp  preview hunk  <leader>gwB  full blame popup
+--           <leader>gwb  toggle blame  <leader>gwd  toggle word diff
 --           ih / ah     hunk text object (o/x mode)
 -- ──────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
@@ -55,7 +56,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>gb",
+			"<leader>gwb",
 			function()
 				require("gitsigns").toggle_current_line_blame()
 			end,
@@ -73,7 +74,7 @@ return {
 			silent = true,
 		},
 		{
-			"<leader>gs",
+			"<leader>gws",
 			function()
 				require("gitsigns").stage_hunk()
 			end,
@@ -82,7 +83,7 @@ return {
 			silent = true,
 		},
 		{
-			"<leader>gu",
+			"<leader>gwu",
 			function()
 				require("gitsigns").reset_hunk()
 			end,
@@ -91,7 +92,7 @@ return {
 			silent = true,
 		},
 		{
-			"<leader>gp",
+			"<leader>gwp",
 			function()
 				require("gitsigns").preview_hunk()
 			end,
@@ -100,7 +101,7 @@ return {
 			silent = true,
 		},
 		{
-			"<leader>gB",
+			"<leader>gwB",
 			function()
 				require("gitsigns").blame_line({ full = true })
 			end,

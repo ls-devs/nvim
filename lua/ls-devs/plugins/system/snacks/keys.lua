@@ -133,11 +133,11 @@ return {
 		desc = "Git Status",
 	},
 	{
-		"<leader>gc",
+		"<leader>gL",
 		function()
 			Snacks.picker.git_log()
 		end,
-		desc = "Git Commits",
+		desc = "Git Log",
 	},
 	{
 		"<leader>gb",
