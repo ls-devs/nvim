@@ -25,7 +25,9 @@ return {
 			yaml = { "yamllint" },
 			dockerfile = { "hadolint" },
 			gitcommit = { "gitlint" },
-			sql = { "sqlfluff" },
+			-- sqlfluff removed: sql-formatter (conform) handles all style/layout
+			-- rules on save, and sqlls (LSP) provides syntax checking. sqlfluff
+			-- was producing redundant noise (uppercase keywords, linebreak rules).
 			sh = { "shellcheck" },
 			ps1 = { "psscriptanalyzer" },
 			psm1 = { "psscriptanalyzer" },
@@ -48,14 +50,6 @@ return {
 		local M = {}
 
 		local nvim_lint = require("lint")
-
-		-- sqlfluff: inject --dialect ansi as default so it works without a .sqlfluff project config.
-		-- Projects that have a .sqlfluff file can override the dialect there.
-		local sqlfluff = nvim_lint.linters.sqlfluff
-		if sqlfluff then
-			local base_args = vim.list_extend({ "--dialect", "ansi" }, sqlfluff.args or {})
-			nvim_lint.linters.sqlfluff = vim.tbl_deep_extend("force", sqlfluff, { args = base_args })
-		end
 
 		if opts.linters then
 			for name, linter in pairs(opts.linters) do

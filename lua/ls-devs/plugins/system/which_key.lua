@@ -119,6 +119,9 @@ return {
 				{ pattern = "repl", icon = "󰘞", color = "cyan" },
 				-- ── AI / CodeCompanion ─────────────────────────────────────
 				{ pattern = "codecompanion", icon = "󰚩", color = "green" },
+				-- ── Database / Dadbod ─────────────────────────────────────
+				{ pattern = "dbui", icon = "󰆼", color = "cyan" },
+				{ pattern = "database", icon = "󰆼", color = "cyan" },
 				-- ── HTTP / Kulala ──────────────────────────────────────────
 				{ pattern = "kulala run", icon = "󰖟", color = "blue" },
 				{ pattern = "kulala", icon = "󰖟", color = "azure" },
@@ -180,6 +183,30 @@ return {
 			padding = { 1, 2 },
 			width = { min = 30, max = 0.4 },
 		},
+		-- Suppress which-key in UI panels / tool windows where it adds noise
+		disable = {
+			ft = {
+				"neo-tree",
+				"OverseerList",
+				"OverseerForm",
+				"OverseerOutput",
+				"dapui_hover",
+				"dapui_scopes",
+				"dapui_console",
+				"dapui_breakpoints",
+				"dapui_stacks",
+				"dapui_watches",
+				"neotest-output",
+				"neotest-summary",
+				"neotest-output-panel",
+				"trouble",
+				"lazy",
+				"mason",
+				"codediff-explorer",
+				"codediff-history",
+			},
+			bt = { "terminal" },
+		},
 		-- Group labels derived from every keymap in this config.
 		-- No hardcoded glyphs — mini.icons (lazy=false) resolves icons automatically.
 		spec = {
@@ -209,6 +236,7 @@ return {
 			{ "<leader>t", group = "Tabs", icon = { icon = "󰓩", color = "azure" } },
 			{ "<leader>tm", group = "Tab Move", icon = { icon = "󰒺", color = "azure" } },
 			{ "<leader>O", group = "Octo", icon = { icon = "󰊤", color = "grey" } },
+			{ "<leader>D", group = "Database", icon = { icon = "󰆼", color = "cyan" } },
 			{ "<leader>x", group = "Utils/Execute", icon = { icon = "󰒃", color = "green" } },
 			-- ── Navigation prefixes ───────────────────────────────────────
 			{ "]", group = "Next", icon = { icon = "󰜴", color = "green" } },

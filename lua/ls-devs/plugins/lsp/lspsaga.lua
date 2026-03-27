@@ -8,10 +8,7 @@ return {
 	event = "LspAttach",
 	opts = {
 		lightbulb = {
-			enable = true,
-			enable_in_insert = false,
-			sign = false,
-			virtual_text = true,
+			enable = false,
 		},
 		symbol_in_winbar = {
 			-- Winbar breadcrumb is off; enabled per-project if needed
@@ -205,6 +202,5 @@ return {
 			silent = true,
 			noremap = true,
 		},
-
 	},
 }

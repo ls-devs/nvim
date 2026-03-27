@@ -43,7 +43,7 @@ return {
 			yaml = { "yq" },
 			lua = { "stylua" },
 			cs = { "csharpier" },
-			sql = { "sql-formatter" },
+			sql = { "sql_formatter" },
 			sh = { "shellharden" },
 			-- dockerfile-language-server provides formatting via LSP fallback
 			dockerfile = {},
@@ -135,7 +135,7 @@ return {
 					return {}
 				end,
 			},
-			["sql-formatter"] = {
+			["sql_formatter"] = {
 				prepend_args = function(_, ctx)
 					if
 						#vim.fs.find({ ".sql-formatter.json" }, { path = ctx.dirname, upward = true, type = "file" })

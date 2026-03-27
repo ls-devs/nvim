@@ -16,6 +16,15 @@ return {
 	config = function()
 		require("tiny-inline-diagnostic").setup({
 			preset = "modern",
+			-- Replace the default rounded nerd-font caps (U+E0B6 / U+E0B4) with
+			-- empty strings: the background highlight alone defines the container,
+			-- avoiding both rounded caps and the half-block gap of block chars.
+			signs = {
+				left = "",
+				right = "",
+				vertical = " │",
+				vertical_end = " └",
+			},
 			-- Keep cursorline transparent so the cursor-line bg shows through
 			transparent_cursorline = true,
 			hi = {

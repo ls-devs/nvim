@@ -19,19 +19,24 @@ return {
 	-- ── init ─────────────────────────────────────────────────────────────
 	-- Runs before setup(). Wires autocmds that must fire before VimEnter.
 	init = function()
-		-- Terminal mode keymaps — mirrors old toggleterm set_terminal_keymaps().
-		vim.api.nvim_create_autocmd("TermOpen", {
-			pattern = "term://*",
-			callback = function()
-				local o = { noremap = true, silent = true, buffer = 0 }
-				vim.keymap.set("t", "<C-x>", [[<Cmd>q!<CR>]], o)
-				vim.keymap.set("t", "<C-q>", [[<Cmd>hide<CR>]], o)
-				vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], o)
-				vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], o)
-				vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]], o)
-				vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]], o)
-				vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], o)
-			end,
+		-- Terminal mode keymaps — registered on both TermOpen and BufWinEnter
+		-- (BufWinEnter catches snacks float terminals whose buffer names may
+		-- not always match "term://*" on the first TermOpen fire).
+		local function set_term_keymaps()
+			if vim.bo.buftype ~= "terminal" then
+				return
+			end
+			local o = { noremap = true, silent = true, buffer = 0 }
+			vim.keymap.set("t", "<C-x>", [[<Cmd>q!<CR>]], o)
+			vim.keymap.set("t", "<C-q>", [[<Cmd>hide<CR>]], o)
+			vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], o)
+			vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], o)
+			vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]], o)
+			vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]], o)
+			vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], o)
+		end
+		vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter" }, {
+			callback = set_term_keymaps,
 		})
 
 		-- Dashboard: hide statusline/tabline while visible; guard against
@@ -151,10 +156,21 @@ return {
 			win = {
 				position = "float",
 				border = "rounded",
-				width = 0.65,
-				height = 0.4,
+				width = 0.72,
+				height = 0.82,
 				title_pos = "left",
-				wo = { winblend = 0 },
+				wo = { winblend = 0, statuscolumn = "  " },
+				-- Override snacks' default double-escape (200ms timer) with single Esc
+				keys = {
+					term_normal = {
+						"<esc>",
+						function()
+							vim.cmd("stopinsert")
+						end,
+						mode = "t",
+						desc = "Exit terminal mode",
+					},
+				},
 			},
 		},
 

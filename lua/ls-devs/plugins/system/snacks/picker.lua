@@ -184,6 +184,8 @@ return {
 	sources = {
 		select = {
 			preview = false,
+			hidden = { "preview" },
+			layout = { preset = "select" },
 		},
 
 		-- ── marks: prominent mark label + file + line content ─────────────

@@ -121,6 +121,11 @@ return {
 			"S",
 			mode = { "n", "x", "o" },
 			function()
+				-- Guard: empty buffers have no treesitter nodes → nvim_win_set_cursor crash
+				local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+				if #lines == 0 or (#lines == 1 and lines[1] == "") then
+					return
+				end
 				require("flash").treesitter()
 			end,
 			desc = "Flash treesitter",

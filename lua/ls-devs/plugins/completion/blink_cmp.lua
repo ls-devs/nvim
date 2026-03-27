@@ -282,6 +282,8 @@ return {
 					return { "git", "buffer" }
 				elseif ft == "css" or ft == "scss" then
 					return { "lsp", "path", "snippets", "copilot", "buffer", "dotenv", "sass-variables" }
+				elseif ft == "sql" or ft == "mysql" or ft == "plsql" then
+					return { "dadbod", "lsp", "path", "snippets", "buffer" }
 				elseif ft == "codecompanion" or ft == "codecompanion_input" then
 					-- Variables like #buffer/#diagnostic come from LSP; skip snippets so they
 					-- don't appear above context variables in the completion menu.
@@ -339,6 +341,16 @@ return {
 					module = "blink-cmp-git",
 					score_offset = 80,
 					opts = {},
+				},
+				-- vim-dadbod-completion — native blink.cmp source (see dadbod_source.lua).
+				-- Using a native source instead of blink.compat because blink.compat sets
+				-- offset=cursor.col when the cmp source lacks get_keyword_pattern, making
+				-- re-requests always receive input="" → completions vanish while typing.
+				dadbod = {
+					name = "dadbod",
+					module = "ls-devs.plugins.completion.completion_modules.dadbod_source",
+					score_offset = 85,
+					min_keyword_length = 0,
 				},
 			},
 		},
