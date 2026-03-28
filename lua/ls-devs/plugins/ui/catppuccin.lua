@@ -191,6 +191,10 @@ return {
 					SnacksDashboardFooter = { fg = colors.yellow },
 					SnacksDashboardTitle = { fg = colors.blue, style = { "bold" } },
 					SnacksDashboardSpecial = { fg = colors.peach },
+					-- Snacks indent scope — bright line showing current block scope
+					SnacksIndentScope = { fg = colors.text },
+					-- Markview code block background — lighter than default (surface0 instead of computed dark mix)
+					MarkviewCode = { bg = colors.surface0 },
 				}
 			end,
 			-- Enable built-in catppuccin highlight patches for each supported plugin
