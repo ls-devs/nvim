@@ -8,6 +8,45 @@
 -- ─────────────────────────────────────────────────────────────────────────
 ---@class LsDevsUtils
 local M = {}
+
+-- ── Snacks picker item types ─────────────────────────────────────────────
+---@alias SnacksPickerHighlight {[1]: string, [2]: string|nil}
+
+---@class SnacksPickerKeymapItem
+---@field idx integer
+---@field score integer
+---@field text string
+---@field _mode string
+---@field _lhs string
+---@field _desc string
+---@field _local boolean
+
+---@class SnacksPickerAutocmdItem
+---@field idx integer
+---@field score integer
+---@field text string
+---@field _event string
+---@field _pattern string
+---@field _group string
+---@field _desc string
+---@field _is_cmd boolean
+---@field _buflocal boolean
+
+---@class SnacksPickerCommandItem
+---@field idx integer
+---@field score integer
+---@field text string
+---@field _name string
+---@field _nargs string
+---@field _desc string
+---@field _def string
+---@field _local boolean
+
+---@class SnacksPickerHighlightItem
+---@field idx integer
+---@field score integer
+---@field text string
+---@field _name string
 --- Opens a `:helpgrep` prompt and displays matching help topics in a new tab.
 --- The quickfix list is opened automatically when results are found.
 --- Returns silently if the user cancels or provides an empty input.
@@ -298,8 +337,8 @@ M.KeymapsList = function()
 				{ win = "input", height = 1, border = "top" },
 			},
 		},
-		---@param item snacks.picker.Item
-		---@return snacks.picker.Highlight[]
+		---@param item SnacksPickerKeymapItem
+		---@return SnacksPickerHighlight[]
 		format = function(item)
 			local a = Snacks.picker.util.align
 			local lhs = Snacks.util.normkey(item._lhs)
@@ -376,8 +415,8 @@ M.AutocmdsList = function()
 				{ win = "input", height = 1, border = "top" },
 			},
 		},
-		---@param item snacks.picker.Item
-		---@return snacks.picker.Highlight[]
+		---@param item SnacksPickerAutocmdItem
+		---@return SnacksPickerHighlight[]
 		format = function(item)
 			local a = Snacks.picker.util.align
 			return {
@@ -460,8 +499,8 @@ M.CommandsList = function()
 				{ win = "input", height = 1, border = "top" },
 			},
 		},
-		---@param item snacks.picker.Item
-		---@return snacks.picker.Highlight[]
+		---@param item SnacksPickerCommandItem
+		---@return SnacksPickerHighlight[]
 		format = function(item)
 			local a = Snacks.picker.util.align
 			local n = item._nargs
@@ -511,8 +550,8 @@ M.HighlightsList = function()
 				{ win = "input", height = 1, border = "top" },
 			},
 		},
-		---@param item snacks.picker.Item
-		---@return snacks.picker.Highlight[]
+		---@param item SnacksPickerHighlightItem
+		---@return SnacksPickerHighlight[]
 		format = function(item)
 			-- Render name with its own hl group — instant visual preview of the style
 			return { { item._name, item._name } }
@@ -885,7 +924,7 @@ local function workspace_packages(workspace_root, current_pkg_root)
 
 	local function expand(patterns)
 		for _, pat in ipairs(patterns) do
-			for _, d in ipairs(vim.fn.glob(workspace_root .. "/" .. pat, 0, 1)) do
+			for _, d in ipairs(vim.fn.glob(workspace_root .. "/" .. pat, false, true)) do
 				add(d)
 			end
 		end
@@ -926,7 +965,7 @@ local function workspace_packages(workspace_root, current_pkg_root)
 	-- Generic shallow scan: direct children of workspace root with package.json.
 	-- Covers non-standard monorepos where packages live directly at the repo root.
 	if workspace_root ~= current_pkg_root then
-		for _, d in ipairs(vim.fn.glob(workspace_root .. "/*", 0, 1)) do
+		for _, d in ipairs(vim.fn.glob(workspace_root .. "/*", false, true)) do
 			if
 				vim.fn.isdirectory(d) == 1
 				and not d:match("[/\\]node_modules$")
@@ -986,6 +1025,7 @@ local FRONTEND_PATTERNS = {
 -- Script names treated as "server" processes when no cmd pattern matches.
 -- These are run as plain background jobs (no --inspect-brk) so they still
 -- appear in the picker and can act as the backend half of Full Stack.
+---@diagnostic disable-next-line: unused-local
 local SERVER_NAMES = {
 	"^start$",
 	"^serve$",
