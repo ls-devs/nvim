@@ -152,15 +152,6 @@ return {
 						return
 					end
 
-					-- treesitter-context window: nofile buffer in a floating win marked
-					-- with vim.w[win].context. Attach markview and let it render there.
-					for _, win in ipairs(vim.fn.win_findbuf(ev.buf)) do
-						if vim.w[win].context then
-							pcall(require("markview.actions").attach, ev.buf)
-							return
-						end
-					end
-
 					local name = vim.api.nvim_buf_get_name(ev.buf)
 					local is_real_file = name ~= "" and vim.fn.filereadable(name) == 1
 
@@ -185,29 +176,6 @@ return {
 					if not is_real_file then
 						pcall(require("markview.state").detach, ev.buf, true)
 						pcall(require("markview.actions").clear, ev.buf)
-					end
-				end)
-			end,
-		})
-
-		-- Re-render markview in treesitter-context window whenever the cursor
-		-- moves inside a real markdown buffer (context content changes each move).
-		vim.api.nvim_create_autocmd("CursorMoved", {
-			group = vim.api.nvim_create_augroup("markview_ctx_rerender", { clear = true }),
-			callback = function(ev)
-				if vim.bo[ev.buf].buftype ~= "" or vim.bo[ev.buf].filetype ~= "markdown" then
-					return
-				end
-				-- Defer so treesitter-context has written the new lines first.
-				vim.schedule(function()
-					local state = require("markview.state")
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						if vim.api.nvim_win_is_valid(win) and vim.w[win].context then
-							local ctx_buf = vim.api.nvim_win_get_buf(win)
-							if state.buf_attached(ctx_buf) then
-								pcall(require("markview.actions").render, ctx_buf)
-							end
-						end
 					end
 				end)
 			end,
