@@ -37,6 +37,14 @@ return {
 			winhighlight = false,
 		},
 	},
+	config = function(_, opts)
+		require("focus").setup(opts)
+		-- Start with autoresize disabled so window-switching doesn't resize unexpectedly.
+		-- Use <leader>wr (FocusToggle) to enable golden-ratio autoresize on demand.
+		-- Must be set AFTER setup() so the WinEnter autocmd is still registered
+		-- (autocmd.setup early-exits if focus_disable is already true at setup time).
+		vim.g.focus_disable = true
+	end,
 	keys = {
 		{
 			"<leader>wm",
