@@ -103,7 +103,7 @@ return {
 					end
 				end,
 				---@return boolean
-				should_attach = function(_, bufnr)
+				should_attach = function(bufnr, _)
 					if not vim.bo[bufnr].buflisted then
 						return false
 					end
