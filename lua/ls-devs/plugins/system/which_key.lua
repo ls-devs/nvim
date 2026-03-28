@@ -159,6 +159,13 @@ return {
 				{ pattern = "treewalker", icon = "󰙅", color = "blue" },
 				{ pattern = "multiple.*cursor", icon = "󰇀", color = "purple" },
 				{ pattern = "^mc ", icon = "󰇀", color = "purple" },
+				{ pattern = "^MC ", icon = "󰇀", color = "purple" },
+				{ pattern = "align cursor", icon = "󰉶", color = "purple" },
+				{ pattern = "sequence increment", icon = "󰐖", color = "purple" },
+				{ pattern = "sequence decrement", icon = "󰍴", color = "purple" },
+				{ pattern = "split cursor", icon = "󰇘", color = "purple" },
+				{ pattern = "match.*cursor", icon = "󰱼", color = "purple" },
+				{ pattern = "restore cursor", icon = "󰑖", color = "purple" },
 				{ pattern = "spider", icon = "󰸱", color = "cyan" },
 				{ pattern = "emmet", icon = "󰅴", color = "green" },
 				{ pattern = "move line", icon = "󰜸", color = "azure" },
@@ -167,7 +174,21 @@ return {
 				{ pattern = "select ", icon = "󰒉", color = "cyan" },
 				{ pattern = "ts repeat", icon = "󰑖", color = "blue" },
 				{ pattern = "executable", icon = "󰒃", color = "green" },
+				{ pattern = "make file", icon = "󰒃", color = "green" },
 				{ pattern = "quit all", icon = "󰗼", color = "red" },
+				{ pattern = "blink on yank", icon = "󰸱", color = "yellow" },
+				-- ── File / Dirs ────────────────────────────────────────────
+				{ pattern = "recent files", icon = "󱋡", color = "blue" },
+				{ pattern = "recent", icon = "󱋡", color = "blue" },
+				{ pattern = "file system", icon = "󰝰", color = "green" },
+				{ pattern = "auto.create.*dir", icon = "󱧃", color = "green" },
+				-- ── Quickfix / Loclist ─────────────────────────────────────
+				{ pattern = "location list", icon = "󰁨", color = "yellow" },
+				{ pattern = "loclist", icon = "󰁨", color = "yellow" },
+				-- ── Live Server ────────────────────────────────────────────
+				{ pattern = "live server", icon = "󰋗", color = "green" },
+				-- ── Mason ─────────────────────────────────────────────────
+				{ pattern = "^mason$", icon = "󱌣", color = "blue" },
 				-- ── Misc ───────────────────────────────────────────────────
 				{ pattern = "lazy$", icon = "󰒲", color = "purple" },
 				{ pattern = "octo", icon = "󰊤", color = "grey" },
