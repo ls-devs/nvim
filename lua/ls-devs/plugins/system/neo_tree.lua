@@ -295,7 +295,7 @@ return {
 					".env.mocked",
 					".env.development",
 					".env.integration",
-					".env.valdiation",
+					".env.validation",
 					".env.production",
 					".eslintrc.json",
 					".eslintrc.js",

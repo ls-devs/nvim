@@ -169,7 +169,7 @@ return {
 			-- Routes through CustomHover (handles edge cases) before falling
 			-- back to Lspsaga hover_doc
 			"K",
-			require("ls-devs.utils.custom_functions").CustomHover,
+			function() require("ls-devs.utils.custom_functions").CustomHover() end,
 			desc = "LSP Hover Doc",
 			silent = true,
 			noremap = true,

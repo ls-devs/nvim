@@ -774,7 +774,7 @@ return {
 								table.insert(urls, url)
 							end
 							if #urls == 0 then
-								if vim.fn.exists("Browse") then
+								if vim.fn.exists(":Browse") ~= 0 then
 									vim.cmd("Browse")
 								end
 								return

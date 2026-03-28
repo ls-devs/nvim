@@ -239,7 +239,7 @@ return {
 							---@param ctx table
 							---@return string
 							highlight = function(ctx)
-								return "CmpItemKind" .. ctx.kind
+								return "BlinkCmpKind" .. ctx.kind
 							end,
 						},
 					},
@@ -380,9 +380,14 @@ return {
 		-- Fix: intercept nvim_open_win to create blink windows hidden from birth,
 		-- and wrap docs.update_position to always hide→reposition→unhide atomically.
 		-- Re-entrancy guard prevents WinResized callbacks from nesting.
-		local win_mod = require("blink.cmp.lib.window")
-		local menu = require("blink.cmp.completion.windows.menu")
-		local docs = require("blink.cmp.completion.windows.documentation")
+		-- Guard: if blink renames its internal modules the requires below will fail;
+		-- in that case skip the patch so window creation still works normally.
+		local ok_win, win_mod = pcall(require, "blink.cmp.lib.window")
+		local ok_menu, menu = pcall(require, "blink.cmp.completion.windows.menu")
+		local ok_docs, docs = pcall(require, "blink.cmp.completion.windows.documentation")
+		if not (ok_win and ok_menu and ok_docs) then
+			return
+		end
 
 		local _blink_hiding_win = false
 		local orig_nvim_open_win = vim.api.nvim_open_win

@@ -11,8 +11,8 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	init = function()
 		-- Align fold/sign column highlights with the line-number column on the cursor line.
-		vim.cmd("hi link CursorLineFold CursorLineNr")
-		vim.cmd("hi link CursorLineSign CursorLineNr")
+		vim.api.nvim_set_hl(0, "CursorLineFold", { link = "CursorLineNr" })
+		vim.api.nvim_set_hl(0, "CursorLineSign", { link = "CursorLineNr" })
 	end,
 	---@param _ LazyPlugin
 	---@param opts table

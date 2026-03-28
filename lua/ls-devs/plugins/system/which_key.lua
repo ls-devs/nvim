@@ -230,7 +230,6 @@ return {
 			{ "<leader>l", group = "Lazy/LazyGit", icon = { icon = "󰒲", color = "purple" } },
 			{ "<leader>m", group = "Multi-Cursor", icon = { icon = "󰇀", color = "purple" } },
 			{ "<leader>e", group = "Explorer", icon = { icon = "󰙅", color = "green" } },
-			{ "<leader>z", group = "Terminal", icon = { icon = "󰆍", color = "green" } },
 			{ "<leader>v", group = "Trouble", icon = { icon = "󰒡", color = "red" } },
 			{ "<leader>o", group = "Overseer", icon = { icon = "󰑮", color = "yellow" } },
 			{ "<leader>t", group = "Tabs", icon = { icon = "󰓩", color = "azure" } },

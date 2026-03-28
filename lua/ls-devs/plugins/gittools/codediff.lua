@@ -31,7 +31,10 @@ return {
 	cmd = "CodeDiff",
 	---@return boolean
 	cond = function()
-		return vim.fn.isdirectory(".git") == 1
+		-- isdirectory() misses two common cases: (1) Neovim opened from a repo
+		-- subdirectory where .git is in a parent; (2) git worktrees where .git
+		-- is a file, not a directory. Search upward for both forms.
+		return vim.fn.finddir(".git", ".;") ~= "" or vim.fn.findfile(".git", ".;") ~= ""
 	end,
 	opts = {
 		highlights = {

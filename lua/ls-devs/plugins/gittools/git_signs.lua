@@ -134,6 +134,7 @@ return {
 	},
 	---@return boolean
 	cond = function()
-		return vim.fn.isdirectory(".git") == 1 -- only load in git repositories
+		-- Search upward for .git dir (normal repo) or .git file (worktree)
+		return vim.fn.finddir(".git", ".;") ~= "" or vim.fn.findfile(".git", ".;") ~= ""
 	end,
 }

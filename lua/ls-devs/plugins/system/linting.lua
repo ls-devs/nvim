@@ -8,7 +8,7 @@ return {
 	"mfussenegger/nvim-lint",
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
-		events = { "BufWritePost", "BufReadPost", "InsertLeave", "BufEnter" },
+		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 		linters_by_ft = {
 			-- eslint_d: fast daemon designed for linting/diagnostics.
 			-- The eslint LSP is configured to suppress publishDiagnostics so it
@@ -161,11 +161,10 @@ return {
 
 		---@param ms integer
 		---@param fn fun()
-		---@return fun(...)
+		---@return fun()
 		local function debounce(ms, fn)
 			local timer = vim.uv.new_timer()
-			return function(...)
-				local argv = { ... }
+			return function()
 				timer:start(ms, 0, function()
 					timer:stop()
 					vim.schedule(fn)

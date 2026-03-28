@@ -9,8 +9,7 @@ return {
 	"kevinhwang91/nvim-bqf",
 	ft = "qf",
 	dependencies = {
-		"junegunn/fzf",
-		lazy = true,
+		{ "junegunn/fzf", lazy = true },
 	},
 	opts = {
 		auto_enable = true,

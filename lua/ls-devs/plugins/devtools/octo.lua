@@ -50,9 +50,8 @@ return {
 	},
 	---@param _ LazyPlugin
 	---@param opts table
-	config = function(_, opts)
-		require("octo").setup(opts)
-	end,
+	dependencies = {},
+	config = true,
 	keys = {
 		{
 			"<leader>Op",

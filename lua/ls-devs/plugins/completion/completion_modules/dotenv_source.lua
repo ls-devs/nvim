@@ -13,6 +13,11 @@ function source.new()
 	return setmetatable({}, { __index = source })
 end
 
+---@return string[]
+function source:get_trigger_characters()
+	return { "$" }
+end
+
 ---@param self DotenvSource
 ---@param _ table
 ---@param callback function
@@ -21,35 +26,39 @@ function source:get_completions(_, callback)
 	local seen = {}
 	local files = vim.fn.glob(vim.fn.getcwd() .. "/.env*", false, true)
 
-	for _, file in ipairs(files) do
-		local f = io.open(file, "r")
-		if f then
-			for line in f:lines() do
-				-- support: KEY=val, export KEY=val, KEY="val", KEY='val'
-				local key, value = line:match("^%s*export%s+([%w_]+)%s*=%s*(.-)%s*$")
-				if not key then
-					key, value = line:match("^%s*([%w_]+)%s*=%s*(.-)%s*$")
+	vim.schedule(function()
+		for _, file in ipairs(files) do
+			local f = io.open(file, "r")
+			if f then
+				for line in f:lines() do
+					-- support: KEY=val, export KEY=val, KEY="val", KEY='val'
+					local key, value = line:match("^%s*export%s+([%w_]+)%s*=%s*(.-)%s*$")
+					if not key then
+						key, value = line:match("^%s*([%w_]+)%s*=%s*(.-)%s*$")
+					end
+					if key and not seen[key] then
+						seen[key] = true
+						-- Strip matching quotes: 'value' → value, "value" → value
+						value = (value or "")
+						value = value:match("^'(.-)'%s*$") or value:match('^"(.-)"?%s*$') or value
+						table.insert(items, {
+							label = key,
+							kind = vim.lsp.protocol.CompletionItemKind.Variable,
+							detail = value ~= "" and value or nil,
+							documentation = value ~= "" and { kind = "plaintext", value = value } or nil,
+						})
+					end
 				end
-				if key and not seen[key] then
-					seen[key] = true
-					value = (value or ""):gsub("^[\"'](.-)[\"'%s]*$", "%1")
-					table.insert(items, {
-						label = key,
-						kind = vim.lsp.protocol.CompletionItemKind.Variable,
-						detail = value ~= "" and value or nil,
-						documentation = value ~= "" and { kind = "plaintext", value = value } or nil,
-					})
-				end
+				f:close()
 			end
-			f:close()
 		end
-	end
 
-	callback({
-		is_incomplete_forward = false,
-		is_incomplete_backward = false,
-		items = items,
-	})
+		callback({
+			is_incomplete_forward = false,
+			is_incomplete_backward = false,
+			items = items,
+		})
+	end)
 end
 
 return source

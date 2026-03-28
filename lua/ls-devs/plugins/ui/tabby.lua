@@ -39,13 +39,13 @@ local tabName = function(tab)
 
 	-- For floating terminals: use filetype as tab name, or fall back to buffer tail.
 	if string.find(tabTail, "Floating") then
-		if vim.bo.filetype == "" then
+		if file_type == "" then
 			local tail = vim.fn.expand("%:t")
 			if string.find(tail, "npm") then
 				tabName = string.gsub(tail, "%d+:", "")
 			end
 		else
-			tabName = vim.bo.filetype
+			tabName = file_type
 		end
 	end
 

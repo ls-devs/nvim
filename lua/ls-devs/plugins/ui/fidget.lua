@@ -1,5 +1,5 @@
 -- ── fidget.nvim ───────────────────────────────────────────────────────────
--- Purpose : LSP progress spinner displayed in the bottom-right corner
+-- Purpose : LSP progress spinner displayed in the top-right corner
 -- Trigger : LspAttach
 -- Note    : override_vim_notify is false — snacks.notifier owns vim.notify routing;
 --           fidget is scoped to LSP $progress messages only

@@ -53,12 +53,12 @@ return {
 				["|(%S-)|"] = vim.cmd.help,
 			},
 			highlights = {
-				["|%S-|"] = "@text.reference",
-				["@%S+"] = "@parameter",
-				["^%s*(Parameters:)"] = "@text.title",
-				["^%s*(Return:)"] = "@text.title",
-				["^%s*(See also:)"] = "@text.title",
-				["{%S-}"] = "@parameter",
+				["|%S-|"] = "@markup.link",
+				["@%S+"] = "@variable.parameter",
+				["^%s*(Parameters:)"] = "@markup.heading",
+				["^%s*(Return:)"] = "@markup.heading",
+				["^%s*(See also:)"] = "@markup.heading",
+				["{%S-}"] = "@variable.parameter",
 			},
 		},
 		-- ── Routing ───────────────────────────────────────────────────────────────────

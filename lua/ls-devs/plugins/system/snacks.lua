@@ -36,6 +36,7 @@ return {
 			vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], o)
 		end
 		vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter" }, {
+			group = vim.api.nvim_create_augroup("snacks_term_keymaps", { clear = true }),
 			callback = set_term_keymaps,
 		})
 
@@ -44,6 +45,9 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "snacks_dashboard",
 			callback = function()
+				-- Save current values before clamping so we can restore user's settings
+				local saved_laststatus = vim.o.laststatus
+				local saved_showtabline = vim.o.showtabline
 				vim.opt_local.laststatus = 0
 				vim.opt_local.showtabline = 0
 				vim.b.miniindentscope_disable = true
@@ -81,12 +85,7 @@ return {
 
 				vim.api.nvim_create_autocmd("OptionSet", {
 					group = aug,
-					pattern = "laststatus",
-					callback = guard,
-				})
-				vim.api.nvim_create_autocmd("OptionSet", {
-					group = aug,
-					pattern = "showtabline",
+					pattern = { "laststatus", "showtabline" },
 					callback = guard,
 				})
 				vim.api.nvim_create_autocmd("BufUnload", {
@@ -94,8 +93,8 @@ return {
 					once = true,
 					callback = function()
 						pcall(vim.api.nvim_del_augroup_by_id, aug)
-						vim.opt.laststatus = 3
-						vim.opt.showtabline = 2
+						vim.opt.laststatus = saved_laststatus
+						vim.opt.showtabline = saved_showtabline
 					end,
 				})
 			end,

@@ -213,7 +213,8 @@ return {
 		ins_right({
 			---@return string
 			function()
-				return require("NeoComposer.ui").status_recording()
+				local ok, neo = pcall(require, "NeoComposer.ui")
+				return ok and neo.status_recording() or ""
 			end,
 			padding = { left = 0, right = 1 },
 		})
@@ -232,14 +233,11 @@ return {
 							else
 								return lsp.name
 							end
-						else
-							if string.len(lsps[#lsps].name) >= 17 then
-								return string.sub(lsps[#lsps].name, 0, 14) .. "..."
-							else
-								return lsps[#lsps].name
-							end
 						end
 					end
+					-- No client matched filetype — fall back to the last attached client
+					local fallback = lsps[#lsps].name
+					return string.len(fallback) >= 17 and string.sub(fallback, 0, 14) .. "..." or fallback
 				else
 					return ""
 				end
@@ -252,12 +250,12 @@ return {
 		ins_right({
 			---@return string
 			function()
-				local linter = require("lint").linters_by_ft[vim.bo.filetype]
-				if linter then
-					return linter[1]
-				else
+				local ok, lint = pcall(require, "lint")
+				if not ok then
 					return ""
 				end
+				local linter = lint.linters_by_ft[vim.bo.filetype]
+				return linter and linter[1] or ""
 			end,
 			color = { fg = colors.flamingo, gui = "bold" },
 			padding = { left = 1, right = 0 },
@@ -297,11 +295,11 @@ return {
 			color = { fg = colors.green, gui = "bold" },
 		})
 
-		-- Live clock (HH:MM:SS); hidden on narrow windows (<80 cols).
+		-- Live clock (HH:MM); hidden on narrow windows (<80 cols).
 		ins_right({
 			---@return string
 			function()
-				return os.date("%H:%M:%S", os.time())
+				return os.date("%H:%M", os.time())
 			end,
 			color = {
 				fg = colors.blue,

@@ -147,7 +147,7 @@ return {
 					vim.notify("Entering resize mode")
 				end,
 				on_leave = function()
-					vim.notify("Exiting resize mode, bye")
+					vim.notify("Exiting resize mode")
 				end,
 			},
 		},

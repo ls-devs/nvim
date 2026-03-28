@@ -1,16 +1,15 @@
 -- ── neotest ───────────────────────────────────────────────────────────────
 -- Purpose : Unified test runner UI — run tests under cursor/file/suite,
 --           inline pass/fail gutter signs, floating output panel.
--- Trigger : BufReadPost (load), <leader>T* keymaps
--- Adapters : jest (JS/TS/JSX/TSX/Node), vitest, python (pytest), rust (cargo),
---            phpunit (PHP)
+-- Trigger : ft (JS/TS/Python only — avoids loading adapters for every buffer)
+-- Adapters : jest (JS/TS/JSX/TSX), vitest, python (pytest)
 -- Note    : Output and summary panels open as floats (border = "rounded").
 --           DAP strategy reuses the existing nvim-dap stack.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
 	"nvim-neotest/neotest",
-	event = { "BufReadPost" },
+	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "python" },
 	dependencies = {
 		{ "nvim-neotest/nvim-nio", lazy = true },
 		{ "nvim-lua/plenary.nvim", lazy = true },
@@ -164,22 +163,6 @@ return {
 					require("neotest").jump.prev({ status = "failed" })
 				end, vim.tbl_extend("force", o, { desc = "Prev failed test" }))
 				vim.keymap.set("t", "[f", esc .. "[f", vim.tbl_extend("force", o, { desc = "Prev failed test" }))
-				-- step through failures — close float, land in source
-				vim.keymap.set("n", "]t", function()
-					vim.api.nvim_win_close(0, true)
-					require("neotest").jump.next({ status = "failed" })
-				end, vim.tbl_extend("force", o, { desc = "Next failed → close output" }))
-				vim.keymap.set(
-					"t",
-					"]t",
-					esc .. "]t",
-					vim.tbl_extend("force", o, { desc = "Next failed → close output" })
-				)
-				vim.keymap.set("n", "[t", function()
-					vim.api.nvim_win_close(0, true)
-					require("neotest").jump.prev({ status = "failed" })
-				end, vim.tbl_extend("force", o, { desc = "Prev failed → close output" }))
-				vim.keymap.set("t", "[t", esc .. "[t", vim.tbl_extend("force", o, { desc = "Prev failed → output" }))
 			end,
 		})
 	end,

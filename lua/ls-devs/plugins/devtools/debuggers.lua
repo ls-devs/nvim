@@ -184,7 +184,9 @@ return {
 								end
 								return 9229
 							end,
-							cwd = vim.fn.getcwd(),
+							cwd = function()
+								return vim.fn.getcwd()
+							end,
 							sourceMaps = true,
 							skipFiles = { "<node_internals>/**", "**/node_modules/**" },
 							resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
@@ -208,7 +210,9 @@ return {
 								end
 								return 9222
 							end,
-							webRoot = vim.fn.getcwd(),
+							webRoot = function()
+								return vim.fn.getcwd()
+							end,
 							sourceMaps = true,
 							protocol = "inspector",
 							urlFilter = "http://localhost:*",
@@ -335,7 +339,7 @@ return {
 					end
 				end,
 
-				virt_text_pos = vim.fn.has("nvim-0.10") == 1 and "inline" or "eol", -- inline requires Neovim ≥ 0.10
+				virt_text_pos = "inline",
 
 				all_frames = false,
 				virt_lines = false,
@@ -365,14 +369,14 @@ return {
 		-- Session control
 		{
 			"<leader>un",
-			":DapContinue<CR>",
+			"<cmd>DapContinue<cr>",
 			desc = "DAP Continue",
 			noremap = true,
 			silent = true,
 		},
 		{
 			"<leader>ut",
-			":DapTerminate<CR>",
+			"<cmd>DapTerminate<cr>",
 			desc = "DAP Terminate",
 			noremap = true,
 			silent = true,
@@ -380,7 +384,7 @@ return {
 		-- Breakpoints
 		{
 			"<leader>bb",
-			":DapToggleBreakpoint<CR>",
+			"<cmd>DapToggleBreakpoint<cr>",
 			desc = "DAP Toggle Breakpoint",
 			noremap = true,
 			silent = true,

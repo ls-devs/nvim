@@ -49,7 +49,10 @@ return {
 		end
 		patch_rainbow()
 		-- reapply when switching catppuccin flavour
-		vim.api.nvim_create_autocmd("ColorScheme", { callback = patch_rainbow })
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = vim.api.nvim_create_augroup("flash_catppuccin", { clear = true }),
+			callback = patch_rainbow,
+		})
 	end,
 	opts = { -- 52-char alphabet so up to 52 matches get a single-character label;
 		-- beyond that flash falls back to two-character label pairs automatically

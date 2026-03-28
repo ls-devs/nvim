@@ -35,10 +35,23 @@ return {
 					table.insert(lines, "")
 				end
 				-- pop trailing blank line
-				if lines[#lines] == "" then table.remove(lines) end
-				vim.lsp.util.open_floating_preview(lines, "plaintext", {
+				if lines[#lines] == "" then
+					table.remove(lines)
+				end
+				local buf = vim.api.nvim_create_buf(false, true)
+				vim.bo[buf].bufhidden = "wipe"
+				vim.bo[buf].filetype = "plaintext"
+				vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+				local width = math.min(80, vim.o.columns - 4)
+				local height = math.min(#lines, 15)
+				vim.api.nvim_open_win(buf, false, {
+					relative = "cursor",
+					row = 1,
+					col = 0,
+					width = width,
+					height = height,
+					style = "minimal",
 					border = "rounded",
-					max_width = 80,
 				})
 				return
 			end

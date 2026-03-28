@@ -11,6 +11,7 @@ return {
 		retirementAgeMins = 9, -- close buffers idle for more than this many minutes
 		ignoredFiletypes = {
 			"OverseerList", -- task runner panel: don't auto-close mid-task
+			"neo-tree", -- file explorer: buftype="" so ignoreSpecialBuftypes won't catch it
 		},
 		ignoreFilenamePattern = "",
 		ignoreAltFile = true, -- preserve the alternate file (#) from retirement

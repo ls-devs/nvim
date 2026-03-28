@@ -12,18 +12,7 @@ return {
 		{
 			"<leader>sr",
 			function()
-				-- Open a floating window then let grug-far occupy it via "enew" (no split).
-				local buf = vim.api.nvim_create_buf(false, true)
-				vim.api.nvim_open_win(buf, true, {
-					relative = "editor",
-					width = math.floor(vim.o.columns * 0.85),
-					height = math.floor(vim.o.lines * 0.85),
-					col = math.floor(vim.o.columns * 0.075),
-					row = math.floor(vim.o.lines * 0.075),
-					style = "minimal",
-					border = "rounded",
-				})
-				require("grug-far").open({ windowCreationCommand = "enew" })
+				require("grug-far").open({ transient = true })
 			end,
 			desc = "GrugFar Search & Replace",
 			noremap = true,
@@ -32,18 +21,8 @@ return {
 		{
 			"<leader>sw",
 			function()
-				local buf = vim.api.nvim_create_buf(false, true)
-				vim.api.nvim_open_win(buf, true, {
-					relative = "editor",
-					width = math.floor(vim.o.columns * 0.85),
-					height = math.floor(vim.o.lines * 0.85),
-					col = math.floor(vim.o.columns * 0.075),
-					row = math.floor(vim.o.lines * 0.075),
-					style = "minimal",
-					border = "rounded",
-				})
 				require("grug-far").open({
-					windowCreationCommand = "enew",
+					transient = true,
 					prefills = { search = vim.fn.expand("<cword>") },
 				})
 			end,
@@ -54,18 +33,8 @@ return {
 		{
 			"<leader>sf",
 			function()
-				local buf = vim.api.nvim_create_buf(false, true)
-				vim.api.nvim_open_win(buf, true, {
-					relative = "editor",
-					width = math.floor(vim.o.columns * 0.85),
-					height = math.floor(vim.o.lines * 0.85),
-					col = math.floor(vim.o.columns * 0.075),
-					row = math.floor(vim.o.lines * 0.075),
-					style = "minimal",
-					border = "rounded",
-				})
 				require("grug-far").open({
-					windowCreationCommand = "enew",
+					transient = true,
 					prefills = { paths = vim.fn.expand("%") },
 				})
 			end,

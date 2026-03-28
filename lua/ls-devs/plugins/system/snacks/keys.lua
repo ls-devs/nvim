@@ -115,14 +115,6 @@ return {
 		end,
 		desc = "Icons (Nerd Font)",
 	},
-	-- Commands fuzzy (replaces telescope-cmdline extension)
-	{
-		"<leader>fcm",
-		function()
-			require("ls-devs.utils.custom_functions").CommandsList()
-		end,
-		desc = "Commands (fuzzy)",
-	},
 
 	-- ── Picker — extra pickers ───────────────────────────────────────────
 	{

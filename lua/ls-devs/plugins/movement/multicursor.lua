@@ -109,19 +109,28 @@ return {
 			end, { desc = "MC Clear / Re-enable Cursors" })
 		end)
 
-		-- ── Highlights (Catppuccin Mocha palette) ─────────────────────────
-		local colors = {
-			blue = "#89b4fa",
-			peach = "#fab387",
-			surface0 = "#313244",
-			overlay1 = "#7f849c",
-		}
-		vim.api.nvim_set_hl(0, "MultiCursorCursor", { reverse = true })
-		vim.api.nvim_set_hl(0, "MultiCursorVisual", { bg = colors.surface0, fg = colors.blue })
-		vim.api.nvim_set_hl(0, "MultiCursorSign", { link = "SignColumn" })
-		vim.api.nvim_set_hl(0, "MultiCursorMatchPreview", { bg = colors.surface0, fg = colors.peach })
-		vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { fg = colors.overlay1, reverse = true })
-		vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { bg = colors.surface0, fg = colors.overlay1 })
-		vim.api.nvim_set_hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+		-- ── Highlights (uses catppuccin palette; reapplied on theme switch) ──
+		local function apply_mc_highlights()
+			local ok, palettes = pcall(require, "catppuccin.palettes")
+			local c = ok and palettes.get_palette()
+				or {
+					blue = "#89b4fa",
+					peach = "#fab387",
+					surface0 = "#313244",
+					overlay1 = "#7f849c",
+				}
+			vim.api.nvim_set_hl(0, "MultiCursorCursor", { reverse = true })
+			vim.api.nvim_set_hl(0, "MultiCursorVisual", { bg = c.surface0, fg = c.blue })
+			vim.api.nvim_set_hl(0, "MultiCursorSign", { link = "SignColumn" })
+			vim.api.nvim_set_hl(0, "MultiCursorMatchPreview", { bg = c.surface0, fg = c.peach })
+			vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { fg = c.overlay1, reverse = true })
+			vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { bg = c.surface0, fg = c.overlay1 })
+			vim.api.nvim_set_hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+		end
+		apply_mc_highlights()
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = vim.api.nvim_create_augroup("multicursor_catppuccin", { clear = true }),
+			callback = apply_mc_highlights,
+		})
 	end,
 }

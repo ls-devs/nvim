@@ -11,11 +11,11 @@ return {
 	"rachartier/tiny-inline-diagnostic.nvim",
 	event = "LspAttach",
 	priority = 1000,
-	-- Suppress in the lazy.nvim UI buffer without autocmd overhead
-	disabled_ft = { "lazy" },
 	config = function()
 		require("tiny-inline-diagnostic").setup({
 			preset = "modern",
+			-- Suppress in the lazy.nvim UI buffer without autocmd overhead
+			disabled_ft = { "lazy" },
 			-- Replace the default rounded nerd-font caps (U+E0B6 / U+E0B4) with
 			-- empty strings: the background highlight alone defines the container,
 			-- avoiding both rounded caps and the half-block gap of block chars.

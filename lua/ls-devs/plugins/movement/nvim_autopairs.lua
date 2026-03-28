@@ -26,7 +26,7 @@ return {
 		fast_wrap = {
 			map = "<M-e>",
 			chars = { "{", "[", "(", '"', "'" },
-			pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+			pattern = [=[[%'%"%)%>%]%)%}%,]]=],
 			offset = 0, -- Offset from pattern match
 			end_key = "$",
 			keys = "qwertyuiopzxcvbnmasdfghjkl",

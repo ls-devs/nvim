@@ -1,12 +1,13 @@
 -- ── conform ───────────────────────────────────────────────────────────────
 -- Purpose : Code formatter dispatcher — delegates to per-filetype formatters
--- Trigger : BufWritePre (load), ConformInfo cmd; manual format via <leader>fm
+-- Trigger : cmd / keys (<leader>fm, ConformInfo); format_on_save intentionally off
 -- Note    : format_on_save=false is intentional — use <leader>fm to format manually
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
 	"stevearc/conform.nvim",
-	event = { "BufWritePre" },
+	-- No event trigger: format_on_save=false means BufWritePre would load the
+	-- plugin on every write and do nothing. Keys + cmd are sufficient.
 	cmd = { "ConformInfo" },
 	keys = {
 		{
@@ -93,6 +94,8 @@ return {
 						"prettier.config.ts",
 						"prettier.config.mjs",
 						"prettier.config.cjs",
+						-- package.json may contain a "prettier" key — treat it as a config file
+						"package.json",
 					}
 					if #vim.fs.find(configs, { path = ctx.dirname, upward = true, type = "file" }) == 0 then
 						return { "--print-width", "100", "--trailing-comma", "all" }
@@ -153,7 +156,4 @@ return {
 			},
 		},
 	},
-	config = function(_, opts)
-		require("conform").setup(opts)
-	end,
 }

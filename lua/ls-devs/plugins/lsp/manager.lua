@@ -8,6 +8,9 @@ return {
 	-- Global Mason Installer (LSP | LINTERS | FORMATTERS | DAPS)
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		-- VeryLazy ensures run_on_start fires after startup. Without an event,
+		-- the plugin only loads on cmd and the auto-install/update never runs.
+		event = { "VeryLazy" },
 		cmd = {
 			"MasonToolsInstall",
 			"MasonToolsInstallSync",

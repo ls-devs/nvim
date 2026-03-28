@@ -39,8 +39,10 @@ return {
 				ps_cache,
 				ps_cache
 			)
+			local blink_ok, blink = pcall(require, "blink.cmp")
 			vim.lsp.start({
 				name = "powershell_es",
+				capabilities = blink_ok and blink.get_lsp_capabilities() or nil,
 				cmd = {
 					ps_shell,
 					"-NoLogo",

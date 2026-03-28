@@ -103,12 +103,12 @@ return {
 					end
 				end,
 				---@return boolean
-				should_attach = function(_, _)
-					if not vim.bo.buflisted then
+				should_attach = function(_, bufnr)
+					if not vim.bo[bufnr].buflisted then
 						return false
 					end
 
-					if vim.bo.buftype ~= "" then
+					if vim.bo[bufnr].buftype ~= "" then
 						return false
 					end
 
@@ -258,7 +258,7 @@ return {
 
 		language = "English",
 
-		log_level = "DEBUG",
+		log_level = "WARN",
 
 		-- ── Extensions ────────────────────────────────────────────────────────
 		extensions = {

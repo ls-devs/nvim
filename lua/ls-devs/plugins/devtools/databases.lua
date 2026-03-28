@@ -7,7 +7,7 @@
 --           <leader>Du when DBUI visible       → DBUIToggle (close)
 --           <leader>Du with no real buffers    → open DBUI normally
 -- Note    : vim-dadbod is the backend driver; vim-dadbod-completion adds
---           SQL autocomplete restricted to sql/mysql/plsql filetypes only.
+--           SQL autocomplete for sql/mysql/plsql/sqlite filetypes.
 --           DML (INSERT/UPDATE/DELETE/CREATE) works in any query buffer;
 --           results show rows affected. Custom table helpers add DML
 --           templates as child items under each table in the drawer.
@@ -17,7 +17,7 @@ return {
 	"kristijanhusak/vim-dadbod-ui",
 	dependencies = {
 		{ "tpope/vim-dadbod", lazy = true },
-		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql", "sqlite" }, lazy = true },
 	},
 	cmd = {
 		"DBUI",
@@ -40,11 +40,18 @@ return {
 					return
 				end
 
-				-- If DBUI is already visible in the current tab, just toggle it closed
-				for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-					if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "dbui" then
-						vim.cmd("DBUIToggle")
-						return
+				-- Scan all tabs: if DBUI is already visible anywhere, navigate to it
+				-- (or toggle it closed if it's in the current tab)
+				for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+					for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
+						if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "dbui" then
+							if tabpage == vim.api.nvim_get_current_tabpage() then
+								vim.cmd("DBUIToggle")
+							else
+								vim.api.nvim_set_current_tabpage(tabpage)
+							end
+							return
+						end
 					end
 				end
 
@@ -75,9 +82,34 @@ return {
 		{
 			"<leader>Dq",
 			function()
-				-- In the dbui drawer, the word under cursor is the table/view name
+				-- DBUI tree heading labels that are NOT table/view names.
+				-- cword under these nodes should be ignored.
+				local DBUI_TREE_HEADINGS = {
+					Tables = true,
+					Views = true,
+					Routines = true,
+					Triggers = true,
+					Indexes = true,
+					Functions = true,
+					Procedures = true,
+					Types = true,
+					Sequences = true,
+					Enums = true,
+				}
+
 				local ft = vim.bo.filetype
-				local cword = (ft == "dbui") and vim.fn.expand("<cword>") or ""
+				local cword = ""
+				if ft == "dbui" then
+					-- Only use cword when the cursor is on an actual table/view node
+					local w = vim.fn.expand("<cword>")
+					if not DBUI_TREE_HEADINGS[w] then
+						cword = w
+					end
+				elseif ft == "sql" or ft == "mysql" or ft == "plsql" or ft == "sqlite" then
+					-- Pre-fill with the identifier under the cursor so the user can
+					-- just hit <CR> when the cursor is already on a table name
+					cword = vim.fn.expand("<cword>")
+				end
 
 				local function open_dml(tbl)
 					if not tbl or tbl == "" then
@@ -141,7 +173,9 @@ return {
 						local target = nil
 						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 							local bft = vim.bo[buf].filetype
-							if (bft == "sql" or bft == "mysql" or bft == "plsql") and vim.api.nvim_buf_is_loaded(buf) then
+							if
+								(bft == "sql" or bft == "mysql" or bft == "plsql") and vim.api.nvim_buf_is_loaded(buf)
+							then
 								target = buf
 								break
 							end
@@ -149,6 +183,11 @@ return {
 
 						if not target then
 							target = vim.api.nvim_create_buf(true, false)
+							-- Give the buffer a recognizable name (query-1.sql, query-2.sql, …)
+							local n = #vim.tbl_filter(function(b)
+								return vim.api.nvim_buf_get_name(b):match("query%-%d+%.sql$") ~= nil
+							end, vim.api.nvim_list_bufs())
+							pcall(vim.api.nvim_buf_set_name, target, ("query-%d.sql"):format(n + 1))
 							vim.bo[target].filetype = "sql"
 						end
 
@@ -177,7 +216,7 @@ return {
 				if cword ~= "" then
 					open_dml(cword)
 				else
-					vim.ui.input({ prompt = "Table name: " }, function(input)
+					vim.ui.input({ prompt = "Table name: ", default = cword }, function(input)
 						open_dml(input)
 					end)
 				end
@@ -198,11 +237,11 @@ return {
 		-- {table} and {schema} are replaced automatically by dadbod-ui.
 		vim.g.db_ui_table_helpers = {
 			postgresql = {
-				["Insert"] = "INSERT INTO {optional_schema}\"{table}\" ({columns}) VALUES ({values});",
-				["Update"] = "UPDATE {optional_schema}\"{table}\" SET {column} = {value} WHERE {condition};",
-				["Delete"] = "DELETE FROM {optional_schema}\"{table}\" WHERE {condition};",
-				["Truncate"] = "TRUNCATE TABLE {optional_schema}\"{table}\";",
-				["Count"] = "SELECT COUNT(*) FROM {optional_schema}\"{table}\";",
+				["Insert"] = 'INSERT INTO {optional_schema}"{table}" ({columns}) VALUES ({values});',
+				["Update"] = 'UPDATE {optional_schema}"{table}" SET {column} = {value} WHERE {condition};',
+				["Delete"] = 'DELETE FROM {optional_schema}"{table}" WHERE {condition};',
+				["Truncate"] = 'TRUNCATE TABLE {optional_schema}"{table}";',
+				["Count"] = 'SELECT COUNT(*) FROM {optional_schema}"{table}";',
 			},
 			mysql = {
 				["Insert"] = "INSERT INTO {optional_schema}`{table}` ({columns}) VALUES ({values});",
@@ -212,10 +251,20 @@ return {
 				["Count"] = "SELECT COUNT(*) FROM {optional_schema}`{table}`;",
 			},
 			sqlite = {
-				["Insert"] = "INSERT INTO \"{table}\" ({columns}) VALUES ({values});",
-				["Update"] = "UPDATE \"{table}\" SET {column} = {value} WHERE {condition};",
-				["Delete"] = "DELETE FROM \"{table}\" WHERE {condition};",
-				["Count"] = "SELECT COUNT(*) FROM \"{table}\";",
+				["Insert"] = 'INSERT INTO "{table}" ({columns}) VALUES ({values});',
+				["Update"] = 'UPDATE "{table}" SET {column} = {value} WHERE {condition};',
+				["Delete"] = 'DELETE FROM "{table}" WHERE {condition};',
+				-- SQLite has no TRUNCATE — use DELETE FROM without a WHERE clause
+				["Clear"] = 'DELETE FROM "{table}";',
+				["Count"] = 'SELECT COUNT(*) FROM "{table}";',
+			},
+			-- Oracle PL/SQL helpers (double-quoted identifiers, no backticks)
+			plsql = {
+				["Insert"] = 'INSERT INTO {optional_schema}"{table}" ({columns}) VALUES ({values});',
+				["Update"] = 'UPDATE {optional_schema}"{table}" SET {column} = {value} WHERE {condition};',
+				["Delete"] = 'DELETE FROM {optional_schema}"{table}" WHERE {condition};',
+				["Truncate"] = 'TRUNCATE TABLE {optional_schema}"{table}";',
+				["Count"] = 'SELECT COUNT(*) FROM {optional_schema}"{table}";',
 			},
 		}
 	end,

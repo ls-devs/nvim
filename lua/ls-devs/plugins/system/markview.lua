@@ -71,7 +71,6 @@ return {
 					end,
 				},
 				filetypes = {
-					"md",
 					"markdown",
 					"codecompanion",
 				},
@@ -108,7 +107,7 @@ return {
 					end
 
 					-- Only real markdown files on disk
-					return ft == "markdown" or ft == "md"
+					return ft == "markdown"
 				end,
 			},
 			html = {

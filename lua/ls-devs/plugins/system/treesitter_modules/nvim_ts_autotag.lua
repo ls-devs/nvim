@@ -15,8 +15,6 @@ return {
 		"typescriptreact",
 		"svelte",
 		"vue",
-		"tsx",
-		"jsx",
 		"rescript",
 		"xml",
 		"php",

@@ -81,5 +81,4 @@ return {
 			coq = false,
 		},
 	},
-	dependencies = {},
 }
