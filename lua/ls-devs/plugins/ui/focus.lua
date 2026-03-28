@@ -1,8 +1,9 @@
 -- ── focus.nvim ────────────────────────────────────────────────────────────
--- Purpose : Auto-resize the focused window using golden-ratio proportions
+-- Purpose : Manual window resizing — golden-ratio maximise or equalise on demand
 -- Trigger : BufReadPost, BufNewFile
--- Note    : autoresize enabled by default; per-filetype suppression (neo-tree,
---           DAP panels, OverseerList, etc.) is managed by autocmds in core/autocmds.lua
+-- Note    : autoresize (auto-resize on WinEnter) is intentionally disabled.
+--           Use <leader>wm to maximise the current window and <leader>we to
+--           restore equal splits. No resize fires automatically on Ctrl-H/L.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
@@ -12,39 +13,28 @@ return {
 		enable = true,
 		commands = true,
 		split = {
-			-- Don't auto-resize when a blank new buffer opens inside a split
 			bufnew = false,
-			-- Don't propagate focus sizing to tmux panes
 			tmux = false,
 		},
-		-- Enabled by default; toggle with <leader>wr
+		-- Disable auto-resize on WinEnter: prevents the WinEnter autocmd from
+		-- being created entirely. Without this, even "toggled off" state still
+		-- runs split_resizer on every window switch and modifies winwidth/winheight.
 		autoresize = {
-			enable = true,
+			enable = false,
 		},
-		-- All visual changes disabled; focus.nvim is used purely for window resizing
+		-- All visual changes disabled; focus.nvim is used purely for manual resizing
 		ui = {
 			number = false,
 			relativenumber = false,
 			hybridnumber = false,
 			absolutenumber_unfocussed = false,
-
 			cursorline = false,
 			cursorcolumn = false,
-			colorcolumn = {
-				enable = false,
-			},
+			colorcolumn = { enable = false },
 			signcolumn = false,
 			winhighlight = false,
 		},
 	},
-	config = function(_, opts)
-		require("focus").setup(opts)
-		-- Start with autoresize disabled so window-switching doesn't resize unexpectedly.
-		-- Use <leader>wr (FocusToggle) to enable golden-ratio autoresize on demand.
-		-- Must be set AFTER setup() so the WinEnter autocmd is still registered
-		-- (autocmd.setup early-exits if focus_disable is already true at setup time).
-		vim.g.focus_disable = true
-	end,
 	keys = {
 		{
 			"<leader>wm",
@@ -62,8 +52,8 @@ return {
 		},
 		{
 			"<leader>wr",
-			"<cmd>FocusToggle<CR>",
-			desc = "Focus Toggle Autoresize",
+			"<cmd>FocusMaxOrEqual<CR>",
+			desc = "Focus Max or Equalise",
 			silent = true,
 			noremap = true,
 		},
