@@ -36,7 +36,7 @@ lua/ls-devs/
       manager.lua              ← Mason package list (LSPs, linters, formatters, DAPs)
       lspsaga.lua
     movement/                  ← flash, mini.surround, multiple-cursors, neotab,
-    │                            nvim-autopairs, nvim-spider, smart-splits, treesj, vim-matchup
+    │                            nvim-autopairs, nvim-spider, smart-splits, treesj, treewalker, vim-matchup
     system/
       formatting.lua           ← conform.nvim formatter mappings (format_on_save=false)
       linting.lua              ← nvim-lint linter mappings + autocmd wiring
@@ -45,11 +45,11 @@ lua/ls-devs/
       neo_tree.lua
       treesitter.lua
       sleuth.lua, wildfire.lua, markview.lua, grug_far.lua, gx.lua, early_retirement.lua,
-      treesitter_context.lua
+      treesitter_context.lua, which_key.lua
       dependencies/            ← plenary, luarocks
       treesitter_modules/      ← nvim-ts-autotag
     ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, focus, lualine, mini_icons,
-    │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, better-qf
+    │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, nvim-bqf, quicker
     utilities/                 ← mini.comment, scrolleof, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch,

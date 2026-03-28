@@ -4,7 +4,7 @@
 -- Trigger : Required on-demand by plugin configs (not loaded at startup)
 -- Provides: HelpGrep, CustomHover, OpenURLs, OrigamiHLFolds,
 --           GhSwitch, KeymapsList, AutocmdsList, CommandsList, HighlightsList,
---           DapChromeDebug
+--           DapChromeDebug, DapNodeDebug
 -- ─────────────────────────────────────────────────────────────────────────
 ---@class LsDevsUtils
 local M = {}
