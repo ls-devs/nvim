@@ -236,7 +236,7 @@ return {
 		},
 
 		-- ── scope / words / bufdelete ──────────────────────────────────────
-		scope = { enabled = true },
+		scope = { enabled = false }, -- disabled: curved-arrow scope indicator
 		words = {
 			enabled = true,
 			debounce = 200,
