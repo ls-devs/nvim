@@ -18,7 +18,10 @@ return {
 				args = (function()
 					local cfg = vim.fn.stdpath("cache") .. "/markdownlint-cli2.json"
 					if vim.fn.filereadable(cfg) == 0 then
-						vim.fn.writefile({ '{"default":true,"MD013":false,"MD060":false}' }, cfg)
+						vim.fn.writefile(
+							{ '{"default":true,"MD013":false,"MD060":false,"MD040":false,"MD022":false,"MD032":false}' },
+							cfg
+						)
 					end
 					return { "--config", cfg, "-" }
 				end)(),
