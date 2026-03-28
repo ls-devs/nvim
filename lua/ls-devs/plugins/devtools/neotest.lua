@@ -1,7 +1,7 @@
 -- ── neotest ───────────────────────────────────────────────────────────────
 -- Purpose : Unified test runner UI — run tests under cursor/file/suite,
 --           inline pass/fail gutter signs, floating output panel.
--- Trigger : ft (JS/TS/Python only — avoids loading adapters for every buffer)
+-- Trigger : keys / cmd (on demand only — not triggered by filetype)
 -- Adapters : jest (JS/TS/JSX/TSX), vitest, python (pytest)
 -- Note    : Output and summary panels open as floats (border = "rounded").
 --           DAP strategy reuses the existing nvim-dap stack.
@@ -9,7 +9,9 @@
 ---@type LazySpec
 return {
 	"nvim-neotest/neotest",
-	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "python" },
+	cmd = {
+		"Neotest",
+	},
 	dependencies = {
 		{ "nvim-neotest/nvim-nio", lazy = true },
 		{ "nvim-lua/plenary.nvim", lazy = true },
