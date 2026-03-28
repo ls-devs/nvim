@@ -38,10 +38,39 @@ return {
 		-- still runs split_resizer on every WinEnter even when toggled off,
 		-- setting winwidth/winheight=1 and causing a subtle window rebalance.
 		local augroup = vim.api.nvim_create_augroup("Focus", { clear = true })
+		local ignore_ft = {
+			"neo-tree",
+			"neo-tree-popup",
+			"neotest-summary",
+			"Trouble",
+			"trouble",
+			"dap-repl",
+			"dapui_console",
+			"dapui_watches",
+			"dapui_stacks",
+			"dapui_breakpoints",
+			"dapui_scopes",
+			"OverseerList",
+			"dbui",
+			"dbout",
+			"lazy",
+			"mason",
+			"codecompanion_cli",
+			"codediff-explorer",
+			"codediff-history",
+			"qf",
+		}
 		vim.api.nvim_create_autocmd("WinEnter", {
 			group = augroup,
 			callback = function()
 				if vim.g.focus_disable or vim.w.focus_disable or vim.b.focus_disable then
+					return
+				end
+				-- Skip non-editing buffers and known sidebar/tool filetypes
+				if vim.bo.buftype ~= "" then
+					return
+				end
+				if vim.tbl_contains(ignore_ft, vim.bo.filetype) then
 					return
 				end
 				require("focus").resize()
