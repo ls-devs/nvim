@@ -237,6 +237,7 @@ return {
 			{ "<leader>tm", group = "Tab Move", icon = { icon = "󰒺", color = "azure" } },
 			{ "<leader>O", group = "Octo", icon = { icon = "󰊤", color = "grey" } },
 			{ "<leader>D", group = "Database", icon = { icon = "󰆼", color = "cyan" } },
+			{ "<leader>q", group = "Quit", icon = { icon = "󰗼", color = "red" } },
 			{ "<leader>x", group = "Utils/Execute", icon = { icon = "󰒃", color = "green" } },
 			-- ── Navigation prefixes ───────────────────────────────────────
 			{ "]", group = "Next", icon = { icon = "󰜴", color = "green" } },

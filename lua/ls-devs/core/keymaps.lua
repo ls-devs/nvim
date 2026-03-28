@@ -153,8 +153,8 @@ end, { noremap = true, silent = true, desc = "CodeCompanion CLI Ask" })
 vim.keymap.set("n", "<leader>qq", "<cmd>qa<CR>", { noremap = true, silent = true, desc = "Quit All" })
 
 -- ── Utils / Execute ───────────────────────────────────────────────────────
--- <leader>x: make current file executable (single press; xq/xl are sub-bindings)
-vim.keymap.set("n", "<leader>x", function()
+-- <leader>xx: make current file executable (<leader>x is the group prefix)
+vim.keymap.set("n", "<leader>xx", function()
 	local file = vim.fn.expand("%")
 	vim.fn.system({ "chmod", "+x", file })
 	vim.notify("Made executable: " .. vim.fn.expand("%:t"), vim.log.levels.INFO)
@@ -186,6 +186,12 @@ vim.keymap.set("n", "<leader>xl", function()
 	if is_open then
 		vim.cmd("lclose")
 	else
-		vim.cmd("lopen")
+		-- Only open if a location list exists for this window
+		local loclist = vim.fn.getloclist(0, { size = true })
+		if loclist.size > 0 then
+			vim.cmd("lopen")
+		else
+			vim.notify("No location list", vim.log.levels.WARN)
+		end
 	end
 end, { noremap = true, silent = true, desc = "Toggle Location List" })
