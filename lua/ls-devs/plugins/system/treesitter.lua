@@ -486,7 +486,7 @@ return {
 			lazy = true,
 			config = function()
 				---@diagnostic disable-next-line: duplicate-set-field
-				require("various-textobjs.utils").notFoundMsg = function() end
+				require("various-textobjs").setup({ notify = { whenObjectNotFound = false } })
 			end,
 			keys = {
 				{
@@ -494,7 +494,7 @@ return {
 					mode = { "o", "x" },
 					function()
 						if vim.fn.indent(".") == 0 then
-							require("various-textobjs").entirebuffer()
+							require("various-textobjs").entireBuffer()
 						else
 							require("various-textobjs").indentation("inner", "inner")
 						end
@@ -788,54 +788,7 @@ return {
 					end,
 				},
 				-- Language-specific (buffer-local)
-				{
-					"il",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdlink("inner")
-					end,
-					buffer = true,
-				},
-				{
-					"al",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdlink("outer")
-					end,
-					buffer = true,
-				},
-				{
-					"ie",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdEmphasis("inner")
-					end,
-					buffer = true,
-				},
-				{
-					"ae",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdEmphasis("outer")
-					end,
-					buffer = true,
-				},
-				{
-					"iC",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdFencedCodeBlock("inner")
-					end,
-					buffer = true,
-				},
-				{
-					"aC",
-					mode = { "o", "x" },
-					function()
-						require("various-textobjs").mdFencedCodeBlock("outer")
-					end,
-					buffer = true,
-				},
+				-- mdlink/mdEmphasis/mdFencedCodeBlock deprecated (2025-11-30): removed to avoid runtime warnings
 				{
 					"iy",
 					mode = { "o", "x" },

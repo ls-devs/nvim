@@ -6,6 +6,19 @@
 return {
 	"Aasim-A/scrollEOF.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-	-- opts=true passes an empty table, enabling the plugin with its default config
-	opts = true,
+	opts = {
+		-- Disable in non-editing panels where scrolloff behaviour is unwanted
+		disabled_filetypes = {
+			"terminal",
+			"lazy",
+			"neo-tree",
+			"snacks_dashboard",
+			"mason",
+			"help",
+			"qf",
+			"neotest-summary",
+			"trouble",
+			"Trouble",
+		},
+	},
 }

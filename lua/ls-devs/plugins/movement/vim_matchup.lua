@@ -21,5 +21,9 @@ return {
 		vim.g.matchup_matchparen_deferred = 1
 		-- Enable treesitter integration (replaces matchup={enable=true} in old treesitter opts)
 		vim.g.matchup_treesitter_enabled = 1
+		-- Stop treesitter-based matching after 500 lines to avoid stalls on large buffers
+		vim.g.matchup_treesitter_stopline = 500
+		-- Highlight the surrounding match pair (both open and close) for visual clarity
+		vim.g.matchup_matchparen_hi_surround_always = 1
 	end,
 }

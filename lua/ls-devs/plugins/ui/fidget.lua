@@ -131,7 +131,7 @@ return {
 					y_padding = 0,
 					align = "top",
 					relative = "editor",
-					avoid = { "NvimTree", "TestExplorer" },
+					avoid = { "neo-tree", "neotest-summary", "neo-tree-popup" },
 				},
 			},
 

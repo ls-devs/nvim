@@ -11,6 +11,8 @@ return {
 		-- Automatically close the panel when the diagnostics list becomes empty
 		auto_close = true,
 		auto_preview = false,
+		-- Auto-jump to the only item when there is exactly one result (skips the panel)
+		auto_jump = true,
 		keys = {
 			-- Rebind `l` (normally move-right) to fold toggle inside the trouble buffer
 			["l"] = "fold_toggle",
@@ -36,6 +38,20 @@ return {
 			"<leader>vl",
 			"<cmd>Trouble lsp toggle<CR>",
 			desc = "Trouble LSP",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"<leader>vq",
+			"<cmd>Trouble qflist toggle<CR>",
+			desc = "Trouble Quickfix",
+			silent = true,
+			noremap = true,
+		},
+		{
+			"<leader>vf",
+			"<cmd>Trouble loclist toggle<CR>",
+			desc = "Trouble Loclist",
 			silent = true,
 			noremap = true,
 		},

@@ -18,18 +18,13 @@ return {
 			hide_keyword = true,
 			show_file = false,
 			folder_level = 0,
-			respect_root = true,
 			color_mode = true,
-			border_follow = false,
-			winblend = 0,
 		},
 		hover = {
-			border_follow = false,
 			max_height = 0.5,
+			max_width = 0.9,
 		},
-		diagnostic = {
-			border_follow = false,
-		},
+		diagnostic = {},
 		rename = {
 			-- Open rename prompt with cursor at end, not with text pre-selected
 			in_select = false,
@@ -42,13 +37,10 @@ return {
 		ui = {
 			title = true,
 			border = "rounded",
-			winblend = 0,
-			expand = "",
-			collapse = "",
+			-- expand/collapse must be non-empty: empty strings break the outline tree view
+			expand = "►",
+			collapse = "▼",
 			code_action = "💡",
-			incoming = " ",
-			outgoing = " ",
-			hover = " ",
 		},
 		beacon = {
 			enable = true,

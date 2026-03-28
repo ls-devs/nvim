@@ -40,12 +40,7 @@ return {
 				winblend = 0,
 			},
 		},
-		preview = {
-			border = "rounded",
-			win_opts = {
-				winblend = 0,
-			},
-		},
+		-- note: "preview" is not a valid top-level key in overseer config; removed
 		task_list = {
 			keymaps = {
 				["?"] = "keymap.show_help",

@@ -140,6 +140,10 @@ return {
 		},
 	},
 	opts = {
+		-- Prevent smart-splits from trying to navigate/resize into neo-tree
+		ignored_filetypes = { "NvimTree", "neo-tree", "neo-tree-popup" },
+		-- After a buffer swap, keep the cursor in the buffer it was editing
+		cursor_follows_swapped_bufs = true,
 		resize_mode = {
 			silent = true,
 			hooks = {

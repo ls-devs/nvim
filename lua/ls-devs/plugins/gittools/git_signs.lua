@@ -19,6 +19,19 @@ return {
 			changedelete = { text = "~" },
 			untracked = { text = "┆" },
 		},
+		signs_staged = {
+			add = { text = "┃" },
+			change = { text = "┃" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
+		},
+		signs_staged_enable = true,
+		diff_opts = {
+			algorithm = "histogram", -- histogram produces fewer/cleaner hunks than myers (default)
+			indent_heuristic = true, -- avoids misaligned diff hunks in indented code
+		},
 		signcolumn = true,
 		numhl = false,
 		linehl = false,
@@ -128,6 +141,25 @@ return {
 				require("gitsigns").prev_hunk()
 			end,
 			desc = "Prev Hunk",
+			noremap = true,
+			silent = true,
+		},
+		-- Stage / reset the entire buffer (complement to hunk-level stage/unstage)
+		{
+			"<leader>gwS",
+			function()
+				require("gitsigns").stage_buffer()
+			end,
+			desc = "Gitsigns Stage Buffer",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>gwR",
+			function()
+				require("gitsigns").reset_buffer()
+			end,
+			desc = "Gitsigns Reset Buffer",
 			noremap = true,
 			silent = true,
 		},

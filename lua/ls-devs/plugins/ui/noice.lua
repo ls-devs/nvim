@@ -107,6 +107,11 @@ return {
 				filter = { event = "msg_show", find = "search hit TOP" },
 				opts = { skip = true },
 			},
+			-- Suppress ":w" write confirmation (noisy on frequent saves)
+			{
+				filter = { event = "msg_show", find = "written" },
+				opts = { skip = true },
+			},
 		},
 		messages = {
 			enabled = true,
@@ -203,7 +208,7 @@ return {
 		-- nvim-notify removed: snacks.notifier is the vim.notify backend now.
 		-- inc-rename: activates the inc_rename = true preset above — provides
 		-- live-preview rename where every occurrence updates as you type.
-		{ "smjonas/inc-rename.nvim", lazy = true, opts = {} },
+		{ "smjonas/inc-rename.nvim", lazy = true, opts = { input_buffer_type = "snacks" } },
 	},
 	keys = {},
 }

@@ -14,7 +14,8 @@ return {
 		preset = "helix",
 		icons = {
 			mappings = true,
-			keys = {},
+			-- keys = {} would strip all modifier-key glyphs (⌃, ⌥, ⇧, etc.)
+			-- Leave unset to keep which-key's built-in Nerd Font key icons
 			group = "",
 			-- Icon rules: matched against keymap desc in order, first match wins.
 			-- Covers all custom function() keymaps that mini.icons can't auto-resolve.

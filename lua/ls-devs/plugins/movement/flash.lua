@@ -64,6 +64,10 @@ return {
 			rainbow = { enabled = true, shade = 7 },
 			current = false, -- no label on the match at the cursor (already there)
 		},
+		search = {
+			-- Exclude snacks input/picker windows so flash doesn't try to jump into them
+			exclude = { "snacks_input", "snacks_picker_input" },
+		},
 		jump = {
 			nohlsearch = true, -- clear hlsearch immediately after any flash jump
 		},

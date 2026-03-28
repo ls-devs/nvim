@@ -80,5 +80,12 @@ return {
 			noremap = true,
 			silent = true,
 		},
+		{
+			"<leader>cC",
+			"<cmd>CccConvert<CR>",
+			desc = "Color Convert",
+			noremap = true,
+			silent = true,
+		},
 	},
 }

@@ -232,6 +232,12 @@ return {
 		-- Route all DBUI notifications through vim.notify so Snacks
 		-- picks them up and displays them in the bottom-right corner
 		vim.g.db_ui_use_nvim_notify = 1
+		-- Show database type icons in the DBUI tree
+		vim.g.db_ui_show_database_icon = 1
+		-- Use PostgreSQL views (not just tables) when listing db objects
+		vim.g.db_ui_use_postgres_views = 1
+		-- Automatically execute query when buffer is saved (Ctrl+S triggers run)
+		vim.g.db_ui_execute_on_save = 1
 		-- Custom table helpers: adds DML query templates that appear as
 		-- child items when expanding a table in the DBUI drawer.
 		-- {table} and {schema} are replaced automatically by dadbod-ui.

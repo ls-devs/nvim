@@ -88,6 +88,23 @@ return {
 		vim.keymap.set("n", "<C-LeftDrag>", mc.handleMouseDrag, { desc = "MC Mouse Drag" })
 		vim.keymap.set("n", "<C-LeftRelease>", mc.handleMouseRelease, { desc = "MC Mouse Release" })
 
+		-- Align all cursors to the same column (useful for column editing)
+		vim.keymap.set({ "n", "x" }, "<leader>mA", mc.alignCursors, { desc = "MC Align Cursors" })
+
+		-- Sequence increment/decrement: replace numbers under each cursor with
+		-- a sequence (like <C-a> on visual block but for multi-cursors)
+		vim.keymap.set({ "n", "x" }, "g<C-a>", mc.sequenceIncrement, { desc = "MC Sequence Increment" })
+		vim.keymap.set({ "n", "x" }, "g<C-x>", mc.sequenceDecrement, { desc = "MC Sequence Decrement" })
+
+		-- Split cursors: one cursor per line of the visual selection
+		vim.keymap.set("x", "<leader>mP", mc.splitCursors, { desc = "MC Split Cursors by Line" })
+
+		-- Match-cursors: add cursor at each match of the pattern inside selection
+		vim.keymap.set("x", "<leader>mm", mc.matchCursors, { desc = "MC Match Pattern in Selection" })
+
+		-- Restore cursors from the last multicursor session (handy after an undo)
+		vim.keymap.set("n", "<leader>mr", mc.restoreCursors, { desc = "MC Restore Cursors" })
+
 		-- ── Keymap layer — only active when multiple cursors exist ─────────
 		-- These mappings only activate while cursors are live, so they can
 		-- safely overlap with single-cursor bindings.

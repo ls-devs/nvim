@@ -12,6 +12,12 @@ return {
 		display_mode = "split",
 		split_direction = "vertical",
 		show_icons = "on_request",
+		default_env = "dev", -- use the @dev environment block by default when no env is set
+		global_keymaps = false, -- disable kulala's own global keymaps (we define our own below)
+		lsp = {
+			enable = true, -- enable kulala's built-in language server for .http files
+			filetypes = { "http", "rest" },
+		},
 	},
 	keys = {
 		-- <leader>rh — run the HTTP request under the cursor

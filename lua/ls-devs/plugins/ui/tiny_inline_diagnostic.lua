@@ -26,7 +26,7 @@ return {
 				vertical_end = " └",
 			},
 			-- Keep cursorline transparent so the cursor-line bg shows through
-			transparent_cursorline = true,
+			transparent_bg = true,
 			hi = {
 				error = "DiagnosticError",
 				warn = "DiagnosticWarn",

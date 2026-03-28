@@ -174,7 +174,11 @@ return {
 		-- ── Output / floating panels ──────────────────────────────────────
 		output = {
 			enabled = true,
-			open_on_run = false,
+			open_on_run = "short", -- auto-open output only for short (< 20-line) runs; keeps large outputs quiet
+		},
+		output_panel = {
+			enabled = true,
+			open = "botright split | resize 15",
 		},
 		-- All floats (output popup, diagnostic preview) use rounded borders
 		floating = {
@@ -210,6 +214,10 @@ return {
 				prev_failed = "[f",
 				close = "q",
 				help = "?",
+				parent = "P",
+				prev_sibling = "<",
+				next_sibling = ">",
+				watch = "w",
 			},
 		},
 

@@ -20,6 +20,10 @@ return {
 		provider_selector = function(bufnr, filetype, buftype)
 			return { "treesitter", "indent" }
 		end,
+		-- Auto-close import/comment folds on buffer open (per-filetype)
+		close_fold_kinds_for_ft = {
+			default = { "imports", "comment" },
+		},
 		-- Snappier visual feedback when opening a fold (ms the highlight persists).
 		open_fold_hl_timeout = 200,
 		-- Appends a " 󱞤 N " count badge to the virtual text of each closed fold,
@@ -83,6 +87,18 @@ return {
 			opts = {
 				relculright = true,
 				setopt = true,
+				-- Prevent custom column from bleeding into tool panels
+				ft_ignore = {
+					"neo-tree",
+					"Trouble",
+					"lazy",
+					"snacks_dashboard",
+					"mason",
+					"help",
+					"qf",
+					"neotest-summary",
+					"OverseerList",
+				},
 			},
 			---@param _ LazyPlugin
 			---@param opts table

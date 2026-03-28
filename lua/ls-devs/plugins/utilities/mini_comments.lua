@@ -11,11 +11,19 @@ return {
 		local comment = require("mini.comment")
 		comment.setup({
 			options = {
+				-- Skip blank lines when toggling a comment range (gcip won't comment empty lines)
+				ignore_blank_line = true,
 				-- Delegate comment-string resolution to Treesitter context
-				-- so embedded languages (e.g. JSX inside TSX) get the right syntax
+				-- so embedded languages (e.g. JSX inside TSX) get the right syntax.
+				-- ref_position is forwarded so multi-line ranges use the start position,
+				-- not the cursor position (fixes wrong commentstring on JSX/TSX blocks).
+				---@param ref_position {[1]: integer, [2]: integer}
 				---@return string
-				custom_commentstring = function()
-					return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
+				custom_commentstring = function(ref_position)
+					return require("ts_context_commentstring.internal").calculate_commentstring({
+						key = "__default",
+						location = { ref_position[1] - 1, ref_position[2] },
+					}) or vim.bo.commentstring
 				end,
 			},
 		})

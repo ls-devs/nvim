@@ -49,7 +49,13 @@ return {
 			return true
 		end,
 
-		snippets = { preset = "luasnip" },
+		snippets = {
+			preset = "luasnip",
+			-- score_offset default is -3 and is applied on top of the provider's score_offset (85).
+			-- Set to +3 here to cancel out the default penalty so snippets stay at their
+			-- declared score_offset and aren't silently demoted behind LSP items.
+			score_offset = 3,
+		},
 
 		-- ── Keymaps ───────────────────────────────────────────────────────────
 		keymap = {
@@ -340,6 +346,7 @@ return {
 					name = "Git",
 					module = "blink-cmp-git",
 					score_offset = 80,
+					async = true,
 					opts = {},
 				},
 				-- vim-dadbod-completion — native blink.cmp source (see dadbod_source.lua).
@@ -370,6 +377,12 @@ return {
 		})
 
 		require("luasnip.loaders.from_vscode").lazy_load()
+		-- Setup LuaSnip with cursor-boundary events so exiting a node
+		-- is detected correctly (without this, cursors can escape snippets silently)
+		require("luasnip").setup({
+			region_check_events = "CursorMoved",
+			delete_check_events = "TextChanged",
+		})
 		require("blink.cmp").setup(opts)
 
 		-- ── Noice Flash Workaround ────────────────────────────────────────────

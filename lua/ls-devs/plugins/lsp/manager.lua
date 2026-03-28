@@ -88,6 +88,11 @@ return {
 			start_delay = 3000,
 			-- Skip the update check if one already ran within the last 5 hours
 			debounce_hours = 5,
+			-- Disable mason-null-ls integration (not installed) to avoid failed pcall on startup
+			integrations = {
+				["mason-null-ls"] = false,
+				["mason-nvim-dap"] = false,
+			},
 		},
 	},
 	-- Mason LSP Configuration
@@ -115,6 +120,8 @@ return {
 					},
 					ui = {
 						border = "rounded",
+						-- Disable slow on-open outdated check (auto_update handles updates already)
+						check_outdated_packages_on_open = false,
 						icons = {
 							package_installed = "✓",
 							package_pending = "➜",
@@ -156,7 +163,29 @@ return {
 					})
 				end,
 			},
-			{ "b0o/schemastore.nvim", lazy = true },
+			{
+				"b0o/schemastore.nvim",
+				lazy = true,
+				config = function()
+					-- Wire JSON/YAML schema validation and completion through schemastore
+					vim.lsp.config("jsonls", {
+						settings = {
+							json = {
+								schemas = require("schemastore").json.schemas(),
+								validate = { enable = true },
+							},
+						},
+					})
+					vim.lsp.config("yamlls", {
+						settings = {
+							yaml = {
+								schemaStore = { enable = false, url = "" },
+								schemas = require("schemastore").yaml.schemas(),
+							},
+						},
+					})
+				end,
+			},
 			-- mason-nvim-dap bridges Mason-installed adapters with nvim-dap,
 			-- auto-registering dap.adapters entries for all installed DAP packages.
 			{

@@ -38,77 +38,17 @@ return {
 	---@param opts table
 	config = function(_, opts)
 		require("neo-tree").setup(opts)
-		-- Snap cursor to the first character of the filename on every move.
-		-- Neo-tree renders lines as: [indent spaces][icon][space][name]
-		-- Strategy: scan left-to-right for the last [multi-byte char][space] pair
-		-- (that's always the icon + space); the char after the space is the filename.
-		---@param line string
-		---@return integer
-		local function name_col(line)
-			local b = 1
-			while b <= #line do
-				local byte = line:byte(b)
-				local clen = (byte >= 0xF0 and 4) or (byte >= 0xE0 and 3) or (byte >= 0xC0 and 2) or 1
-				if clen > 1 then
-					local after = b + clen
-					if after <= #line and line:byte(after) == 0x20 then
-						-- Scan past all spaces following this glyph (handles empty
-						-- folder icons which produce two consecutive spaces).
-						local name_start = after + 1
-						while name_start <= #line and line:byte(name_start) == 0x20 do
-							name_start = name_start + 1
-						end
-						-- Accept only if the target is ASCII (< 0x80): indent markers
-						-- and icons always lead to another glyph (\xc2+) or the filename
-						-- (ASCII). Right-side git/diagnostic glyphs are themselves non-ASCII
-						-- so they are never a valid target here.
-						if name_start <= #line and line:byte(name_start) < 0x80 then
-							return name_start - 1 -- 0-indexed col of first filename char
-						end
-					end
-				end
-				b = b + clen
-			end
-			-- Fallback: first non-blank char (handles root items with no icon)
-			local first = line:find("%S")
-			return first and first - 1 or 0
-		end
-
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "neo-tree",
-			---@param ev vim.api.keyset.create_autocmd.callback_args
-			callback = function(ev)
-				local group = vim.api.nvim_create_augroup("neotree_cursor_snap_" .. ev.buf, { clear = true })
-				local lock = false
-				vim.api.nvim_create_autocmd("CursorMoved", {
-					buffer = ev.buf,
-					group = group,
-					callback = function()
-						if lock then
-							return
-						end
-						local ok, pos = pcall(vim.api.nvim_win_get_cursor, 0)
-						if not ok then
-							return
-						end
-						local row, col = pos[1], pos[2]
-						local line = vim.api.nvim_get_current_line()
-						local target = name_col(line)
-						if col ~= target then
-							lock = true
-							pcall(vim.api.nvim_win_set_cursor, 0, { row, target })
-							lock = false
-						end
-					end,
-				})
-			end,
-		})
 	end,
 	opts = {
 		close_if_last_window = true,
-		popup_border_style = "rounded",
+		-- "NC" reads winborder on Neovim ≥ 0.11; hardcoding "rounded" would bypass it
+		popup_border_style = "NC",
 		enable_git_status = true,
 		enable_diagnostics = true,
+		-- Snap cursor to first filename character when navigating (replaces custom CursorMoved autocmd)
+		enable_cursor_hijack = true,
+		-- Limit git status scope to neo-tree root for performance in large repos
+		git_status_scope_to_path = true,
 		open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
 		sort_case_insensitive = true,
 		default_component_configs = {

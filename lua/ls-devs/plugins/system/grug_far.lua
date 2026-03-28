@@ -53,7 +53,7 @@ return {
 		},
 		spinnerStates = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },
 		icons = {
-			fileIconsProvider = "nvim-web-devicons",
+			fileIconsProvider = "mini.icons",
 		},
 	},
 }

@@ -20,5 +20,10 @@ return {
 		{ "<M-Down>", "<cmd>Treewalker Down<CR>", mode = { "n", "v" }, desc = "Treewalker Down" },
 		{ "<M-Left>", "<cmd>Treewalker Left<CR>", mode = { "n", "v" }, desc = "Treewalker Left" },
 		{ "<M-Right>", "<cmd>Treewalker Right<CR>", mode = { "n", "v" }, desc = "Treewalker Right" },
+		-- Swap: move the current node (and its children) up/down/left/right in the AST
+		{ "<M-S-Up>", "<cmd>Treewalker SwapUp<CR>", mode = "n", desc = "Treewalker Swap Up" },
+		{ "<M-S-Down>", "<cmd>Treewalker SwapDown<CR>", mode = "n", desc = "Treewalker Swap Down" },
+		{ "<M-S-Left>", "<cmd>Treewalker SwapLeft<CR>", mode = "n", desc = "Treewalker Swap Left" },
+		{ "<M-S-Right>", "<cmd>Treewalker SwapRight<CR>", mode = "n", desc = "Treewalker Swap Right" },
 	},
 }

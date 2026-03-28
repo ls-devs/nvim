@@ -60,6 +60,10 @@ return {
 			{ text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" }
 		)
 		vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
+		vim.fn.sign_define(
+			"DapBreakpointRejected",
+			{ text = "✕", texthl = "DapBreakpointRejected", linehl = "", numhl = "" }
+		)
 	end,
 	dependencies = {
 		{

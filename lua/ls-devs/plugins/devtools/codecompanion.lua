@@ -56,7 +56,7 @@ return {
 			opts = {
 				panel = {
 					enabled = true,
-					auto_refresh = true,
+					auto_refresh = false, -- only refresh when explicitly requested (gr) to avoid flicker
 					keymap = {
 						jump_prev = "[[",
 						jump_next = "]]",
@@ -233,7 +233,7 @@ return {
 				width = 95,
 				height = 20,
 				prompt = "Prompt ",
-				provider = "default",
+				provider = "snacks", -- use snacks picker for the action palette (consistent with telescope-free setup)
 				window = {
 					layout = "float",
 					width = 0.9,
