@@ -1,9 +1,13 @@
 -- ── focus.nvim ────────────────────────────────────────────────────────────
--- Purpose : Manual window resizing — golden-ratio maximise or equalise on demand
+-- Purpose : Window resizing — manual (wm/we) or auto golden-ratio (wr toggle)
 -- Trigger : BufReadPost, BufNewFile
--- Note    : autoresize (auto-resize on WinEnter) is intentionally disabled.
---           Use <leader>wm to maximise the current window and <leader>we to
---           restore equal splits. No resize fires automatically on Ctrl-H/L.
+-- Note    : autoresize.enable=true is required for both manual commands AND
+--           the WinEnter autocmd. We patch the autocmd after setup to respect
+--           is_disabled() — focus.nvim's own callback skips this check, which
+--           causes winwidth/winheight to be reset on every window switch even
+--           when "disabled", producing a subtle rebalance on Ctrl-H/L.
+--           We start disabled (vim.g.focus_disable=true after setup) so the
+--           autocmd is registered but silently skipped. <leader>wr toggles.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
@@ -12,17 +16,8 @@ return {
 	opts = {
 		enable = true,
 		commands = true,
-		split = {
-			bufnew = false,
-			tmux = false,
-		},
-		-- Disable auto-resize on WinEnter: prevents the WinEnter autocmd from
-		-- being created entirely. Without this, even "toggled off" state still
-		-- runs split_resizer on every window switch and modifies winwidth/winheight.
-		autoresize = {
-			enable = false,
-		},
-		-- All visual changes disabled; focus.nvim is used purely for manual resizing
+		split = { bufnew = false, tmux = false },
+		autoresize = { enable = true },
 		ui = {
 			number = false,
 			relativenumber = false,
@@ -35,27 +30,31 @@ return {
 			winhighlight = false,
 		},
 	},
+	config = function(_, opts)
+		require("focus").setup(opts)
+
+		-- Patch: replace the Focus augroup's WinEnter callback with one that
+		-- checks is_disabled() before calling resize(). Without this, focus.nvim
+		-- still runs split_resizer on every WinEnter even when toggled off,
+		-- setting winwidth/winheight=1 and causing a subtle window rebalance.
+		local augroup = vim.api.nvim_create_augroup("Focus", { clear = true })
+		vim.api.nvim_create_autocmd("WinEnter", {
+			group = augroup,
+			callback = function()
+				if vim.g.focus_disable or vim.w.focus_disable or vim.b.focus_disable then
+					return
+				end
+				require("focus").resize()
+			end,
+			desc = "Focus: resize focused split (guarded)",
+		})
+
+		-- Start disabled — <leader>wr (FocusToggle) opts in to auto golden-ratio
+		vim.g.focus_disable = true
+	end,
 	keys = {
-		{
-			"<leader>wm",
-			"<cmd>FocusMaximise<CR>",
-			desc = "Focus Maximise Window",
-			silent = true,
-			noremap = true,
-		},
-		{
-			"<leader>we",
-			"<cmd>FocusEqualise<CR>",
-			desc = "Focus Equalize Window",
-			silent = true,
-			noremap = true,
-		},
-		{
-			"<leader>wr",
-			"<cmd>FocusMaxOrEqual<CR>",
-			desc = "Focus Max or Equalise",
-			silent = true,
-			noremap = true,
-		},
+		{ "<leader>wm", "<cmd>FocusMaximise<CR>", desc = "Focus Maximise", silent = true, noremap = true },
+		{ "<leader>we", "<cmd>FocusEqualise<CR>", desc = "Focus Equalise", silent = true, noremap = true },
+		{ "<leader>wr", "<cmd>FocusToggle<CR>", desc = "Focus Toggle Autoresize", silent = true, noremap = true },
 	},
 }

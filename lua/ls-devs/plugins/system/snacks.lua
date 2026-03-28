@@ -217,7 +217,7 @@ return {
 		indent = {
 			enabled = true,
 			indent = { char = "│" },
-			scope = { enabled = true },
+			scope = { enabled = false }, -- disable curved-corner scope indicator
 			---@param buf integer
 			---@return boolean
 			filter = function(buf)
