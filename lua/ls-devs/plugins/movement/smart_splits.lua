@@ -144,14 +144,6 @@ return {
 		ignored_filetypes = { "NvimTree", "neo-tree", "neo-tree-popup" },
 		resize_mode = {
 			silent = true,
-			hooks = {
-				on_enter = function()
-					vim.notify("Entering resize mode")
-				end,
-				on_leave = function()
-					vim.notify("Exiting resize mode")
-				end,
-			},
 		},
 	},
 }

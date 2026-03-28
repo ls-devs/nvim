@@ -74,6 +74,8 @@ return {
 			"statuscol.nvim",
 			"neotab.nvim",
 			"nvim-ufo",
+			"blink.cmp",
+			"snacks.nvim",
 		},
 		integrations = {
 			lspconfig = true,

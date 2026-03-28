@@ -12,20 +12,12 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		signs = {
-			add = { text = "┃" },
-			change = { text = "┃" },
-			delete = { text = "_" },
-			topdelete = { text = "‾" },
-			changedelete = { text = "~" },
-			untracked = { text = "┆" },
+			delete = { text = "_" }, -- default ▁
+			topdelete = { text = "‾" }, -- default ▔
 		},
 		signs_staged = {
-			add = { text = "┃" },
-			change = { text = "┃" },
 			delete = { text = "_" },
 			topdelete = { text = "‾" },
-			changedelete = { text = "~" },
-			untracked = { text = "┆" },
 		},
 		signs_staged_enable = true,
 		diff_opts = {
@@ -35,7 +27,6 @@ return {
 		signcolumn = true,
 		numhl = false,
 		linehl = false,
-		word_diff = false,
 		watch_gitdir = {
 			follow_files = true,
 		},

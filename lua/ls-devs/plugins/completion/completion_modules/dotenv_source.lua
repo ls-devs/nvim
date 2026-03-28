@@ -40,7 +40,7 @@ function source:get_completions(_, callback)
 						seen[key] = true
 						-- Strip matching quotes: 'value' → value, "value" → value
 						value = (value or "")
-						value = value:match("^'(.-)'%s*$") or value:match('^"(.-)"?%s*$') or value
+						value = value:match("^'(.-)'%s*$") or value:match('^"(.-)"') or value
 						table.insert(items, {
 							label = key,
 							kind = vim.lsp.protocol.CompletionItemKind.Variable,

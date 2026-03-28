@@ -156,7 +156,7 @@ return {
 				position = "float",
 				border = "rounded",
 				width = 0.72,
-				height = 0.82,
+				height = 0.65,
 				title_pos = "left",
 				wo = { winblend = 0, statuscolumn = "  " },
 				-- Override snacks' default double-escape (200ms timer) with single Esc

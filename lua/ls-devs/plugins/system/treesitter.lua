@@ -2,7 +2,6 @@
 -- Purpose : Syntax parsing, highlighting, and text objects
 -- Note    : Uses the main branch (full rewrite for Neovim 0.12+).
 --           The master branch is archived and incompatible with Neovim 0.12.
---           lazy = false is required — the plugin does not support lazy-loading.
 --           wildfire.nvim owns <C-Space> incremental selection.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
