@@ -9,6 +9,21 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+		-- Override markdownlint-cli2 args to inject a config that disables
+		-- MD013 (line-length) and MD060 (table-column-style) globally.
+		-- markdownlint-cli2 reads stdin ("-") but also accepts --config; we write
+		-- the JSON once to a temp file so the arg is always available.
+		linters = {
+			["markdownlint-cli2"] = {
+				args = (function()
+					local cfg = vim.fn.stdpath("cache") .. "/markdownlint-cli2.json"
+					if vim.fn.filereadable(cfg) == 0 then
+						vim.fn.writefile({ '{"default":true,"MD013":false,"MD060":false}' }, cfg)
+					end
+					return { "--config", cfg, "-" }
+				end)(),
+			},
+		},
 		linters_by_ft = {
 			-- eslint_d: fast daemon designed for linting/diagnostics.
 			-- The eslint LSP is configured to suppress publishDiagnostics so it
