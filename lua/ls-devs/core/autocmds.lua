@@ -45,7 +45,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "Setup nvim-emmet on LspAttach",
 })
 
--- Buffer-local keymaps for the CLI terminal buffer.
+-- In markdown/codecompanion buffers: drop conceallevel to 0 when entering
+-- visual mode so raw syntax (**, `, [], etc.) is visible for selection.
+-- Restore to 2 when leaving visual mode.
+vim.api.nvim_create_autocmd("ModeChanged", {
+	group = augroup,
+	pattern = { "*:[vV\x16]*", "[vV\x16]*:*" },
+	callback = function()
+		local ft = vim.bo.filetype
+		if ft ~= "markdown" and ft ~= "codecompanion" then
+			return
+		end
+		local in_visual = vim.fn.mode():match("^[vV\x16]") ~= nil
+		vim.wo.conceallevel = in_visual and 0 or 2
+	end,
+	desc = "Markdown: show raw syntax in visual mode",
+})
+
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup,
 	pattern = "codecompanion_cli",
