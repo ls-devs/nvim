@@ -41,6 +41,9 @@ return {
 			json = { "jsonlint" },
 			python = { "ruff" },
 			yaml = { "yamllint" },
+			yamllint = {
+				args = { "-d", "{extends: default, rules: {document-start: disable}}" }
+			},
 			dockerfile = { "hadolint" },
 			gitcommit = { "gitlint" },
 			-- sqlfluff removed: sql-formatter (conform) handles all style/layout

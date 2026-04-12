@@ -131,7 +131,7 @@ install_system_packages() {
       $SUDO_CMD apt-get install -y \
         git curl wget unzip tar gzip xz-utils \
         build-essential gcc g++ make cmake \
-        libstdc++-dev pkg-config gettext ninja-build \
+        pkg-config gettext ninja-build \
         python3 python3-pip python3-venv \
         default-jdk \
         ripgrep fd-find fzf shellcheck \
@@ -598,9 +598,31 @@ setup_neovim_headless() {
     return 0
   fi
 
+  # Make sure cargo is reachable for blink.cmp's `cargo build --release` step.
+  # rustup installs to ~/.cargo/bin; source the env file if present so the
+  # nvim subprocess inherits a working PATH.
+  # shellcheck source=/dev/null
+  [ -f "${HOME}/.cargo/env" ] && source "${HOME}/.cargo/env"
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+
+  if ! command_exists cargo; then
+    warn "cargo not on PATH — blink.cmp build will fail. Re-run install_rust."
+  fi
+
   # 1. Lazy.nvim — install all plugins (incl. blink.cmp cargo build)
   info "Installing plugins (Lazy.nvim) — includes blink.cmp Rust build…"
   nvim --headless "+Lazy! install" +qa 2>&1 | grep -Ev "^$" | tail -5 || true
+
+  # Fallback: if blink.cmp shipped but its native lib is missing, build it
+  # explicitly. Lazy's build hook can silently skip when the env was wrong.
+  local blink_dir="${HOME}/.local/share/nvim/lazy/blink.cmp"
+  if [ -d "$blink_dir" ] && [ ! -d "${blink_dir}/target/release" ]; then
+    if command_exists cargo; then
+      info "blink.cmp Rust artefact missing — building manually…"
+      ( cd "$blink_dir" && cargo build --release ) || \
+        warn "blink.cmp manual build failed — check 'cd ${blink_dir} && cargo build --release'"
+    fi
+  fi
 
   # 2. Mason — install all LSPs / formatters / linters / debuggers
   info "Installing Mason tools (LSPs, formatters, linters, debuggers)…"

@@ -43,7 +43,6 @@ return {
 		close_if_last_window = true,
 		-- "NC" reads winborder on Neovim ≥ 0.11; hardcoding "rounded" would bypass it
 		popup_border_style = "NC",
-		-- Snap cursor to first filename character when navigating (replaces custom CursorMoved autocmd)
 		enable_cursor_hijack = true,
 		-- Limit git status scope to neo-tree root for performance in large repos
 		git_status_scope_to_path = true,

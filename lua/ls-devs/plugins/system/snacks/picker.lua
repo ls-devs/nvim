@@ -186,6 +186,69 @@ return {
 			preview = false,
 			hidden = { "preview" },
 			layout = { preset = "select" },
+			-- Pure vertical layout (no preview pane) for all overseer ui.select calls.
+			kinds = {
+				overseer_template = {
+					layout = {
+						reverse = true,
+						layout = {
+							box = "vertical",
+							width = 0.50,
+							height = 0.6,
+							border = "rounded",
+							title = "  {title} ",
+							title_pos = "center",
+							{ win = "list", border = "none" },
+							{ win = "input", height = 1, border = "top" },
+						},
+					},
+				},
+				overseer_task = {
+					layout = {
+						reverse = true,
+						layout = {
+							box = "vertical",
+							width = 0.50,
+							height = 0.6,
+							border = "rounded",
+							title = "  {title} ",
+							title_pos = "center",
+							{ win = "list", border = "none" },
+							{ win = "input", height = 1, border = "top" },
+						},
+					},
+				},
+				overseer_task_options = {
+					layout = {
+						reverse = true,
+						layout = {
+							box = "vertical",
+							width = 0.50,
+							height = 0.6,
+							border = "rounded",
+							title = "  {title} ",
+							title_pos = "center",
+							{ win = "list", border = "none" },
+							{ win = "input", height = 1, border = "top" },
+						},
+					},
+				},
+				overseer_new_component = {
+					layout = {
+						reverse = true,
+						layout = {
+							box = "vertical",
+							width = 0.50,
+							height = 0.6,
+							border = "rounded",
+							title = "  {title} ",
+							title_pos = "center",
+							{ win = "list", border = "none" },
+							{ win = "input", height = 1, border = "top" },
+						},
+					},
+				},
+			},
 		},
 
 		-- ── marks: prominent mark label + file + line content ─────────────

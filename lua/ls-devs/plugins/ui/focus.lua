@@ -8,6 +8,9 @@
 --           when "disabled", producing a subtle rebalance on Ctrl-H/L.
 --           We start disabled (vim.g.focus_disable=true after setup) so the
 --           autocmd is registered but silently skipped. <leader>wr toggles.
+--           Additionally, resize is skipped when neo-tree sidebar is open to
+--           prevent split-width recalculation from causing UI glitches on
+--           buffer switch.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
@@ -72,6 +75,14 @@ return {
 				end
 				if vim.tbl_contains(ignore_ft, vim.bo.filetype) then
 					return
+				end
+				-- Skip resize when neo-tree sidebar is open to prevent autoresize glitches
+				for _, win in ipairs(vim.api.nvim_list_wins()) do
+					local ok, ft =
+						pcall(vim.api.nvim_get_option_value, "filetype", { buf = vim.api.nvim_win_get_buf(win) })
+					if ok and ft == "neo-tree" then
+						return
+					end
 				end
 				require("focus").resize()
 			end,

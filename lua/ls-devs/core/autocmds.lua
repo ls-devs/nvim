@@ -49,10 +49,37 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = augroup,
 	pattern = "codecompanion_cli",
 	callback = function(args)
+		-- Tell focus.nvim to save/restore this window's dimensions so the
+		-- terminal content is never garbled by golden-ratio redistribution.
+		vim.b[args.buf].focus_disable = true
 		-- <C-q> hides the CLI panel from terminal mode without killing the process
 		vim.keymap.set("t", "<C-q>", function()
 			require("codecompanion").toggle_cli()
 		end, { buffer = args.buf, silent = true, desc = "Hide CodeCompanion CLI" })
+		-- Single <Esc> passes through to the Claude Code TUI (e.g. cancel, clear input).
+		-- Double <Esc> exits Neovim terminal mode so normal keybinds become available.
+		vim.keymap.set("t", "<Esc>", "<Esc>", { buffer = args.buf, silent = true, desc = "Pass Esc to CLI" })
+		vim.keymap.set(
+			"t",
+			"<Esc><Esc>",
+			"<C-\\><C-n>",
+			{ buffer = args.buf, silent = true, desc = "Exit terminal mode" }
+		)
+		-- When the CLI process itself exits (e.g. /exit, Ctrl-D), close the window.
+		vim.api.nvim_create_autocmd("TermClose", {
+			group = augroup,
+			buffer = args.buf,
+			once = true,
+			callback = function()
+				vim.schedule(function()
+					local win = vim.fn.bufwinid(args.buf)
+					if win ~= -1 and vim.api.nvim_win_is_valid(win) then
+						pcall(vim.api.nvim_win_close, win, true)
+					end
+				end)
+			end,
+			desc = "Auto-close CLI window on process exit",
+		})
 	end,
 	desc = "CodeCompanion CLI buffer-local keymaps",
 })
@@ -112,14 +139,104 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Blink on yank",
 })
 
--- Re-equalize split sizes when the terminal itself is resized
+-- Re-equalize split sizes when the terminal itself is resized.
+-- wincmd= ignores winfixwidth, so save/restore fixed-width windows around it.
 vim.api.nvim_create_autocmd("VimResized", {
 	group = augroup,
-	pattern = "*",
 	callback = function()
+		local saved = {}
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_is_valid(win) and vim.wo[win].winfixwidth then
+				saved[win] = vim.api.nvim_win_get_width(win)
+			end
+		end
 		vim.cmd("wincmd =")
+		for win, w in pairs(saved) do
+			if vim.api.nvim_win_is_valid(win) then
+				pcall(vim.api.nvim_win_set_width, win, w)
+			end
+		end
 	end,
-	desc = "Auto-equalize splits on terminal resize",
+	desc = "Auto-equalize splits on terminal resize (respects winfixwidth)",
+})
+
+-- Enforce fixed sidebar widths after any window resize.
+-- Covers: neo-tree (always 40), OverseerList (always 40).
+-- Runs synchronously (no vim.schedule) so the correction lands before the next
+-- redraw, preventing the visual glitch that deferred correction caused.
+-- Width is only set when it actually changed to avoid spurious WinResized loops.
+-- codecompanion_cli is intentionally excluded: it has winfixwidth=true + focus_disable=true,
+-- so focus.nvim and natural splits leave it alone.
+local _win_enforcing = false
+vim.api.nvim_create_autocmd("WinResized", {
+	group = augroup,
+	callback = function()
+		if _win_enforcing then
+			return
+		end
+		_win_enforcing = true
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_is_valid(win) then
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.bo[buf].filetype
+				if ft == "neo-tree" or ft == "OverseerList" then
+					if vim.api.nvim_win_get_width(win) ~= 40 then
+						pcall(vim.api.nvim_win_set_width, win, 40)
+					end
+				end
+			end
+		end
+		_win_enforcing = false
+	end,
+	desc = "Enforce fixed sidebar widths (neo-tree / OverseerList) after resize",
+})
+
+-- Pin OverseerList: disable focus.nvim and enforce width synchronously.
+-- overseer's window.lua sets winfixwidth and calls nvim_win_set_width BEFORE
+-- triggering FileType, so both are already in place here. We just enforce the
+-- width correction synchronously (no vim.schedule) to avoid any deferred
+-- one-frame flash, and mark the buffer so focus.nvim ignores it.
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "OverseerList",
+	callback = function(args)
+		vim.b[args.buf].focus_disable = true
+		local win = vim.fn.bufwinid(args.buf)
+		if win ~= -1 then
+			vim.wo[win].winfixwidth = true
+			if vim.api.nvim_win_get_width(win) ~= 40 then
+				pcall(vim.api.nvim_win_set_width, win, 40)
+			end
+		end
+	end,
+	desc = "Pin OverseerList width and disable focus.nvim interference",
+})
+
+-- Pin neo-tree sidebar width at the source so no resize ever reaches WinResized.
+-- neo-tree does not set winfixwidth itself, leaving its split vulnerable to
+-- golden-ratio / equalize operations on every buffer switch. We set winfixwidth
+-- synchronously on FileType (before any redraw) so the window is truly fixed.
+-- Floating neo-tree instances (Neotree float reveal) are excluded via the
+-- relative check — floats have relative ~= "" and must not have winfixwidth set.
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "neo-tree",
+	callback = function(args)
+		local win = vim.fn.bufwinid(args.buf)
+		if win == -1 then
+			return
+		end
+		-- Floating neo-tree (Neotree float) must be skipped
+		if vim.api.nvim_win_get_config(win).relative ~= "" then
+			return
+		end
+		vim.b[args.buf].focus_disable = true
+		vim.wo[win].winfixwidth = true
+		if vim.api.nvim_win_get_width(win) ~= 40 then
+			pcall(vim.api.nvim_win_set_width, win, 40)
+		end
+	end,
+	desc = "Pin neo-tree sidebar width and disable focus.nvim interference",
 })
 
 -- Open help in a vertical split on the right

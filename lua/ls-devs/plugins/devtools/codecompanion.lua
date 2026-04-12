@@ -135,8 +135,14 @@ return {
 				},
 			},
 			cli = {
-				agent = "copilot",
+				agent = "claude_code",
 				agents = {
+					claude_code = {
+						cmd = "claude",
+						args = {},
+						description = "Claude Code CLI",
+						provider = "terminal",
+					},
 					copilot = {
 						cmd = "copilot",
 						args = {},
@@ -144,7 +150,7 @@ return {
 					},
 				},
 				opts = {
-					auto_insert = true,
+					auto_insert = false,
 				},
 				keymaps = {
 					next_chat = {
@@ -706,5 +712,34 @@ return {
 	},
 	config = function(_, opts)
 		require("codecompanion").setup(opts)
+
+		-- Smarter auto-insert for the CLI terminal buffer.
+		-- The built-in auto_insert=true fires startinsert() immediately on every
+		-- BufEnter, which forces the copilot CLI to re-render its prompt on each
+		-- window switch. Instead: defer via vim.schedule so the buffer-switch event
+		-- chain is fully settled, and only proceed if the cursor is still on the
+		-- CLI buffer (guards against rapid switching).
+		-- Additionally, send a PTY resize (TIOCSWINSZ) via jobresize() to match
+		-- the actual window dimensions — the terminal process does not receive a
+		-- resize signal on buffer re-entry, which causes the CLI to render with
+		-- stale dimensions until the user manually resizes.
+		vim.api.nvim_create_autocmd("BufEnter", {
+			callback = function(ev)
+				if vim.bo[ev.buf].filetype ~= "codecompanion_cli" then
+					return
+				end
+				vim.schedule(function()
+					if not (vim.api.nvim_buf_is_valid(ev.buf) and vim.api.nvim_get_current_buf() == ev.buf) then
+						return
+					end
+					local chan = vim.bo[ev.buf].channel
+					if chan and chan > 0 then
+						local win = vim.api.nvim_get_current_win()
+						vim.fn.jobresize(chan, vim.api.nvim_win_get_width(win), vim.api.nvim_win_get_height(win))
+					end
+					vim.cmd.startinsert()
+				end)
+			end,
+		})
 	end,
 }
