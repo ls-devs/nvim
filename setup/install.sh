@@ -330,8 +330,30 @@ install_rust() {
   header "4 · Rust + Cargo (rustup)"
   # blink.cmp requires `cargo build --release` at plugin install time
 
+  local rust_min="1.80"
+
   if command_exists cargo; then
-    success "Cargo $(cargo --version) already installed."
+    local cargo_ver
+    cargo_ver=$(cargo --version | awk '{print $2}')
+    if version_ge "$cargo_ver" "$rust_min"; then
+      success "Cargo ${cargo_ver} already satisfies >= ${rust_min}."
+    else
+      warn "Cargo ${cargo_ver} too old for blink.cmp (need >= ${rust_min})."
+      if command_exists rustup; then
+        info "Updating toolchain via rustup…"
+        rustup update stable && rustup default stable
+      else
+        warn "Removing distro cargo and reinstalling via rustup…"
+        case "$PKG_MANAGER" in
+          apt) $SUDO_CMD apt-get remove -y rustc cargo || true ;;
+          dnf|yum) $SUDO_CMD "$PKG_MANAGER" remove -y rust cargo || true ;;
+          pacman) $SUDO_CMD pacman -Rns --noconfirm rust || true ;;
+        esac
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+        # shellcheck source=/dev/null
+        source "${HOME}/.cargo/env"
+      fi
+    fi
   else
     info "Installing Rust via rustup…"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
@@ -371,7 +393,11 @@ install_nodejs() {
   # Node.js provider for Neovim (required for some plugins and remote plugins)
   if ! npm list -g --depth=0 neovim 2>/dev/null | grep -q neovim; then
     info "Installing npm global: neovim provider…"
-    npm install -g neovim
+    if [ -w "$(npm root -g 2>/dev/null)" ]; then
+      npm install -g neovim
+    else
+      $SUDO_CMD npm install -g neovim
+    fi
   fi
 
   success "Node.js $(node --version) ready."
@@ -485,7 +511,11 @@ install_pnpm() {
     success "pnpm $(pnpm --version) already installed."; return 0
   fi
   info "Installing pnpm via npm…"
-  $SUDO_CMD npm install -g pnpm
+  if [ -w "$(npm root -g 2>/dev/null)" ]; then
+    npm install -g pnpm
+  else
+    $SUDO_CMD npm install -g pnpm
+  fi
   success "pnpm $(pnpm --version) installed."
 }
 
