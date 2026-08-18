@@ -9,7 +9,9 @@
 return {
 	"saghen/blink.cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
-	build = "cargo build --release",
+	build = function()
+		require("blink.cmp").build():pwait()
+	end,
 	dependencies = {
 		{ "saghen/blink.lib", lazy = true },
 		{
@@ -109,7 +111,7 @@ return {
 					show_on_x_blocked_trigger_characters = {},
 				},
 				list = {
-					selection = { preselect = false, auto_insert = true },
+					selection = { preselect = false, auto_insert = false },
 				},
 				menu = {
 					auto_show = true,
