@@ -78,8 +78,7 @@ return {
 				"bash-debug-adapter",
 				"js-debug-adapter",
 
-				-- ── Swift (requires Swift toolchain installed separately) ──────
-				"sourcekit-lsp",
+				-- ── Swift ──────
 				"swift-format",
 			},
 			auto_update = true,

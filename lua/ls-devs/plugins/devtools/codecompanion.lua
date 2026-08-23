@@ -135,7 +135,7 @@ return {
 				},
 			},
 			cli = {
-				agent = "claude_code",
+				agent = "copilot",
 				agents = {
 					claude_code = {
 						cmd = "claude",

@@ -94,8 +94,6 @@ return {
 						"prettier.config.ts",
 						"prettier.config.mjs",
 						"prettier.config.cjs",
-						-- package.json may contain a "prettier" key — treat it as a config file
-						"package.json",
 					}
 					if #vim.fs.find(configs, { path = ctx.dirname, upward = true, type = "file" }) == 0 then
 						return { "--print-width", "100", "--trailing-comma", "all" }

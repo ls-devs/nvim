@@ -441,24 +441,51 @@ return {
 			end
 		end
 
+		-- ── Docs Window Reposition-Flash Fix ──────────────────────────────────
+		-- blink.cmp can call docs.update_position() twice in quick succession:
+		-- once with an estimated position (before the markdown content is
+		-- rendered/measured) and once more with the corrected position (after
+		-- the real content width is known). Each call used to do its own
+		-- hide → reposition → unhide cycle, so the window briefly became
+		-- visible at the FIRST (often wrong, e.g. left-side) position before
+		-- the second call hid it again and moved it to the final (right-side)
+		-- position — producing a visible flash/artifact.
+		-- Fix: defer the unhide to the next event-loop tick and tag it with a
+		-- generation counter. If update_position is called again before that
+		-- tick runs, the stale unhide is skipped — only the LAST computed
+		-- position ever becomes visible.
 		local orig_docs_update_position = docs.update_position
 		local docs_update_in_progress = false
+		local docs_unhide_generation = 0
 		---@diagnostic disable-next-line: duplicate-set-field
 		docs.update_position = function()
 			if docs_update_in_progress then
 				orig_docs_update_position()
 				return
 			end
+
 			local win_id = docs.win:is_open() and docs.win.id or nil
 			if win_id then
 				vim.api.nvim_win_set_config(win_id, { hide = true })
 			end
+
 			docs_update_in_progress = true
 			orig_docs_update_position()
 			docs_update_in_progress = false
-			if docs.win:is_open() and docs.win.id then
-				vim.api.nvim_win_set_config(docs.win.id, { hide = false })
-			end
+
+			docs_unhide_generation = docs_unhide_generation + 1
+			local my_generation = docs_unhide_generation
+
+			vim.schedule(function()
+				-- A newer update_position call superseded this one before the
+				-- scheduled tick ran — let that call's own unhide win instead.
+				if my_generation ~= docs_unhide_generation then
+					return
+				end
+				if docs.win:is_open() and docs.win.id then
+					vim.api.nvim_win_set_config(docs.win.id, { hide = false })
+				end
+			end)
 		end
 	end,
 }
