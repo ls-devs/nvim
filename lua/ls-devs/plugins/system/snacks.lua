@@ -176,7 +176,16 @@ return {
 		-- ── lazygit (replaces utils/custom_functions.lua M.LazyGit) ───────
 		lazygit = {
 			configure = true,
-			win = { border = "rounded", width = 0.9, height = 0.9 },
+			win = {
+				border = "rounded",
+				width = 0.9,
+				height = 0.9,
+				wo = {
+					statuscolumn = "",
+					signcolumn = "no",
+					foldcolumn = "0",
+				},
+			},
 		},
 
 		-- ── quickfile ─────────────────────────────────────────────────────

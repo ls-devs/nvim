@@ -49,7 +49,6 @@ return {
 			-- dockerfile-language-server provides formatting via LSP fallback
 			dockerfile = {},
 			python = { "black" },
-			swift = { "swift-format" },
 			ps1 = { "psscriptanalyzer" },
 			psm1 = { "psscriptanalyzer" },
 			psd1 = { "psscriptanalyzer" },

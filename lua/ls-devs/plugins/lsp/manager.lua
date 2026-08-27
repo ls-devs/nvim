@@ -45,6 +45,7 @@ return {
 				"taplo",
 				"omnisharp",
 				"powershell_es",
+				"clangd",
 
 				-- ── Linters ───────────────────────────────────────────────────────
 				-- eslint_d: fast daemon for ESLint diagnostics (nvim-lint).
@@ -72,14 +73,12 @@ return {
 				"sql-formatter",
 				"csharpier",
 				"shellharden",
+				"clang-format",
 
 				-- ── Debuggers (DAP adapters) ──────────────────────────────────────
 				"debugpy",
 				"bash-debug-adapter",
 				"js-debug-adapter",
-
-				-- ── Swift ──────
-				"swift-format",
 			},
 			auto_update = true,
 			run_on_start = true,
