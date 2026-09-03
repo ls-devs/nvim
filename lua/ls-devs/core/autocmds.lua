@@ -52,6 +52,19 @@ vim.api.nvim_create_autocmd("FileType", {
 		-- Tell focus.nvim to save/restore this window's dimensions so the
 		-- terminal content is never garbled by golden-ratio redistribution.
 		vim.b[args.buf].focus_disable = true
+		-- Disable statuscolumn for the CLI terminal window.
+		-- snacks.statuscolumn runs a 50 ms cache-clearing timer that forces
+		-- constant re-evaluation; in a terminal buffer this causes the CLI to
+		-- rewrite the same line in an infinite loop.
+		-- Use vim.schedule to ensure the window exists before setting the option.
+		vim.schedule(function()
+			if not vim.api.nvim_buf_is_valid(args.buf) then
+				return
+			end
+			for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
+				vim.wo[win].statuscolumn = ""
+			end
+		end)
 		-- <C-q> hides the CLI panel from terminal mode without killing the process
 		vim.keymap.set("t", "<C-q>", function()
 			require("codecompanion").toggle_cli()

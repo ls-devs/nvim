@@ -103,6 +103,12 @@ return {
 				["<C-k>"] = { "select_prev", "fallback" },
 				["<CR>"] = { "accept_and_enter", "fallback" },
 				["<C-e>"] = { "cancel", "fallback" },
+				-- Space: accept the selected/ghost-text completion without
+				-- inserting a trailing space (cmdline commands rarely need one).
+				["<Space>"] = { "select_and_accept", "fallback" },
+				-- Tab: select the next item in the cmdline menu.
+				["<Tab>"] = { "select_next", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
 			},
 			completion = {
 				ghost_text = { enabled = true },

@@ -723,6 +723,9 @@ return {
 		-- the actual window dimensions — the terminal process does not receive a
 		-- resize signal on buffer re-entry, which causes the CLI to render with
 		-- stale dimensions until the user manually resizes.
+		-- Debounce: track the last size sent to avoid sending duplicate resizes
+		-- that would make the CLI redraw in an infinite loop.
+		local last_cli_size = {}
 		vim.api.nvim_create_autocmd("BufEnter", {
 			callback = function(ev)
 				if vim.bo[ev.buf].filetype ~= "codecompanion_cli" then
@@ -735,7 +738,13 @@ return {
 					local chan = vim.bo[ev.buf].channel
 					if chan and chan > 0 then
 						local win = vim.api.nvim_get_current_win()
-						vim.fn.jobresize(chan, vim.api.nvim_win_get_width(win), vim.api.nvim_win_get_height(win))
+						local w = vim.api.nvim_win_get_width(win)
+						local h = vim.api.nvim_win_get_height(win)
+						if last_cli_size.w ~= w or last_cli_size.h ~= h then
+							last_cli_size.w = w
+							last_cli_size.h = h
+							vim.fn.jobresize(chan, w, h)
+						end
 					end
 					vim.cmd.startinsert()
 				end)
