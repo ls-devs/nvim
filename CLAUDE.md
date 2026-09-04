@@ -32,7 +32,7 @@ lua/ls-devs/
   plugins/
     completion/                ← blink.cmp, LuaSnip, lspkind
       completion_modules/      ← pure-Lua helpers (NOT imported by lazy.nvim)
-    devtools/                  ← codecompanion, debuggers, neotest, overseer, etc.
+    devtools/                  ← codecompanion, debuggers (nvim-dap-view), neotest, overseer, ccc, etc.
       codecompanion.lua        ← SOURCE OF TRUTH for all AI/MCP/Copilot integration
     gittools/                  ← codediff.nvim, gitsigns, git-worktree
     lsp/
@@ -40,7 +40,7 @@ lua/ls-devs/
     movement/                  ← flash, mini.surround, smart-splits, treesj, etc.
     system/                    ← conform (formatting), nvim-lint, snacks, neo-tree, treesitter, etc.
       snacks/                  ← dashboard.lua, keys.lua, picker.lua (required by snacks.lua)
-    ui/                        ← catppuccin, lualine, tabby, noice, ufo, etc.
+    ui/                        ← catppuccin, lualine, tabby, noice, ufo, colorizer, etc.
     utilities/                 ← mini.comment, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch, DapChromeDebug, etc.

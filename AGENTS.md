@@ -29,8 +29,10 @@ lua/ls-devs/
     │                            overseer, typescript-tools,
     │                            live-server, lazydev, emmet,
     │                            neotest (+ adapters), octo.nvim,
-    │                            iron.nvim (REPL), ccc.nvim (color picker)
+    │                            iron.nvim (REPL), ccc.nvim (on-demand color picker)
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
+    │   debuggers.lua          ← nvim-dap-view root spec (panels + inline virtual text
+    │                            + hover in one plugin) with nvim-dap and adapters as deps
     gittools/                  ← codediff.nvim (diff viewer + conflict resolution), gitsigns, git-worktree
     lsp/
       manager.lua              ← Mason package list (LSPs, linters, formatters, DAPs)
@@ -49,7 +51,8 @@ lua/ls-devs/
       dependencies/            ← plenary, luarocks
       treesitter_modules/      ← nvim-ts-autotag
     ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, lualine, mini_icons,
-    │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, nvim-bqf, quicker
+    │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, nvim-bqf, quicker,
+    │                            colorizer.lua (nvim-colorizer.lua: inline colour highlighting)
     utilities/                 ← mini.comment, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch,

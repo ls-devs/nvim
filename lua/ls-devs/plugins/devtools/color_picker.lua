@@ -1,33 +1,19 @@
 -- ── ccc.nvim ─────────────────────────────────────────────────────────────
--- Purpose : Inline color picker and highlighter for CSS/SCSS/HTML/JS/TS work
--- Trigger : ft = css/scss/sass/less/html/jsx/tsx/astro/vue/svelte (auto-load
---           for color highlighting); cmd CccPick / CccHighlighterToggle
--- Note    : The picker opens as a rounded-border float at the cursor.
---           Auto-highlighting is on by default for supported filetypes.
+-- Purpose : Interactive slider-based colour picker and format converter
+-- Trigger : cmd only — CccPick / CccConvert
+-- Note    : ccc's *highlighter* was retired in favour of ui/colorizer.lua
+--           (catgoose/nvim-colorizer.lua): ccc has had no upstream commit in
+--           12 months and its LSP highlighter duplicated Neovim 0.12+'s
+--           built-in `vim.lsp.document_color`.
+--           ccc is kept only for `:CccPick`, whose slider UI has no
+--           equivalent in colorizer or in core, and is now loaded strictly on
+--           demand instead of on every CSS/HTML/JSX buffer.
+--           The picker opens as a rounded-border float at the cursor.
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
 	"uga-rosa/ccc.nvim",
-	ft = {
-		"css",
-		"scss",
-		"sass",
-		"less",
-		"html",
-		"htmldjango",
-		"javascriptreact",
-		"typescriptreact",
-		"astro",
-		"vue",
-		"svelte",
-	},
-	cmd = {
-		"CccPick",
-		"CccConvert",
-		"CccHighlighterEnable",
-		"CccHighlighterDisable",
-		"CccHighlighterToggle",
-	},
+	cmd = { "CccPick", "CccConvert" },
 	opts = {
 		default_color = "#ffffff",
 		preserve = false,
@@ -40,28 +26,10 @@ return {
 		},
 		auto_close = true,
 		alpha_show = "show",
-		-- ── Color highlighter ─────────────────────────────────────────────
+		-- Highlighting is owned by nvim-colorizer.lua
 		highlighter = {
-			auto_enable = true,
-			max_byte = 100 * 1024, -- skip files > 100 KB to avoid slowdowns
-			-- Neovim 0.12+ ships `vim.lsp.document_color`, enabled by default,
-			-- which already highlights LSP-served colors. Keeping ccc's LSP
-			-- highlighter on would duplicate that work on every keystroke, so
-			-- ccc only handles literals core does not cover.
+			auto_enable = false,
 			lsp = false,
-			filetypes = {
-				"css",
-				"scss",
-				"sass",
-				"less",
-				"html",
-				"htmldjango",
-				"javascriptreact",
-				"typescriptreact",
-				"astro",
-				"vue",
-				"svelte",
-			},
 		},
 	},
 	---@param _ LazyPlugin
@@ -74,13 +42,6 @@ return {
 			"<leader>cp",
 			"<cmd>CccPick<CR>",
 			desc = "Color Picker",
-			noremap = true,
-			silent = true,
-		},
-		{
-			"<leader>cH",
-			"<cmd>CccHighlighterToggle<CR>",
-			desc = "Color Highlighter Toggle",
 			noremap = true,
 			silent = true,
 		},

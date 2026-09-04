@@ -1,10 +1,12 @@
--- ── nvim-dap-ui ───────────────────────────────────────────────────────────
+-- ── nvim-dap-view ─────────────────────────────────────────────────────────
 -- Purpose : Full DAP debugging ecosystem for Neovim
 --
 -- Standardized DAP Keymaps (project-agnostic, reusable):
 --
---   <leader>uo   Toggle DAP UI panel (dapui.toggle)
---   <leader>uc   Close DAP UI panel (dapui.close)
+--   <leader>uo   Toggle DAP view panel (DapViewToggle)
+--   <leader>uc   Close DAP view panel (DapViewClose)
+--   <leader>uh   Hover/evaluate expression under cursor or selection
+--   <leader>uw   Watch expression under cursor or selection
 --   <leader>un   Continue/start debug session (dap.continue)
 --   <leader>ut   Terminate debug session (dap.terminate)
 --   <leader>bb   Toggle breakpoint (dap.toggle_breakpoint)
@@ -13,38 +15,71 @@
 --
 -- All keymaps are documented with 'desc' and are safe for reuse in other Neovim configs.
 --
--- Provides: nvim-dap (protocol client), nvim-dap-ui (visual panels),
---           nvim-dap-virtual-text (inline variable values in source)
--- Note    : mason-nvim-dap (configured in manager.lua) handles adapter
+-- Provides: nvim-dap (protocol client), nvim-dap-view (panels + inline
+--           virtual text + hover, all in one plugin)
+-- Note    : replaces nvim-dap-ui + nvim-dap-virtual-text, both of which went
+--           into low-maintenance mode. nvim-dap-view ships its own virtual
+--           text implementation, so the separate plugin is no longer needed,
+--           and `auto_toggle` replaces the four manual dap.listeners that
+--           used to open/close the panel.
+--           mason-nvim-dap (configured in manager.lua) handles adapter
 --           auto-setup; JS/TS adapters use pwa-node/pwa-chrome from
 --           js-debug-adapter (installed via Mason)
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
-	"rcarriga/nvim-dap-ui",
-	config = function()
-		require("dapui").setup()
-		local dap, dapui = require("dap"), require("dapui")
-		-- Auto-open UI when a debug session starts (attach or launch)
-		dap.listeners.before.attach.dapui_config = function()
-			dapui.open()
-			require("nvim-dap-virtual-text").refresh()
-		end
-		dap.listeners.before.launch.dapui_config = function()
-			dapui.open()
-			require("nvim-dap-virtual-text").refresh()
-		end
+	"igorlfs/nvim-dap-view",
+	version = "1.*",
+	cmd = {
+		"DapViewOpen",
+		"DapViewClose",
+		"DapViewToggle",
+		"DapViewHover",
+		"DapViewWatch",
+		"DapViewJump",
+		"DapViewShow",
+		"DapViewNavigate",
+		"DapViewVirtualTextEnable",
+		"DapViewVirtualTextDisable",
+		"DapViewVirtualTextToggle",
+	},
+	opts = {
+		-- Open the panel when a session starts, close it when the session ends.
+		-- Replaces the dapui open/close listeners this config used to register.
+		auto_toggle = true,
+		windows = {
+			size = 0.25,
+			position = "below",
+		},
+		winbar = {
+			show = true,
+			default_section = "scopes",
+			sections = { "scopes", "watches", "threads", "breakpoints", "exceptions", "repl", "console" },
+			show_keymap_hints = true,
+		},
+		-- Built-in replacement for nvim-dap-virtual-text, matching the previous
+		-- inline placement and " = value" rendering.
+		virtual_text = {
+			enabled = true,
+			position = "inline",
+			---@param variable dap.Variable
+			---@return string
+			format = function(variable)
+				return " = " .. variable.value
+			end,
+		},
+		-- Reuse the config-wide rounded borders
+		help = { border = "rounded" },
+		hover = { border = "rounded" },
+	},
+	---@param _ LazyPlugin
+	---@param opts table
+	config = function(_, opts)
+		require("dap-view").setup(opts)
+		local dap = require("dap")
 
-		-- Auto-close when the debuggee process terminates normally
-		dap.listeners.before.event_terminated["dapui_config"] = function()
-			dapui.close()
-			require("nvim-dap-virtual-text").refresh()
-		end
-
-		-- Auto-close when the debuggee process exits with a code
-		dap.listeners.before.event_exited["dapui_config"] = function(_, body)
-			dapui.close()
-			require("nvim-dap-virtual-text").refresh()
+		-- Report the debuggee's exit code (auto_toggle already handles the panel)
+		dap.listeners.after.event_exited["dap_view_exit_notify"] = function(_, body)
 			local code = body and body.exitCode or "?"
 			if code == 0 then
 				vim.notify("[DAP] Process exited (code 0)", vim.log.levels.INFO)
@@ -316,57 +351,37 @@ return {
 				},
 			},
 		},
-		{
-			"theHamsta/nvim-dap-virtual-text",
-			lazy = true,
-			opts = {
-				enabled = true,
-				enable_commands = true,
-				highlight_changed_variables = true,
-				highlight_new_as_changed = false,
-				show_stop_reason = true,
-				commented = false,
-				only_first_definition = true,
-				all_references = false,
-				clear_on_continue = false,
-				---@param variable table
-				---@param buf integer
-				---@param stackframe table
-				---@param node table
-				---@param options table
-				---@return string
-				display_callback = function(variable, buf, stackframe, node, options)
-					if options.virt_text_pos == "inline" then
-						return " = " .. variable.value
-					else
-						return variable.name .. " = " .. variable.value
-					end
-				end,
-
-				virt_text_pos = "inline",
-
-				all_frames = false,
-				virt_lines = false,
-				virt_text_win_col = nil,
-			},
-		},
 	},
 	keys = {
-		-- UI toggle
+		-- Panel toggle
 		{
 			"<leader>uo",
-			mode = { "n" },
-			function()
-				require("dapui").toggle()
-			end,
-			desc = "DAP UI Toggle",
+			"<cmd>DapViewToggle<CR>",
+			desc = "DAP View Toggle",
 			noremap = true,
 			silent = true,
 		},
 		{
 			"<leader>uc",
-			"<cmd>lua require('dapui').close()<CR>",
-			desc = "DAP UI Close",
+			"<cmd>DapViewClose<CR>",
+			desc = "DAP View Close",
+			noremap = true,
+			silent = true,
+		},
+		-- Evaluate / watch (built into dap-view, no extra plugin needed)
+		{
+			"<leader>uh",
+			"<cmd>DapViewHover<CR>",
+			mode = { "n", "x" },
+			desc = "DAP Hover Expression",
+			noremap = true,
+			silent = true,
+		},
+		{
+			"<leader>uw",
+			"<cmd>DapViewWatch<CR>",
+			mode = { "n", "x" },
+			desc = "DAP Watch Expression",
 			noremap = true,
 			silent = true,
 		},
