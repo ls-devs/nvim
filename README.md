@@ -39,6 +39,14 @@ Command Line Tools, Homebrew, this config, Neovim and the shell for you):
 curl -fsSL https://raw.githubusercontent.com/ls-devs/nvim/main/setup/install-macos.sh | bash
 ```
 
+> **Homebrew is required on macOS.** Only the Xcode Command Line Tools are truly
+> unavoidable (they provide clang, `git`, `make` and `python3`), but `cmake`,
+> `ninja` and `gettext` — needed to compile Neovim — are *not* part of them, and
+> neither are `ripgrep`, `fd`, `node` or the `tree-sitter` CLI. Everything could
+> be sourced individually from cargo, npm and GitHub releases, but that trades
+> one dependency for six. If you prefer MacPorts or Nix, skip this script and
+> install the tools listed in `install_brew_packages()` by hand.
+
 **Linux / WSL / Windows** — clone first, then run the matching script:
 
 ```bash

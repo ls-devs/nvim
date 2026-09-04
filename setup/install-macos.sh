@@ -220,7 +220,38 @@ install_brew_packages() {
   )
 
   info "Installing ${#build_deps[@]} build deps and ${#tools[@]} tools…"
+
+  # One bulk call is much faster, but a single bad formula (network blip, an
+  # unavailable bottle) aborts the whole invocation and would leave the rest
+  # uninstalled. So: bulk first, then verify and retry only what is missing.
   brew install "${build_deps[@]}" "${tools[@]}" || true
+
+  local missing_required=() missing_optional=() f
+  for f in "${build_deps[@]}" "${tools[@]}"; do
+    brew list --versions "$f" >/dev/null 2>&1 && continue
+    info "Retrying ${f}…"
+    brew install "$f" >/dev/null 2>&1 || true
+    if ! brew list --versions "$f" >/dev/null 2>&1; then
+      if printf '%s\n' "${build_deps[@]}" | grep -qx "$f"; then
+        missing_required+=("$f")
+      else
+        missing_optional+=("$f")
+      fi
+    fi
+  done
+
+  # Build deps are fatal only when we actually build Neovim from source.
+  if [ ${#missing_required[@]} -gt 0 ]; then
+    if [ "$NVIM_MODE" = "source" ] && [ "$SKIP_NVIM" != "true" ]; then
+      error "Missing build dependencies: ${missing_required[*]}"
+      error "Neovim cannot be compiled without them. Fix Homebrew and re-run,"
+      error "or use --nvim=brew / --skip-nvim."
+      exit 1
+    fi
+    warn "Missing build dependencies: ${missing_required[*]}"
+  fi
+  [ ${#missing_optional[@]} -gt 0 ] && \
+    warn "These tools failed to install: ${missing_optional[*]} — install them later with 'brew install <name>'."
 
   # `tree-sitter` is the single most common cause of "no syntax highlighting":
   # nvim-treesitter's `main` branch shells out to the CLI and fails silently
@@ -230,17 +261,27 @@ install_brew_packages() {
     if version_ge "$ts_ver" "0.26.1"; then
       success "tree-sitter CLI ${ts_ver} (>= 0.26.1)."
     else
-      warn "tree-sitter CLI ${ts_ver} is older than 0.26.1 — parsers will fail to build."
+      warn "tree-sitter CLI ${ts_ver} is older than 0.26.1 — parsers will fail to"
+      warn "build and you will get no syntax highlighting. Run 'brew upgrade tree-sitter'."
     fi
+  else
+    warn "tree-sitter CLI is NOT installed — nvim-treesitter will silently install"
+    warn "zero parsers and you will get no syntax highlighting anywhere."
+    warn "Fix with: brew install tree-sitter   (or: cargo install tree-sitter-cli)"
   fi
 
   # openjdk is keg-only; jdtls needs it visible as a system JVM.
-  if [ -d "$(brew --prefix openjdk)/libexec/openjdk.jdk" ]; then
-    sudo ln -sfn "$(brew --prefix openjdk)/libexec/openjdk.jdk" \
+  local jdk_prefix; jdk_prefix="$(brew --prefix openjdk 2>/dev/null || true)"
+  if [ -n "$jdk_prefix" ] && [ -d "${jdk_prefix}/libexec/openjdk.jdk" ]; then
+    sudo ln -sfn "${jdk_prefix}/libexec/openjdk.jdk" \
       /Library/Java/JavaVirtualMachines/openjdk.jdk 2>/dev/null || true
   fi
 
-  success "Homebrew packages installed."
+  if [ ${#missing_required[@]} -eq 0 ] && [ ${#missing_optional[@]} -eq 0 ]; then
+    success "Homebrew packages installed."
+  else
+    warn "Homebrew finished with missing packages (see above)."
+  fi
 }
 
 # ── 5 · Neovim ────────────────────────────────────────────────────────────────
@@ -400,9 +441,12 @@ install_shell() {
 
   # install-zsh.sh handles oh-my-zsh, zsh-autosuggestions,
   # zsh-syntax-highlighting, spaceship-prompt and deploys setup/zshrc.
+  # macOS still ships bash 3.2, where expanding an empty array under `set -u`
+  # aborts the script ("args[@]: unbound variable"). The ${a[@]+"${a[@]}"}
+  # guard is the portable way to expand "zero or more" arguments.
   local args=()
   [ "$NO_CHSH" = "true" ] && args+=(--no-chsh)
-  bash "$script" "${args[@]}"
+  bash "$script" ${args[@]+"${args[@]}"}
 }
 
 # ── post · Neovim headless setup ──────────────────────────────────────────────
