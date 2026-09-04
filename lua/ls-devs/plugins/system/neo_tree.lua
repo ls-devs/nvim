@@ -314,23 +314,6 @@ return {
 					vim.cmd("stopinsert")
 				end,
 			},
-			{
-				-- Disable focus.nvim before the window is created so it cannot
-				-- golden-ratio-resize the neo-tree split before its filetype is set.
-				-- Without this, focus.nvim's WinEnter fires while the NUI buffer is
-				-- not yet attached, bypassing the FileType-based focus_disable guard
-				-- and causing a brief right-side flash.
-				event = "neo_tree_window_before_open",
-				handler = function()
-					vim.g.focus_disable = true
-				end,
-			},
-			{
-				event = "neo_tree_window_after_open",
-				handler = function()
-					vim.g.focus_disable = false
-				end,
-			},
 		},
 		buffers = {
 			follow_current_file = {

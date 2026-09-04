@@ -125,18 +125,9 @@ return {
 			silent = true,
 		},
 		-- <leader>ot — toggle the task list panel (docked left)
-		-- Temporarily disable focus.nvim around the toggle to prevent it from
-		-- golden-ratio-resizing the new split before winfixwidth is set —
-		-- mirrors the neo_tree_window_before/after_open event handlers in neo_tree.lua.
 		{
 			"<leader>ot",
-			function()
-				vim.g.focus_disable = true
-				vim.cmd("OverseerToggle left")
-				vim.schedule(function()
-					vim.g.focus_disable = false
-				end)
-			end,
+			"<cmd>OverseerToggle left<CR>",
 			desc = "Overseer Toggle",
 			noremap = true,
 			silent = true,

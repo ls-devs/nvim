@@ -152,6 +152,12 @@ end, { noremap = true, silent = true, desc = "CodeCompanion CLI Ask" })
 -- ── Session / Window ─────────────────────────────────────────────────────
 vim.keymap.set("n", "<leader>qq", "<cmd>qa<CR>", { noremap = true, silent = true, desc = "Quit All" })
 
+-- Window sizing — native replacements for focus.nvim, which was removed:
+-- it shipped disabled by default, had no upstream commits in 6 months, and
+-- still calls nvim_win_set_width/height (deprecated in Neovim 0.13).
+vim.keymap.set("n", "<leader>wm", "<C-w>_<C-w>|", { noremap = true, silent = true, desc = "Window Maximise" })
+vim.keymap.set("n", "<leader>we", "<C-w>=", { noremap = true, silent = true, desc = "Window Equalise" })
+
 -- ── Utils / Execute ───────────────────────────────────────────────────────
 -- <leader>xx: make current file executable (<leader>x is the group prefix)
 vim.keymap.set("n", "<leader>xx", function()

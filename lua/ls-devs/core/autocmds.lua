@@ -49,9 +49,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = augroup,
 	pattern = "codecompanion_cli",
 	callback = function(args)
-		-- Tell focus.nvim to save/restore this window's dimensions so the
-		-- terminal content is never garbled by golden-ratio redistribution.
-		vim.b[args.buf].focus_disable = true
 		-- Disable statuscolumn for the CLI terminal window.
 		-- snacks.statuscolumn runs a 50 ms cache-clearing timer that forces
 		-- constant re-evaluation; in a terminal buffer this causes the CLI to
@@ -178,8 +175,8 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- Runs synchronously (no vim.schedule) so the correction lands before the next
 -- redraw, preventing the visual glitch that deferred correction caused.
 -- Width is only set when it actually changed to avoid spurious WinResized loops.
--- codecompanion_cli is intentionally excluded: it has winfixwidth=true + focus_disable=true,
--- so focus.nvim and natural splits leave it alone.
+-- codecompanion_cli is intentionally excluded: it has winfixwidth=true, so
+-- natural splits leave it alone.
 local _win_enforcing = false
 vim.api.nvim_create_autocmd("WinResized", {
 	group = augroup,
@@ -204,16 +201,15 @@ vim.api.nvim_create_autocmd("WinResized", {
 	desc = "Enforce fixed sidebar widths (neo-tree / OverseerList) after resize",
 })
 
--- Pin OverseerList: disable focus.nvim and enforce width synchronously.
+-- Pin OverseerList width synchronously.
 -- overseer's window.lua sets winfixwidth and calls nvim_win_set_width BEFORE
 -- triggering FileType, so both are already in place here. We just enforce the
 -- width correction synchronously (no vim.schedule) to avoid any deferred
--- one-frame flash, and mark the buffer so focus.nvim ignores it.
+-- one-frame flash.
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup,
 	pattern = "OverseerList",
 	callback = function(args)
-		vim.b[args.buf].focus_disable = true
 		local win = vim.fn.bufwinid(args.buf)
 		if win ~= -1 then
 			vim.wo[win].winfixwidth = true
@@ -222,12 +218,12 @@ vim.api.nvim_create_autocmd("FileType", {
 			end
 		end
 	end,
-	desc = "Pin OverseerList width and disable focus.nvim interference",
+	desc = "Pin OverseerList width",
 })
 
 -- Pin neo-tree sidebar width at the source so no resize ever reaches WinResized.
 -- neo-tree does not set winfixwidth itself, leaving its split vulnerable to
--- golden-ratio / equalize operations on every buffer switch. We set winfixwidth
+-- equalize operations on every buffer switch. We set winfixwidth
 -- synchronously on FileType (before any redraw) so the window is truly fixed.
 -- Floating neo-tree instances (Neotree float reveal) are excluded via the
 -- relative check — floats have relative ~= "" and must not have winfixwidth set.
@@ -243,13 +239,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		if vim.api.nvim_win_get_config(win).relative ~= "" then
 			return
 		end
-		vim.b[args.buf].focus_disable = true
 		vim.wo[win].winfixwidth = true
 		if vim.api.nvim_win_get_width(win) ~= 40 then
 			pcall(vim.api.nvim_win_set_width, win, 40)
 		end
 	end,
-	desc = "Pin neo-tree sidebar width and disable focus.nvim interference",
+	desc = "Pin neo-tree sidebar width",
 })
 
 -- Open help in a vertical split on the right

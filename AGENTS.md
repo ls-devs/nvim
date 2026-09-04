@@ -26,7 +26,7 @@ lua/ls-devs/
       completion_modules/      ← non-spec Lua helpers (dotenv_source.lua); NOT imported by lazy.nvim
       blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
     devtools/                  ← codecompanion (+ copilot dep + img-clip dep), debuggers, databases,
-    │                            asyncrun, overseer, typescript-tools,
+    │                            overseer, typescript-tools,
     │                            live-server, lazydev, emmet,
     │                            neotest (+ adapters), octo.nvim,
     │                            iron.nvim (REPL), ccc.nvim (color picker)
@@ -48,7 +48,7 @@ lua/ls-devs/
       treesitter_context.lua, which_key.lua
       dependencies/            ← plenary, luarocks
       treesitter_modules/      ← nvim-ts-autotag
-    ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, focus, lualine, mini_icons,
+    ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, lualine, mini_icons,
     │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, nvim-bqf, quicker
     utilities/                 ← mini.comment, trouble
   utils/
