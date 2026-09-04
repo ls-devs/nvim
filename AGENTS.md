@@ -214,7 +214,7 @@ To add a skill, update `skills-lock.json` and place the skill file under `.agent
 ### Add a new LSP
 1. `manager.lua` → add to `ensure_installed` (LSP section)
 2. `mason-lspconfig.nvim` with `automatic_enable = true` will configure it automatically
-3. If custom server settings are needed, add a config block in `manager.lua` or a new file under `lsp/` (and explicitly require it)
+3. If custom server settings are needed, add `lsp/<lspconfig-server-name>.lua` — Neovim resolves it from the runtimepath automatically, no `require` needed
 
 ### Add a new formatter
 1. `manager.lua` → add tool to `ensure_installed` (Formatters section)
@@ -235,7 +235,7 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 - Do **not** add `format_on_save = true` — it is intentionally disabled
 - Do **not** edit `lazy-lock.json` manually
 - Do **not** add plugin logic to `core/lazy.lua` — it is a composition point only
-- Do **not** assume files in `lsp/` are active — verify in `plugins/lsp/manager.lua` first
+- Do **not** re-declare an `lsp/` fragment's settings inside `manager.lua` — Neovim already merges the fragment automatically; duplicating it just creates two sources of truth
 - Do **not** change the `catppuccin` colorscheme or switch to square borders without updating all affected UI plugins
 - Do **not** place plugin specs in `completion_modules/` — that folder is not imported by lazy.nvim
 - Do **not** use `vim.loop.*` — use `vim.uv.*` (vim.loop is deprecated since Neovim 0.10)

@@ -19,7 +19,6 @@ return {
 			ensure_installed = {
 				-- ── LSP servers ───────────────────────────────────────────────────
 				"eslint",
-				"sonarlint-language-server",
 				"vim-language-server",
 				"typescript-language-server",
 				"vue-language-server",
@@ -57,12 +56,10 @@ return {
 				"jsonlint",
 				"hadolint",
 				"yamllint",
-				"sqlfluff",
 				"ruff",
 				"shellcheck",
 				"codespell",
 				"stylelint",
-				"luacheck",
 
 				-- ── Formatters ────────────────────────────────────────────────────
 				"prettierd",
