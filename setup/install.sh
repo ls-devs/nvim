@@ -290,9 +290,11 @@ install_gh_cli() {
 
 # ── 3. Neovim ─────────────────────────────────────────────────────────────────
 install_neovim() {
-  header "3 · Neovim (>= 0.12.0)"
+  header "3 · Neovim (>= 0.13.0)"
 
-  local required="0.12.0" current=""
+  # This config uses vim.hl.hl_op() and 'scrolloffpad', which are 0.13-dev only.
+  # Distro packages still ship 0.12.x, so a source build is usually required.
+  local required="0.13.0" current=""
   command_exists nvim && current=$(nvim --version | head -1 | sed 's/NVIM v//')
 
   if [ -n "$current" ] && version_ge "$current" "$required"; then

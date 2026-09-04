@@ -247,7 +247,7 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 
 | Requirement | Used by |
 |---|---|
-| Neovim ≥ 0.12.0 | everything |
+| Neovim **0.13-dev** (build from git) | everything — `vim.hl.hl_op()` and `'scrolloffpad'` do not exist in 0.12.x |
 | git | lazy.nvim bootstrap, gitsigns, codediff.nvim |
 | Node.js + npm/pnpm | ts_ls, eslint, markdown-preview, copilot.lua |
 | Python + pynvim | debugpy, pyright |

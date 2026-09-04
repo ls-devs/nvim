@@ -296,13 +296,26 @@ return {
 		statuscolumn = { enabled = false },
 
 		-- ── explorer / image ──────────────────────────────────────────────
-		-- neo-tree owns the explorer. image is enabled only when the terminal
-		-- supports the Kitty graphics protocol (kitty, WezTerm, Ghostty).
+		-- neo-tree owns the explorer. snacks.image speaks the Kitty graphics
+		-- protocol, which only kitty, Ghostty and WezTerm implement (macOS
+		-- Terminal.app and iTerm2 do NOT — iTerm2 uses its own protocol).
+		-- Detection also has to survive tmux, which rewrites $TERM to
+		-- tmux-256color: snacks handles tmux via passthrough, so fall back to
+		-- the terminal-specific env vars that tmux inherits.
 		explorer = { enabled = false },
 		image = {
-			enabled = vim.env.TERM == "xterm-kitty"
-				or vim.env.TERM_PROGRAM == "WezTerm"
-				or vim.env.TERM_PROGRAM == "ghostty",
+			enabled = (function()
+				local term = (vim.env.TERM or ""):lower()
+				local prog = (vim.env.TERM_PROGRAM or ""):lower()
+				for _, name in ipairs({ "kitty", "ghostty", "wezterm" }) do
+					if term:find(name, 1, true) or prog:find(name, 1, true) then
+						return true
+					end
+				end
+				return vim.env.KITTY_WINDOW_ID ~= nil
+					or vim.env.GHOSTTY_RESOURCES_DIR ~= nil
+					or vim.env.WEZTERM_EXECUTABLE ~= nil
+			end)(),
 		},
 
 		-- ── toggle ────────────────────────────────────────────────────────

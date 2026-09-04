@@ -30,13 +30,22 @@ There are two ways to use this configuration. Both are fully automated — just 
 
 ### Option A — Native install (your machine)
 
-> Supports: Ubuntu/Debian · Fedora/RHEL · Arch · openSUSE · Alpine · macOS (Homebrew) · WSL
+> Supports: Ubuntu/Debian · Fedora/RHEL · Arch · openSUSE · Alpine · macOS · WSL
+
+**macOS** — one command on a completely fresh machine (it installs the Xcode
+Command Line Tools, Homebrew, this config, Neovim and the shell for you):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ls-devs/nvim/main/setup/install-macos.sh | bash
+```
+
+**Linux / WSL / Windows** — clone first, then run the matching script:
 
 ```bash
 git clone <repo-url> ~/.config/nvim
 cd ~/.config/nvim/setup
 
-# Linux / macOS / WSL
+# Linux / WSL
 chmod +x install.sh && ./install.sh
 
 # Windows (PowerShell — run as Administrator)
@@ -52,6 +61,42 @@ The script will:
 5. Run `:TSUpdate` — installs treesitter parsers
 6. Prompt for `gh auth login` (GitHub browser OAuth — needed for Copilot + octo.nvim)
 7. Install the `gh copilot` CLI extension
+
+On macOS the script additionally builds Neovim from `neovim/neovim` master into
+`~/Utils/neovim` (`make CMAKE_BUILD_TYPE="Release" && sudo make install`) and sets
+up zsh + oh-my-zsh + spaceship. Useful flags:
+
+| Flag | Effect |
+|---|---|
+| `--nvim=brew` | Use the Homebrew bottle instead of building from source |
+| `--nvim-ref=REF` | Build a specific git ref (default `master`) |
+| `--skip-zsh` / `--no-chsh` | Skip the shell setup / keep the current default shell |
+| `--terminal=NAME` | Optionally install a terminal emulator — `ghostty`, `wezterm`, `kitty`, `iterm2` (default `none`) |
+| `--skip-headless` | Skip `:Lazy` / `:MasonToolsInstallSync` / `:TSUpdate` |
+| `--skip-github` | Skip `gh auth login` and the Copilot CLI extension |
+
+> **Neovim version:** this config uses `vim.hl.hl_op()` and `'scrolloffpad'`, which
+> only exist in Neovim **0.13-dev**. Homebrew and most distro repos still ship
+> 0.12.x, which is why the macOS installer builds from git by default.
+
+> **Inline images:** `snacks.image` uses the Kitty graphics protocol, implemented
+> only by kitty, Ghostty and WezTerm (tmux passthrough included). macOS
+> Terminal.app supports neither it nor Sixel, so image rendering disables itself
+> there — everything else, truecolor included (Terminal.app since macOS 26),
+> works normally. iTerm2 is also unsupported: it uses its own image protocol.
+
+### Shell (zsh + oh-my-zsh + spaceship)
+
+Included on macOS by default, and available standalone everywhere:
+
+```bash
+bash setup/install-zsh.sh             # zsh, oh-my-zsh, spaceship, plugins, ~/.zshrc
+bash setup/install-zsh.sh --no-chsh   # …but keep the current default shell
+```
+
+It installs `zsh-autosuggestions` and `zsh-syntax-highlighting`, clones
+`spaceship-prompt`, and deploys `setup/zshrc` to `~/.zshrc` (backing up any
+existing file).
 
 ### Option B — Docker (any OS, zero host dependencies)
 

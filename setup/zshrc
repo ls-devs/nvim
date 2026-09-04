@@ -1,3 +1,12 @@
+# ── Homebrew (macOS) ──────────────────────────────────────────────────────────
+# Apple Silicon installs to /opt/homebrew, which is NOT on the default PATH,
+# so nothing installed by brew would be reachable without this.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # ── oh-my-zsh ─────────────────────────────────────────────────────────────────
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_COMPDUMP="$ZSH/cache/.zcompdump-$HOST"
@@ -74,6 +83,11 @@ if [ -x /usr/bin/dircolors ]; then
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
+elif [ "$(uname -s)" = "Darwin" ]; then
+  # BSD ls has no --color / dircolors; it uses CLICOLOR + LSCOLORS instead.
+  export CLICOLOR=1
+  export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
+  alias grep='grep --color=auto'
 fi
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -91,7 +105,13 @@ export EDITOR='nvim'
 
 # ── Terminal ──────────────────────────────────────────────────────────────────
 export BAT_THEME="Catppuccin-mocha"
-export TERM=xterm-256color
+# Only fall back to xterm-256color when the terminal advertises nothing useful.
+# Forcing it unconditionally would mask richer terminfo entries such as
+# xterm-ghostty / xterm-kitty / wezterm, which Neovim needs for undercurl
+# and extended underline styles.
+case "${TERM:-}" in
+  ""|dumb|unknown) export TERM=xterm-256color ;;
+esac
 export COLORTERM=truecolor
 
 # ── Functions ─────────────────────────────────────────────────────────────────
@@ -147,6 +167,20 @@ export MANPATH="${MANPATH-$(manpath 2>/dev/null)}:${NPM_PACKAGES}/share/man"
 
 # Swift (optional)
 [ -d "/usr/share/swift/usr/bin" ] && export PATH="/usr/share/swift/usr/bin:$PATH"
+
+# ── macOS-specific PATH / JAVA_HOME ──────────────────────────────────────────
+if [ "$(uname -s)" = "Darwin" ]; then
+  # `pip install --user` puts console scripts here, not in ~/.local/bin
+  for _pydir in "$HOME"/Library/Python/*/bin(N); do
+    [ -d "$_pydir" ] && export PATH="$_pydir:$PATH"
+  done
+  unset _pydir
+  # jdtls needs a JVM; Homebrew's openjdk is keg-only so it is not on PATH
+  if command -v brew &>/dev/null && [ -d "$(brew --prefix openjdk 2>/dev/null)/bin" ]; then
+    export PATH="$(brew --prefix openjdk)/bin:$PATH"
+    export JAVA_HOME="$(brew --prefix openjdk)/libexec/openjdk.jdk/Contents/Home"
+  fi
+fi
 
 # zfunctions
 [ -d "$HOME/.zfunctions" ] && fpath=($fpath "$HOME/.zfunctions")

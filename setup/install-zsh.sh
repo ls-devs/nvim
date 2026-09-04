@@ -61,8 +61,15 @@ detect_environment() {
       ;;
     Darwin)
       OS_TYPE="macos"
-      command_exists brew || { error "Homebrew required. Install from https://brew.sh"; exit 1; }
-      PKG_MANAGER="brew"
+      # macOS ships zsh 5.9 at /bin/zsh, and oh-my-zsh / spaceship are plain
+      # git clones — so Homebrew is only needed if zsh is somehow missing.
+      if command_exists brew; then
+        PKG_MANAGER="brew"
+      elif command_exists zsh; then
+        PKG_MANAGER="none"
+      else
+        error "Homebrew required to install zsh. Install from https://brew.sh"; exit 1
+      fi
       ;;
     *)
       error "Unsupported OS: $(uname -s). On Windows use install-zsh.ps1."
@@ -90,6 +97,7 @@ install_zsh() {
     zypper) $SUDO_CMD zypper install -y zsh ;;
     apk)    $SUDO_CMD apk add zsh ;;
     brew)   brew install zsh ;;
+    none)   error "zsh not found and no package manager available."; exit 1 ;;
   esac
 
   success "zsh $(zsh --version) installed."
@@ -194,10 +202,15 @@ set_default_shell() {
   local zsh_path
   zsh_path="$(command -v zsh)"
 
-  local current_shell
-  current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 \
-    || dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}' \
-    || echo "")"
+  local current_shell=""
+  # `getent` does not exist on macOS, and the old combined pipeline always
+  # reported an empty shell there because `cut` still exited 0 on empty input.
+  if [ "$OS_TYPE" = "macos" ]; then
+    current_shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')"
+  else
+    current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)"
+  fi
+  [ -n "$current_shell" ] || current_shell="${SHELL:-}"
 
   if [ "$current_shell" = "$zsh_path" ]; then
     success "Default shell is already zsh ($zsh_path)."; return 0
