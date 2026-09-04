@@ -44,7 +44,11 @@ return {
 		highlighter = {
 			auto_enable = true,
 			max_byte = 100 * 1024, -- skip files > 100 KB to avoid slowdowns
-			lsp = true, -- use LSP color info when available
+			-- Neovim 0.12+ ships `vim.lsp.document_color`, enabled by default,
+			-- which already highlights LSP-served colors. Keeping ccc's LSP
+			-- highlighter on would duplicate that work on every keystroke, so
+			-- ccc only handles literals core does not cover.
+			lsp = false,
 			filetypes = {
 				"css",
 				"scss",

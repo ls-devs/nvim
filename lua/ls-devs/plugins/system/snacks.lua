@@ -14,7 +14,7 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
-	dependencies = { { "echasnovski/mini.icons", lazy = false } },
+	dependencies = { { "nvim-mini/mini.icons", lazy = false } },
 
 	-- ── init ─────────────────────────────────────────────────────────────
 	-- Runs before setup(). Wires autocmds that must fire before VimEnter.
@@ -290,9 +290,10 @@ return {
 		},
 
 		-- ── statuscolumn ──────────────────────────────────────────────────
-		-- Structured sign column: fold chevrons (⌄/›) from nvim-ufo, ordered
-		-- git signs, and relative line numbers — all in one consistent layout.
-		statuscolumn = { enabled = true },
+		-- Disabled: statuscol.nvim (loaded as an nvim-ufo dependency) sets
+		-- 'statuscolumn' with setopt=true and always wins, making the snacks
+		-- implementation dead config plus a redundant 50ms cache timer.
+		statuscolumn = { enabled = false },
 
 		-- ── explorer / image ──────────────────────────────────────────────
 		-- neo-tree owns the explorer. image is enabled only when the terminal

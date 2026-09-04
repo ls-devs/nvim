@@ -7,6 +7,10 @@
 ---@type LazySpec
 return {
 	"chrisgrieser/nvim-spider",
+	-- luarocks.nvim provides the `lua-utf8` rock that nvim-spider needs for
+	-- UTF-8-aware motions. It has no trigger of its own, so without declaring it
+	-- here it never loads and spider silently falls back to byte-wise strings.
+	dependencies = { "vhyrro/luarocks.nvim" },
 	opts = {
 		skipInsignificantPunctuation = true, -- skip lone punctuation chars (., ;, ,) that aren't real word boundaries
 		subwordMovement = true, -- stop at camelCase transitions and underscore separators

@@ -6,7 +6,7 @@
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
-	"echasnovski/mini.comment",
+	"nvim-mini/mini.comment",
 	config = function()
 		local comment = require("mini.comment")
 		comment.setup({

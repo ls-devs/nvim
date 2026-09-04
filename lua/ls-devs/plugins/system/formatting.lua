@@ -49,9 +49,13 @@ return {
 			-- dockerfile-language-server provides formatting via LSP fallback
 			dockerfile = {},
 			python = { "black" },
-			ps1 = { "psscriptanalyzer" },
-			psm1 = { "psscriptanalyzer" },
-			psd1 = { "psscriptanalyzer" },
+			-- PowerShell: powershell_es (LSP) exposes PSScriptAnalyzer's Invoke-Formatter
+			-- through textDocument/formatting. There is no conform `psscriptanalyzer`
+			-- formatter, so lsp_format="prefer" routes these filetypes to the language
+			-- server instead of falling through to the ["_"] trim_whitespace default.
+			ps1 = { lsp_format = "prefer" },
+			psm1 = { lsp_format = "prefer" },
+			psd1 = { lsp_format = "prefer" },
 			["_"] = { "trim_whitespace" }, -- fallback: trim trailing whitespace on any unmatched filetype
 		},
 		-- Per-formatter defaults applied only when no project config file is found.

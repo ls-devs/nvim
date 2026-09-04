@@ -80,12 +80,11 @@ return {
 				"bash-debug-adapter",
 				"js-debug-adapter",
 			},
-			auto_update = true,
-			run_on_start = true,
-			-- Defer installation 3 s after startup to avoid slowing initial load
-			start_delay = 3000,
-			-- Skip the update check if one already ran within the last 5 hours
-			debounce_hours = 5,
+			-- NOTE: this plugin is cmd-lazy on purpose (see `cmd` above), so it
+			-- never loads at startup. `run_on_start`, `start_delay`,
+			-- `debounce_hours` and `auto_update` would therefore never fire and
+			-- have been removed as dead config. Run `:MasonToolsInstall` (or
+			-- `:MasonToolsUpdate`) after changing `ensure_installed`.
 			-- Disable mason-null-ls integration (not installed) to avoid failed pcall on startup
 			integrations = {
 				["mason-null-ls"] = false,
@@ -95,7 +94,7 @@ return {
 	},
 	-- Mason LSP Configuration
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			automatic_enable = {
@@ -107,7 +106,7 @@ return {
 		dependencies = {
 			-- Mason Core
 			{
-				"williamboman/mason.nvim",
+				"mason-org/mason.nvim",
 				cmd = "Mason",
 				lazy = true,
 				opts = {

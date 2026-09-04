@@ -48,7 +48,7 @@ return {
 		},
 	},
 	dependencies = {
-		{ "nvim-tree/nvim-web-devicons" },
+		-- icons provided by mini.icons via its nvim-web-devicons shim
 	},
 	keys = {
 		{

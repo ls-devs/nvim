@@ -171,6 +171,7 @@ local options = {
 	number = true,
 	signcolumn = "yes:1", -- always reserve 1 column for signs (prevents layout shift on diagnostics)
 	scrolloff = 8, -- keep 8 lines of context above/below the cursor
+	scrolloffpad = 1, -- allow scrolling past EOF while honouring 'scrolloff' (replaces scrollEOF.nvim)
 	sidescrolloff = 12, -- keep 12 columns of context when scrolling horizontally
 	winblend = 0, -- no pseudo-transparency for floating windows
 	pumblend = 0, -- no pseudo-transparency for the popup menu

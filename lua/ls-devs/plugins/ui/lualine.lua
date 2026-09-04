@@ -9,9 +9,7 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	event = { "BufReadPost", "BufNewFile", "User SnacksDashboardClosed" },
-	dependencies = {
-		{ "nvim-tree/nvim-web-devicons", lazy = true },
-	},
+	-- icons provided by mini.icons via its nvim-web-devicons shim
 	config = function()
 		local lualine = require("lualine")
 		local colors = require("catppuccin.palettes.mocha")

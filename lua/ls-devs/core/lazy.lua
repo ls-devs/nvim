@@ -41,7 +41,7 @@ require("lazy").setup({
 	},
 	install = {
 		missing = true,
-		colorscheme = { "catppuccin" },
+		colorscheme = { "catppuccin-nvim" },
 	},
 	ui = {
 		border = "rounded",

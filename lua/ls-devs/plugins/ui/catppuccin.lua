@@ -233,6 +233,6 @@ return {
 			-- Compiled highlight definitions cached here for fast startup on subsequent loads
 			compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
 		})
-		vim.cmd.colorscheme("catppuccin")
+		vim.cmd.colorscheme("catppuccin-nvim")
 	end,
 }

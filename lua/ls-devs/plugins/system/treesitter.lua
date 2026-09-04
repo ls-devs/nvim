@@ -1,20 +1,93 @@
 -- ── nvim-treesitter ───────────────────────────────────────────────────────
 -- Purpose : Syntax parsing, highlighting, and text objects
--- Note    : Uses the main branch (full rewrite for Neovim 0.12+).
---           The master branch is archived and incompatible with Neovim 0.12.
---           wildfire.nvim owns <C-Space> incremental selection.
+-- Note    : Uses the main branch (full rewrite, requires Neovim 0.12+).
+--           main is the upstream default branch; master is frozen (not
+--           archived) since 2026-03 and incompatible with Neovim 0.12+.
+--           main has no `ensure_installed` option — parsers are installed
+--           through `require("nvim-treesitter").install()`, done below for
+--           the languages this config actually supports.
+--           Requires tree-sitter-cli >= 0.26.1 on PATH (NOT the npm build);
+--           `:checkhealth nvim-treesitter` reports the installed version.
+--           wildfire.nvim owns <C-Space> incremental selection (main dropped
+--           the old `incremental_selection` module).
 -- ─────────────────────────────────────────────────────────────────────────
+
+-- Parsers matching the LSPs/formatters/linters declared in plugins/lsp/manager.lua.
+local ensure_installed = {
+	"bash",
+	"c",
+	"c_sharp",
+	"css",
+	"csv",
+	"diff",
+	"dockerfile",
+	"editorconfig",
+	"gitcommit",
+	"gitignore",
+	"git_config",
+	"git_rebase",
+	"go",
+	"graphql",
+	"html",
+	"http",
+	"ini",
+	"java",
+	"javascript",
+	"jsdoc",
+	"json",
+	"json5",
+	"lua",
+	"luadoc",
+	"luap",
+	"markdown",
+	"markdown_inline",
+	"php",
+	"powershell",
+	"printf",
+	"python",
+	"query",
+	"regex",
+	"rust",
+	"scss",
+	"sql",
+	"ssh_config",
+	"toml",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"vue",
+	"xml",
+	"yaml",
+}
+
 ---@type LazySpec
 return {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "main",
 	event = { "BufReadPre", "BufNewFile" },
-	cmd = { "TSInstall", "TSInstallFromGrammar", "TSUpdate" },
+	cmd = { "TSInstall", "TSInstallFromGrammar", "TSUpdate", "TSLog" },
 	build = ":TSUpdate",
 	config = function()
 		require("nvim-treesitter").setup({
 			install_dir = vim.fn.stdpath("data") .. "/site",
 		})
+
+		-- Install only what is actually missing, off the startup path.
+		vim.schedule(function()
+			local installed = {}
+			for _, lang in ipairs(require("nvim-treesitter.config").get_installed("parsers")) do
+				installed[lang] = true
+			end
+
+			local missing = vim.tbl_filter(function(lang)
+				return not installed[lang]
+			end, ensure_installed)
+
+			if #missing > 0 then
+				require("nvim-treesitter").install(missing)
+			end
+		end)
 
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "*",
@@ -521,11 +594,13 @@ return {
 					end,
 				},
 				{
-					"R",
+					-- gR, not R: flash.nvim owns `R` (treesitter search) in o/x mode.
+					"gR",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").restOfIndentation()
 					end,
+					desc = "Rest of indentation",
 				},
 				{
 					"ag",
@@ -594,11 +669,13 @@ return {
 					end,
 				},
 				{
-					"r",
+					-- gr, not r: flash.nvim owns `r` (remote flash) in operator-pending.
+					"gr",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").restOfParagraph()
 					end,
+					desc = "Rest of paragraph",
 				},
 				{
 					"gG",
@@ -727,18 +804,21 @@ return {
 					end,
 				},
 				{
-					"im",
+					-- iM/aM, not im/am: nvim-treesitter-textobjects owns im/am (@function).
+					"iM",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").chainMember("inner")
 					end,
+					desc = "Inner chain member",
 				},
 				{
-					"am",
+					"aM",
 					mode = { "o", "x" },
 					function()
 						require("various-textobjs").chainMember("outer")
 					end,
+					desc = "Outer chain member",
 				},
 				{
 					"gw",

@@ -7,7 +7,7 @@
 -- ─────────────────────────────────────────────────────────────────────────
 ---@type LazySpec
 return {
-	"echasnovski/mini.icons",
+	"nvim-mini/mini.icons",
 	lazy = false,
 	priority = 900, -- after snacks (1000) but before icon-consuming plugins
 	opts = {},

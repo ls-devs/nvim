@@ -56,7 +56,7 @@ The big-picture split is:
 
 - `core/`: startup behavior, global options, environment-aware defaults
 - `plugins/`: lazy.nvim specs grouped by feature area
-- `lsp/`: standalone server config fragments that exist alongside the plugin-based LSP setup
+- `lsp/`: per-server config fragments, auto-resolved by Neovim from the runtimepath
 - `utils/`: custom Lua helpers reused by plugin configs
 
 Important cross-file behavior:
@@ -83,7 +83,7 @@ When changing tooling behavior, update all relevant layers together:
 - formatter mappings in `lua/ls-devs/plugins/system/formatting.lua`
 - linter mappings in `lua/ls-devs/plugins/system/linting.lua`
 
-Do not assume the standalone files under `lsp/` are automatically active. They exist, but the active wiring visible in this repo is the Mason/lazy.nvim setup under `lua/ls-devs/plugins/lsp/`. If you need to change language-server behavior, verify where that server is actually configured before editing.
+Files under the top-level `lsp/` are not imported by `core/lazy.lua`, but Neovim 0.11+ resolves `lsp/<server>.lua` from the runtimepath automatically, and `~/.config/nvim` is on the runtimepath — so they *are* applied to servers enabled by `mason-lspconfig`. The filename must match the lspconfig server name, not the Mason package name (`vue-language-server` → `lsp/vue_ls.lua`). A fragment for a server missing from `manager.lua`'s `ensure_installed` is dead code.
 
 Theme and UI choices are intentional and shared across files: `catppuccin` is the install colorscheme in `core/lazy.lua`, and multiple UI plugins use rounded borders and Nerd Font icons. Try to preserve those defaults when adding new UI surfaces.
 

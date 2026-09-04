@@ -14,6 +14,11 @@ return {
 		-- markdownlint-cli2 reads stdin ("-") but also accepts --config; we write
 		-- the JSON once to a temp file so the arg is always available.
 		linters = {
+			-- Disable the document-start rule so YAML files without a leading `---`
+			-- don't produce noise on every buffer.
+			yamllint = {
+				args = { "--format", "parsable", "-d", "{extends: default, rules: {document-start: disable}}", "-" },
+			},
 			["markdownlint-cli2"] = {
 				args = (function()
 					local cfg = vim.fn.stdpath("cache") .. "/markdownlint-cli2.json"
@@ -41,9 +46,6 @@ return {
 			json = { "jsonlint" },
 			python = { "ruff" },
 			yaml = { "yamllint" },
-			yamllint = {
-				args = { "-d", "{extends: default, rules: {document-start: disable}}" }
-			},
 			dockerfile = { "hadolint" },
 			gitcommit = { "gitlint" },
 			-- sqlfluff removed: sql-formatter (conform) handles all style/layout

@@ -26,10 +26,10 @@ lua/ls-devs/
       completion_modules/      ← non-spec Lua helpers (dotenv_source.lua); NOT imported by lazy.nvim
       blink_cmp.lua            ← main completion config (v2/main branch, cargo build)
     devtools/                  ← codecompanion (+ copilot dep + img-clip dep), debuggers, databases,
-    │                            asyncrun, overseer, kulala.nvim, typescript-tools,
+    │                            asyncrun, overseer, typescript-tools,
     │                            live-server, lazydev, emmet,
-    │                            neotest (+ adapters), rustaceanvim, octo.nvim,
-    │                            iron.nvim (REPL), nvim-coverage, ccc.nvim (color picker)
+    │                            neotest (+ adapters), octo.nvim,
+    │                            iron.nvim (REPL), ccc.nvim (color picker)
     │   codecompanion.lua      ← SOURCE OF TRUTH for AI/MCP/Copilot integration
     gittools/                  ← codediff.nvim (diff viewer + conflict resolution), gitsigns, git-worktree
     lsp/
@@ -50,13 +50,14 @@ lua/ls-devs/
       treesitter_modules/      ← nvim-ts-autotag
     ui/                        ← catppuccin, tiny-inline-diagnostic, fidget, focus, lualine, mini_icons,
     │                            noice, reactive, stickybuf, tabby, todo-comments, ufo, nvim-bqf, quicker
-    utilities/                 ← mini.comment, scrolleof, trouble
+    utilities/                 ← mini.comment, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch,
                                   OrigamiHLFolds, KeymapsList, AutocmdsList, CommandsList,
                                   HighlightsList, DapChromeDebug, DapNodeDebug
-lsp/                           ← standalone server config fragments (NOT auto-loaded by default)
-                                 eslint.lua: loaded by manager.lua; suppresses publishDiagnostics
+lsp/                           ← per-server config fragments, auto-resolved by Neovim 0.11+
+                                 from the runtimepath (filename = lspconfig server name)
+                                 eslint.lua: also required by manager.lua; suppresses publishDiagnostics
                                    so the eslint LSP only provides code actions (not diagnostics)
 .agents/skills/                ← local CodeCompanion agent skills
 .github/copilot-instructions.md ← Copilot-specific subset of this file
@@ -149,8 +150,12 @@ When adding/removing a tool (LSP, linter, formatter, debugger):
 ### `completion_modules/` — not imported by lazy.nvim
 Files under `lua/ls-devs/plugins/completion/completion_modules/` are **not** plugin specs and are **not** imported by `core/lazy.lua`. The folder exists for pure-Lua helpers used by `blink_cmp.lua` (e.g. `dotenv_source.lua`). Do not place lazy.nvim specs there.
 
-### `lsp/` directory — not auto-loaded
-Files under the top-level `lsp/` are **not** imported by `core/lazy.lua`. The active LSP configuration is fully managed through Mason and `nvim-lspconfig` via `plugins/lsp/manager.lua`. Before editing any LSP behavior, verify which file actually controls it.
+### `lsp/` directory — auto-loaded by Neovim (not by lazy.nvim)
+Files under the top-level `lsp/` are **not** imported by `core/lazy.lua`, but Neovim 0.11+ resolves `lsp/<server>.lua` from the runtimepath on its own — and `~/.config/nvim` **is** on the runtimepath. So `lsp/lua_ls.lua`, `lsp/vue_ls.lua`, … **are** applied automatically to any server enabled by `mason-lspconfig`'s `automatic_enable`.
+
+Two consequences:
+- The filename must match the **lspconfig** server name, not the Mason package name (e.g. `vue-language-server` → `lsp/vue_ls.lua`, `powershell-editor-services` → `lsp/powershell_es.lua`).
+- A file under `lsp/` for a server that is not in `manager.lua`'s `ensure_installed` is dead code (currently: `intelephense.lua`, `kotlin_language_server.lua`).
 
 ### UI consistency
 - Colorscheme: `catppuccin` (set in `core/lazy.lua` `install.colorscheme`)
@@ -244,6 +249,7 @@ Find the plugin spec file for the relevant feature and update the `keys` table e
 | Node.js + npm/pnpm | ts_ls, eslint, markdown-preview, copilot.lua |
 | Python + pynvim | debugpy, pyright |
 | Cargo/Rust | rust_analyzer, some plugins |
+| `tree-sitter` CLI >= 0.26.1 | nvim-treesitter `main` parser install (`:TSInstall`/`:TSUpdate`). Must NOT be the npm build — use a release binary or `cargo install tree-sitter-cli`. Distro packages are usually far too old. |
 | Go | gopls (if added), some tools |
 | Java (JDK) | jdtls |
 | Deno | deno LSP |

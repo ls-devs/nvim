@@ -11,7 +11,7 @@ return {
 	cmd = { "Octo" },
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", lazy = true },
-		{ "nvim-tree/nvim-web-devicons", lazy = true },
+		-- icons provided by mini.icons via its nvim-web-devicons shim
 	},
 	opts = {
 		-- ── Picker backend ────────────────────────────────────────────────

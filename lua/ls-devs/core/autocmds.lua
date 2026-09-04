@@ -147,7 +147,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = augroup,
 	pattern = "*",
 	callback = function()
-		vim.hl.on_yank({ timeout = 60, visual = true })
+		vim.hl.hl_op({ timeout = 60, visual = true })
 	end,
 	desc = "Blink on yank",
 })
@@ -328,7 +328,9 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPost" }, {
 			end
 			local ft = vim.bo[bufnr].filetype
 			if ft ~= "" then
-				pcall(vim.cmd, "TSBufEnable highlight")
+				-- nvim-treesitter `main` has no TSBufEnable; highlighting is started
+				-- through Neovim's own API.
+				pcall(vim.treesitter.start, bufnr)
 			end
 			if #vim.lsp.get_clients({ bufnr = bufnr }) == 0 then
 				pcall(vim.cmd, "LspStart")

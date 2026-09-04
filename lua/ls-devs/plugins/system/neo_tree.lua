@@ -379,9 +379,10 @@ return {
 		},
 	},
 	dependencies = {
-		{ "3rd/image.nvim", lazy = true },
+		-- image.nvim removed: snacks.image owns image rendering and the preview
+		-- mapping below already sets use_image_nvim = false.
+		-- icons provided by mini.icons via its nvim-web-devicons shim
 		{ "plenary.nvim", lazy = true },
-		{ "nvim-tree/nvim-web-devicons", lazy = true },
 		{ "MunifTanjim/nui.nvim", lazy = true },
 		{
 			"s1n7ax/nvim-window-picker",

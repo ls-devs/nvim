@@ -154,5 +154,5 @@ return {
 			noremap = true,
 		},
 	},
-	dependencies = "echasnovski/mini.icons",
+	dependencies = "nvim-mini/mini.icons",
 }

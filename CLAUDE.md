@@ -32,7 +32,7 @@ lua/ls-devs/
   plugins/
     completion/                ← blink.cmp, LuaSnip, lspkind
       completion_modules/      ← pure-Lua helpers (NOT imported by lazy.nvim)
-    devtools/                  ← codecompanion, debuggers, neotest, overseer, kulala, etc.
+    devtools/                  ← codecompanion, debuggers, neotest, overseer, etc.
       codecompanion.lua        ← SOURCE OF TRUTH for all AI/MCP/Copilot integration
     gittools/                  ← codediff.nvim, gitsigns, git-worktree
     lsp/
@@ -41,11 +41,12 @@ lua/ls-devs/
     system/                    ← conform (formatting), nvim-lint, snacks, neo-tree, treesitter, etc.
       snacks/                  ← dashboard.lua, keys.lua, picker.lua (required by snacks.lua)
     ui/                        ← catppuccin, lualine, tabby, noice, ufo, etc.
-    utilities/                 ← mini.comment, trouble, scrolleof
+    utilities/                 ← mini.comment, trouble
   utils/
     custom_functions.lua       ← HelpGrep, CustomHover, OpenURLs, GhSwitch, DapChromeDebug, etc.
-lsp/                           ← standalone server config fragments (NOT auto-loaded)
-                                 eslint.lua is loaded by manager.lua only
+lsp/                           ← per-server config fragments, auto-resolved by Neovim 0.11+
+                                 from the runtimepath (filename must equal the lspconfig
+                                 server name, e.g. vue_ls.lua — NOT the Mason package name)
 .agents/skills/                ← project-local CodeCompanion agent skills
 lazy-lock.json                 ← plugin version lockfile (do not edit manually)
 skills-lock.json               ← agent skills lockfile
@@ -171,7 +172,7 @@ When modifying CodeCompanion behavior, stay within `codecompanion.lua`. Do not s
 - Do **not** add `format_on_save = true` — it is intentionally disabled
 - Do **not** edit `lazy-lock.json` manually
 - Do **not** add plugin logic to `core/lazy.lua` — it is a composition point only
-- Do **not** assume files in `lsp/` are active — verify in `plugins/lsp/manager.lua` first
+- Do **not** assume a file in `lsp/` is active — Neovim only applies it if that server is enabled via `manager.lua`'s `ensure_installed`, and only if the filename matches the lspconfig server name
 - Do **not** place plugin specs in `completion_modules/` — that folder is not imported by lazy.nvim
 - Do **not** use `vim.loop.*` — use `vim.uv.*` (deprecated since Neovim 0.10)
 - Do **not** use `vim.api.nvim_set_keymap` / `vim.api.nvim_buf_set_keymap` — use `vim.keymap.set()`
@@ -188,6 +189,7 @@ When modifying CodeCompanion behavior, stay within `codecompanion.lua`. Do not s
 | Node.js + npm/pnpm | ts_ls, eslint, markdown-preview, copilot.lua |
 | Python + pynvim | debugpy, pyright |
 | Cargo/Rust | rust_analyzer, blink.cmp build step |
+| `tree-sitter` CLI >= 0.26.1 | nvim-treesitter `main` parser install (`:TSInstall`/`:TSUpdate`). Must NOT be the npm build — use a release binary or `cargo install tree-sitter-cli`. Distro packages are usually far too old. |
 | win32yank | WSL clipboard |
 | lazygit | snacks.lazygit float |
 | wslview | URL opener in WSL |

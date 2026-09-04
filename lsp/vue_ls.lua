@@ -1,4 +1,4 @@
--- ── lsp/volar ─────────────────────────────────────────────────────────────
+-- ── lsp/vue_ls ─────────────────────────────────────────────────────────────
 -- Server  : vue-language-server (Volar v2) — official Vue Language Server.
 -- Role    : Vue SFC support (.vue files): template, script, style blocks,
 --           TypeScript type checking, component props/emits/slots.

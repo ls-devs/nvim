@@ -6,7 +6,7 @@
 ---@type LazySpec
 return {
 	"folke/trouble.nvim",
-	dependencies = { { "echasnovski/mini.icons", lazy = false } },
+	dependencies = { { "nvim-mini/mini.icons", lazy = false } },
 	opts = {
 		-- Automatically close the panel when the diagnostics list becomes empty
 		auto_close = true,
